@@ -2,7 +2,7 @@
 
 ## Kubernetes架构
 
-  ![架构图](https://github.com/Lancger/opsfull/blob/master/images/kubernetes%E6%9E%B6%E6%9E%84.jpg)
+ ![1](https://github.com/Lancger/opsfull/blob/master/images/kubernetes%E6%9E%B6%E6%9E%84.jpg)
 
 ## k8s架构图
 
