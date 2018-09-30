@@ -25,3 +25,5 @@
         <td><a href="docs/helm.md">6.Helm部署</a></td>
     </tr>
 </table>
+
+  ![](https://github.com/Lancger/opsfull/blob/master/images/K8S.png)
