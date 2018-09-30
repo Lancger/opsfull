@@ -66,3 +66,14 @@ RC、RS和Deployment只是保证了支撑服务的POD的数量，但是没有解
 
 在K8集群中，客户端需要访问的服务就是Service对象。每个Service会对 应一个集群内部有效的虚拟IP，集群内部通过虚拟IP访问一个服务。
 
+## 四、K8S的IP地址
+Node IP: 节点设备的IP，如物理机，虚拟机等容器宿主的实际IP。 
+
+Pod IP: Pod 的IP地址，是根据docker0网格IP段进行分配的。 
+
+Cluster IP: Service的IP，是一个虚拟IP，仅作用于service对象，由k8s
+管理和分配，需要结合service port才能使用，单独的IP没有通信功能，
+集群外访问需要一些修改。
+
+在K8S集群内部，nodeip podip clusterip的通信机制是由k8s制定的路由
+规则，不是IP路由。
