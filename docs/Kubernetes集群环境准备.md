@@ -61,17 +61,18 @@ sed -i "s/SELINUXTYPE=targeted/SELINUXTYPE=disabled/g" /etc/sysconfig/selinux
 setenforce 0
 ```
 
-5、
+5、其他配置
 ```
 yum install -y ntpdate wget lrzsz vim net-tools
 
 #加入crontab
 1 * * * * /usr/sbin/ntpdate ntp1.aliyun.com >/dev/null 2>&1
 
+#设置时区
+cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
 #SSH登录慢
 sed -i "s/#UseDNS yes/UseDNS no/"  /etc/ssh/sshd_config
 sed -i "s/GSSAPIAuthentication yes/GSSAPIAuthentication no/"  /etc/ssh/sshd_config
 systemctl restart sshd.service
-
-
 ```
