@@ -19,3 +19,9 @@
 ### ETCD
 4. 所有持久化的状态信息存储在ETCD中。
 ## K8S Node节点
+### Kubelet
+管理Pods以及容器、镜像、Volume等，实现对集群 对节点的管理。
+### Kube-proxy
+提供网络代理以及负载均衡，实现与Service通信。
+### Docker Engine
+负责节点的容器的管理工作。
