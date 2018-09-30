@@ -25,5 +25,5 @@
 
 # 二、准备工作
 
-  ![安装流程](https://github.com/unixhot/salt-kubernetes/blob/master/docs/K8S.png)
+  ![安装流程](https://github.com/Lancger/opsfull/blob/master/images/%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B.png)
 
