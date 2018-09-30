@@ -53,8 +53,10 @@ EOF
 
 4、关闭防火墙和selinux
 ```
+#关闭防火墙
 systemctl disable firewalld
 systemctl stop firewalld
+
 #关闭selinux
 sed -i "s/SELINUX=enforcing/SELINUX=disabled/g" /etc/sysconfig/selinux
 sed -i "s/SELINUXTYPE=targeted/SELINUXTYPE=disabled/g" /etc/sysconfig/selinux
