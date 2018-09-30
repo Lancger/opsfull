@@ -8,7 +8,7 @@
 
 ![](https://github.com/Lancger/opsfull/blob/master/images/k8s%E6%9E%B6%E6%9E%84%E5%9B%BE.jpg)
 
-## K8S Master节点
+## 一、K8S Master节点
 ### API Server
 1. 供Kubernetes API接口，主要处理 REST操作以及更新ETCD中的对象。 所有资源增删改查的唯一入口。
 ### Scheduler
@@ -18,7 +18,7 @@
 自动化控制中心。
 ### ETCD
 4. 所有持久化的状态信息存储在ETCD中。
-## K8S Node节点
+## 二、K8S Node节点
 ### Kubelet
 1. 管理Pods以及容器、镜像、Volume等，实现对集群 对节点的管理。
 ### Kube-proxy
