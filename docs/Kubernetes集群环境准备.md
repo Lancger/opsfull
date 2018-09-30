@@ -27,7 +27,7 @@
 
 # 二、准备工作
   
-  1、设置主机名
+1、设置主机名
 ```
 hostnamectl set-hostname linux-node1
 hostnamectl set-hostname linux-node2
