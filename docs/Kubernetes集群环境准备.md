@@ -26,3 +26,7 @@
         <td colspan="2">1.如果有条件可以部署多个Kubernets node，实验效果更佳</td>
     </tr>
 </table>
+
+# 约定
+1.所有文件存放在/opt/kubernetes目录下 
+2.使用二进制方式进行部署
