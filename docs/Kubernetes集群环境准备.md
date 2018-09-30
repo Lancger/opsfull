@@ -1,5 +1,7 @@
 # 一、k8s集群实验环境准备
 
+  ![架构图](https://github.com/Lancger/opsfull/blob/master/images/K8S.png)
+
 <table border="0">
     <tr>
         <td><strong>主机名</strong></td>
@@ -28,7 +30,6 @@
 
 # 二、准备工作
 
-  ![架构图](https://github.com/Lancger/opsfull/blob/master/images/K8S.png)
 
   
   1、设置主机名
