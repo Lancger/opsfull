@@ -24,7 +24,8 @@ scheduler负责分配调度Pod到集群内的node节点
 controller-manager由一系列的控制器组成，它通过apiserver监控整个 集群的状态，并确保集群处于预期的工作状态
 
 ### ETCD
-4. 所有持久化的状态信息存储在ETCD中。
+所有持久化的状态信息存储在ETCD中
+
 ## 二、K8S Node节点
 ### Kubelet
 1. 管理Pods以及容器、镜像、Volume等，实现对集群 对节点的管理。
