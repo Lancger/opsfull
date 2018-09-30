@@ -33,7 +33,7 @@ hostnamectl set-hostname linux-node1
 hostnamectl set-hostname linux-node2
 hostnamectl set-hostname linux-node3
 ```
-2、设置部署节点到其它所有节点的SSH免密码登(包括本机)
+2、设置部署节点(Master)到其它所有节点的SSH免密码登(包括本机)
 ```
 [root@linux-node1 ~]# ssh-keygen -t rsa
 [root@linux-node1 ~]# ssh-copy-id linux-node1
