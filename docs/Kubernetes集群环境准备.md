@@ -23,11 +23,13 @@
     </tr>
 </table>
 
+  ![安装流程](https://github.com/Lancger/opsfull/blob/master/images/%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B.png)
+
+
 # 二、准备工作
 
   ![架构图](https://github.com/Lancger/opsfull/blob/master/images/K8S.png)
 
-  ![安装流程](https://github.com/Lancger/opsfull/blob/master/images/%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B.png)
   
   
 
