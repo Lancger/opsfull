@@ -10,12 +10,19 @@
 
 ## 一、K8S Master节点
 ### API Server
-1. 供Kubernetes API接口，主要处理 REST操作以及更新ETCD中的对象。 所有资源增删改查的唯一入口。
+apiserver提供集群管理的REST API接口，包括认证授权、数据校验以 及集群状态变更等
+只有API Server才直接操作etcd
+其他模块通过API Server查询或修改数据
+提供其他模块之间的数据交互和通信的枢纽
+
 ### Scheduler
-2. 资源调度，负责Pod到Node的调度。
+scheduler负责分配调度Pod到集群内的node节点
+监听kube-apiserver，查询还未分配Node的Pod
+根据调度策略为这些Pod分配节点
+
 ### Controller Manager
-3. 所有其他群集级别的功能，目前由控制器Manager执行。资源对象的
-自动化控制中心。
+controller-manager由一系列的控制器组成，它通过apiserver监控整个 集群的状态，并确保集群处于预期的工作状态
+
 ### ETCD
 4. 所有持久化的状态信息存储在ETCD中。
 ## 二、K8S Node节点
