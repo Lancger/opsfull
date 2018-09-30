@@ -40,3 +40,22 @@ hostnamectl set-hostname linux-node3
 [root@linux-node1 ~]# ssh-copy-id linux-node2
 [root@linux-node1 ~]# ssh-copy-id linux-node3
 ```
+3、绑定主机host
+```
+cat > /etc/hosts <<EOF
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+192.168.56.11 linux-node1
+192.168.56.12 linux-node2
+192.168.56.13 linux-node3
+EOF
+```
+
+4、关闭防火墙和selinux
+```
+systemctl disable firewalld
+systemctl stop firewalld
+#关闭selinux
+sed -i "s/SELINUX=enforcing/SELINUX=disabled/g" /etc/sysconfig/selinux
+sed -i "s/SELINUXTYPE=targeted/SELINUXTYPE=disabled/g" /etc/sysconfig/selinux
+```
