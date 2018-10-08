@@ -158,7 +158,8 @@ NAME            STATUS   ROLES    AGE    VERSION
 2.创建 kube-proxy 证书请求
 ```
 [root@linux-node1 ~]# cd /usr/local/src/ssl/
-[root@linux-node1 ~]# vim kube-proxy-csr.json
+[root@linux-node1 ssl]#
+cat > kube-proxy-csr.json <<EOF
 {
   "CN": "system:kube-proxy",
   "hosts": [],
@@ -176,11 +177,12 @@ NAME            STATUS   ROLES    AGE    VERSION
     }
   ]
 }
+EOF
 ```
    
 3.生成证书
 ```
-[root@linux-node1~]# cfssl gencert -ca=/opt/kubernetes/ssl/ca.pem \
+[root@linux-node1 ssl]# cfssl gencert -ca=/opt/kubernetes/ssl/ca.pem \
    -ca-key=/opt/kubernetes/ssl/ca-key.pem \
    -config=/opt/kubernetes/ssl/ca-config.json \
    -profile=kubernetes  kube-proxy-csr.json | cfssljson -bare kube-proxy
