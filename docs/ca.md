@@ -100,8 +100,8 @@ ca.csr  ca-key.pem  ca.pem
 
 ## 6.分发证书
 ```
-# cp ca.csr ca.pem ca-key.pem ca-config.json /opt/kubernetes/ssl
-SCP证书到k8s-node1和k8s-node2节点
-# scp ca.csr ca.pem ca-key.pem ca-config.json 192.168.56.12:/opt/kubernetes/ssl 
-# scp ca.csr ca.pem ca-key.pem ca-config.json 192.168.56.13:/opt/kubernetes/ssl
+[root@linux-node1 ssl]# cp ca.csr ca.pem ca-key.pem ca-config.json /opt/kubernetes/ssl
+#scp证书到k8s-node1和k8s-node2节点
+[root@linux-node1 ssl]# scp ca.csr ca.pem ca-key.pem ca-config.json 192.168.56.12:/opt/kubernetes/ssl 
+[root@linux-node1 ssl]# scp ca.csr ca.pem ca-key.pem ca-config.json 192.168.56.13:/opt/kubernetes/ssl
 ```
