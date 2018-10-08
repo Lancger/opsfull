@@ -56,7 +56,7 @@ EOF
 ```
 [root@linux-node1 ssl]# head -c 16 /dev/urandom | od -An -t x | tr -d ' '
 ad6d5bb607a186796d8861557df0d17f 
-[root@linux-node1 ssl]# vim /opt/kubernetes/ssl/bootstrap-token.csv
+[root@linux-node1 ~]# vim /opt/kubernetes/ssl/bootstrap-token.csv
 ad6d5bb607a186796d8861557df0d17f,kubelet-bootstrap,10001,"system:kubelet-bootstrap"
 ```
 
