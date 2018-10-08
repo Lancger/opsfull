@@ -16,8 +16,8 @@ yum install -y docker-ce
 systemctl start docker
 
 systemctl enable docker
-Created symlink from /etc/systemd/system/multi-user.target.wants/docker.service to /usr/lib/systemd/system/docker.service.
+#Created symlink from /etc/systemd/system/multi-user.target.wants/docker.service to /usr/lib/systemd/system/docker.service.
 
 systemctl disable docker
-Removed symlink /etc/systemd/system/multi-user.target.wants/docker.service.
+#Removed symlink /etc/systemd/system/multi-user.target.wants/docker.service.
 ```
