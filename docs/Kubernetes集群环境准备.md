@@ -82,3 +82,12 @@ systemctl restart sshd.service
 6、软件包下载
 
 https://pan.baidu.com/s/10HWLaLAKUdw08HVfDvUfBQ
+
+所有文件存放在/opt/kubernetes目录下
+
+使用二进制方式进行部署
+
+官网下载地址
+
+https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.12.md#downloads-for-v1121
+
