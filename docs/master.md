@@ -43,20 +43,20 @@ EOF
 
 ### 2.生成 kubernetes 证书和私钥
 ```
- [root@linux-node1 src]# cfssl gencert -ca=/opt/kubernetes/ssl/ca.pem \
+[root@linux-node1 ssl]# cfssl gencert -ca=/opt/kubernetes/ssl/ca.pem \
    -ca-key=/opt/kubernetes/ssl/ca-key.pem \
    -config=/opt/kubernetes/ssl/ca-config.json \
    -profile=kubernetes kubernetes-csr.json | cfssljson -bare kubernetes
-[root@linux-node1 src]# cp kubernetes*.pem /opt/kubernetes/ssl/
-[root@linux-node1 ~]# scp kubernetes*.pem 192.168.56.12:/opt/kubernetes/ssl/
-[root@linux-node1 ~]# scp kubernetes*.pem 192.168.56.13:/opt/kubernetes/ssl/
+[root@linux-node1 ssl]# cp kubernetes*.pem /opt/kubernetes/ssl/
+[root@linux-node1 ssl]# scp kubernetes*.pem 192.168.56.12:/opt/kubernetes/ssl/
+[root@linux-node1 ssl]# scp kubernetes*.pem 192.168.56.13:/opt/kubernetes/ssl/
 ```
 
 ### 3.创建 kube-apiserver 使用的客户端 token 文件
 ```
-[root@linux-node1 ~]#  head -c 16 /dev/urandom | od -An -t x | tr -d ' '
+[root@linux-node1 ssl]# head -c 16 /dev/urandom | od -An -t x | tr -d ' '
 ad6d5bb607a186796d8861557df0d17f 
-[root@linux-node1 ~]# vim /opt/kubernetes/ssl/ bootstrap-token.csv
+[root@linux-node1 ssl]# vim /opt/kubernetes/ssl/ bootstrap-token.csv
 ad6d5bb607a186796d8861557df0d17f,kubelet-bootstrap,10001,"system:kubelet-bootstrap"
 ```
 
