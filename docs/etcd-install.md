@@ -11,11 +11,11 @@
 [root@linux-node1 etcd-v3.2.18-linux-amd64]# scp etcd etcdctl 192.168.56.13:/opt/kubernetes/bin/
 ```
 
-
 ## 1.创建 etcd 证书签名请求：
 ```
 [root@linux-node1 ~]# cd /usr/local/src/ssl
-[root@linux-node1 ssl]# cat > etcd-csr.json <<EOF
+[root@linux-node1 ssl]# 
+cat > etcd-csr.json <<EOF
 {
   "CN": "etcd",
   "hosts": [
