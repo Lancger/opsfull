@@ -140,7 +140,7 @@ tcp        0      0 127.0.0.1:8080          0.0.0.0:*               LISTEN      
 tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      985/sshd
 tcp6       0      0 :::22                   :::*                    LISTEN      985/sshd
 
-#发现 kube-apiserver 会监听2个端口一个6443，一个本地的8080(给kube-controller-manager和kube-scheduler服务使用，不需要认证，其他的服务访问apiserver就需要认证)
+#发现 kube-apiserver 会监听2个端口一个6443（需要认证），一个本地的8080(给kube-controller-manager和kube-scheduler服务使用，不需要认证，其他的服务访问apiserver就需要认证)
 ```
 
 ## 部署Controller Manager服务
