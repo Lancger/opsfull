@@ -1,5 +1,13 @@
 # 手动制作CA证书
 
+```
+Kubernetes 系统各组件需要使用 TLS 证书对通信进行加密。
+CA证书管理:
+• easyrsa
+• openssl
+• cfssl
+```
+
 ## 1.安装 CFSSL
 ```
 [root@linux-node1 ~]# cd /usr/local/src
