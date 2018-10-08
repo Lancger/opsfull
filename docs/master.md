@@ -9,7 +9,9 @@
 
 ### 1.创建生成CSR的 JSON 配置文件
 ```
-[root@linux-node1 src]# vim kubernetes-csr.json
+[root@linux-node1 ~]# cd /usr/local/src/ssl
+[root@linux-node1 ssl]# vim kubernetes-csr.json
+cat > kubernetes-csr.json <<EOF
 {
   "CN": "kubernetes",
   "hosts": [
@@ -36,6 +38,7 @@
     }
   ]
 }
+EOF
 ```
 
 ### 2.生成 kubernetes 证书和私钥
