@@ -69,6 +69,8 @@ readonly,readonly,2
 
 ### 5.部署Kubernetes API Server
 ```
+#正常日志在 /opt/kubernetes/log 目录中查看，启动异常日志在 /var/log/messages 中查看
+
 [root@linux-node1 ~]# vim /usr/lib/systemd/system/kube-apiserver.service
 [Unit]
 Description=Kubernetes API Server
