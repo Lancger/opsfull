@@ -80,6 +80,13 @@ specifically, section 10.2.3 ("Information Requirements").
 
 ## 4.设置ETCD配置文件
 ```
+#注意修改项（集群不同的地方）
+##################################################
+ETCD_NAME="etcd-node1"
+ETCD_LISTEN_PEER_URLS="https://192.168.56.11:2380"   --2380集群监听的端口
+ETCD_LISTEN_CLIENT_URLS="https://192.168.56.11:2379,https://127.0.0.1:2379"   --2379客户端监听的端口
+##################################################
+
 [root@linux-node1 ~]# vim /opt/kubernetes/cfg/etcd.conf
 #[member]
 ETCD_NAME="etcd-node1"
