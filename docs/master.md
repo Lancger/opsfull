@@ -302,7 +302,7 @@ Context "kubernetes" created.
 [root@linux-node1 src]# kubectl config use-context kubernetes
 Switched to context "kubernetes".
 
-#以上这么多操作，就是在当前家目录下生成了一个这个文件(如果其他节点也需要正常使用kubectl命令，需要将这个文件也同步到对应的目录)
+#以上步骤4-7这么多操作，就是在当前家目录下生成了一个这个文件(如果其他节点也需要正常使用kubectl命令，需要将这个文件也同步到对应的目录)
 [root@linux-node1 ~]# cat ~/.kube/config
 apiVersion: v1
 clusters:
