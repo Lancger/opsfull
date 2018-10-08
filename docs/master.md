@@ -10,7 +10,7 @@
 ### 1.创建生成CSR的 JSON 配置文件
 ```
 [root@linux-node1 ~]# cd /usr/local/src/ssl
-[root@linux-node1 ssl]# vim kubernetes-csr.json
+[root@linux-node1 ssl]#
 cat > kubernetes-csr.json <<EOF
 {
   "CN": "kubernetes",
