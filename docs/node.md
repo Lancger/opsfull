@@ -122,7 +122,7 @@ RestartSec=5
 ```
 [root@linux-node2 ~]# systemctl daemon-reload
 [root@linux-node2 ~]# systemctl enable kubelet
-[root@linux-node2 ~]# systemctl start kubelet
+[root@linux-node2 ~]# systemctl restart kubelet
 ```
 
 5.查看服务状态
@@ -143,9 +143,12 @@ node-csr-0_w5F1FM_la_SeGiu3Y5xELRpYUjjT2icIFk9gO9KOU   1m        kubelet-bootstr
 [root@linux-node1 ~]# kubectl get csr|grep 'Pending' | awk 'NR>0{print $1}'| xargs kubectl certificate approve
 ```
 执行完毕后，查看节点状态已经是Ready的状态了
-[root@linux-node1 ssl]#  kubectl get node
-NAME            STATUS    ROLES     AGE       VERSION
-
+```
+[root@linux-node1 ~]# kubectl get node
+NAME            STATUS   ROLES    AGE    VERSION
+192.168.56.12   Ready    <none>   103s   v1.12.1
+192.168.56.13   Ready    <none>   103s   v1.12.1
+```
 ## 部署Kubernetes Proxy
 1.配置kube-proxy使用LVS
 ```
