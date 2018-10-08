@@ -128,6 +128,19 @@ WantedBy=multi-user.target
 查看API Server服务状态
 ```
 [root@linux-node1 ~]# systemctl status kube-apiserver
+
+[root@linux-node1 ~]# netstat -ntlp
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 192.168.56.11:6443      0.0.0.0:*               LISTEN      1508/kube-apiserver
+tcp        0      0 192.168.56.11:2379      0.0.0.0:*               LISTEN      987/etcd
+tcp        0      0 127.0.0.1:2379          0.0.0.0:*               LISTEN      987/etcd
+tcp        0      0 192.168.56.11:2380      0.0.0.0:*               LISTEN      987/etcd
+tcp        0      0 127.0.0.1:8080          0.0.0.0:*               LISTEN      1508/kube-apiserver
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      985/sshd
+tcp6       0      0 :::22                   :::*                    LISTEN      985/sshd
+
+#发现 kube-apiserver 会监听2个端口一个6443，一个本地的8080(给kube-controller-manager和kube-scheduler服务使用，不需要认证，其他的服务访问apiserver就需要认证)
 ```
 
 ## 部署Controller Manager服务
