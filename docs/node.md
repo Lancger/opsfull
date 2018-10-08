@@ -61,10 +61,11 @@ Switched to context "default".
 ```
 
 部署kubelet
-1.设置CNI支持
+1.设置CNI支持(k8s网络接口的插件)
 ```
 [root@linux-node2 ~]# mkdir -p /etc/cni/net.d
-[root@linux-node2 ~]# vim /etc/cni/net.d/10-default.conf
+[root@linux-node2 ~]# 
+cat > /etc/cni/net.d/10-default.conf <<EOF
 {
         "name": "flannel",
         "type": "flannel",
@@ -74,6 +75,8 @@ Switched to context "default".
             "mtu": 1400
         }
 }
+EOF
+[root@linux-node2 ~]# 
 ```
 
 2.创建kubelet目录
