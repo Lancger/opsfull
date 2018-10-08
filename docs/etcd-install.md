@@ -14,14 +14,15 @@
 
 ## 1.创建 etcd 证书签名请求：
 ```
- [root@linux-node1 ~]# vim etcd-csr.json
+[root@linux-node1 ~]# cd /usr/local/src/ssl
+[root@linux-node1 ssl]# cat > etcd-csr.json <<EOF
 {
   "CN": "etcd",
   "hosts": [
     "127.0.0.1",
-"192.168.56.11",
-"192.168.56.12",
-"192.168.56.13"
+    "192.168.56.11",
+    "192.168.56.12",
+    "192.168.56.13"
   ],
   "key": {
     "algo": "rsa",
@@ -37,6 +38,8 @@
     }
   ]
 }
+EOF
+[root@linux-node1 ssl]#
 ```
 
 ## 2.生成 etcd 证书和私钥：
