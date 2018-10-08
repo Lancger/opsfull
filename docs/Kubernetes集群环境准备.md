@@ -92,9 +92,7 @@ mkdir -p /opt/kubernetes/{cfg,bin,ssl,log}
 
 #添加环境变量
 vim /root/.bash_profile
-
 PATH=$PATH:$HOME/bin:/opt/kubernetes/bin
-
 source /root/.bash_profile
 ```
 ![官网下载链接](https://github.com/Lancger/opsfull/blob/master/images/k8s-soft.jpg)
