@@ -21,8 +21,8 @@ CA证书管理工具:
 [root@linux-node1 src]# mv cfssl_linux-amd64  /opt/kubernetes/bin/cfssl
 
 #复制cfssl命令文件到k8s-node1和k8s-node2节点。如果实际中多个节点，就都需要同步复制。
-[root@linux-node1 ~]# scp /opt/kubernetes/bin/cfssl* 192.168.56.12:/opt/kubernetes/bin
-[root@linux-node1 ~]# scp /opt/kubernetes/bin/cfssl* 192.168.56.13:/opt/kubernetes/bin
+[root@linux-node1 ~]# scp /opt/kubernetes/bin/cfssl* 192.168.56.12:/opt/kubernetes/bin  --生成ca-config.json的样例(可省略)
+[root@linux-node1 ~]# scp /opt/kubernetes/bin/cfssl* 192.168.56.13:/opt/kubernetes/bin  --生成ca-csr.json的样例(可省略)
 ```
 
 ## 2.初始化cfssl
