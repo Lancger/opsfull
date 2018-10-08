@@ -80,9 +80,10 @@ systemctl restart sshd.service
 ```
 
 6、软件包下载
-```
+
 k8s-v1.12.0版本网盘地址: https://pan.baidu.com/s/10HWLaLAKUdw08HVfDvUfBQ
 
+```
 #所有文件存放在/opt/kubernetes目录下
 mkdir -p /opt/kubernetes/{cfg,bin,ssl,log}
 
