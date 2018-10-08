@@ -21,15 +21,15 @@ CA证书管理工具:
 [root@linux-node1 src]# mv cfssl_linux-amd64  /opt/kubernetes/bin/cfssl
 
 #复制cfssl命令文件到k8s-node1和k8s-node2节点。如果实际中多个节点，就都需要同步复制。
-[root@linux-node1 ~]# scp /opt/kubernetes/bin/cfssl* 192.168.56.12:/opt/kubernetes/bin  --生成ca-config.json的样例(可省略)
-[root@linux-node1 ~]# scp /opt/kubernetes/bin/cfssl* 192.168.56.13:/opt/kubernetes/bin  --生成ca-csr.json的样例(可省略)
+[root@linux-node1 ~]# scp /opt/kubernetes/bin/cfssl* 192.168.56.12:/opt/kubernetes/bin
+[root@linux-node1 ~]# scp /opt/kubernetes/bin/cfssl* 192.168.56.13:/opt/kubernetes/bin
 ```
 
 ## 2.初始化cfssl
 ```
 [root@linux-node1 src]# mkdir ssl && cd ssl
-[root@linux-node1 ssl]# cfssl print-defaults config > config.json
-[root@linux-node1 ssl]# cfssl print-defaults csr > csr.json
+[root@linux-node1 ssl]# cfssl print-defaults config > config.json    --生成ca-config.json的样例(可省略)
+[root@linux-node1 ssl]# cfssl print-defaults csr > csr.json    --生成ca-csr.json的样例(可省略)
 ```
 
 ## 3.创建用来生成 CA 文件的 JSON 配置文件
