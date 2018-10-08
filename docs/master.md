@@ -143,7 +143,7 @@ tcp6       0      0 :::22                   :::*                    LISTEN      
 #发现 kube-apiserver 会监听2个端口一个6443（需要认证），一个本地的8080(给kube-controller-manager和kube-scheduler服务使用，不需要认证，其他的服务访问apiserver就需要认证)
 ```
 
-## 部署Controller Manager服务
+## 2.部署Controller Manager服务
 ```
 [root@linux-node1 ~]# vim /usr/lib/systemd/system/kube-controller-manager.service
 [Unit]
@@ -181,13 +181,13 @@ WantedBy=multi-user.target
 [root@linux-node1 scripts]# systemctl start kube-controller-manager
 ```
 
-## 4.查看服务状态
+### 4.查看服务状态
 ```
 [root@linux-node1 scripts]# systemctl status kube-controller-manager
 ```
 
 
-## 部署Kubernetes Scheduler
+## 3.部署Kubernetes Scheduler
 ```
 [root@linux-node1 ~]# vim /usr/lib/systemd/system/kube-scheduler.service
 [Unit]
