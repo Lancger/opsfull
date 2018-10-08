@@ -14,14 +14,15 @@
 kubelet启动的时候会向kube-apiserver发送tls-bootstrap的请求，所以说需要将bootstrap的token设置为对应的角色，这样kubectl才有权限去创建请求，这个请求是怎么回事呢？kubelet起来的时候会访问apiserver,来动态获取证书。
 
 ```
-[root@linux-node1 ~]# kubectl create clusterrolebinding kubelet-bootstrap --clusterrole=system:node-bootstrapper --user=kubelet-bootstrap
+[root@linux-node1 ~]# cd /usr/local/src/ssl
+[root@linux-node1 ssl]# kubectl create clusterrolebinding kubelet-bootstrap --clusterrole=system:node-bootstrapper --user=kubelet-bootstrap
 clusterrolebinding "kubelet-bootstrap" created
 ```
 
 3.创建 kubelet bootstrapping kubeconfig 文件
 设置集群参数
 ```
-[root@linux-node1 ~]# kubectl config set-cluster kubernetes \
+[root@linux-node1 ssl]# kubectl config set-cluster kubernetes \
    --certificate-authority=/opt/kubernetes/ssl/ca.pem \
    --embed-certs=true \
    --server=https://192.168.56.11:6443 \
