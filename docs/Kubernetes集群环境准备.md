@@ -98,3 +98,12 @@ PATH=$PATH:$HOME/bin:/opt/kubernetes/bin
 source /root/.bash_profile
 ```
 ![官网下载链接](https://github.com/Lancger/opsfull/blob/master/images/k8s-soft.jpg)
+
+7、解压软件包
+```
+tar -zxvf kubernetes.tar.gz -C /usr/local/src/
+tar -zxvf kubernetes-server-linux-amd64.tar.gz -C /usr/local/src/
+tar -zxvf kubernetes-client-linux-amd64.tar.gz -C /usr/local/src/
+tar -zxvf kubernetes-node-linux-amd64.tar.gz -C /usr/local/src/
+```
+
