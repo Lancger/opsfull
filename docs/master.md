@@ -269,6 +269,8 @@ EOF
 ```
 
 4.设置集群参数
+apiserver通过RBAC给客户端授权，RBAC预定义了一些角色，我们需要对其进行配置
+
 ```
 [root@linux-node1 src]# kubectl config set-cluster kubernetes \
    --certificate-authority=/opt/kubernetes/ssl/ca.pem \
