@@ -3,7 +3,7 @@
 
 ## 0.准备etcd软件包
 ```
-wget https://github.com/coreos/etcd/releases/download/v3.2.18/etcd-v3.2.18-linux-amd64.tar.gz
+[root@linux-node1 src]# wget https://github.com/coreos/etcd/releases/download/v3.2.18/etcd-v3.2.18-linux-amd64.tar.gz
 [root@linux-node1 src]# tar zxf etcd-v3.2.18-linux-amd64.tar.gz
 [root@linux-node1 src]# cd etcd-v3.2.18-linux-amd64
 [root@linux-node1 etcd-v3.2.18-linux-amd64]# cp etcd etcdctl /opt/kubernetes/bin/ 
