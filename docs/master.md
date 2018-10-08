@@ -231,6 +231,7 @@ WantedBy=multi-user.target
 ```
 [root@linux-node1 ~]# cd /usr/local/src/ssl/
 [root@linux-node1 ssl]# vim admin-csr.json
+cat > admin-csr.json <<EOF
 {
   "CN": "admin",
   "hosts": [],
@@ -248,6 +249,8 @@ WantedBy=multi-user.target
     }
   ]
 }
+EOF
+[root@linux-node1 ssl]#
 ```
 
 3.生成 admin 证书和私钥：
