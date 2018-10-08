@@ -63,11 +63,11 @@ specifically, section 10.2.3 ("Information Requirements").
 [root@linux-node1 ssl]#
 
 #会生成以下证书文件
-[root@k8s-master ~]# ls -l etcd*
--rw-r--r-- 1 root root 1045 Mar  5 11:27 etcd.csr
--rw-r--r-- 1 root root  257 Mar  5 11:25 etcd-csr.json
--rw------- 1 root root 1679 Mar  5 11:27 etcd-key.pem
--rw-r--r-- 1 root root 1419 Mar  5 11:27 etcd.pem
+[root@linux-node1 ssl]# ls -l etcd*
+-rw-r--r--. 1 root root 1062 Oct  8 19:26 etcd.csr
+-rw-r--r--. 1 root root  299 Oct  8 19:24 etcd-csr.json
+-rw-------. 1 root root 1675 Oct  8 19:26 etcd-key.pem
+-rw-r--r--. 1 root root 1436 Oct  8 19:26 etcd.pem
 ```
 
 ## 3.将证书移动到/opt/kubernetes/ssl目录下
