@@ -152,9 +152,74 @@ WantedBy=multi-user.target
 [root@linux-node1 ~]# systemctl start etcd
 [root@linux-node1 ~]# systemctl status etcd
 ```
+## 7.修改集群其他节点差异配置文件
+```
+#node2配置文件
+[root@linux-node2 src]# cat /opt/kubernetes/cfg/etcd.conf
+#[member]
+ETCD_NAME="etcd-node2"
+ETCD_DATA_DIR="/var/lib/etcd/default.etcd"
+#ETCD_SNAPSHOT_COUNTER="10000"
+#ETCD_HEARTBEAT_INTERVAL="100"
+#ETCD_ELECTION_TIMEOUT="1000"
+ETCD_LISTEN_PEER_URLS="https://192.168.56.12:2380"
+ETCD_LISTEN_CLIENT_URLS="https://192.168.56.12:2379,https://127.0.0.1:2379"
+#ETCD_MAX_SNAPSHOTS="5"
+#ETCD_MAX_WALS="5"
+#ETCD_CORS=""
+#[cluster]
+ETCD_INITIAL_ADVERTISE_PEER_URLS="https://192.168.56.12:2380"
+# if you use different ETCD_NAME (e.g. test),
+# set ETCD_INITIAL_CLUSTER value for this name, i.e. "test=http://..."
+ETCD_INITIAL_CLUSTER="etcd-node1=https://192.168.56.11:2380,etcd-node2=https://192.168.56.12:2380,etcd-node3=https://192.168.56.13:2380"
+ETCD_INITIAL_CLUSTER_STATE="new"
+ETCD_INITIAL_CLUSTER_TOKEN="k8s-etcd-cluster"
+ETCD_ADVERTISE_CLIENT_URLS="https://192.168.56.12:2379"
+#[security]
+CLIENT_CERT_AUTH="true"
+ETCD_CA_FILE="/opt/kubernetes/ssl/ca.pem"
+ETCD_CERT_FILE="/opt/kubernetes/ssl/etcd.pem"
+ETCD_KEY_FILE="/opt/kubernetes/ssl/etcd-key.pem"
+PEER_CLIENT_CERT_AUTH="true"
+ETCD_PEER_CA_FILE="/opt/kubernetes/ssl/ca.pem"
+ETCD_PEER_CERT_FILE="/opt/kubernetes/ssl/etcd.pem"
+ETCD_PEER_KEY_FILE="/opt/kubernetes/ssl/etcd-key.pem"
+
+#node3配置文件
+[root@linux-node3 src]# cat /opt/kubernetes/cfg/etcd.conf
+#[member]
+ETCD_NAME="etcd-node3"
+ETCD_DATA_DIR="/var/lib/etcd/default.etcd"
+#ETCD_SNAPSHOT_COUNTER="10000"
+#ETCD_HEARTBEAT_INTERVAL="100"
+#ETCD_ELECTION_TIMEOUT="1000"
+ETCD_LISTEN_PEER_URLS="https://192.168.56.13:2380"
+ETCD_LISTEN_CLIENT_URLS="https://192.168.56.13:2379,https://127.0.0.1:2379"
+#ETCD_MAX_SNAPSHOTS="5"
+#ETCD_MAX_WALS="5"
+#ETCD_CORS=""
+#[cluster]
+ETCD_INITIAL_ADVERTISE_PEER_URLS="https://192.168.56.13:2380"
+# if you use different ETCD_NAME (e.g. test),
+# set ETCD_INITIAL_CLUSTER value for this name, i.e. "test=http://..."
+ETCD_INITIAL_CLUSTER="etcd-node1=https://192.168.56.11:2380,etcd-node2=https://192.168.56.12:2380,etcd-node3=https://192.168.56.13:2380"
+ETCD_INITIAL_CLUSTER_STATE="new"
+ETCD_INITIAL_CLUSTER_TOKEN="k8s-etcd-cluster"
+ETCD_ADVERTISE_CLIENT_URLS="https://192.168.56.13:2379"
+#[security]
+CLIENT_CERT_AUTH="true"
+ETCD_CA_FILE="/opt/kubernetes/ssl/ca.pem"
+ETCD_CERT_FILE="/opt/kubernetes/ssl/etcd.pem"
+ETCD_KEY_FILE="/opt/kubernetes/ssl/etcd-key.pem"
+PEER_CLIENT_CERT_AUTH="true"
+ETCD_PEER_CA_FILE="/opt/kubernetes/ssl/ca.pem"
+ETCD_PEER_CERT_FILE="/opt/kubernetes/ssl/etcd.pem"
+ETCD_PEER_KEY_FILE="/opt/kubernetes/ssl/etcd-key.pem"
+```
+
 下面需要大家在所有的 etcd 节点重复上面的步骤，直到所有机器的 etcd 服务都已启动。
 
-## 7.验证集群
+## 8.验证集群
 ```
 [root@linux-node1 ~]# etcdctl --endpoints=https://192.168.56.11:2379 \
   --ca-file=/opt/kubernetes/ssl/ca.pem \
