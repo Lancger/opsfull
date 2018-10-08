@@ -32,6 +32,8 @@ Cluster "kubernetes" set.
 
 设置客户端认证参数
 ```
+#注意这里的token需要跟之前kube-apiserver配置的一致（/usr/lib/systemd/system/kube-apiserver.service 中 /opt/kubernetes/ssl/bootstrap-token.csv 中的一致）
+
 [root@linux-node1 ~]# kubectl config set-credentials kubelet-bootstrap \
    --token=ad6d5bb607a186796d8861557df0d17f \
    --kubeconfig=bootstrap.kubeconfig   
