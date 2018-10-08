@@ -139,18 +139,22 @@ WantedBy=multi-user.target
 
 ## 6.重新加载系统服务
 ```
-[root@linux-node1 ~]# systemctl daemon-reload
-[root@linux-node1 ~]# systemctl enable etcd
-
 [root@linux-node1 ~]# scp /opt/kubernetes/cfg/etcd.conf 192.168.56.12:/opt/kubernetes/cfg/
 [root@linux-node1 ~]# scp /etc/systemd/system/etcd.service 192.168.56.12:/etc/systemd/system/
 [root@linux-node1 ~]# scp /opt/kubernetes/cfg/etcd.conf 192.168.56.13:/opt/kubernetes/cfg/
 [root@linux-node1 ~]# scp /etc/systemd/system/etcd.service 192.168.56.13:/etc/systemd/system/
 
+[root@linux-node1 ~]# systemctl daemon-reload
+[root@linux-node1 ~]# systemctl enable etcd
+
 #在所有节点上创建etcd存储目录并启动etcd
 mkdir /var/lib/etcd
 systemctl start etcd
 systemctl status etcd
+
+systemctl daemon-reload
+systemctl enable etcd
+
 ```
 ## 7.修改集群其他节点差异配置文件
 ```
