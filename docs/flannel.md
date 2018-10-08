@@ -1,6 +1,8 @@
 1.为Flannel生成证书
 ```
-[root@linux-node1 ~]# vim flanneld-csr.json
+[root@linux-node1 ~]# cd /usr/local/src/ssl/
+[root@linux-node1 ssl]#
+cat > flanneld-csr.json <<EOF
 {
   "CN": "flanneld",
   "hosts": [],
@@ -18,20 +20,21 @@
     }
   ]
 }
+EOF
 ```
 
 2.生成证书
 ```
-[root@linux-node1 ~]# cfssl gencert -ca=/opt/kubernetes/ssl/ca.pem \
+[root@linux-node1 ssl]# cfssl gencert -ca=/opt/kubernetes/ssl/ca.pem \
    -ca-key=/opt/kubernetes/ssl/ca-key.pem \
    -config=/opt/kubernetes/ssl/ca-config.json \
    -profile=kubernetes flanneld-csr.json | cfssljson -bare flanneld
 ```
 3.分发证书
 ```
-[root@linux-node1 ~]# cp flanneld*.pem /opt/kubernetes/ssl/
-[root@linux-node1 ~]# scp flanneld*.pem 192.168.56.12:/opt/kubernetes/ssl/
-[root@linux-node1 ~]# scp flanneld*.pem 192.168.56.13:/opt/kubernetes/ssl/
+[root@linux-node1 ssl]# cp flanneld*.pem /opt/kubernetes/ssl/
+[root@linux-node1 ssl]# scp flanneld*.pem 192.168.56.12:/opt/kubernetes/ssl/
+[root@linux-node1 ssl]# scp flanneld*.pem 192.168.56.13:/opt/kubernetes/ssl/
 ```
 
 4.下载Flannel软件包
