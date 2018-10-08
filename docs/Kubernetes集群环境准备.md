@@ -89,7 +89,9 @@ k8s-v1.12.0版本网盘地址: https://pan.baidu.com/s/10HWLaLAKUdw08HVfDvUfBQ
 
 官网下载地址: https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.12.md#downloads-for-v1121
 
-添加环境变量
+#添加环境变量
+[root@linux-node1 ~]# vim .bash_profile
 
+PATH=$PATH:$HOME/bin:/opt/kubernetes/bin
 ```
 ![官网下载链接](https://github.com/Lancger/opsfull/blob/master/images/k8s-soft.jpg)
