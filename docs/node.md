@@ -191,7 +191,7 @@ EOF
 ```
 [root@linux-node1 ssl]# cp kube-proxy*.pem /opt/kubernetes/ssl/
 [root@linux-node1 ssl]# scp kube-proxy*.pem 192.168.56.12:/opt/kubernetes/ssl/
-[root@linux-node1 ssl]# scp kube-proxy*.pem 192.168.56.12:/opt/kubernetes/ssl/
+[root@linux-node1 ssl]# scp kube-proxy*.pem 192.168.56.13:/opt/kubernetes/ssl/
 ```
 
 5.创建kube-proxy配置文件
