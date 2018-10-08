@@ -13,7 +13,8 @@
 <table border="0">
     <tr>
         <td><strong>手动部署</strong></td>
-        <td><a href="docs/init.md">1.系统初始化</a></td>
+        <td><a href="docs/init.md">1.Kubernetes集群环境准备</a></td>
+        <td><a href="docs/Docker安装.md">2.Docker安装</a></td>
         <td><a href="docs/ca.md">2.CA证书制作</a></td>
         <td><a href="docs/etcd-install.md">3.ETCD集群部署</a></td>
         <td><a href="docs/master.md">4.Master节点部署</a></td>
