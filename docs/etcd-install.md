@@ -13,6 +13,8 @@
 
 ## 1.创建 etcd 证书签名请求：
 ```
+#约定所有证书都放在 /usr/local/src/ssl 目录中，然后同步到其他机器
+
 [root@linux-node1 ~]# cd /usr/local/src/ssl
 [root@linux-node1 ssl]# 
 cat > etcd-csr.json <<EOF
