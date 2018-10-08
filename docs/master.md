@@ -265,7 +265,7 @@ EOF
 -rw------- 1 root root 1675 Mar  5 12:29 admin-key.pem
 -rw-r--r-- 1 root root 1399 Mar  5 12:29 admin.pem
 
-[root@linux-node1 src]# mv admin*.pem /opt/kubernetes/ssl/
+[root@linux-node1 src]# cp admin*.pem /opt/kubernetes/ssl/
 ```
 
 4.设置集群参数
