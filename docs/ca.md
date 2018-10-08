@@ -34,47 +34,53 @@ CA证书管理工具:
 
 ## 3.创建用来生成 CA 文件的 JSON 配置文件
 ```
-[root@linux-node1 ssl]# vim ca-config.json
+[root@linux-node1 ssl]#
+cat > ca-config.json <<EOF
 {
   "signing": {
     "default": {
-      "expiry": "8760h"
+      "expiry": "87600h"
     },
     "profiles": {
       "kubernetes": {
-        "usages": [
+         "expiry": "87600h",
+         "usages": [
             "signing",
             "key encipherment",
             "server auth",
             "client auth"
-        ],
-        "expiry": "8760h"
+        ]
       }
     }
   }
 }
+EOF
+[root@linux-node1 ssl]#
 ```
 
 
 ## 4.创建用来生成 CA 证书签名请求（CSR）的 JSON 配置文件
 ```
-[root@linux-node1 ssl]# vim ca-csr.json
+[root@linux-node1 ssl]# 
+cat > ca-csr.json <<EOF
 {
-  "CN": "kubernetes",
-  "key": {
-    "algo": "rsa",
-    "size": 2048
-  },
-  "names": [
-    {
-      "C": "CN",
-      "ST": "BeiJing",
-      "L": "BeiJing",
-      "O": "k8s",
-      "OU": "System"
-    }
-  ]
+    "CN": "kubernetes",
+    "key": {
+        "algo": "rsa",
+        "size": 2048
+    },
+    "names": [
+        {
+            "C": "CN",
+            "L": "Beijing",
+            "ST": "Beijing",
+            "O": "k8s",
+            "OU": "System"
+        }
+    ]
 }
+EOF
+[root@linux-node1 ssl]# 
 ```
 
 ## 5.生成CA证书（ca.pem）和密钥（ca-key.pem）
