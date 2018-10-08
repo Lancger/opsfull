@@ -15,4 +15,6 @@
 第三步：启动后台进程：
 ```
 [root@linux-node1 ~]# systemctl start docker
+[root@linux-node1 ~]# systemctl enable docker
+[root@linux-node1 ~]# systemctl disable docker
 ```
