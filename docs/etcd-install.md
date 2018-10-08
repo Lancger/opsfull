@@ -148,9 +148,9 @@ WantedBy=multi-user.target
 [root@linux-node1 ~]# scp /etc/systemd/system/etcd.service 192.168.56.13:/etc/systemd/system/
 
 #在所有节点上创建etcd存储目录并启动etcd
-[root@linux-node1 ~]# mkdir /var/lib/etcd
-[root@linux-node1 ~]# systemctl start etcd
-[root@linux-node1 ~]# systemctl status etcd
+mkdir /var/lib/etcd
+systemctl start etcd
+systemctl status etcd
 ```
 ## 7.修改集群其他节点差异配置文件
 ```
