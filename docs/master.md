@@ -230,7 +230,7 @@ WantedBy=multi-user.target
 2.创建 admin 证书签名请求
 ```
 [root@linux-node1 ~]# cd /usr/local/src/ssl/
-[root@linux-node1 ssl]# vim admin-csr.json
+[root@linux-node1 ssl]# 
 cat > admin-csr.json <<EOF
 {
   "CN": "admin",
