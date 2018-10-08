@@ -72,10 +72,10 @@ specifically, section 10.2.3 ("Information Requirements").
 
 ## 3.将证书移动到/opt/kubernetes/ssl目录下
 ```
-[root@k8s-master ~]# cp etcd*.pem /opt/kubernetes/ssl
-[root@linux-node1 ~]# scp etcd*.pem 192.168.56.12:/opt/kubernetes/ssl
-[root@linux-node1 ~]# scp etcd*.pem 192.168.56.13:/opt/kubernetes/ssl
-[root@k8s-master ~]# rm -f etcd.csr etcd-csr.json
+[root@linux-node1 ssl]# cp etcd*.pem /opt/kubernetes/ssl
+[root@linux-node1 ssl]# scp etcd*.pem 192.168.56.12:/opt/kubernetes/ssl
+[root@linux-node1 ssl]# scp etcd*.pem 192.168.56.13:/opt/kubernetes/ssl
+[root@linux-node1 ssl]# rm -f etcd.csr etcd-csr.json
 ```
 
 ## 4.设置ETCD配置文件
