@@ -91,10 +91,10 @@ mkdir -p /opt/kubernetes/{cfg,bin,ssl,log}
 官网下载地址: https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.12.md#downloads-for-v1121
 
 #添加环境变量
-vim .bash_profile
+vim /root/.bash_profile
 
 PATH=$PATH:$HOME/bin:/opt/kubernetes/bin
 
-source .bash_profile
+source /root/.bash_profile
 ```
 ![官网下载链接](https://github.com/Lancger/opsfull/blob/master/images/k8s-soft.jpg)
