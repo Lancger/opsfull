@@ -86,6 +86,10 @@ EOF
 ## 5.生成CA证书（ca.pem）和密钥（ca-key.pem）
 ```
 [root@ linux-node1 ssl]# cfssl gencert -initca ca-csr.json | cfssljson -bare ca
+
+#执行上面的命令后，会生成下面三个文件
+ca.csr  ca-key.pem  ca.pem
+
 [root@ linux-node1 ssl]# ls -l ca*
 -rw-r--r-- 1 root root  290 Mar  4 13:45 ca-config.json
 -rw-r--r-- 1 root root 1001 Mar  4 14:09 ca.csr
