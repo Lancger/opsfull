@@ -6,7 +6,7 @@ Kubernetes 系统各组件需要使用 TLS 证书对通信进行加密。
 CA证书管理工具:
 • easyrsa       ---openvpn比较常用
 • openssl
-• cfssl         ---使用简单
+• cfssl         ---使用最多，使用json文件格式，相对简单
 ```
 
 ## 1.安装 CFSSL
