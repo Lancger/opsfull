@@ -218,7 +218,8 @@ WantedBy=multi-user.target
 [root@linux-node1 scripts]# systemctl status kube-scheduler
 ```
 
-## 四.部署kubectl 命令行工具
+## 四.部署kubectl命令行工具(管理k8s集群的工具，跟apiserver交互，通信需要证书)
+（为了安全，只在master服务器上安装）
 
 1.准备二进制命令包
 ```
