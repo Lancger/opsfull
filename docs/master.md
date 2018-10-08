@@ -328,11 +328,14 @@ users:
 
 8.使用kubectl工具
 ```
-[root@linux-node1 ~]# kubectl get cs
+[root@linux-node1 ~]# kubectl get cs   
 NAME                 STATUS    MESSAGE             ERROR
 controller-manager   Healthy   ok                  
 scheduler            Healthy   ok                  
 etcd-1               Healthy   {"health":"true"}   
 etcd-2               Healthy   {"health":"true"}   
 etcd-0               Healthy   {"health":"true"}   
+
+疑问：为何这里不显示apiserver的一个健康状况？
+答疑：因为执行kubectl命令就是和apiserver通信，能执行成功apiserver肯定是正常的，如果不正常是没有输出的
 ```
