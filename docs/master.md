@@ -186,6 +186,7 @@ WantedBy=multi-user.target
 [root@linux-node1 scripts]# systemctl status kube-controller-manager
 ```
 
+
 ## 部署Kubernetes Scheduler
 ```
 [root@linux-node1 ~]# vim /usr/lib/systemd/system/kube-scheduler.service
