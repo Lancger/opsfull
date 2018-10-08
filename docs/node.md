@@ -53,6 +53,8 @@ Context "default" created.
 ```
 [root@linux-node1 ssl]# kubectl config use-context default --kubeconfig=bootstrap.kubeconfig
 Switched to context "default".
+
+#以上操作，就是为了生成这个文件 bootstrap.kubeconfig (需要往所有节点上拷贝过去)
 [root@linux-node1 kubernetes]# cp bootstrap.kubeconfig /opt/kubernetes/cfg
 [root@linux-node1 kubernetes]# scp bootstrap.kubeconfig 192.168.56.12:/opt/kubernetes/cfg
 [root@linux-node1 kubernetes]# scp bootstrap.kubeconfig 192.168.56.13:/opt/kubernetes/cfg
@@ -72,8 +74,6 @@ Switched to context "default".
             "mtu": 1400
         }
 }
-
-
 ```
 
 2.创建kubelet目录
