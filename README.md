@@ -3,11 +3,11 @@
 - [Kubernetes集群环境准备](docs/Kubernetes集群环境准备.md)
 - [Docker安装](docs/Docker安装.md)
 - [CA证书制作](docs/ca.md)
-- [CA证书制作](docs/ca.md)
-- [CA证书制作](docs/ca.md)
-- [CA证书制作](docs/ca.md)
-- [CA证书制作](docs/ca.md)
-- [CA证书制作](docs/ca.md)
+- [ETCD集群部署](docs/etcd-install.md)
+- [Master节点部署](docs/master.md)
+- [Node节点部署](docs/node.md)
+- [Flannel部署](docs/flannel.md)
+- [应用创建](docs/app.md)
 
 # 使用手册
 <table border="0">
