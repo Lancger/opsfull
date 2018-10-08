@@ -47,9 +47,10 @@ EOF
 ## 2.生成 etcd 证书和私钥：
 ```
 [root@linux-node1 ssl]# cfssl gencert -ca=/opt/kubernetes/ssl/ca.pem \
->   -ca-key=/opt/kubernetes/ssl/ca-key.pem \
->   -config=/opt/kubernetes/ssl/ca-config.json \
->   -profile=kubernetes etcd-csr.json | cfssljson -bare etcd
+  -ca-key=/opt/kubernetes/ssl/ca-key.pem \
+  -config=/opt/kubernetes/ssl/ca-config.json \
+  -profile=kubernetes etcd-csr.json | cfssljson -bare etcd
+  
 2018/10/08 19:26:26 [INFO] generate received request
 2018/10/08 19:26:26 [INFO] received CSR
 2018/10/08 19:26:26 [INFO] generating key: rsa-2048
