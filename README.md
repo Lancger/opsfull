@@ -22,5 +22,6 @@
         <td><a href="docs/ingress.md">4.Ingress部署</a></td>
         <td><a href="https://github.com/unixhot/devops-x">5.CI/CD</a></td>
         <td><a href="docs/helm.md">6.Helm部署</a></td>
+        <td><a href="docs/helm.md">6.Helm部署</a></td>
     </tr>
 </table>
