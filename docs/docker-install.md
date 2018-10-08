@@ -2,19 +2,22 @@
 
 第一步：使用国内Docker源
 ```
-[root@linux-node1 ~]# cd /etc/yum.repos.d/
-[root@linux-node1 yum.repos.d]# wget \
- https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+cd /etc/yum.repos.d/
+wget https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
  ```
 
 第二步：Docker安装：
 ```
-[root@linux-node1 ~]# yum install -y docker-ce
+yum install -y docker-ce
 ```
 
 第三步：启动后台进程：
 ```
-[root@linux-node1 ~]# systemctl start docker
-[root@linux-node1 ~]# systemctl enable docker
-[root@linux-node1 ~]# systemctl disable docker
+systemctl start docker
+
+systemctl enable docker
+Created symlink from /etc/systemd/system/multi-user.target.wants/docker.service to /usr/lib/systemd/system/docker.service.
+
+systemctl disable docker
+Removed symlink /etc/systemd/system/multi-user.target.wants/docker.service.
 ```
