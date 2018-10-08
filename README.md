@@ -2,6 +2,7 @@
 - [Kubernetes架构介绍](docs/Kubernetes架构介绍.md)
 - [Kubernetes集群环境准备](docs/Kubernetes集群环境准备.md)
 - [Docker安装](docs/Docker安装.md)
+- [CA证书制作](docs/ca.md)
 
 
 # 使用手册
