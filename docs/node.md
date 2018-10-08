@@ -34,7 +34,7 @@ Cluster "kubernetes" set.
 ```
 #注意这里的token需要跟之前kube-apiserver配置的一致（/usr/lib/systemd/system/kube-apiserver.service 中 /opt/kubernetes/ssl/bootstrap-token.csv 中的一致）
 
-[root@linux-node1 ~]# kubectl config set-credentials kubelet-bootstrap \
+[root@linux-node1 ssl]# kubectl config set-credentials kubelet-bootstrap \
    --token=ad6d5bb607a186796d8861557df0d17f \
    --kubeconfig=bootstrap.kubeconfig   
 User "kubelet-bootstrap" set.
@@ -42,7 +42,7 @@ User "kubelet-bootstrap" set.
 
 设置上下文参数
 ```
-[root@linux-node1 ~]# kubectl config set-context default \
+[root@linux-node1 ssl]# kubectl config set-context default \
    --cluster=kubernetes \
    --user=kubelet-bootstrap \
    --kubeconfig=bootstrap.kubeconfig
@@ -51,7 +51,7 @@ Context "default" created.
 
 选择默认上下文
 ```
-[root@linux-node1 ~]# kubectl config use-context default --kubeconfig=bootstrap.kubeconfig
+[root@linux-node1 ssl]# kubectl config use-context default --kubeconfig=bootstrap.kubeconfig
 Switched to context "default".
 [root@linux-node1 kubernetes]# cp bootstrap.kubeconfig /opt/kubernetes/cfg
 [root@linux-node1 kubernetes]# scp bootstrap.kubeconfig 192.168.56.12:/opt/kubernetes/cfg
