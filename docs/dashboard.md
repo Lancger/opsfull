@@ -27,6 +27,8 @@ kubernetes-dashboard   NodePort   10.1.36.42   <none>        443:34696/TCP   1h
 
 ```
 https://192.168.56.13:34696/#!/overview?namespace=default
+  ![dashboard登录](https://github.com/Lancger/opsfull/)
+
 
 ## 访问Dashboard
 
