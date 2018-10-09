@@ -20,7 +20,7 @@ kubernetes-dashboard-66c9d98865-bqwl5   1/1       Running   0          1h       
 #查看Dashboard运行日志
 [root@linux-node1 ~]# kubectl logs pod/kubernetes-dashboard-66c9d98865-bqwl5 -n kube-system
 
-#查看Dashboard服务IP(可以访问任意node节点的34696端口就可以访问到Dashboard页面 https://192.168.56.13:34696/#!/overview?namespace=default)
+#查看Dashboard服务IP(可以访问任意node节点的34696端口就可以访问到Dashboard页面 https://192.168.56.13:34696/#!/overview?namespace=default,如何master节点安装了kube-proxy也可以访问)
 [root@linux-node1 ~]# kubectl get service -n kube-system
 NAME                   TYPE       CLUSTER-IP   EXTERNAL-IP   PORT(S)         AGE
 kubernetes-dashboard   NodePort   10.1.36.42   <none>        443:34696/TCP   1h
