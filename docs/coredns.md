@@ -42,7 +42,10 @@ coredns-77c989547b-9zm4m                1/1       Running   0          5m       
 ## 测试CoreDNS
 
 ```
-[root@linux-node1 ~]# kubectl run dns-test --rm -it --image=alpine /bin/sh
-
-ping www.qq.com
+[root@linux-node1 coredns]# kubectl run dns-test --rm -it --image=alpine /bin/sh
+If you don't see a command prompt, try pressing enter.
+/ # ping www.qq.com
+PING www.qq.com (121.51.142.21): 56 data bytes
+64 bytes from 121.51.142.21: seq=0 ttl=127 time=20.864 ms
+64 bytes from 121.51.142.21: seq=1 ttl=127 time=19.937 ms
 ```
