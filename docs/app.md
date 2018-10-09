@@ -14,4 +14,6 @@ net-test-74f45db489-pr5jc   1/1       Running   0          1m        10.2.59.2  
 3.测试联通性
 ```
 ping 10.2.83.2
+
+#如果要在master节点能ping通这些容器的IP,需要在master按照kube-proxy
 ```
