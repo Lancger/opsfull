@@ -196,41 +196,41 @@ EOF
 
 5.创建kube-proxy配置文件
 ```
-[root@linux-node2 ~]# kubectl config set-cluster kubernetes \
+[root@linux-node1 ssl]# kubectl config set-cluster kubernetes \
    --certificate-authority=/opt/kubernetes/ssl/ca.pem \
    --embed-certs=true \
    --server=https://192.168.56.11:6443 \
    --kubeconfig=kube-proxy.kubeconfig
 Cluster "kubernetes" set.
 
-[root@linux-node2 ~]# kubectl config set-credentials kube-proxy \
+[root@linux-node1 ssl]# kubectl config set-credentials kube-proxy \
    --client-certificate=/opt/kubernetes/ssl/kube-proxy.pem \
    --client-key=/opt/kubernetes/ssl/kube-proxy-key.pem \
    --embed-certs=true \
    --kubeconfig=kube-proxy.kubeconfig
 User "kube-proxy" set.
 
-[root@linux-node2 ~]# kubectl config set-context default \
+[root@linux-node1 ssl]# kubectl config set-context default \
    --cluster=kubernetes \
    --user=kube-proxy \
    --kubeconfig=kube-proxy.kubeconfig
 Context "default" created.
 
-[root@linux-node2 ~]# kubectl config use-context default --kubeconfig=kube-proxy.kubeconfig
+[root@linux-node1 ssl]# kubectl config use-context default --kubeconfig=kube-proxy.kubeconfig
 Switched to context "default".
 ```
 6.分发kubeconfig配置文件
 ```
 [root@linux-node1 ssl]# cp kube-proxy.kubeconfig /opt/kubernetes/cfg/
-[root@linux-node1 ~]# scp kube-proxy.kubeconfig 192.168.56.12:/opt/kubernetes/cfg/
-[root@linux-node1 ~]# scp kube-proxy.kubeconfig 192.168.56.13:/opt/kubernetes/cfg/
+[root@linux-node1 ssl]# scp kube-proxy.kubeconfig 192.168.56.12:/opt/kubernetes/cfg/
+[root@linux-node1 ssl]# scp kube-proxy.kubeconfig 192.168.56.13:/opt/kubernetes/cfg/
 ```
 
-7.创建kube-proxy服务配置
+7.创建kube-proxy服务配置(在node节点上配置)
 ```
-[root@linux-node2 bin]# mkdir /var/lib/kube-proxy
+[root@linux-node2 ~]# mkdir /var/lib/kube-proxy
 
-[root@k8s-node2 ~]# vim /usr/lib/systemd/system/kube-proxy.service
+[root@linux-node2 ~]# vim /usr/lib/systemd/system/kube-proxy.service
 [Unit]
 Description=Kubernetes Kube-Proxy Server
 Documentation=https://github.com/GoogleCloudPlatform/kubernetes
