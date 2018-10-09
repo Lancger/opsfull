@@ -232,3 +232,56 @@ nginx-deployment-7498dc98f8-g4zkp   1/1       Running   0          2m        10.
 nginx-deployment-7498dc98f8-tt7z5   1/1       Running   0          7s        10.2.76.17   192.168.56.12
 nginx-deployment-7498dc98f8-z2466   1/1       Running   0          2m        10.2.76.16   192.168.56.12
 ```
+
+10、Pod ip 变化频繁, 引入service-ip
+```
+#创建nginx-server
+[root@linux-node1 ~]# cat nginx-service.yaml
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: nginx
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+    
+    
+[root@linux-node1 ~]# kubectl create -f nginx-service.yaml
+service "nginx-service" created
+
+#发现给我们创建了一个vip 10.1.46.200 并且通过lvs做了负载均衡
+[root@linux-node1 ~]# kubectl get service
+NAME            TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)   AGE
+kubernetes      ClusterIP   10.1.0.1      <none>        443/TCP   3h
+nginx-service   ClusterIP   10.1.46.200   <none>        80/TCP    5m
+
+#在node节点使用ipvsadm -Ln查看负载均衡后端节点
+[root@linux-node2 ~]# ipvsadm -Ln
+IP Virtual Server version 1.2.1 (size=4096)
+Prot LocalAddress:Port Scheduler Flags
+  -> RemoteAddress:Port           Forward Weight ActiveConn InActConn
+TCP  10.1.46.200:80 rr
+  -> 10.2.76.11:80                Masq    1      0          0
+  -> 10.2.76.12:80                Masq    1      0          0
+  -> 10.2.76.13:80                Masq    1      0          0
+  -> 10.2.76.18:80                Masq    1      0          0
+  -> 10.2.76.19:80                Masq    1      0          0
+  
+#在master上访问vip不行，是因为没有安装kube-proxy服务，需要在node节点去测试验证
+[root@linux-node1 ~]# curl --head http://10.1.46.200
+
+[root@linux-node2 ~]# curl --head http://10.1.46.200
+HTTP/1.1 200 OK
+Server: nginx/1.10.3
+Date: Tue, 09 Oct 2018 07:55:57 GMT
+Content-Type: text/html
+Content-Length: 612
+Last-Modified: Tue, 31 Jan 2017 15:01:11 GMT
+Connection: keep-alive
+ETag: "5890a6b7-264"
+Accept-Ranges: bytes
+```
