@@ -41,8 +41,10 @@ EOF
 4.下载Flannel软件包
 ```
 [root@linux-node1 ~]# cd /usr/local/src
+
 # wget
  https://github.com/coreos/flannel/releases/download/v0.10.0/flannel-v0.10.0-linux-amd64.tar.gz
+ 
 [root@linux-node1 src]# tar zxf flannel-v0.10.0-linux-amd64.tar.gz
 [root@linux-node1 src]# cp flanneld mk-docker-opts.sh /opt/kubernetes/bin/
 
@@ -146,6 +148,7 @@ ExecStart=/usr/bin/dockerd $DOCKER_OPTS
 [root@linux-node1 ~]# scp /usr/lib/systemd/system/docker.service 192.168.56.12:/usr/lib/systemd/system/
 [root@linux-node1 ~]# scp /usr/lib/systemd/system/docker.service 192.168.56.13:/usr/lib/systemd/system/
 ```
+
 重启Docker
 ```
 systemctl daemon-reload
