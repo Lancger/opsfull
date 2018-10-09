@@ -43,6 +43,7 @@ cat > /etc/hosts <<EOF
 192.168.56.12 linux-node2
 192.168.56.13 linux-node3
 EOF
+```
 
 3、设置部署节点(Master)到其它所有节点的SSH免密码登(包括本机)
 ```
