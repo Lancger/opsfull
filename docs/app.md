@@ -162,3 +162,19 @@ ETag: "5acb8e45-264"
 Accept-Ranges: bytes
 
 ```
+
+5、更新Deployment
+```
+#--record  记录日志，方便以后回滚
+[root@linux-node1 ~]# kubectl set image deployment/nginx-deployment nginx=nginx:1.12.1 --record
+deployment.apps "nginx-deployment" image updated
+
+```
+
+6、查看更新后的Deployment
+```
+#这里发现镜像已经更新为1.12.1版本了，然后CURRENT（当前镜像数为4个，期望值DESIRED为3个，说明正在进行滚动更新）
+[root@linux-node1 ~]# kubectl get deployment -o wide
+NAME               DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE       CONTAINERS   IMAGES         SELECTOR
+nginx-deployment   3         4         1            3           13m       nginx        nginx:1.12.1   app=nginx
+```
