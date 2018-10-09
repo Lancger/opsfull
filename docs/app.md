@@ -284,4 +284,16 @@ Last-Modified: Tue, 31 Jan 2017 15:01:11 GMT
 Connection: keep-alive
 ETag: "5890a6b7-264"
 Accept-Ranges: bytes
+
+#每执行一次curl --head http://10.1.46.200请求，后端InActConn连接数就会增加1
+[root@linux-node2 ~]# ipvsadm -Ln
+IP Virtual Server version 1.2.1 (size=4096)
+Prot LocalAddress:Port Scheduler Flags
+  -> RemoteAddress:Port           Forward Weight ActiveConn InActConn
+TCP  10.1.46.200:80 rr
+  -> 10.2.76.11:80                Masq    1      0          1
+  -> 10.2.76.12:80                Masq    1      0          1
+  -> 10.2.76.13:80                Masq    1      0          2
+  -> 10.2.76.18:80                Masq    1      0          2
+  -> 10.2.76.19:80                Masq    1      0          2
 ```
