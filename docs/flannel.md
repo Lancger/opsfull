@@ -135,7 +135,7 @@ mk /kubernetes/network/config '{ "Network": "10.2.0.0/16", "Backend": { "Type": 
 ```
 [root@linux-node1 ~]# vim /usr/lib/systemd/system/docker.service
 [Unit] #在Unit下面修改After和增加Requires
-After=network-online.target firewalld.service flannel.service
+After=network-online.target flannel.service
 Wants=network-online.target
 Requires=flannel.service
 
@@ -148,18 +148,17 @@ ExecStart=/usr/bin/dockerd $DOCKER_OPTS
 cat /usr/lib/systemd/system/docker.service
 [Unit]
 Description=Docker Application Container Engine
-Documentation=https://docs.docker.com
-After=network-online.target firewalld.service flannel.service
-Wants=network-online.target
+Documentation=http://docs.docker.com
+After=network.target flannel.service
 Requires=flannel.service
 
 [Service]
 Type=notify
-# the default is not to use systemd for cgroups because the delegate issues still
-# exists and systemd currently does not support the cgroup feature set required
-# for containers run by docker
 EnvironmentFile=-/run/flannel/docker
-ExecStart=/usr/bin/dockerd $DOCKER_OPTS
+EnvironmentFile=-/opt/kubernetes/cfg/docker
+ExecStart=/usr/bin/dockerd $DOCKER_OPT_BIP $DOCKER_OPT_MTU $DOCKER_OPTS
+LimitNOFILE=1048576
+LimitNPROC=1048576
 ExecReload=/bin/kill -s HUP $MAINPID
 # Having non-zero Limit*s causes performance problems due to accounting overhead
 # in the kernel. We recommend using cgroups to do container-local accounting.
