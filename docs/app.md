@@ -189,3 +189,46 @@ REVISION  CHANGE-CAUSE
 5         kubectl set image deployment/nginx-deployment nginx=nginx:1.12.1 --record=true
 ```
 
+7、查看具体某一个版本的升级历史
+```
+[root@linux-node1 ~]# kubectl rollout history deployment/nginx-deployment --revision=1
+deployments "nginx-deployment" with revision #1
+Pod Template:
+  Labels:	app=nginx
+	pod-template-hash=2701970576
+  Containers:
+   nginx:
+    Image:	nginx:1.13.12
+    Port:	80/TCP
+    Host Port:	0/TCP
+    Environment:	<none>
+    Mounts:	<none>
+  Volumes:	<none>
+```
+
+8、快速回滚到上一个版本
+```
+[root@linux-node1 ~]# kubectl rollout undo deployment/nginx-deployment
+deployment.apps "nginx-deployment"
+[root@linux-node1 ~]#
+```
+
+9、扩容到5个节点
+```
+[root@linux-node1 ~]# kubectl get pod -o wide   ----之前是3个pod
+NAME                                READY     STATUS    RESTARTS   AGE       IP           NODE
+nginx-deployment-7498dc98f8-48lqg   1/1       Running   0          2m        10.2.76.15   192.168.56.12
+nginx-deployment-7498dc98f8-g4zkp   1/1       Running   0          2m        10.2.76.9    192.168.56.13
+nginx-deployment-7498dc98f8-z2466   1/1       Running   0          2m        10.2.76.16   192.168.56.12
+
+[root@linux-node1 ~]# kubectl scale deployment nginx-deployment --replicas 5
+deployment.extensions "nginx-deployment" scaled
+
+[root@linux-node1 ~]# kubectl get pod -o wide     ----现在扩容到了5个pod
+NAME                                READY     STATUS    RESTARTS   AGE       IP           NODE
+nginx-deployment-7498dc98f8-28894   1/1       Running   0          8s        10.2.76.10   192.168.56.13
+nginx-deployment-7498dc98f8-48lqg   1/1       Running   0          2m        10.2.76.15   192.168.56.12
+nginx-deployment-7498dc98f8-g4zkp   1/1       Running   0          2m        10.2.76.9    192.168.56.13
+nginx-deployment-7498dc98f8-tt7z5   1/1       Running   0          7s        10.2.76.17   192.168.56.12
+nginx-deployment-7498dc98f8-z2466   1/1       Running   0          2m        10.2.76.16   192.168.56.12
+```
