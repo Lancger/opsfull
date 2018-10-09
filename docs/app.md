@@ -178,3 +178,14 @@ deployment.apps "nginx-deployment" image updated
 NAME               DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE       CONTAINERS   IMAGES         SELECTOR
 nginx-deployment   3         4         1            3           13m       nginx        nginx:1.12.1   app=nginx
 ```
+
+7、查看历史记录
+```
+[root@linux-node1 ~]# kubectl rollout history deployment/nginx-deployment
+deployments "nginx-deployment"
+REVISION  CHANGE-CAUSE
+1         <none>               ---第一个没有，是因为我们创建的时候没有加上--record参数
+4         kubectl set image deployment/nginx-deployment nginx=nginx:1.12.2 --record=true
+5         kubectl set image deployment/nginx-deployment nginx=nginx:1.12.1 --record=true
+```
+
