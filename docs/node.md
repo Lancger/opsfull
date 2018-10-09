@@ -187,6 +187,7 @@ EOF
    -config=/opt/kubernetes/ssl/ca-config.json \
    -profile=kubernetes  kube-proxy-csr.json | cfssljson -bare kube-proxy
 ```
+
 4.分发证书到所有Node节点
 ```
 [root@linux-node1 ssl]# cp kube-proxy*.pem /opt/kubernetes/ssl/
@@ -219,6 +220,7 @@ Context "default" created.
 [root@linux-node1 ssl]# kubectl config use-context default --kubeconfig=kube-proxy.kubeconfig
 Switched to context "default".
 ```
+
 6.分发kubeconfig配置文件
 ```
 [root@linux-node1 ssl]# cp kube-proxy.kubeconfig /opt/kubernetes/cfg/
@@ -259,6 +261,7 @@ LimitNOFILE=65536
 
 [Install]
 WantedBy=multi-user.target
+
 8.启动Kubernetes Proxy
 [root@linux-node2 ~]# systemctl daemon-reload
 [root@linux-node2 ~]# systemctl enable kube-proxy
