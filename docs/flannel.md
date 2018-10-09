@@ -102,11 +102,13 @@ RequiredBy=docker.service
 下载CNI插件
 ```
 https://github.com/containernetworking/plugins/releases
-wget https://github.com/containernetworking/plugins/releases/download/v0.7.1/cni-plugins-amd64-v0.7.1.tgz
-[root@linux-node1 ~]# mkdir /opt/kubernetes/bin/cni
+
+[root@linux-node1 ~]# cd /usr/local/src/
+[root@linux-node1 src]# wget https://github.com/containernetworking/plugins/releases/download/v0.7.1/cni-plugins-amd64-v0.7.1.tgz
+[root@linux-node1 src]# mkdir /opt/kubernetes/bin/cni
 [root@linux-node1 src]# tar zxf cni-plugins-amd64-v0.7.1.tgz -C /opt/kubernetes/bin/cni
-[root@linux-node1 ~]# scp -r /opt/kubernetes/bin/cni/* 192.168.56.12:/opt/kubernetes/bin/cni/
-[root@linux-node1 ~]# scp -r /opt/kubernetes/bin/cni/* 192.168.56.13:/opt/kubernetes/bin/cni/
+[root@linux-node1 src]# scp -r /opt/kubernetes/bin/cni/* 192.168.56.12:/opt/kubernetes/bin/cni/
+[root@linux-node1 src]# scp -r /opt/kubernetes/bin/cni/* 192.168.56.13:/opt/kubernetes/bin/cni/
 ```
 
 创建Etcd的key
