@@ -4,7 +4,8 @@ k8s集群内部服务发现是通过dns来实现的，其他pod之间的域名�
 
 ## 创建CoreDNS
 ```
-vim coredns/coredns.yaml 
+#vim coredns/coredns.yaml 
+
 apiVersion: v1
 kind: ServiceAccount
 metadata:
