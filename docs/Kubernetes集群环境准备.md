@@ -39,9 +39,9 @@ hostnamectl set-hostname linux-node3
 cat > /etc/hosts <<EOF
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
-192.168.56.11 linux-node1
-192.168.56.12 linux-node2
-192.168.56.13 linux-node3
+192.168.56.11 linux-node1 linux-node1.example.com
+192.168.56.12 linux-node2 linux-node2.example.com
+192.168.56.13 linux-node3 linux-node3.example.com
 EOF
 ```
 
