@@ -3,8 +3,11 @@
 k8s集群内部服务发现是通过dns来实现的，其他pod之间的域名解析服务都是靠dns来实现的，目前支持2种dns，一种kubedns,一种coredns.
 
 ## 创建CoreDNS
+
 ```
-[root@linux-node1 ~]# kubectl create -f /srv/addons/coredns/coredns.yaml 
+#将本项目clone到/opt/目录
+
+[root@linux-node1 ~]# kubectl create -f /opt/opsfull/example/coredns/coredns.yaml
 
 [root@linux-node1 ~]# kubectl get pod -n kube-system
 NAME                                    READY     STATUS    RESTARTS   AGE
