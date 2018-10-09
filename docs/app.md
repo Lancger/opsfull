@@ -148,7 +148,8 @@ Events:
   Normal  Started                3m    kubelet, 192.168.56.12  Started container
 
 
-#测试访问nginx镜像（在对应的节点上测试，本来是其他节点也可以正常访问的）
+#测试pod访问
+测试访问nginx镜像（在对应的节点上测试，本来是其他节点也可以正常访问的）
 [root@linux-node3 ~]# curl --head http://10.2.76.4
 HTTP/1.1 200 OK
 Server: nginx/1.13.12
