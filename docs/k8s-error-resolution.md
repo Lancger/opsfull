@@ -75,7 +75,7 @@ FLANNEL_ETCD_CERTFILE="--etcd-certfile=/opt/kubernetes/ssl/flanneld.pem"
 FLANNEL_ETCD_KEYFILE="--etcd-keyfile=/opt/kubernetes/ssl/flanneld-key.pem"
 
 #etcd集群集群执行下面命令，清空etcd数据
-rm -rf /var/lib/etcd/
+rm -rf /var/lib/etcd/default.etcd/
 
 #下面这条只需在一个节点执行就可以
 #如果是/coreos.com/network则执行下面的
