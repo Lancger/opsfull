@@ -93,3 +93,19 @@ rm -rf /var/lib/etcd/default.etcd/
     mk /kubernetes/network/config '{ "Network": "10.2.0.0/16", "Backend": { "Type": "vxlan", "VNI": 1 }}'
 ```
 参考文档：https://stackoverflow.com/questions/34439659/flannel-and-docker-dont-start
+
+## 报错二：
+```
+Oct 10 11:40:11 linux-node1 flanneld: E1010 11:40:11.797324   20669 main.go:349] Couldn't fetch network config: 104: Not a directory (/kubernetes/network/config) [12]
+
+问题原因：在初次配置的时候，把flannel的配置文件中的etcd-prefix-key配置成了/kubernetes/network/config，实际上应该是/kubernetes/network
+
+[root@linux-node1 ~]# cat /opt/kubernetes/cfg/flannel
+FLANNEL_ETCD="-etcd-endpoints=https://192.168.56.11:2379,https://192.168.56.12:2379,https://192.168.56.13:2379"
+FLANNEL_ETCD_KEY="-etcd-prefix=/kubernetes/network/config"    --正确的应该为 /kubernetes/network/
+FLANNEL_ETCD_CAFILE="--etcd-cafile=/opt/kubernetes/ssl/ca.pem"
+FLANNEL_ETCD_CERTFILE="--etcd-certfile=/opt/kubernetes/ssl/flanneld.pem"
+FLANNEL_ETCD_KEYFILE="--etcd-keyfile=/opt/kubernetes/ssl/flanneld-key.pem"
+
+```
+参考文档：https://www.cnblogs.com/lyzw/p/6016789.html
