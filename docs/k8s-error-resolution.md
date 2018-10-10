@@ -36,6 +36,12 @@ NAME            STATUS    ROLES     AGE       VERSION   EXTERNAL-IP   OS-IMAGE  
 192.168.56.12   Ready     <none>    2m        v1.10.3   <none>        CentOS Linux 7 (Core)   3.10.0-862.el7.x86_64   docker://18.6.1
 192.168.56.13   Ready     <none>    2m        v1.10.3   <none>        CentOS Linux 7 (Core)   3.10.0-862.el7.x86_64   docker://18.6.1
 
+#查询pod
+[root@linux-node1 ~]# kubectl get pod -o wide
+NAME                        READY     STATUS    RESTARTS   AGE       IP          NODE
+net-test-5767cb94df-6smfk   1/1       Running   1          1h        10.2.69.3   192.168.56.12
+net-test-5767cb94df-ctkhz   1/1       Running   1          1h        10.2.17.3   192.168.56.13
+
 #查询service
 [root@linux-node1 ~]# kubectl get service
 NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
