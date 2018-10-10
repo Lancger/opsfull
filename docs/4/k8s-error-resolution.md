@@ -13,4 +13,10 @@ rm -rf /var/lib/etcd/default.etcd/
     --key-file /opt/kubernetes/ssl/flanneld-key.pem \
     --no-sync -C https://192.168.56.11:2379,https://192.168.56.12:2379,https://192.168.56.13:2379 \
     mk /coreos.com/network/config '{"Network":"172.17.0.0/16"}'
+
+[root@linux-node1 ~]# /opt/kubernetes/bin/etcdctl --ca-file /opt/kubernetes/ssl/ca.pem \
+    --cert-file /opt/kubernetes/ssl/flanneld.pem \
+    --key-file /opt/kubernetes/ssl/flanneld-key.pem \
+    --no-sync -C https://192.168.56.11:2379,https://192.168.56.12:2379,https://192.168.56.13:2379 \
+    mk /kubernetes/network/config '{ "Network": "10.2.0.0/16", "Backend": { "Type": "vxlan", "VNI": 1 }}'
 ```
