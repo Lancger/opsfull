@@ -4,8 +4,14 @@
 systemctl restart kube-scheduler
 systemctl restart kube-controller-manager
 systemctl restart kube-apiserver
+systemctl restart flanneld
 systemctl restart etcd
 
+systemctl stop kube-scheduler
+systemctl stop kube-controller-manager
+systemctl stop kube-apiserver
+systemctl stop flanneld
+systemctl stop etcd
 
 systemctl status kube-apiserver
 systemctl status kube-scheduler
@@ -14,11 +20,18 @@ systemctl status etcd
 
 #node
 systemctl restart kubelet
-systemctl start kube-proxy
+systemctl restart kube-proxy
+systemctl restart flanneld
 systemctl restart etcd
+
+systemctl stop kubelet
+systemctl stop kube-proxy
+systemctl stop flanneld
+systemctl stop etcd
 
 systemctl status kubelet
 systemctl status kube-proxy
+systemctl status flanneld
 systemctl status etcd
 
 #查询健康状况
