@@ -20,3 +20,4 @@ rm -rf /var/lib/etcd/default.etcd/
     --no-sync -C https://192.168.56.11:2379,https://192.168.56.12:2379,https://192.168.56.13:2379 \
     mk /kubernetes/network/config '{ "Network": "10.2.0.0/16", "Backend": { "Type": "vxlan", "VNI": 1 }}'
 ```
+参考文档：https://stackoverflow.com/questions/34439659/flannel-and-docker-dont-start
