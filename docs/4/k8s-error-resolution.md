@@ -1,3 +1,17 @@
+## 一、服务重启
+```
+#master
+systemctl restart kube-apiserver
+systemctl restart kube-scheduler
+systemctl restart kube-controller-manager
+systemctl restart etcd
+
+#node
+systemctl restart kubelet
+systemctl start kube-proxy
+systemctl restart etcd
+
+```
 ## 报错一：flanneld 启动不了
 ```
 Oct 10 10:42:19 linux-node1 flanneld: E1010 10:42:19.499080    1816 main.go:349] Couldn't fetch network config: 100: Key not found (/coreos.com) [11]
