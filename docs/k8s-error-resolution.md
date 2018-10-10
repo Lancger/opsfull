@@ -20,6 +20,26 @@ systemctl restart etcd
 systemctl status kubelet
 systemctl status kube-proxy
 systemctl status etcd
+
+#查询健康状况
+[root@linux-node1 ~]# kubectl get cs
+NAME                 STATUS    MESSAGE             ERROR
+controller-manager   Healthy   ok
+scheduler            Healthy   ok
+etcd-0               Healthy   {"health":"true"}
+etcd-2               Healthy   {"health":"true"}
+etcd-1               Healthy   {"health":"true"}
+
+#查询node
+[root@linux-node1 ~]# kubectl get node -o wide
+NAME            STATUS    ROLES     AGE       VERSION   EXTERNAL-IP   OS-IMAGE                KERNEL-VERSION          CONTAINER-RUNTIME
+192.168.56.12   Ready     <none>    2m        v1.10.3   <none>        CentOS Linux 7 (Core)   3.10.0-862.el7.x86_64   docker://18.6.1
+192.168.56.13   Ready     <none>    2m        v1.10.3   <none>        CentOS Linux 7 (Core)   3.10.0-862.el7.x86_64   docker://18.6.1
+
+#查询service
+[root@linux-node1 ~]# kubectl get service
+NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+kubernetes   ClusterIP   10.1.0.1     <none>        443/TCP   4m
 ```
 ## 报错一：flanneld 启动不了
 ```
