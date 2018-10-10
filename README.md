@@ -8,6 +8,8 @@
 - [Node节点部署](docs/node.md)
 - [Flannel部署](docs/flannel.md)
 - [应用创建](docs/app.md)
+- [问题汇总](docs/k8s-error-resolution.md)
+
 
 # 使用手册
 <table border="0">
