@@ -9,6 +9,8 @@
 - [Flannel部署](docs/flannel.md)
 - [应用创建](docs/app.md)
 - [问题汇总](docs/k8s-error-resolution.md)
+- [常用手册](docs/operational.md)
+
 
 
 # 使用手册
