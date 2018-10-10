@@ -1,9 +1,9 @@
 ## 一、服务重启
 ```
 #master
-systemctl restart kube-apiserver
 systemctl restart kube-scheduler
 systemctl restart kube-controller-manager
+systemctl restart kube-apiserver
 systemctl restart etcd
 
 
