@@ -27,7 +27,7 @@ Oct 10 10:42:19 linux-node1 flanneld: E1010 10:42:19.499080    1816 main.go:349]
 ```
 ## 解决办法：
 ```
-首先查看flannel使用的那种类型的网络模式是对应的etcd中的key是哪个（/kubernetes/network/config 或 /coreos.com/network ）
+#首先查看flannel使用的那种类型的网络模式是对应的etcd中的key是哪个（/kubernetes/network/config 或 /coreos.com/network ）
 [root@linux-node3 cfg]# cat /opt/kubernetes/cfg/flannel
 FLANNEL_ETCD="-etcd-endpoints=https://192.168.56.11:2379,https://192.168.56.12:2379,https://192.168.56.13:2379"
 FLANNEL_ETCD_KEY="-etcd-prefix=/coreos.com/network"
