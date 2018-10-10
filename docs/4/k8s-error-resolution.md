@@ -6,11 +6,20 @@ systemctl restart kube-scheduler
 systemctl restart kube-controller-manager
 systemctl restart etcd
 
+
+systemctl status kube-apiserver
+systemctl status kube-scheduler
+systemctl status kube-controller-manager
+systemctl status etcd
+
 #node
 systemctl restart kubelet
 systemctl start kube-proxy
 systemctl restart etcd
 
+systemctl status kubelet
+systemctl status kube-proxy
+systemctl status etcd
 ```
 ## 报错一：flanneld 启动不了
 ```
