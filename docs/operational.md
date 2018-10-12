@@ -35,6 +35,7 @@ systemctl status kube-proxy
 systemctl status flannel
 systemctl status etcd
 ```
+
 ## 二、常用查询
 ```
 #查询健康状况
@@ -73,3 +74,39 @@ kubernetes   ClusterIP   10.1.0.1     <none>        443/TCP   4m
   --key-file=/opt/kubernetes/ssl/etcd-key.pem cluster-health
 ```
 
+## 三、修改POD的IP地址段
+```
+#修改一
+[root@linux-node1 ~]# vim /usr/lib/systemd/system/kube-controller-manager.service
+[Unit]
+Description=Kubernetes Controller Manager
+Documentation=https://github.com/GoogleCloudPlatform/kubernetes
+
+[Service]
+ExecStart=/opt/kubernetes/bin/kube-controller-manager \
+  --address=127.0.0.1 \
+  --master=http://127.0.0.1:8080 \
+  --allocate-node-cidrs=true \
+  --service-cluster-ip-range=10.1.0.0/16 \
+  --cluster-cidr=10.2.0.0/16 \          ---POD的IP地址段
+  --cluster-name=kubernetes \
+  --cluster-signing-cert-file=/opt/kubernetes/ssl/ca.pem \
+  --cluster-signing-key-file=/opt/kubernetes/ssl/ca-key.pem \
+  --service-account-private-key-file=/opt/kubernetes/ssl/ca-key.pem \
+  --root-ca-file=/opt/kubernetes/ssl/ca.pem \
+  --leader-elect=true \
+  --v=2 \
+  --logtostderr=false \
+  --log-dir=/opt/kubernetes/log
+
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+
+#修改二（修改etcd key中的值）
+/opt/kubernetes/bin/etcdctl --ca-file /opt/kubernetes/ssl/ca.pem --cert-file /opt/kubernetes/ssl/flanneld.pem --key-file /opt/kubernetes/ssl/flanneld-key.pem \
+      --no-sync -C https://192.168.56.11:2379,https://192.168.56.12:2379,https://192.168.56.13:2379 \
+mk /kubernetes/network/config '{ "Network": "10.2.0.0/16", "Backend": { "Type": "vxlan", "VNI": 1 }}' >/dev/null 2>&1
+```
