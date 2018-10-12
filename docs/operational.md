@@ -34,7 +34,9 @@ systemctl status kubelet
 systemctl status kube-proxy
 systemctl status flannel
 systemctl status etcd
-
+```
+## 二、常用插叙
+```
 #查询健康状况
 [root@linux-node1 ~]# kubectl get cs
 NAME                 STATUS    MESSAGE             ERROR
@@ -64,3 +66,4 @@ net-test-5767cb94df-ctkhz   1/1       Running   1          1h        10.2.17.3  
 NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 kubernetes   ClusterIP   10.1.0.1     <none>        443/TCP   4m
 ```
+
