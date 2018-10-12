@@ -32,7 +32,7 @@ rm -rf /var/lib/etcd/default.etcd/
 ```
 参考文档：https://stackoverflow.com/questions/34439659/flannel-and-docker-dont-start
 
-## 报错二：
+## 报错二：flanneld 启动不了
 ```
 Oct 10 11:40:11 linux-node1 flanneld: E1010 11:40:11.797324   20669 main.go:349] Couldn't fetch network config: 104: Not a directory (/kubernetes/network/config) [12]
 
