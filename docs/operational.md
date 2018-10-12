@@ -65,5 +65,11 @@ net-test-5767cb94df-ctkhz   1/1       Running   1          1h        10.2.17.3  
 [root@linux-node1 ~]# kubectl get service
 NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 kubernetes   ClusterIP   10.1.0.1     <none>        443/TCP   4m
+
+#Etcd集群健康状况查询
+[root@linux-node1 ~]# etcdctl --endpoints=https://192.168.56.11:2379 \
+  --ca-file=/opt/kubernetes/ssl/ca.pem \
+  --cert-file=/opt/kubernetes/ssl/etcd.pem \
+  --key-file=/opt/kubernetes/ssl/etcd-key.pem cluster-health
 ```
 
