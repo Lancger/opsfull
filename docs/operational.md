@@ -35,7 +35,7 @@ systemctl status kube-proxy
 systemctl status flannel
 systemctl status etcd
 ```
-## 二、常用插叙
+## 二、常用查询
 ```
 #查询健康状况
 [root@linux-node1 ~]# kubectl get cs
