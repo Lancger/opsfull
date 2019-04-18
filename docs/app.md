@@ -276,6 +276,12 @@ Events:
   Normal  Created                3m    kubelet, 192.168.56.12  Created container
   Normal  Started                3m    kubelet, 192.168.56.12  Started container
 
+#导出资源描述
+kubectl get   --export -o yaml 命令会以Yaml格式导出系统中已有资源描述
+
+比如，我们可以将系统中 nginx 部署的描述导成 Yaml 文件
+kubectl get deployment nginx-deployment-6c45fc49cb-7rwdp --export -o yaml > nginx-deployment.yaml
+
 
 #测试pod访问
 测试访问nginx镜像（在对应的节点上测试，本来是其他节点也可以正常访问的）
