@@ -10,7 +10,7 @@
 - [应用创建](docs/app.md)
 - [问题汇总](docs/k8s-error-resolution.md)
 - [常用手册](docs/operational.md)
-- [Envoy 的架构与基本术语](docs/Envoy 的架构与基本术语.md)
+- [Envoy 的架构与基本术语](docs/Envoy的架构与基本术语.md)
 - [K8S学习手册](docs/Kubernetes学习笔记.md)
 
 
