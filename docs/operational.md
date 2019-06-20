@@ -56,6 +56,9 @@ NAME            STATUS    ROLES     AGE       VERSION   EXTERNAL-IP   OS-IMAGE  
 #创建测试deployment
 [root@linux-node1 ~]# kubectl run net-test --image=alpine --replicas=2 sleep 360000
 
+#查看创建的deployment
+kubectl get deployment -o wide --all-namespaces
+
 #查询pod
 [root@linux-node1 ~]# kubectl get pod -o wide
 NAME                        READY     STATUS    RESTARTS   AGE       IP          NODE
