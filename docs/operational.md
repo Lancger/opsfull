@@ -60,7 +60,7 @@ NAME            STATUS    ROLES     AGE       VERSION   EXTERNAL-IP   OS-IMAGE  
 kubectl get deployment -o wide --all-namespaces
 
 #查询pod
-[root@linux-node1 ~]# kubectl get pod -o wide
+[root@linux-node1 ~]# kubectl get pod -o wide --all-namespaces
 NAME                        READY     STATUS    RESTARTS   AGE       IP          NODE
 net-test-5767cb94df-6smfk   1/1       Running   1          1h        10.2.69.3   192.168.56.12
 net-test-5767cb94df-ctkhz   1/1       Running   1          1h        10.2.17.3   192.168.56.13
