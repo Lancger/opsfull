@@ -12,6 +12,7 @@
 - [常用手册](docs/operational.md)
 - [Envoy 的架构与基本术语](docs/Envoy的架构与基本术语.md)
 - [K8S学习手册](docs/Kubernetes学习笔记.md)
+- [K8S重启pod](docs/k8s%E9%87%8D%E5%90%AFpod.md)
 
 
 # 使用手册
