@@ -1,6 +1,11 @@
 1.创建一个测试用的deployment
 ```
 [root@linux-node1 ~]# kubectl run net-test --image=alpine --replicas=2 sleep 360000
+
+[root@linux-node1 ~]# kubectl get deployment
+NAME       DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+net-test   2         2         2            2           2h
+[root@linux-node1 ~]# kubectl delete deployment net-test
 ```
 
 2.查看获取IP情况
