@@ -35,9 +35,12 @@ systemctl stop docker
 # 清理k8s集群
 rm -rf /var/lib/etcd/
 rm -rf /var/lib/docker
+rm -rf /opt/containerd
 rm -rf /opt/kubernetes
 rm -rf /var/lib/kubelet
-rm -rf /opt/containerd
+rm -rf /var/lib/chrony
+rm -rf /var/lib/kube-proxy
+
 
 systemctl disable kube-scheduler
 systemctl disable kube-controller-manager
