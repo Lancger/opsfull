@@ -43,12 +43,12 @@ systemctl disable kube-controller-manager
 systemctl disable kube-apiserver
 systemctl disable flannel
 systemctl disable etcd
-systemctl disable dockerd
+systemctl disable docker
 
 systemctl disable kubelet
 systemctl disable kube-proxy
 systemctl disable flannel
 systemctl disable etcd
-systemctl disable dockerd
+systemctl disable docker
 
 ```
