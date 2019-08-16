@@ -5,7 +5,7 @@ systemctl restart kube-controller-manager
 systemctl restart kube-apiserver
 systemctl restart flannel
 systemctl restart etcd
-systemctl restart dockerd
+systemctl restart docker
 
 
 systemctl stop kube-scheduler
@@ -13,21 +13,21 @@ systemctl stop kube-controller-manager
 systemctl stop kube-apiserver
 systemctl stop flannel
 systemctl stop etcd
-systemctl stop dockerd
+systemctl stop docker
 
 #node
 systemctl restart kubelet
 systemctl restart kube-proxy
 systemctl restart flannel
 systemctl restart etcd
-systemctl stop dockerd
+systemctl restart docker
 
 
 systemctl stop kubelet
 systemctl stop kube-proxy
 systemctl stop flannel
 systemctl stop etcd
-systemctl stop dockerd
+systemctl stop docker
 
 ```
 
