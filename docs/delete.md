@@ -36,6 +36,7 @@ systemctl stop docker
 rm -rf /var/lib/etcd/
 rm -rf /var/lib/docker
 rm -rf /opt/kubernetes
+rm -rf /var/lib/kubelet
 rm -rf /opt/containerd
 
 systemctl disable kube-scheduler
