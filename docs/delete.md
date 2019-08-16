@@ -40,6 +40,7 @@ rm -rf /opt/kubernetes
 rm -rf /var/lib/kubelet
 rm -rf /var/lib/chrony
 rm -rf /var/lib/kube-proxy
+rm -rf /srv/*
 
 
 systemctl disable kube-scheduler
