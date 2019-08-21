@@ -14,8 +14,7 @@ kubectl describe pod    name_of_pod  查看pod详细信息
 
 进入pod:
 
-kubectl exec  -it   name-of-pod   bash
-
+kubectl exec -it name-of-pod /bin/bash
 ```
 参考资料：
 
