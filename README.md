@@ -14,6 +14,8 @@
 - [K8S学习手册](docs/Kubernetes学习笔记.md)
 - [K8S重启pod](docs/k8s%E9%87%8D%E5%90%AFpod.md)
 - [K8S清理](docs/delete.md)
+- [外部访问K8s中Pod的几种方式](docs/外部访问K8s中Pod的几种方式.md)
+
 
 
 # 使用手册
