@@ -353,3 +353,8 @@ kubectl get ingress -o wide
 kubectl delete ingress nginx-ingress
 
 ```
+
+
+参考资料：
+
+https://www.jianshu.com/p/feeea0bbd73e
