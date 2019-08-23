@@ -1,4 +1,30 @@
-1.创建一个测试用的deployment
+1.查询命名空间
+```
+[root@linux-node1 ~]# kubectl get namespace --all-namespaces
+NAME              STATUS   AGE
+default           Active   3d13h
+kube-node-lease   Active   3d13h
+kube-public       Active   3d13h
+kube-system       Active   3d13h
+```
+
+2.查询健康状况
+```
+[root@linux-node1 ~]# kubectl get cs --all-namespaces
+NAME                 STATUS    MESSAGE             ERROR
+controller-manager   Healthy   ok
+scheduler            Healthy   ok
+etcd-0               Healthy   {"health":"true"}
+etcd-2               Healthy   {"health":"true"}
+etcd-1               Healthy   {"health":"true"}
+```
+
+3.查询node
+```
+[root@linux-node1 ~]# kubectl get node -o wide
+```
+
+4.创建一个测试用的deployment
 ```
 [root@linux-node1 ~]# kubectl run net-test --image=alpine --replicas=2 sleep 360000
 
