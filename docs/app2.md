@@ -304,41 +304,31 @@ kube-system   traefik-ingress-service   NodePort    172.68.221.108   <none>     
 [root@linux-node1 ~]# kubectl delete service nginx-service
 service "nginx-service" deleted
 
-#在node节点使用ipvsadm -Ln查看负载均衡后端节点
-[root@linux-node2 ~]# ipvsadm -Ln
-IP Virtual Server version 1.2.1 (size=4096)
-Prot LocalAddress:Port Scheduler Flags
-  -> RemoteAddress:Port           Forward Weight ActiveConn InActConn
-TCP  10.1.46.200:80 rr
-  -> 10.2.76.11:80                Masq    1      0          0
-  -> 10.2.76.12:80                Masq    1      0          0
-  -> 10.2.76.13:80                Masq    1      0          0
-  -> 10.2.76.18:80                Masq    1      0          0
-  -> 10.2.76.19:80                Masq    1      0          0
-  
-#在master上访问vip不行，是因为没有安装kube-proxy服务，需要在node节点去测试验证
-[root@linux-node1 ~]# curl --head http://10.1.46.200
-
-[root@linux-node2 ~]# curl --head http://10.1.46.200
-HTTP/1.1 200 OK
-Server: nginx/1.10.3
-Date: Tue, 09 Oct 2018 07:55:57 GMT
-Content-Type: text/html
-Content-Length: 612
-Last-Modified: Tue, 31 Jan 2017 15:01:11 GMT
-Connection: keep-alive
-ETag: "5890a6b7-264"
-Accept-Ranges: bytes
-
-#每执行一次curl --head http://10.1.46.200请求，后端InActConn连接数就会增加1
-[root@linux-node2 ~]# ipvsadm -Ln
-IP Virtual Server version 1.2.1 (size=4096)
-Prot LocalAddress:Port Scheduler Flags
-  -> RemoteAddress:Port           Forward Weight ActiveConn InActConn
-TCP  10.1.46.200:80 rr
-  -> 10.2.76.11:80                Masq    1      0          1
-  -> 10.2.76.12:80                Masq    1      0          1
-  -> 10.2.76.13:80                Masq    1      0          2
-  -> 10.2.76.18:80                Masq    1      0          2
-  -> 10.2.76.19:80                Masq    1      0          2
+#查看service的后端节点
+[root@linux-node1 ~]# kubectl describe svc nginx-service
+Name:              nginx-service
+Namespace:         default
+Labels:            <none>
+Annotations:       <none>
+Selector:          app=nginx
+Type:              ClusterIP
+IP:                172.68.176.9
+Port:              <unset>  80/TCP
+TargetPort:        80/TCP
+Endpoints:         172.20.1.138:80,172.20.2.132:80,172.20.2.133:80  ---这里发现有3个后端节点
+Session Affinity:  None
+Events:            <none>
+[root@tw06a2753 bryan]# kubectl describe svc nginx-service
+Name:              nginx-service
+Namespace:         default
+Labels:            <none>
+Annotations:       <none>
+Selector:          app=nginx
+Type:              ClusterIP
+IP:                172.68.176.9
+Port:              <unset>  80/TCP
+TargetPort:        80/TCP
+Endpoints:         172.20.1.138:80,172.20.2.132:80,172.20.2.133:80
+Session Affinity:  None
+Events:            <none>
 ```
