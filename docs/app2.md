@@ -38,7 +38,7 @@ net-test   2         2         2            2           2h
 [root@linux-node1 ~]# kubectl delete deployment net-test
 ```
 
-2.查看获取IP情况
+5.查看获取IP情况
 ```
 [root@linux-node1 ~]# kubectl get pod -o wide
 NAME                        READY     STATUS    RESTARTS   AGE       IP          NODE
@@ -46,7 +46,7 @@ net-test-5767cb94df-6smfk   1/1       Running   1          1h        10.2.69.3  
 net-test-5767cb94df-ctkhz   1/1       Running   1          1h        10.2.17.3   192.168.56.13
 ```
 
-3.测试联通性
+6.测试联通性
 ```
 [root@linux-node1 ~]# ping -c 1 10.2.69.3
 PING 10.2.69.3 (10.2.69.3) 56(84) bytes of data.
@@ -182,7 +182,7 @@ veth8630a55b: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1400
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 ```
 
-4、创建nginx服务
+7、创建nginx服务
 ```
 #创建deployment文件
 [root@linux-node1 ~]# vim  nginx-deployment.yaml
@@ -333,7 +333,7 @@ Accept-Ranges: bytes
 
 ```
 
-5、更新Deployment
+8、更新Deployment
 ```
 #--record  记录日志，方便以后回滚
 [root@linux-node1 ~]# kubectl set image deployment/nginx-deployment nginx=nginx:1.12.1 --record
@@ -341,7 +341,7 @@ deployment.apps "nginx-deployment" image updated
 
 ```
 
-6、查看更新后的Deployment
+9、查看更新后的Deployment
 ```
 #这里发现镜像已经更新为1.12.1版本了，然后CURRENT（当前镜像数为4个，期望值DESIRED为3个，说明正在进行滚动更新）
 [root@linux-node1 ~]# kubectl get deployment -o wide
@@ -349,7 +349,7 @@ NAME               DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE       CONTAI
 nginx-deployment   3         4         1            3           13m       nginx        nginx:1.12.1   app=nginx
 ```
 
-7、查看历史记录
+10、查看历史记录
 ```
 [root@linux-node1 ~]# kubectl rollout history deployment/nginx-deployment
 deployments "nginx-deployment"
@@ -359,7 +359,7 @@ REVISION  CHANGE-CAUSE
 5         kubectl set image deployment/nginx-deployment nginx=nginx:1.12.1 --record=true
 ```
 
-7、查看具体某一个版本的升级历史
+11、查看具体某一个版本的升级历史
 ```
 [root@linux-node1 ~]# kubectl rollout history deployment/nginx-deployment --revision=1
 deployments "nginx-deployment" with revision #1
@@ -376,14 +376,14 @@ Pod Template:
   Volumes:	<none>
 ```
 
-8、快速回滚到上一个版本
+12、快速回滚到上一个版本
 ```
 [root@linux-node1 ~]# kubectl rollout undo deployment/nginx-deployment
 deployment.apps "nginx-deployment"
 [root@linux-node1 ~]#
 ```
 
-9、扩容到5个节点
+13、扩容到5个节点
 ```
 [root@linux-node1 ~]# kubectl get pod -o wide   ----之前是3个pod
 NAME                                READY     STATUS    RESTARTS   AGE       IP           NODE
@@ -403,7 +403,7 @@ nginx-deployment-7498dc98f8-tt7z5   1/1       Running   0          7s        10.
 nginx-deployment-7498dc98f8-z2466   1/1       Running   0          2m        10.2.76.16   192.168.56.12
 ```
 
-10、Pod ip 变化频繁, 引入service-ip
+14、Pod ip 变化频繁, 引入service-ip
 ```
 #创建nginx-server
 [root@linux-node1 ~]# cat nginx-service.yaml
