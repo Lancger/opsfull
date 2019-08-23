@@ -288,10 +288,17 @@ spec:
 service "nginx-service" created
 
 #发现给我们创建了一个vip 10.1.46.200 并且通过lvs做了负载均衡
-[root@linux-node1 ~]# kubectl get service
-NAME            TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)   AGE
-kubernetes      ClusterIP   10.1.0.1      <none>        443/TCP   3h
-nginx-service   ClusterIP   10.1.46.200   <none>        80/TCP    5m
+[root@linux-node1 ~]# kubectl get service --all-namespaces
+NAMESPACE     NAME                      TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                       AGE
+default       kubernetes                ClusterIP   172.68.0.1       <none>        443/TCP                       3d13h
+default       my-mc-service             ClusterIP   172.68.213.121   <none>        60001/TCP,60002/TCP           23m
+default       php-service               ClusterIP   172.68.210.6     <none>        9898/TCP                      18h
+default       test-hello                ClusterIP   172.68.248.205   <none>        80/TCP                        23h
+kube-system   heapster                  ClusterIP   172.68.19.198    <none>        80/TCP                        3d13h
+kube-system   kube-dns                  ClusterIP   172.68.0.2       <none>        53/UDP,53/TCP,9153/TCP        3d13h
+kube-system   kubernetes-dashboard      NodePort    172.68.58.252    <none>        443:26400/TCP                 3d13h
+kube-system   metrics-server            ClusterIP   172.68.31.222    <none>        443/TCP                       3d13h
+kube-system   traefik-ingress-service   NodePort    172.68.221.108   <none>        80:23456/TCP,8080:31477/TCP   3d13h
 
 #删除service
 [root@linux-node1 ~]# kubectl delete service nginx-service
