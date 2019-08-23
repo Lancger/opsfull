@@ -346,7 +346,10 @@ spec:
 rules中的host必须为域名，不能为IP，表示Ingress-controller的Pod所在主机域名，也就是Ingress-controller的IP对应的域名。
 paths中的path则表示映射的路径。如映射/表示若访问myk8s.com，则会将请求转发至nginx的service，端口为80。
 
-kubectl apply -f nginx-ingress.yaml
+kubectl create -f nginx-ingress.yaml
 
 kubectl get ingress -o wide
+
+kubectl delete ingress nginx-ingress
+
 ```
