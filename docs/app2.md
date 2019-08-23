@@ -42,8 +42,8 @@ net-test   2         2         2            2           2h
 ```
 [root@linux-node1 ~]# kubectl get pod -o wide
 NAME                        READY     STATUS    RESTARTS   AGE       IP          NODE
-net-test-5767cb94df-6smfk   1/1       Running   1          1h        10.2.69.3   192.168.56.12
-net-test-5767cb94df-ctkhz   1/1       Running   1          1h        10.2.17.3   192.168.56.13
+net-test-54ddf4f6c7-qfgw9           1/1     Running   0          22s   172.20.2.131   10.33.35.7   <none>           <none>
+net-test-54ddf4f6c7-rwgmc           1/1     Running   0          22s   172.20.1.137   10.33.35.6   <none>           <none>
 ```
 
 6.测试联通性
