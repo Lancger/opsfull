@@ -319,3 +319,23 @@ Endpoints:         172.20.1.138:80,172.20.2.132:80,172.20.2.133:80   --这里发
 Session Affinity:  None
 Events:            <none>
 ```
+
+15.创建自定义Ingress
+有了ingress-controller，我们就可以创建自定义的Ingress了。这里已提前搭建好了nginx服务，我们针对nginx创建一个Ingress：
+```
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+  namespace: default
+
+spec:
+  rules:
+  - host: myk8s.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: nginx-service
+          servicePort: 80
+```
