@@ -353,7 +353,7 @@ kubectl get ingress -o wide
 kubectl delete ingress nginx-ingress
 
 
-#需要找出Ingress-controller的Pod所在主机（这里发现是在）
+#需要找出Ingress-controller的Pod所在主机（这里发现是在node2机器）
 [root@tw06a2753 bryan]# kubectl get pods --all-namespaces -o wide
 NAMESPACE     NAME                                          READY   STATUS                   RESTARTS   AGE     IP             NODE         NOMINATED NODE   READINESS GATES
 default       busybox                                       1/1     Running                  41         41h     172.20.1.27    10.33.35.6   <none>           <none>
