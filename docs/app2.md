@@ -293,6 +293,10 @@ NAME            TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)   AGE
 kubernetes      ClusterIP   10.1.0.1      <none>        443/TCP   3h
 nginx-service   ClusterIP   10.1.46.200   <none>        80/TCP    5m
 
+#删除service
+[root@linux-node1 ~]# kubectl delete service nginx-service
+service "nginx-service" deleted
+
 #在node节点使用ipvsadm -Ln查看负载均衡后端节点
 [root@linux-node2 ~]# ipvsadm -Ln
 IP Virtual Server version 1.2.1 (size=4096)
