@@ -22,6 +22,10 @@ etcd-1               Healthy   {"health":"true"}
 3.查询node
 ```
 [root@linux-node1 ~]# kubectl get node -o wide
+NAME         STATUS                     ROLES    AGE     VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                KERNEL-VERSION               CONTAINER-RUNTIME
+10.33.35.5   Ready,SchedulingDisabled   master   3d13h   v1.15.2   10.33.35.5    <none>        CentOS Linux 7 (Core)   3.10.0-957.27.2.el7.x86_64   docker://18.9.6
+10.33.35.6   Ready                      node     3d13h   v1.15.2   10.33.35.6    <none>        CentOS Linux 7 (Core)   3.10.0-957.27.2.el7.x86_64   docker://18.9.6
+10.33.35.7   Ready                      node     3d13h   v1.15.2   10.33.35.7    <none>        CentOS Linux 7 (Core)   3.10.0-957.27.2.el7.x86_64   docker://18.9.6
 ```
 
 4.创建一个测试用的deployment
