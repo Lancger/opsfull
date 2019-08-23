@@ -352,6 +352,16 @@ kubectl get ingress -o wide
 
 kubectl delete ingress nginx-ingress
 
+
+#需要找出Ingress-controller的Pod所在主机（这里发现是在）
+[root@tw06a2753 bryan]# kubectl get pods --all-namespaces -o wide
+NAMESPACE     NAME                                          READY   STATUS                   RESTARTS   AGE     IP             NODE         NOMINATED NODE   READINESS GATES
+default       busybox                                       1/1     Running                  41         41h     172.20.1.27    10.33.35.6   <none>           <none>
+default       my-mc-deployment-76f77494c7-kxv85             2/2     Running                  0          63m     172.20.2.130   10.33.35.7   <none>           <none>
+                2/2     Running                  0          15h     172.20.1.135   10.33.35.6   <none>           <none>
+default       test-volume-77689f9bcb-9x5rd                  2/2     Running                  0          15h     172.20.2.125   
+kube-system   traefik-ingress-controller-766dbfdddd-fzb8d   1/1     Running                  1          3d14h   172.20.1.14    10.33.35.6   <none>           <none>
+
 ```
 
 
