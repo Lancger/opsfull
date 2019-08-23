@@ -38,6 +38,14 @@ systemctl status etcd
 
 ## 二、常用查询
 ```
+#查询命名空间
+[root@linux-node1 ~]# kubectl get namespace --all-namespaces
+NAME              STATUS   AGE
+default           Active   3d13h
+kube-node-lease   Active   3d13h
+kube-public       Active   3d13h
+kube-system       Active   3d13h
+
 #查询健康状况
 [root@linux-node1 ~]# kubectl get cs --all-namespaces
 NAME                 STATUS    MESSAGE             ERROR
