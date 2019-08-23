@@ -315,20 +315,7 @@ Type:              ClusterIP
 IP:                172.68.176.9
 Port:              <unset>  80/TCP
 TargetPort:        80/TCP
-Endpoints:         172.20.1.138:80,172.20.2.132:80,172.20.2.133:80  ---这里发现有3个后端节点
-Session Affinity:  None
-Events:            <none>
-[root@tw06a2753 bryan]# kubectl describe svc nginx-service
-Name:              nginx-service
-Namespace:         default
-Labels:            <none>
-Annotations:       <none>
-Selector:          app=nginx
-Type:              ClusterIP
-IP:                172.68.176.9
-Port:              <unset>  80/TCP
-TargetPort:        80/TCP
-Endpoints:         172.20.1.138:80,172.20.2.132:80,172.20.2.133:80
+Endpoints:         172.20.1.138:80,172.20.2.132:80,172.20.2.133:80   --这里发现有3个后端节点
 Session Affinity:  None
 Events:            <none>
 ```
