@@ -362,6 +362,20 @@ default       my-mc-deployment-76f77494c7-kxv85             2/2     Running     
 default       test-volume-77689f9bcb-9x5rd                  2/2     Running                  0          15h     172.20.2.125   
 kube-system   traefik-ingress-controller-766dbfdddd-fzb8d   1/1     Running                  1          3d14h   172.20.1.14    10.33.35.6   <none>           <none>
 
+#然后机器绑定域名
+10.33.35.6 myk8s.com
+
+#访问测试
+[root@linux-node1 ~]# curl http://myk8s.com -I
+HTTP/1.1 200 OK
+Server: nginx/1.12.2
+Date: Fri, 23 Aug 2019 04:07:44 GMT
+Content-Type: text/html
+Content-Length: 3700
+Last-Modified: Fri, 10 May 2019 08:08:40 GMT
+Connection: keep-alive
+ETag: "5cd53188-e74"
+Accept-Ranges: bytes
 ```
 
 
