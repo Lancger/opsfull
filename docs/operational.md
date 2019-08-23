@@ -39,7 +39,7 @@ systemctl status etcd
 ## 二、常用查询
 ```
 #查询健康状况
-[root@linux-node1 ~]# kubectl get cs
+[root@linux-node1 ~]# kubectl get cs --all-namespaces
 NAME                 STATUS    MESSAGE             ERROR
 controller-manager   Healthy   ok
 scheduler            Healthy   ok
