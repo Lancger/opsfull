@@ -16,7 +16,7 @@
 - [K8S清理](docs/delete.md)
 - [外部访问K8s中Pod的几种方式](docs/外部访问K8s中Pod的几种方式.md)
 - [应用测试](docs/app2.md)
-- [应用测试](docs/k8s_pv_local.md)
+- [PVC](docs/k8s_pv_local.md)
 
 
 # 使用手册
