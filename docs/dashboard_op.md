@@ -66,7 +66,7 @@ Session Affinity:  None
 Events:            <none>
 ```
 
-## 4、
+## 4、Dashboard运行在哪个节点
 ```
 #发现Dashboard是运行在node3节点
 [root@linux-node1 ~]# kubectl get pod -n kube-system -o wide
