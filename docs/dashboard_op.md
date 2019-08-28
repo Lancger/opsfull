@@ -17,6 +17,10 @@ kube-system   traefik-ingress-controller   1/1     1            1           2d18
 
 #查看deployment详情
 [root@node1 ~]# kubectl describe deployment kubernetes-dashboard -n kube-system
+
+#删除deployment
+[root@node1 ~]# kubectl delete deployment kubernetes-dashboard -n kube-system
+deployment.extensions "kubernetes-dashboard" deleted
 ```
 
 ## 2、查看Service信息
@@ -38,6 +42,10 @@ kube-system   traefik-web-ui            ClusterIP   172.68.226.139   <none>     
 
 #查看service详情
 [root@node1 ~]# kubectl describe svc kubernetes-dashboard -n kube-system
+
+#删除service
+[root@node1 ~]# kubectl delete svc kubernetes-dashboard -n kube-system
+service "kubernetes-dashboard" deleted
 ```
 
 ## 3、查看Service对应的后端节点
