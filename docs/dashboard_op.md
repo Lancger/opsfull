@@ -43,7 +43,11 @@ kube-system   traefik-web-ui            ClusterIP   172.68.226.139   <none>     
 ## 3、查看Service对应的后端节点
 
 ```
-[root@tw06a2753 ~]# kubectl describe svc my-mc-service -n default
+#查看kubernetes-dashboard
+[root@node1 ~]# kubectl describe svc kubernetes-dashboard -n kube-system
+
+#查看服务my-mc-service
+[root@node1 ~]# kubectl describe svc my-mc-service -n default
 Name:              my-mc-service
 Namespace:         default
 Labels:            <none>
