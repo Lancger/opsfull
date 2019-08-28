@@ -1,5 +1,20 @@
 # Kubernetes Dashboard
 
+```
+systemctl restart iptables
+systemctl restart kube-scheduler
+systemctl restart kube-controller-manager
+systemctl restart kube-apiserver
+systemctl restart etcd
+systemctl restart docker
+
+systemctl restart iptables
+systemctl restart kubelet
+systemctl restart kube-proxy
+systemctl restart etcd
+systemctl restart docker
+```
+
 ## 1、查看deployment
 ```
 [root@node1 ~]# kubectl get deployment -A
