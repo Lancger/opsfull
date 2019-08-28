@@ -14,6 +14,9 @@ kube-system   heapster                     1/1     1            1           8d
 kube-system   kubernetes-dashboard         0/1     1            0           4m42s
 kube-system   metrics-server               0/1     1            0           8d
 kube-system   traefik-ingress-controller   1/1     1            1           2d18h
+
+#查看deployment详情
+[root@node1 ~]# kubectl describe deployment kubernetes-dashboard -n kube-system
 ```
 
 ## 2、查看Service信息
@@ -32,8 +35,12 @@ kube-system   kubernetes-dashboard      NodePort    172.68.46.171    <none>     
 kube-system   metrics-server            ClusterIP   172.68.31.222    <none>        443/TCP                       8d      k8s-app=metrics-server
 kube-system   traefik-ingress-service   NodePort    172.68.124.46    <none>        80:33813/TCP,8080:21315/TCP   2d18h   k8s-app=traefik-ingress-lb
 kube-system   traefik-web-ui            ClusterIP   172.68.226.139   <none>        80/TCP                        2d19h   k8s-app=traefik-ingress-lb
+
+#查看service详情
+[root@node1 ~]# kubectl describe svc kubernetes-dashboard -n kube-system
 ```
-## 3、查看Dashboard信息
+
+## 3、查看Service对应的后端节点
 ```
 #发现Dashboard是运行在node3节点
 [root@linux-node1 ~]# kubectl get pod -n kube-system -o wide
