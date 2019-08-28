@@ -41,6 +41,28 @@ kube-system   traefik-web-ui            ClusterIP   172.68.226.139   <none>     
 ```
 
 ## 3、查看Service对应的后端节点
+
+```
+[root@tw06a2753 ~]# kubectl describe svc my-mc-service -n default
+Name:              my-mc-service
+Namespace:         default
+Labels:            <none>
+Annotations:       kubectl.kubernetes.io/last-applied-configuration:
+                     {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"my-mc-service","namespace":"default"},"spec":{"ports":[{"name":"m...
+Selector:          app=products,department=sales
+Type:              ClusterIP
+IP:                172.68.113.166
+Port:              my-first-port  60001/TCP
+TargetPort:        50001/TCP
+Endpoints:         172.20.1.209:50001,172.20.2.206:50001,172.20.2.208:50001
+Port:              my-second-port  60002/TCP
+TargetPort:        50002/TCP
+Endpoints:         172.20.1.209:50002,172.20.2.206:50002,172.20.2.208:50002  ---发现这个service有这3个后端
+Session Affinity:  None
+Events:            <none>
+```
+
+## 4、
 ```
 #发现Dashboard是运行在node3节点
 [root@linux-node1 ~]# kubectl get pod -n kube-system -o wide
