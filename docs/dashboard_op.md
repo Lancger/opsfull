@@ -1,14 +1,19 @@
 # Kubernetes Dashboard
 
-## 创建Dashboard
+## 查看deployment
 ```
-[root@linux-node1 ~]# kubectl create -f /srv/addons/dashboard/
-[root@linux-node1 ~]# kubectl cluster-info
-Kubernetes master is running at https://192.168.56.11:6443
-kubernetes-dashboard is running at https://192.168.56.11:6443/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy
-
-To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
-
+[root@node1 ~]# kubectl get deployment -A
+NAMESPACE     NAME                         READY   UP-TO-DATE   AVAILABLE   AGE
+default       my-mc-deployment             3/3     3            3           2d18h
+default       net                          3/3     3            3           4d15h
+default       net-test                     2/2     2            2           4d16h
+default       test-hello                   1/1     1            1           6d
+default       test-jrr                     1/1     1            1           43h
+kube-system   coredns                      0/2     2            0           4d15h
+kube-system   heapster                     1/1     1            1           8d
+kube-system   kubernetes-dashboard         0/1     1            0           4m42s
+kube-system   metrics-server               0/1     1            0           8d
+kube-system   traefik-ingress-controller   1/1     1            1           2d18h
 ```
 ## 查看Dashboard信息
 ```
