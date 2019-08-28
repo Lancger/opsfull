@@ -1,6 +1,6 @@
 # Kubernetes Dashboard
 
-## 查看deployment
+## 1、查看deployment
 ```
 [root@node1 ~]# kubectl get deployment -A
 NAMESPACE     NAME                         READY   UP-TO-DATE   AVAILABLE   AGE
@@ -15,7 +15,25 @@ kube-system   kubernetes-dashboard         0/1     1            0           4m42
 kube-system   metrics-server               0/1     1            0           8d
 kube-system   traefik-ingress-controller   1/1     1            1           2d18h
 ```
-## 查看Dashboard信息
+
+## 2、查看Service信息
+```
+[root@tw06a2753 ~]# kubectl get service -A -o wide
+NAMESPACE     NAME                      TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                       AGE     SELECTOR
+default       kubernetes                ClusterIP   172.68.0.1       <none>        443/TCP                       8d      <none>
+default       my-mc-service             ClusterIP   172.68.113.166   <none>        60001/TCP,60002/TCP           3d14h   app=products,department=sales
+default       nginx-service             ClusterIP   172.68.176.9     <none>        80/TCP                        5d      app=nginx
+default       php-service               ClusterIP   172.68.210.6     <none>        9898/TCP                      5d19h   app=nginx-php
+default       test-hello                ClusterIP   172.68.248.205   <none>        80/TCP                        6d      run=test-hello
+default       test-jrr-php-service      ClusterIP   172.68.58.202    <none>        9090/TCP                      43h     app=test-jrr-nginx-php
+kube-system   heapster                  ClusterIP   172.68.19.198    <none>        80/TCP                        8d      k8s-app=heapster
+kube-system   kube-dns                  ClusterIP   172.68.0.2       <none>        53/UDP,53/TCP,9153/TCP        4d15h   k8s-app=kube-dns
+kube-system   kubernetes-dashboard      NodePort    172.68.46.171    <none>        443:29107/TCP                 6m31s   k8s-app=kubernetes-dashboard
+kube-system   metrics-server            ClusterIP   172.68.31.222    <none>        443/TCP                       8d      k8s-app=metrics-server
+kube-system   traefik-ingress-service   NodePort    172.68.124.46    <none>        80:33813/TCP,8080:21315/TCP   2d18h   k8s-app=traefik-ingress-lb
+kube-system   traefik-web-ui            ClusterIP   172.68.226.139   <none>        80/TCP                        2d19h   k8s-app=traefik-ingress-lb
+```
+## 3、查看Dashboard信息
 ```
 #发现Dashboard是运行在node3节点
 [root@linux-node1 ~]# kubectl get pod -n kube-system -o wide
