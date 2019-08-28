@@ -17,6 +17,7 @@
 - [外部访问K8s中Pod的几种方式](docs/外部访问K8s中Pod的几种方式.md)
 - [应用测试](docs/app2.md)
 - [PVC](docs/k8s_pv_local.md)
+- [dashboard操作](docs/dashboard_op.md)
 
 
 # 使用手册
