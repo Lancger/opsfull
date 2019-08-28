@@ -3,6 +3,11 @@
 ```
 chattr -i /etc/passwd* && chattr -i /etc/group* && chattr -i /etc/shadow* && chattr -i /etc/gshadow*
 
+cd /etc/ansible/
+ansible-playbook 07.cluster-addon.yml
+
+ansible-playbook 90.setup.yml
+
 systemctl restart iptables
 systemctl restart kube-scheduler
 systemctl restart kube-controller-manager
