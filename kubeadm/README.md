@@ -19,12 +19,10 @@ cat > /etc/sysctl.d/k8s.conf << \EOF
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
 net.ipv4.ip_forward = 1
-vm.swappiness=0
+vm.swappiness = 0
 EOF
-
 modprobe br_netfilter
 sysctl -p /etc/sysctl.d/k8s.conf
-
 
 cat > /etc/sysconfig/modules/ipvs.modules <<EOF
 #!/bin/bash
@@ -44,14 +42,16 @@ systemctl enable chronyd
 systemctl start chronyd
 chronyc sources
 
-
 yum install -y yum-utils \
   device-mapper-persistent-data \
   lvm2
+  
 yum-config-manager \
     --add-repo \
     https://download.docker.com/linux/centos/docker-ce.repo
+    
 #yum list docker-ce --showduplicates | sort -r
+
 yum install -y docker-ce-19.03.1-3.el7
 systemctl restart docker
 systemctl enable docker
