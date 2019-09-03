@@ -1,3 +1,4 @@
+# 一、初始化
 ```
 cat > /etc/hosts << \EOF
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
@@ -77,9 +78,10 @@ EOF
 yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
 kubeadm version
 systemctl enable kubelet.service
+```
 
-
-#初始化集群
+# 二、初始化集群
+```
 kubeadm config print init-defaults > kubeadm.yaml
 
 kubeadm init --config kubeadm.yaml
