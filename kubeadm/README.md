@@ -81,4 +81,6 @@ systemctl enable kubelet.service
 
 #初始化集群
 kubeadm config print init-defaults > kubeadm.yaml
+
+kubeadm init --config kubeadm.yaml
 ```
