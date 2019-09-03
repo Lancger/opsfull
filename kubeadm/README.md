@@ -113,6 +113,10 @@ kubeadm join 192.168.56.11:6443 --token 5avfk1.fwui1smk5utcu7m9     --discovery-
 
 # 四、集群操作
 ```
+#批量重启docker
+docker restart `docker ps -a -q` 
+
+
 root># kubectl get nodes
 NAME                      STATUS     ROLES    AGE     VERSION
 linux-node1.example.com   NotReady   master   11m     v1.15.3
