@@ -118,6 +118,15 @@ NAME                      STATUS     ROLES    AGE     VERSION
 linux-node1.example.com   NotReady   master   11m     v1.15.3
 linux-node2.example.com   NotReady   <none>   5m9s    v1.15.3
 linux-node3.example.com   NotReady   <none>   4m58s   v1.15.3
+
+可以看到是 NotReady 状态，这是因为还没有安装网络插件，接下来安装网络插件，可以在文档 https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/ 中选择我们自己的网络插件，这里我们安装 calio:
+```
+
+# 五、calico网络插件
+```
+wget https://docs.projectcalico.org/v3.8/manifests/calico.yaml
+
+
 ```
 
 参考文档：
