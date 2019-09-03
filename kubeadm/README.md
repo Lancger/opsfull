@@ -111,6 +111,14 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 kubeadm join 192.168.56.11:6443 --token 5avfk1.fwui1smk5utcu7m9     --discovery-token-ca-cert-hash sha256:6730e91a516d8bf3e26d8f5eddd6409a224f8703b94f6ecde2b1fd7481bbbd25
 ```
 
+# 四、集群操作
+```
+root># kubectl get nodes
+NAME                      STATUS     ROLES    AGE     VERSION
+linux-node1.example.com   NotReady   master   11m     v1.15.3
+linux-node2.example.com   NotReady   <none>   5m9s    v1.15.3
+linux-node3.example.com   NotReady   <none>   4m58s   v1.15.3
+```
 
 参考文档：
 
