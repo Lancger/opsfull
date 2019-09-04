@@ -141,7 +141,7 @@ linux-node3.example.com   NotReady   <none>   4m58s   v1.15.3
 ```
 wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 
-kubectl apply -f kube.yml
+kubectl apply -f kube-flannel.yml
 ```
 
 参考文档：
