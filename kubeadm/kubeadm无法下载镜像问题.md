@@ -14,6 +14,22 @@ k8s.gcr.io/kube-proxy:v1.15.3
 k8s.gcr.io/pause:3.1
 k8s.gcr.io/etcd:3.3.10
 k8s.gcr.io/coredns:1.3.1
+
+我们通过 docker.io/mirrorgooglecontainers 中转一下
+```
+
+2、批量下载及转换标签
+
+脚本如下
+```
+kubeadm config images list |sed -e 's/^/docker pull /g' -e 's#k8s.gcr.io#docker.io/mirrorgooglecontainers#g' |sh -x
+docker images |grep mirrorgooglecontainers |awk '{print "docker tag ",$1":"$2,$1":"$2}' |sed -e 's#docker.io/mirrorgooglecontainers#k8s.gcr.io#2' |sh -x
+docker images |grep mirrorgooglecontainers |awk '{print "docker rmi ", $1":"$2}' |sh -x
+docker pull coredns/coredns:1.3.1
+docker tag coredns/coredns:1.3.1 k8s.gcr.io/coredns:1.3.1
+docker rmi coredns/coredns:1.3.1
+
+注：coredns没包含在docker.io/mirrorgooglecontainers中，需要手工从coredns官方镜像转换下。
 ```
 
 参考文档：
