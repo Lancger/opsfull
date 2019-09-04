@@ -147,3 +147,5 @@ wget https://docs.projectcalico.org/v3.8/manifests/calico.yaml
 参考文档：
 
 https://www.qikqiak.com/post/use-kubeadm-install-kubernetes-1.15.3/ 
+
+https://www.jianshu.com/p/351acb6811fd  
