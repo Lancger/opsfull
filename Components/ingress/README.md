@@ -83,7 +83,7 @@ spec:
       tolerations:
       - operator: "Exists"
       nodeSelector:
-        kubernetes.io/hostname: master
+        kubernetes.io/hostname: linux-node1.example.com  #默认master是不允许被调度的，加上tolerations后允许被调度
       containers:
       - image: traefik
         name: traefik-ingress-lb
