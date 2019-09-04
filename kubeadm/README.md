@@ -184,7 +184,7 @@ selector:
 type: NodePort
 ```
 
-2、创建
+2、创建dashboard
 ```
 kubectl apply -f kubernetes-dashboard.yaml
 
