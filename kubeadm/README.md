@@ -205,7 +205,7 @@ cat > admin.yaml << \EOF
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
-  name: admin
+  name: admin-user
   annotations:
     rbac.authorization.kubernetes.io/autoupdate: "true"
 roleRef:
@@ -214,13 +214,14 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 subjects:
 - kind: ServiceAccount
-  name: admin
+  name: admin-user
   namespace: kube-system
+
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: admin
+  name: admin-user
   namespace: kube-system
   labels:
     kubernetes.io/cluster-service: "true"
@@ -228,6 +229,8 @@ metadata:
 EOF
 
 kubectl apply -f admin.yaml
+
+kubectl delete -f admin.yaml
 
 #获取token
 kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
@@ -240,7 +243,9 @@ https://192.168.56.12:31513
 最终我们就完成了使用 kubeadm 搭建 v1.15.3 版本的 kubernetes 集群、coredns、ipvs、flannel。 
 
 参考文档：
+https://github.com/kubernetes/dashboard/wiki/Creating-sample-user
 
 https://www.qikqiak.com/post/use-kubeadm-install-kubernetes-1.15.3/ 
 
 https://www.jianshu.com/p/351acb6811fd  
+
