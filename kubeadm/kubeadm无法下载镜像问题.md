@@ -31,6 +31,10 @@ docker rmi coredns/coredns:1.3.1
 
 注：coredns没包含在docker.io/mirrorgooglecontainers中，需要手工从coredns官方镜像转换下。
 ```
+3、查看镜像列表
+```
+
+```
 
 参考文档：
 
