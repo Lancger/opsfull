@@ -135,7 +135,7 @@ linux-node3.example.com   NotReady   <none>   4m58s   v1.15.3
 iptables -I RH-Firewall-1-INPUT -s 10.96.0.0/12 -j ACCEPT
 service iptables save
 
-kubectl get pods -n kube-system         
+kubectl get pods -n kube-system
 
 kubectl describe pod/calico-kube-controllers-65b8787765-mhhw8 -n kube-system
 ```
