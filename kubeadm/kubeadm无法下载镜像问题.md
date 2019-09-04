@@ -59,6 +59,7 @@ k8s.gcr.io/pause                     3.1                 da86e6ba6ca1        20 
 
 
 docker rmi -f $(docker images -q)
+docker rm -f `docker ps -a -q`
 ```
 
 参考文档：
