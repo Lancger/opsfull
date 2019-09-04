@@ -1,8 +1,12 @@
 # 一、清理资源
 ```
 systemctl stop kubelet.service
+systemctl stop kubelet
+systemctl stop docker
+
 kubeadm reset
 #yum remove -y kubelet kubeadm kubectl --disableexcludes=kubernetes
+
 rm -rf /etc/kubernetes/
 rm -rf /root/.kube/
 rm -rf $HOME/.kube/
