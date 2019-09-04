@@ -116,6 +116,8 @@ spec:
 EOF
 
 kubectl create -f /data/components/ingress/traefik.yaml
+
+kubectl apply -f /data/components/ingress/traefik.yaml
 ```
 ```
 要注意上面 yaml 文件:
