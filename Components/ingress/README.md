@@ -128,5 +128,22 @@ nodeSelector:
 
 nodeSelector 和 tolerations 都属于 Pod 的调度策略，在后面的课程中会为大家讲解。
 
-traefik 还提供了一个 web ui 工具，就是上面的 8080 端口对应的服务，为了能够访问到该服务，我们这里将服务设置成的 NodePort：
 ```
+# 3、traefik-ui
+
+traefik 还提供了一个 web ui 工具，就是上面的 8080 端口对应的服务，为了能够访问到该服务，我们这里将服务设置成的 NodePort
+
+```
+$ kubectl get pods -n kube-system -l k8s-app=traefik-ingress-lb -o wide
+NAME                                          READY     STATUS    RESTARTS   AGE       IP            NODE
+traefik-ingress-controller-57c4f787d9-bfhnl   1/1       Running   0          8m        10.244.0.18   master
+
+$ kubectl get svc -n kube-system
+NAME                      TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                       AGE
+...
+traefik-ingress-service   NodePort    10.102.183.112   <none>        80:30539/TCP,8080:30486/TCP   8m
+...
+
+现在在浏览器中输入 master_node_ip:30486 就可以访问到 traefik 的 dashboard 了：
+```
+
