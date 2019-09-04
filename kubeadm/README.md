@@ -198,6 +198,44 @@ kubernetes-dashboard   NodePort   10.107.51.169   <none>        443:31513/TCP   
 ```
 然后可以通过上面的 https://NodeIP:31513 端口去访问 Dashboard，要记住使用 https，Chrome不生效可以使用Firefox测试：
 
+3、然后创建一个具有全局所有权限的用户来登录Dashboard：(admin.yaml)
+```
+cat > admin.yaml << \EOF
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: admin
+  annotations:
+    rbac.authorization.kubernetes.io/autoupdate: "true"
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- kind: ServiceAccount
+  name: admin
+  namespace: kube-system
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: admin
+  namespace: kube-system
+  labels:
+    kubernetes.io/cluster-service: "true"
+    addonmanager.kubernetes.io/mode: Reconcile
+EOF
+
+kubectl apply -f admin.yaml
+
+kubectl get secret -n kube-system|grep admin-token
+
+#获取token
+kubectl get secret admin-token-d5jsg -o jsonpath={.data.token} -n kube-system |base64 -d
+
+```
+
 参考文档：
 
 https://www.qikqiak.com/post/use-kubeadm-install-kubernetes-1.15.3/ 
