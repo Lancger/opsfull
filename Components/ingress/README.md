@@ -150,5 +150,5 @@ traefik-ingress-service   NodePort    10.111.2.122    <none>        80:32327/TCP
 
 现在在浏览器中输入 master_node_ip:32303 就可以访问到 traefik 的 dashboard 了
 ```
-http://192.168.56.12:32303/dashboard/
+http://192.168.56.11:32303/dashboard/
 
