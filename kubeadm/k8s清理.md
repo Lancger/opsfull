@@ -5,6 +5,7 @@ yum remove -y kubelet kubeadm kubectl --disableexcludes=kubernetes
 
 rm -rf /etc/kubernetes/
 rm -rf /root/.kube/
+rm -rf $HOME/.kube/
 rm -rf /var/lib/etcd/
 rm -rf /var/lib/kubelet/
 rm -rf /opt/cni/
