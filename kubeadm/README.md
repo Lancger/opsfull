@@ -117,6 +117,9 @@ kubeadm join 192.168.56.11:6443 --token 5avfk1.fwui1smk5utcu7m9     --discovery-
 
 # 五、集群操作
 ```
+iptables -I RH-Firewall-1-INPUT -s 10.96.0.0/12 -j ACCEPT
+service iptables save
+
 kubectl get pods -n kube-system         
 
 kubectl describe pod/calico-kube-controllers-65b8787765-mhhw8 -n kube-system
