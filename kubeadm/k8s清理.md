@@ -2,9 +2,7 @@
 ```
 systemctl stop kubelet.service
 kubeadm reset
-
-yum remove -y kubelet kubeadm kubectl --disableexcludes=kubernetes
-
+#yum remove -y kubelet kubeadm kubectl --disableexcludes=kubernetes
 rm -rf /etc/kubernetes/
 rm -rf /root/.kube/
 rm -rf $HOME/.kube/
@@ -17,7 +15,7 @@ rm -rf /opt/cni/
 docker rmi -f $(docker images -q)
 docker rm -f `docker ps -a -q`
 
-yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
+#yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
 kubeadm version
 systemctl restart kubelet.service
 systemctl enable kubelet.service
