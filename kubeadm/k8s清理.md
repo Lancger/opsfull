@@ -19,5 +19,10 @@ systemctl enable kubelet.service
 
 # 二、重新初始化
 ```
+swapoff -a
+modprobe br_netfilter
+sysctl -p /etc/sysctl.d/k8s.conf
+chmod 755 /etc/sysconfig/modules/ipvs.modules && bash /etc/sysconfig/modules/ipvs.modules && lsmod | grep -e ip_vs -e nf_conntrack_ipv4
+
 kubeadm init --config kubeadm.yaml
 ```
