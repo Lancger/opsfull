@@ -1,6 +1,5 @@
 # 一、清理资源
 ```
-systemctl stop kubelet.service
 systemctl stop kubelet
 systemctl stop docker
 
