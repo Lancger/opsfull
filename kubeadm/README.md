@@ -117,11 +117,12 @@ kubeadm join 192.168.56.11:6443 --token 5avfk1.fwui1smk5utcu7m9     --discovery-
 
 # 五、集群操作
 ```
+kubectl get pods -n kube-system         
+
 kubectl describe pod/calico-kube-controllers-65b8787765-mhhw8 -n kube-system
 
 #批量重启docker
 docker restart `docker ps -a -q` 
-
 
 root># kubectl get nodes
 NAME                      STATUS     ROLES    AGE     VERSION
