@@ -138,17 +138,12 @@ traefik 还提供了一个 web ui 工具，就是上面的 8080 端口对应的�
 ```
 root># kubectl get pods -n kube-system -l k8s-app=traefik-ingress-lb -o wide
 NAME                                          READY   STATUS    RESTARTS   AGE   IP           NODE                      NOMINATED NODE   READINESS GATES
-traefik-ingress-controller-7bf58d448c-wcfbg   1/1     Running   0          14m   10.244.1.6   linux-node2.example.com   <none>           <none>
+traefik-ingress-controller-5b58d5c998-6dn97   1/1     Running   0          88s   10.244.0.2   linux-node1.example.com   <none>           <none>
 
-linux-node1.example.com<2019-09-04 22:05:11> ~
-root># kubectl get svc -n kube-system
-NAME                      TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                       AGE
-......
-traefik-ingress-service   NodePort    10.111.2.122    <none>        80:32327/TCP,8080:32303/TCP   20m
-......
-...
+root># kubectl get svc -n kube-system|grep traefik-ingress-service
+traefik-ingress-service   NodePort    10.102.214.49   <none>        80:32472/TCP,8080:32482/TCP   44s
 
 现在在浏览器中输入 master_node_ip:32303 就可以访问到 traefik 的 dashboard 了
 ```
-http://192.168.56.11:32303/dashboard/
+http://192.168.56.11:32482/dashboard/
 
