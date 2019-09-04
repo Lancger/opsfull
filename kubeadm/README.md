@@ -139,9 +139,8 @@ linux-node3.example.com   NotReady   <none>   4m58s   v1.15.3
 
 # 五、master上部署flannel插件
 ```
-wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel-rbac.yml
 wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
-kubectl apply -f kube-fannel-rbac.yml
+
 kubectl apply -f kube.yml
 ```
 
