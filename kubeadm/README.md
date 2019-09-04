@@ -86,23 +86,27 @@ kubeadm config print init-defaults > kubeadm.yaml
 
 kubeadm init --config kubeadm.yaml
 
-mkdir -p $HOME/.kube
-sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-sudo chown $(id -u):$(id -g) $HOME/.kube/config
-
 #获取加入集群的指令
 kubeadm token create --print-join-command
 
 kubeadm join 192.168.56.11:6443 --token 5avfk1.fwui1smk5utcu7m9     --discovery-token-ca-cert-hash sha256:6730e91a516d8bf3e26d8f5eddd6409a224f8703b94f6ecde2b1fd7481bbbd25
 ```
 
-# 三、Master和Node操作
+# 三、Master操作
 ```
 #将 master 节点上面的 $HOME/.kube/config 文件拷贝到 node 节点对应的文件中
+
+mkdir -p $HOME/.kube
+cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+chown $(id -u):$(id -g) $HOME/.kube/config
+
 scp $HOME/.kube/config root@linux-node2:$HOME/.kube/config
 scp $HOME/.kube/config root@linux-node3:$HOME/.kube/config
+scp $HOME/.kube/config root@linux-node4:$HOME/.kube/config
+```
 
-
+# 四、Node操作
+```
 #node节点操作
 mkdir -p $HOME/.kube
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
@@ -111,7 +115,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 kubeadm join 192.168.56.11:6443 --token 5avfk1.fwui1smk5utcu7m9     --discovery-token-ca-cert-hash sha256:6730e91a516d8bf3e26d8f5eddd6409a224f8703b94f6ecde2b1fd7481bbbd25
 ```
 
-# 四、集群操作
+# 五、集群操作
 ```
 #批量重启docker
 docker restart `docker ps -a -q` 
