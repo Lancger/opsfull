@@ -229,10 +229,8 @@ EOF
 
 kubectl apply -f admin.yaml
 
-kubectl get secret -n kube-system|grep admin-token
-
 #获取token
-kubectl get secret admin-token-d5jsg -o jsonpath={.data.token} -n kube-system |base64 -d
+kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
 ```
 
 然后用上面的base64解码后的字符串作为token登录Dashboard即可： k8s dashboard
