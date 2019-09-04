@@ -43,7 +43,6 @@ docker images |grep google_containers |awk '{print "docker rmi ", $1":"$2}' |sh 
 docker pull coredns/coredns:1.3.1
 docker tag coredns/coredns:1.3.1 k8s.gcr.io/coredns:1.3.1
 docker rmi coredns/coredns:1.3.1
-
 ```
 
 3、查看镜像列表
@@ -57,6 +56,9 @@ k8s.gcr.io/kube-controller-manager   v1.15.3             e77c31de5547        2 w
 k8s.gcr.io/coredns                   1.3.1               eb516548c180        7 months ago        40.3MB
 k8s.gcr.io/etcd                      3.3.10              2c4adeb21b4f        9 months ago        258MB
 k8s.gcr.io/pause                     3.1                 da86e6ba6ca1        20 months ago       742kB
+
+
+docker rmi -f $(docker images -q)
 ```
 
 参考文档：
