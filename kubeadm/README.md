@@ -188,15 +188,15 @@ type: NodePort
 ```
 kubectl apply -f kubernetes-dashboard.yaml
 
-kubectl get pods -n kube-system -l k8s-app=kubernetes-dashboard
+root># kubectl get pods -n kube-system -l k8s-app=kubernetes-dashboard
 NAME                                  READY   STATUS    RESTARTS   AGE
-kubernetes-dashboard-fcfb4cbc-t462n   1/1     Running   0          50m
+kubernetes-dashboard-fcfb4cbc-dqbq9   1/1     Running   0          8m5s
 
-kubectl get svc -n kube-system -l k8s-app=kubernetes-dashboard
+root># kubectl get svc -n kube-system -l k8s-app=kubernetes-dashboard
 NAME                   TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)         AGE
-kubernetes-dashboard   NodePort   10.110.172.49   <none>        443:32497/TCP   55m
+kubernetes-dashboard   NodePort   10.107.51.169   <none>        443:31513/TCP   8m25s
 ```
-然后可以通过上面的 32497 端口去访问 Dashboard，要记住使用 https，Chrome不生效可以使用Firefox测试：
+然后可以通过上面的 https://NodeIP:31513 端口去访问 Dashboard，要记住使用 https，Chrome不生效可以使用Firefox测试：
 
 参考文档：
 
