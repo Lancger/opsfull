@@ -135,9 +135,23 @@ linux-node3.example.com   NotReady   <none>   4m58s   v1.15.3
 iptables -I RH-Firewall-1-INPUT -s 10.96.0.0/12 -j ACCEPT
 service iptables save
 
-kubectl get pods -n kube-system
+root># kubectl get pods -n kube-system
+NAME                                              READY   STATUS    RESTARTS   AGE
+coredns-5c98db65d4-mk254                          1/1     Running   0          14m
+coredns-5c98db65d4-ntz98                          1/1     Running   0          14m
+etcd-linux-node1.example.com                      1/1     Running   0          13m
+kube-apiserver-linux-node1.example.com            1/1     Running   0          13m
+kube-controller-manager-linux-node1.example.com   1/1     Running   0          13m
+kube-flannel-ds-amd64-6kx7m                       1/1     Running   0          11m
+kube-flannel-ds-amd64-cqfnb                       1/1     Running   0          11m
+kube-flannel-ds-amd64-thxx2                       1/1     Running   0          11m
+kube-proxy-gdtjg                                  1/1     Running   0          12m
+kube-proxy-lcscl                                  1/1     Running   0          14m
+kube-proxy-sb7d8                                  1/1     Running   0          12m
+kube-scheduler-linux-node1.example.com            1/1     Running   0          13m
+kubernetes-dashboard-fcfb4cbc-dqbq9               1/1     Running   0          4m43s
 
-kubectl describe pod/calico-kube-controllers-65b8787765-mhhw8 -n kube-system
+kubectl describe pod/coredns-5c98db65d4-mk254 -n kube-system
 ```
 
 # 五、master上部署flannel插件
@@ -146,6 +160,43 @@ wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-
 
 kubectl apply -f kube-flannel.yml
 ```
+
+# 六、安装 Dashboard
+
+1、下载yaml文件
+```
+wget https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
+
+vim kubernetes-dashboard.yaml
+# 修改镜像名称
+......
+containers:
+- args:
+  - --auto-generate-certificates
+  image: gcr.azk8s.cn/google_containers/kubernetes-dashboard-amd64:v1.10.1
+  imagePullPolicy: IfNotPresent
+  
+......
+# 修改Service为NodePort类型
+......
+selector:
+  k8s-app: kubernetes-dashboard
+type: NodePort
+```
+
+2、创建
+```
+kubectl apply -f kubernetes-dashboard.yaml
+
+kubectl get pods -n kube-system -l k8s-app=kubernetes-dashboard
+NAME                                  READY   STATUS    RESTARTS   AGE
+kubernetes-dashboard-fcfb4cbc-t462n   1/1     Running   0          50m
+
+kubectl get svc -n kube-system -l k8s-app=kubernetes-dashboard
+NAME                   TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)         AGE
+kubernetes-dashboard   NodePort   10.110.172.49   <none>        443:32497/TCP   55m
+```
+然后可以通过上面的 32497 端口去访问 Dashboard，要记住使用 https，Chrome不生效可以使用Firefox测试：
 
 参考文档：
 
