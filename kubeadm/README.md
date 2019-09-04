@@ -53,7 +53,7 @@ yum-config-manager \
     
 #yum list docker-ce --showduplicates | sort -r
 
-yum install -y docker-ce-19.03.1-3.el7
+yum install -y docker-ce-19.03.2-3.el7
 systemctl restart docker
 systemctl enable docker
 cat > /etc/docker/daemon.json << \EOF
