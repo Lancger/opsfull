@@ -22,7 +22,6 @@ k8s.gcr.io/coredns:1.3.1
 
 2、批量下载及转换标签
 
-脚本如下
 ```
 #docker.io/mirrorgooglecontainers中转镜像
 
