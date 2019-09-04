@@ -233,6 +233,8 @@ kubectl apply -f admin.yaml
 kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
 ```
 
+https://192.168.56.12:31513
+
 然后用上面的base64解码后的字符串作为token登录Dashboard即可： k8s dashboard
 
 最终我们就完成了使用 kubeadm 搭建 v1.15.3 版本的 kubernetes 集群、coredns、ipvs、flannel。 
