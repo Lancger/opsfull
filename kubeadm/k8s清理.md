@@ -1,13 +1,17 @@
 # 一、清理资源
 ```
 systemctl stop kubelet.service
+kubeadm reset
+
 yum remove -y kubelet kubeadm kubectl --disableexcludes=kubernetes
 
 rm -rf /etc/kubernetes/
 rm -rf /root/.kube/
 rm -rf $HOME/.kube/
 rm -rf /var/lib/etcd/
+rm -rf /var/lib/cni/
 rm -rf /var/lib/kubelet/
+rm -rf /etc/cni/
 rm -rf /opt/cni/
 
 docker rmi -f $(docker images -q)
@@ -60,3 +64,8 @@ scp $HOME/.kube/config root@linux-node4:$HOME/.kube/config
 chown $(id -u):$(id -g) $HOME/.kube/config
 
 ```
+
+
+参考资料：
+
+https://blog.51cto.com/wutengfei/2121202  kubernetes中网络报错问题
