@@ -233,8 +233,11 @@ kubectl get secret -n kube-system|grep admin-token
 
 #获取token
 kubectl get secret admin-token-d5jsg -o jsonpath={.data.token} -n kube-system |base64 -d
-
 ```
+
+然后用上面的base64解码后的字符串作为token登录Dashboard即可： k8s dashboard
+
+最终我们就完成了使用 kubeadm 搭建 v1.15.3 版本的 kubernetes 集群、coredns、ipvs、flannel。 
 
 参考文档：
 
