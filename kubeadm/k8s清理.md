@@ -7,6 +7,7 @@ rm -rf /etc/kubernetes/
 rm -rf /root/.kube/
 rm -rf /var/lib/etcd/
 rm -rf /var/lib/kubelet/
+rm -rf /opt/cni/
 
 docker rmi -f $(docker images -q)
 docker rm -f `docker ps -a -q`
