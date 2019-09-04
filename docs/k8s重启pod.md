@@ -1,3 +1,8 @@
+通过kubectl delete批量删除全部Pod
+```
+kubectl delete pod --all
+```
+
 ```
 在没有pod 的yaml文件时，强制重启某个pod
 
