@@ -1,6 +1,8 @@
-    kubeadm 是kubernetes 的集群安装工具，能够快速安装kubernetes 集群。
-
-    kubeadm init 命令默认使用的docker镜像仓库为k8s.gcr.io，国内无法直接访问，于是需要变通一下。
+0、kubeadm镜像介绍
+```
+kubeadm 是kubernetes 的集群安装工具，能够快速安装kubernetes 集群。
+kubeadm init 命令默认使用的docker镜像仓库为k8s.gcr.io，国内无法直接访问，于是需要变通一下。
+```
 
 1、首先查看需要使用哪些镜像
 ```
