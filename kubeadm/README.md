@@ -54,7 +54,7 @@ yum-config-manager \
 #yum list docker-ce --showduplicates | sort -r
 
 yum install -y docker-ce-19.03.2-3.el7
-systemctl restart docker
+systemctl start docker
 systemctl enable docker
 cat > /etc/docker/daemon.json << \EOF
 {
@@ -64,6 +64,8 @@ cat > /etc/docker/daemon.json << \EOF
   ]
 }
 EOF
+systemctl daemon-reload
+systemctl restart docker
 
 cat <<EOF > /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
@@ -76,6 +78,8 @@ gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg
         http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
 EOF
 yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
+systemctl daemon-reload
+systemctl restart kubelet.service
 kubeadm version
 systemctl enable kubelet.service
 ```
