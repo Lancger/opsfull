@@ -33,7 +33,7 @@ docker pull coredns/coredns:1.3.1
 docker tag coredns/coredns:1.3.1 k8s.gcr.io/coredns:1.3.1
 docker rmi coredns/coredns:1.3.1
 
-kubeadm init --config kubeadm.yaml
+kubeadm init --kubernetes-version=v1.15.3 --pod-network-cidr=10.244.0.0/16  --apiserver-advertise-address=192.168.56.11 --apiserver-bind-port=6443
 
 #获取加入集群的指令
 kubeadm token create --print-join-command
