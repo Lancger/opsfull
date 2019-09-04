@@ -22,6 +22,8 @@ k8s.gcr.io/coredns:1.3.1
 
 脚本如下
 ```
+#docker.io/mirrorgooglecontainers中转镜像
+
 kubeadm config images list |sed -e 's/^/docker pull /g' -e 's#k8s.gcr.io#docker.io/mirrorgooglecontainers#g' |sh -x
 docker images |grep mirrorgooglecontainers |awk '{print "docker tag ",$1":"$2,$1":"$2}' |sed -e 's#mirrorgooglecontainers#k8s.gcr.io#2' |sh -x
 docker images |grep mirrorgooglecontainers |awk '{print "docker rmi ", $1":"$2}' |sh -x
@@ -30,7 +32,19 @@ docker tag coredns/coredns:1.3.1 k8s.gcr.io/coredns:1.3.1
 docker rmi coredns/coredns:1.3.1
 
 注：coredns没包含在docker.io/mirrorgooglecontainers中，需要手工从coredns官方镜像转换下。
+
+
+#阿里云的镜像替换为谷歌的镜像
+
+kubeadm config images list |sed -e 's/^/docker pull /g' -e 's#k8s.gcr.io#registry.cn-hangzhou.aliyuncs.com/google_containers#g' |sh -x
+docker images |grep google_containers |awk '{print "docker tag ",$1":"$2,$1":"$2}' |sed -e 's#registry.cn-hangzhou.aliyuncs.com/google_containers#k8s.gcr.io#2' |sh -x
+docker images |grep mirrorgooglecontainers |awk '{print "docker rmi ", $1":"$2}' |sh -x
+docker pull coredns/coredns:1.3.1
+docker tag coredns/coredns:1.3.1 k8s.gcr.io/coredns:1.3.1
+docker rmi coredns/coredns:1.3.1
+
 ```
+
 3、查看镜像列表
 ```
 docker images
