@@ -33,12 +33,9 @@ docker rmi coredns/coredns:1.3.1
 
 kubeadm init --config kubeadm.yaml
 
-
-
-
-sudo chown $(id -u):$(id -g) $HOME/.kube/config
+#获取加入集群的指令
+kubeadm token create --print-join-command
 ```
-
 
 # 三、Node操作
 ```
