@@ -33,7 +33,15 @@ docker rmi coredns/coredns:1.3.1
 ```
 3、查看镜像列表
 ```
+docker images
 
+REPOSITORY                           TAG                 IMAGE ID            CREATED             SIZE
+k8s.gcr.io/kube-proxy                v1.15.3             232b5c793146        2 weeks ago         82.4MB
+k8s.gcr.io/kube-scheduler            v1.15.3             703f9c69a5d5        2 weeks ago         81.1MB
+k8s.gcr.io/kube-controller-manager   v1.15.3             e77c31de5547        2 weeks ago         159MB
+k8s.gcr.io/coredns                   1.3.1               eb516548c180        7 months ago        40.3MB
+k8s.gcr.io/etcd                      3.3.10              2c4adeb21b4f        9 months ago        258MB
+k8s.gcr.io/pause                     3.1                 da86e6ba6ca1        20 months ago       742kB
 ```
 
 参考文档：
