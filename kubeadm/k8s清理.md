@@ -12,8 +12,14 @@ rm -rf /var/lib/kubelet/
 rm -rf /etc/cni/
 rm -rf /opt/cni/
 
-docker rmi -f $(docker images -q)
-docker rm -f `docker ps -a -q`
+ifconfig cni0 down
+ifconfig flannel.1 down
+ifconfig docker0 down
+ip link delete cni0
+ip link delete flannel.1
+
+#docker rmi -f $(docker images -q)
+#docker rm -f `docker ps -a -q`
 
 #yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
 kubeadm version
