@@ -107,7 +107,6 @@ chown $(id -u):$(id -g) $HOME/.kube/config
 
 scp $HOME/.kube/config root@linux-node2:$HOME/.kube/config
 scp $HOME/.kube/config root@linux-node3:$HOME/.kube/config
-scp $HOME/.kube/config root@linux-node4:$HOME/.kube/config
 ```
 
 # 四、Node操作
