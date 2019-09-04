@@ -1,4 +1,6 @@
-# 1、首先，为安全起见我们这里使用 RBAC 安全认证方式：(rbac.yaml)
+# 1、rbac.yaml
+
+首先，为安全起见我们这里使用 RBAC 安全认证方式：(rbac.yaml)
 
 ```
 mkdir -p /data/components/ingress
@@ -52,7 +54,9 @@ EOF
 kubectl create -f /data/components/ingress/rbac.yaml
 ```
 
-# 2、然后使用 Deployment 来管理 Pod，直接使用官方的 traefik 镜像部署即可（traefik.yaml）
+# 2、traefik.yaml
+
+然后使用 Deployment 来管理 Pod，直接使用官方的 traefik 镜像部署即可（traefik.yaml）
 ```
 cat > /data/components/ingress/traefik.yaml << \EOF
 ---
