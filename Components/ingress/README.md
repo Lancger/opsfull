@@ -136,16 +136,19 @@ nodeSelector 和 tolerations 都属于 Pod 的调度策略，在后面的课程�
 traefik 还提供了一个 web ui 工具，就是上面的 8080 端口对应的服务，为了能够访问到该服务，我们这里将服务设置成的 NodePort
 
 ```
-$ kubectl get pods -n kube-system -l k8s-app=traefik-ingress-lb -o wide
-NAME                                          READY     STATUS    RESTARTS   AGE       IP            NODE
-traefik-ingress-controller-57c4f787d9-bfhnl   1/1       Running   0          8m        10.244.0.18   master
+root># kubectl get pods -n kube-system -l k8s-app=traefik-ingress-lb -o wide
+NAME                                          READY   STATUS    RESTARTS   AGE   IP           NODE                      NOMINATED NODE   READINESS GATES
+traefik-ingress-controller-7bf58d448c-wcfbg   1/1     Running   0          14m   10.244.1.6   linux-node2.example.com   <none>           <none>
 
-$ kubectl get svc -n kube-system
-NAME                      TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                       AGE
-...
-traefik-ingress-service   NodePort    10.102.183.112   <none>        80:30539/TCP,8080:30486/TCP   8m
+linux-node1.example.com<2019-09-04 22:05:11> ~
+root># kubectl get svc -n kube-system
+NAME                      TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                       AGE
+......
+traefik-ingress-service   NodePort    10.111.2.122    <none>        80:32327/TCP,8080:32303/TCP   20m
+......
 ...
 
-现在在浏览器中输入 master_node_ip:30486 就可以访问到 traefik 的 dashboard 了：
+现在在浏览器中输入 master_node_ip:32303 就可以访问到 traefik 的 dashboard 了
 ```
+http://192.168.56.12:32303/dashboard/
 
