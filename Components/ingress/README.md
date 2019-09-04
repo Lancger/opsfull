@@ -117,3 +117,16 @@ EOF
 
 kubectl create -f /data/components/ingress/traefik.yaml
 ```
+```
+要注意上面 yaml 文件:
+tolerations:
+- operator: "Exists"
+nodeSelector:
+  kubernetes.io/hostname: master
+  
+由于我们这里的特殊性，只有 master 节点有外网访问权限，所以我们使用nodeSelector标签将traefik的固定调度到master这个节点上，那么上面的tolerations是干什么的呢？这个是因为我们集群使用的 kubeadm 安装的，master 节点默认是不能被普通应用调度的，要被调度的话就需要添加这里的 tolerations 属性，当然如果你的集群和我们的不太一样，直接去掉这里的调度策略就行。
+
+nodeSelector 和 tolerations 都属于 Pod 的调度策略，在后面的课程中会为大家讲解。
+
+traefik 还提供了一个 web ui 工具，就是上面的 8080 端口对应的服务，为了能够访问到该服务，我们这里将服务设置成的 NodePort：
+```
