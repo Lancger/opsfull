@@ -121,13 +121,6 @@ kubeadm join 192.168.56.11:6443 --token 5avfk1.fwui1smk5utcu7m9     --discovery-
 
 # 五、集群操作
 ```
-iptables -I RH-Firewall-1-INPUT -s 10.96.0.0/12 -j ACCEPT
-service iptables save
-
-kubectl get pods -n kube-system         
-
-kubectl describe pod/calico-kube-controllers-65b8787765-mhhw8 -n kube-system
-
 #批量重启docker
 docker restart `docker ps -a -q` 
 
@@ -137,7 +130,14 @@ linux-node1.example.com   NotReady   master   11m     v1.15.3
 linux-node2.example.com   NotReady   <none>   5m9s    v1.15.3
 linux-node3.example.com   NotReady   <none>   4m58s   v1.15.3
 
-可以看到是 NotReady 状态，这是因为还没有安装网络插件，接下来安装网络插件，可以在文档 https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/ 中选择我们自己的网络插件，这里我们安装 calio:
+可以看到是 NotReady 状态，这是因为还没有安装网络插件，接下来安装网络插件，可以在文档 https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/ 中选择我们自己的网络插件，这里我们安装 flannel:
+
+iptables -I RH-Firewall-1-INPUT -s 10.96.0.0/12 -j ACCEPT
+service iptables save
+
+kubectl get pods -n kube-system         
+
+kubectl describe pod/calico-kube-controllers-65b8787765-mhhw8 -n kube-system
 ```
 
 # 五、master上部署flannel插件
