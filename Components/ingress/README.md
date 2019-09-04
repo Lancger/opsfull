@@ -46,4 +46,6 @@ subjects:
   name: traefik-ingress-controller
   namespace: kube-system
 EOF
+
+kubectl create -f /data/components/ingress/rbac.yaml
 ```
