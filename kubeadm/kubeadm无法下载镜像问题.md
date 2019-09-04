@@ -35,7 +35,7 @@ docker rmi coredns/coredns:1.3.1
 注：coredns没包含在docker.io/mirrorgooglecontainers中，需要手工从coredns官方镜像转换下。
 
 
-#阿里云的镜像替换为谷歌的镜像
+#阿里云的中转镜像
 
 kubeadm config images list |sed -e 's/^/docker pull /g' -e 's#k8s.gcr.io#registry.cn-hangzhou.aliyuncs.com/google_containers#g' |sh -x
 docker images |grep google_containers |awk '{print "docker tag ",$1":"$2,$1":"$2}' |sed -e 's#registry.cn-hangzhou.aliyuncs.com/google_containers#k8s.gcr.io#2' |sh -x
