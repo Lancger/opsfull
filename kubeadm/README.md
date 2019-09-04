@@ -215,7 +215,6 @@ subjects:
 - kind: ServiceAccount
   name: admin
   namespace: kube-system
-
 ---
 apiVersion: v1
 kind: ServiceAccount
