@@ -179,7 +179,10 @@ kubectl apply -f /data/components/ingress/ingress.yaml
 创建完成后，我们应该怎么来测试呢？
 
 ```
-第一步，在本地的/etc/hosts里面添加上 traefik.haimaxy.com 与 master 节点外网 IP 的映射关系
+第一步，在本地的/etc/hosts里面添加上 traefik.k8s.com 与 master 节点外网 IP 的映射关系
 
-第二步，在浏览器中访问：http://traefik.haimaxy.com 我们会发现并没有得到我们期望的 dashboard 界面，这是因为我们上面部署 traefik 的时候使用的是 NodePort 这种 Service 对象，所以我们只能通过上面的 30539 端口访问到我们的目标对象：http://traefik.haimaxy.com:30539
+第二步，在浏览器中访问：http://traefik.k8s.com 我们会发现并没有得到我们期望的 dashboard 界面，这是因为我们上面部署 traefik 的时候使用的是 NodePort 这种 Service 对象，所以我们只能通过上面的 32482 端口访问到我们的目标对象：http://traefik.k8s.com:32482
+
+
+加上端口后我们发现可以访问到 dashboard 了，而且在 dashboard 当中多了一条记录，正是上面我们创建的 ingress 对象的数据，我们还可以切换到 HEALTH 界面中，可以查看当前 traefik 代理的服务的整体的健康状态 
 ```
