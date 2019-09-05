@@ -207,3 +207,23 @@ http://traefik.k8s.com
 
 如果你有多个边缘节点的话，可以在每个边缘节点上部署一个 ingress-controller 服务，然后在边缘节点前面挂一个负载均衡器，比如 nginx，将所有的边缘节点均作为这个负载均衡器的后端，这样就可以实现 ingress-controller 的高可用和负载均衡了。
 ```
+
+# 5、ingress tls
+
+上节课给大家展示了 traefik 的安装使用以及简单的 ingress 的配置方法，这节课我们来学习一下 ingress tls 以及 path 路径在 ingress 对象中的使用方法。
+
+1、TLS 认证
+
+在现在大部分场景下面我们都会使用 https 来访问我们的服务，这节课我们将使用一个自签名的证书，当然你有在一些正规机构购买的 CA 证书是最好的，这样任何人访问你的服务的时候都是受浏览器信任的证书。使用下面的 openssl 命令生成 CA 证书：
+```
+openssl req -newkey rsa:2048 -nodes -keyout tls.key -x509 -days 365 -out tls.crt
+```
+现在我们有了证书，我们可以使用 kubectl 创建一个 secret 对象来存储上面的证书：
+```
+kubectl create secret generic traefik-cert --from-file=tls.crt --from-file=tls.key -n kube-system
+```
+
+3、配置 Traefik
+
+前面我们使用的是 Traefik 的默认配置，现在我们来配置 Traefik，让其支持 https：
+
