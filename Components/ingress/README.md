@@ -183,6 +183,27 @@ kubectl apply -f /data/components/ingress/ingress.yaml
 
 第二步，在浏览器中访问：http://traefik.k8s.com 我们会发现并没有得到我们期望的 dashboard 界面，这是因为我们上面部署 traefik 的时候使用的是 NodePort 这种 Service 对象，所以我们只能通过上面的 32482 端口访问到我们的目标对象：http://traefik.k8s.com:32482
 
-
 加上端口后我们发现可以访问到 dashboard 了，而且在 dashboard 当中多了一条记录，正是上面我们创建的 ingress 对象的数据，我们还可以切换到 HEALTH 界面中，可以查看当前 traefik 代理的服务的整体的健康状态 
+
+第三步，上面我们可以通过自定义域名加上端口可以访问我们的服务了，但是我们平时服务别人的服务是不是都是直接用的域名啊，http 或者 https 的，几乎很少有在域名后面加上端口访问的吧？为什么？太麻烦啊，端口也记不住，要解决这个问题，怎么办，我们只需要把我们上面的 traefik 的核心应用的端口隐射到 master 节点上的 80 端口，是不是就可以了，因为 http 默认就是访问 80 端口，但是我们在 Service 里面是添加的一个 NodePort 类型的服务，没办法映射 80 端口，怎么办？这里就可以直接在 Pod 中指定一个 hostPort 即可，更改上面的 traefik.yaml 文件中的容器端口：
+
+containers:
+- image: traefik
+name: traefik-ingress-lb
+ports:
+- name: http
+  containerPort: 80
+  hostPort: 80      #新增这行
+- name: admin
+  containerPort: 8080
+  
+添加以后hostPort: 80，然后更新应用
+kubectl apply -f traefik.yaml
+
+更新完成后，这个时候我们在浏览器中直接使用域名方法测试下
+http://traefik.k8s.com
+
+第四步，正常来说，我们如果有自己的域名，我们可以将我们的域名添加一条 DNS 记录，解析到 master 的外网 IP 上面，这样任何人都可以通过域名来访问我的暴露的服务了。
+
+如果你有多个边缘节点的话，可以在每个边缘节点上部署一个 ingress-controller 服务，然后在边缘节点前面挂一个负载均衡器，比如 nginx，将所有的边缘节点均作为这个负载均衡器的后端，这样就可以实现 ingress-controller 的高可用和负载均衡了。
 ```
