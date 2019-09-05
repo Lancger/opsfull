@@ -147,3 +147,39 @@ traefik-ingress-service   NodePort    10.102.214.49   <none>        80:32472/TCP
 ```
 http://192.168.56.11:32482/dashboard/
 
+# 4、Ingress 对象
+
+现在我们是通过 NodePort 来访问 traefik 的 Dashboard 的，那怎样通过 ingress 来访问呢？ 首先，需要创建一个 ingress 对象：(ingress.yaml)
+
+```
+cat > /data/components/ingress/ingress.yaml <<\EOF
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: traefik-web-ui
+  namespace: kube-system
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: traefik.k8s.com
+    http:
+      paths:
+      - backend:
+          serviceName: traefik-ingress-service
+          #servicePort: 8080
+          servicePort: admin  #这里建议使用servicePort: admin,这样就避免端口的调整
+EOF
+
+kubectl create -f /data/components/ingress/ingress.yaml
+kubectl apply -f /data/components/ingress/ingress.yaml
+
+要注意上面的 ingress 对象的规则，特别是 rules 区域，我们这里是要为 traefik 的 dashboard 建立一个 ingress 对象，所以这里的 serviceName 对应的是上面我们创建的 traefik-ingress-service，端口也要注意对应 8080 端口，为了避免端口更改，这里的 servicePort 的值也可以替换成上面定义的 port 的名字：admin
+```
+创建完成后，我们应该怎么来测试呢？
+
+```
+第一步，在本地的/etc/hosts里面添加上 traefik.haimaxy.com 与 master 节点外网 IP 的映射关系
+
+第二步，在浏览器中访问：http://traefik.haimaxy.com 我们会发现并没有得到我们期望的 dashboard 界面，这是因为我们上面部署 traefik 的时候使用的是 NodePort 这种 Service 对象，所以我们只能通过上面的 30539 端口访问到我们的目标对象：http://traefik.haimaxy.com:30539
+```
