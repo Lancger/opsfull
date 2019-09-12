@@ -77,21 +77,33 @@ curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://41935bf4
 #这个脚本在centos 7上有个bug,脚本会改变docker的配置文件/etc/docker/daemon.json但修改的时候多了一个逗号,导致docker无法启动
 
 #或者直接执行这个指令
-cat > /etc/docker/daemon.json << \EOF
-{"registry-mirrors": ["http://41935bf4.m.daocloud.io"]}
+tee /etc/docker/daemon.json <<-'EOF'
+{
+"registry-mirrors": ["https://1z45x7d0.mirror.aliyuncs.com"],
+"insecure-registries": ["192.168.56.11:5000"],
+"storage-driver": "overlay2",
+"log-driver": "json-file",
+"log-opts": {
+    "max-size": "100m",
+    "max-file": "3"
+    }
+}
 EOF
-
 systemctl daemon-reload
 systemctl restart docker
 
 #查看加速器是否生效
 root># docker info
  Registry Mirrors:
-  http://41935bf4.m.daocloud.io/   --发现参数已经生效
+  https://1z45x7d0.mirror.aliyuncs.com/   --发现参数已经生效
  Live Restore Enabled: false
 ```
 
+## 三、RKE安装
 
+```
+可以从https://github.com/rancher/rke/releases下载安装包,本文使用版本v0.1.9.下载完后将安装包上传至任意节点.
+```
 
 参考资料：
 
