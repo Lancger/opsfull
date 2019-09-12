@@ -52,7 +52,8 @@ cat > /etc/docker/daemon.json << \EOF
 {"registry-mirrors": ["http://41935bf4.m.daocloud.io"]}
 EOF
 
-systemctl docker restart
+systemctl daemon-reload
+systemctl restart docker
 ```
 # 二、配置优化
 ```
