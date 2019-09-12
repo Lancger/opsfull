@@ -115,11 +115,15 @@ mv rke_linux-amd64 /usr/local/bin/rke
 cat >/root/rancher-cluster.yml <<EOF
 nodes:
   - address: 192.168.56.11
-    user: rancher
+    user: docker
+    ssh_key_path: ~/.ssh/id_rsa
     role: [controlplane,worker,etcd]
   - address: 192.168.56.12
-    user: rancher
-    role: [controlplane,worker,etcd]
+    user: docker
+    role: [worker,etcd]
+  - address: 192.168.56.13
+    user: docker
+    role: [worker,etcd]
 
 services:
   etcd:
@@ -129,8 +133,6 @@ services:
 EOF
 
 chmod 777 /root/rancher-cluster.yml
-
-
 ```
 
 3、创建k8s集群
