@@ -5,7 +5,7 @@ mv /etc/yum.repos.d/ /etc/yum.repos.d_bak
 curl http://mirrors.aliyun.com/repo/Centos-7.repo >/etc/yum.repos.d/Centos-7.repo
 curl http://mirrors.aliyun.com/repo/epel-7.repo >/etc/yum.repos.d/epel-7.repo
 sed -i '/aliyuncs/d' /etc/yum.repos.d/Centos-7.repo
-yum makecache fast
+yum clean all && yum makecache fast
 
 yum -y install yum-utils
 yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
@@ -52,3 +52,8 @@ vm.swappiness=0
 EOF
 sysctl --system
 ```
+
+
+参考资料：
+
+http://www.acaiblog.cn/2019/03/15/RKE%E9%83%A8%E7%BD%B2rancher%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4/
