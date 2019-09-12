@@ -1,4 +1,4 @@
-## 一、备份原yum源
+## 一、基础环境准备
 
 ```
 curl http://mirrors.aliyun.com/repo/Centos-7.repo >/etc/yum.repos.d/Centos-7.repo
@@ -11,6 +11,16 @@ yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/d
 yum install -y device-mapper-persistent-data lvm2
 
 yum -y install docker
+
+#设置加速器
+curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://41935bf4.m.daocloud.io
+这个脚本在centos 7上有个bug,脚本会改变docker的配置文件/etc/docker/daemon.json但修改的时候多了一个逗号,导致docker无法启动
+
+或者直接执行这个指令
+cat > /etc/docker/daemon.json << \EOF
+{"registry-mirrors": ["http://41935bf4.m.daocloud.io"]}
+EOF
+
 systemctl docker restart
 ```
 # 一、创建docker用户和用户组
