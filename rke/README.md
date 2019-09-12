@@ -203,6 +203,29 @@ kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceac
 ```
 helm init --service-account tiller --tiller-image hongxiaolu/tiller:v2.12.3 --stable-repo-url https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts
 ```
+4、为helm客户端配置chart仓库
+```
+helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
+```
+5、检查rancher chart仓库可用
+```
+helm search rancher
+```
+```
+安装证书管理器
+helm install stable/cert-manager \
+  --name cert-manager \
+  --namespace kube-system
+  
+ kubectl get pods --all-namespaces|grep cert-manager
+  
+  
+ helm install rancher-stable/rancher \
+  --name rancher \
+  --namespace cattle-system \
+  --set hostname=acai.rancher.com
+  
+```
 
 参考资料：
 
