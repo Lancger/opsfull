@@ -54,6 +54,12 @@ EOF
 
 systemctl daemon-reload
 systemctl restart docker
+
+#查看加速器是否生效
+root># docker info
+ Registry Mirrors:
+  http://41935bf4.m.daocloud.io/   --发现参数已经生效
+ Live Restore Enabled: false
 ```
 # 二、配置优化
 ```
