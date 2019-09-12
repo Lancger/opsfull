@@ -9,6 +9,9 @@ yum makecache fast
 yum -y install yum-utils
 yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 yum install -y device-mapper-persistent-data lvm2
+
+yum -y install docker
+systemctl docker restart
 ```
 # 一、创建docker用户和用户组
 ```
