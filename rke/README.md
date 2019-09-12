@@ -17,7 +17,7 @@ net.ipv4.neigh.default.gc_thresh1=4096
 net.ipv4.neigh.default.gc_thresh2=6144
 net.ipv4.neigh.default.gc_thresh3=8192
 EOF
-sysctl –p
+sysctl -p
 
 cat <<EOF >  /etc/sysctl.d/k8s.conf
 net.bridge.bridge-nf-call-ip6tables = 1
