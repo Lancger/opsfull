@@ -1,7 +1,7 @@
 # 一、基础配置优化
 ```
 groupadd docker
-useradd docker -g docker
+useradd -G docker docker
 echo "123456" | passwd --stdin docker
 
 sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config # 关闭selinux
