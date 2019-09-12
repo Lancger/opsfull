@@ -139,7 +139,7 @@ chmod 777 /tmp/cluster.yml
 3、创建k8s集群
 
 ```
-rke up --config/tmp/cluster.yml
+rke up --config /tmp/cluster.yml
 ```
 
 参考资料：
