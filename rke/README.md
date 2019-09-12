@@ -194,6 +194,15 @@ cp linux-amd64/helm /usr/local/bin/
 ```
 
 2、配置helm客户端具有访问k8s集群的权限
+```
+kubectl -n kube-system create serviceaccount tiller
+kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
+
+```
+3、将helm server（titler）部署到k8s集群
+```
+helm init --service-account tiller --tiller-image hongxiaolu/tiller:v2.12.3 --stable-repo-url https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts
+```
 
 参考资料：
 
