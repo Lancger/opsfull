@@ -145,6 +145,14 @@ chmod 777 /tmp/cluster.yml
 rke up --config /tmp/cluster.yml
 ```
 
+4、安装kubectl
+```
+curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+chmod +x kubectl
+mv kubectl /usr/local/bin/kubectl
+kubectl version
+```
+
 参考资料：
 
 http://www.acaiblog.cn/2019/03/15/RKE%E9%83%A8%E7%BD%B2rancher%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4/
