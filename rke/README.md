@@ -113,24 +113,27 @@ mv rke_linux-amd64 /usr/local/bin/rke
 
 2、创建集群配置文件
 ```
-cat >/root/rancher-cluster.yml <<EOF
+cat >/tmp/cluster.yml <<EOF
 nodes:
-  - address: 192.168.56.11
-    user: docker
-    ssh_key_path: ~/.ssh/id_rsa
-    role: [controlplane,worker,etcd]
-  - address: 192.168.56.12
-    user: docker
-    role: [worker,etcd]
-  - address: 192.168.56.13
-    user: docker
-    role: [worker,etcd]
-
-services:
-  etcd:
-    snapshot: true
-    creation: 6h
-    retention: 24h
+    - address: 192.168.56.11
+      user: docker
+      role:
+        - controlplane
+        - etcd
+        - worker
+    - address: 192.168.56.12
+      user: docker
+      role:
+        - controlplane
+        - etcd
+        - worker
+    - address: 192.168.56.13
+      user: docker
+      role:
+        - controlplane
+        - etcd
+        - worker
+cluster_name: paas_cluster
 EOF
 
 chmod 777 /tmp/cluster.yml
