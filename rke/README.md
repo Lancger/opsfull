@@ -102,7 +102,11 @@ root># docker info
 ## 三、RKE安装
 
 ```
-可以从https://github.com/rancher/rke/releases下载安装包,本文使用版本v0.1.9.下载完后将安装包上传至任意节点.
+#可以从https://github.com/rancher/rke/releases下载安装包,本文使用版本v0.3.0.下载完后将安装包上传至任意节点.
+
+wget https://github.com/rancher/rke/releases/download/v0.3.0-rc10/rke_linux-amd64
+chmod 777 rke_linux-amd64
+mv rke_linux-amd64 /usr/local/bin/rke
 ```
 
 参考资料：
