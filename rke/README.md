@@ -162,7 +162,10 @@ kubectl version
 5、检查k8s集群pod状态
 ```
 kubectl get pods --all-namespaces
+
+kubectl describe pod pod-xxx -n namespace
 ```
+
 
 参考资料：
 
