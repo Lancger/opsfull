@@ -14,9 +14,9 @@ yum -y install docker
 
 #设置加速器
 curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://41935bf4.m.daocloud.io
-这个脚本在centos 7上有个bug,脚本会改变docker的配置文件/etc/docker/daemon.json但修改的时候多了一个逗号,导致docker无法启动
+#这个脚本在centos 7上有个bug,脚本会改变docker的配置文件/etc/docker/daemon.json但修改的时候多了一个逗号,导致docker无法启动
 
-或者直接执行这个指令
+#或者直接执行这个指令
 cat > /etc/docker/daemon.json << \EOF
 {"registry-mirrors": ["http://41935bf4.m.daocloud.io"]}
 EOF
