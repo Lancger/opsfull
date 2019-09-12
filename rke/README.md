@@ -139,12 +139,14 @@ EOF
 chmod 777 /tmp/cluster.yml
 ```
 
-3、创建k8s集群
+3、创建k8s集群(注意这里需要切换为普通用户操作)
 
 ```
+su - docker 
 rke up --config /tmp/cluster.yml
 
 #为root用户配置kubectl访问k8s集群(因为这里指定了目录/tmp，所以kube_config_rancher-cluster.yml文件也在/tmp目录)
+su - root
 mkdir -p /root/.kube
 cp /tmp/kube_config_rancher-cluster.yml /root/.kube/config
 ```
@@ -155,6 +157,11 @@ curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s http
 chmod +x kubectl
 mv kubectl /usr/local/bin/kubectl
 kubectl version
+```
+
+5、检查k8s集群pod状态
+```
+kubectl get pods --all-namespaces
 ```
 
 参考资料：
