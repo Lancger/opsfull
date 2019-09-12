@@ -101,12 +101,42 @@ root># docker info
 
 ## 三、RKE安装
 
+1、下载RKE
 ```
 #可以从https://github.com/rancher/rke/releases下载安装包,本文使用版本v0.3.0.下载完后将安装包上传至任意节点.
 
 wget https://github.com/rancher/rke/releases/download/v0.3.0-rc10/rke_linux-amd64
 chmod 777 rke_linux-amd64
 mv rke_linux-amd64 /usr/local/bin/rke
+```
+
+2、创建集群配置文件
+```
+cat >/root/rancher-cluster.yml <<EOF
+nodes:
+  - address: 192.168.56.11
+    user: rancher
+    role: [controlplane,worker,etcd]
+  - address: 192.168.56.12
+    user: rancher
+    role: [controlplane,worker,etcd]
+
+services:
+  etcd:
+    snapshot: true
+    creation: 6h
+    retention: 24h
+EOF
+
+chmod 777 /root/rancher-cluster.yml
+
+
+```
+
+3、创建k8s集群
+
+```
+rke up --config rancher-cluster.yml
 ```
 
 参考资料：
