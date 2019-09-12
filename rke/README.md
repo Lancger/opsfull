@@ -1,6 +1,7 @@
 ## 一、基础环境准备
 
 ```
+mv /etc/yum.repos.d/ /etc/yum.repos.d_bak
 curl http://mirrors.aliyun.com/repo/Centos-7.repo >/etc/yum.repos.d/Centos-7.repo
 curl http://mirrors.aliyun.com/repo/epel-7.repo >/etc/yum.repos.d/epel-7.repo
 sed -i '/aliyuncs/d' /etc/yum.repos.d/Centos-7.repo
