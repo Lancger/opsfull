@@ -4,14 +4,10 @@ groupadd docker
 useradd docker -G docker
 echo "123456" | passwd --stdin docker
 
-sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config   # 关闭selinux
-
+sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config # 关闭selinux
 systemctl stop firewalld.service && systemctl disable firewalld.service # 关闭防火墙
-
-echo 'LANG="en_US.UTF-8"' >> /etc/profile;source /etc/profile #修改系统语言
-
+#echo 'LANG="en_US.UTF-8"' >> /etc/profile; source /etc/profile # 修改系统语言
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime # 修改时区（如果需要修改）
-
 
 # 性能调优
 cat >> /etc/sysctl.conf<<EOF
