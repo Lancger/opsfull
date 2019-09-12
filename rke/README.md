@@ -11,7 +11,37 @@ yum -y install yum-utils
 yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 yum install -y device-mapper-persistent-data lvm2
 
-yum -y install docker
+yum install docker-ce -y
+
+#从docker1.13版本开始，docker会自动设置iptables的FORWARD默认策略为DROP，所以需要修改docker的启动配置文件/usr/lib/systemd/system/docker.service
+
+cat > /usr/lib/systemd/system/docker.service << \EOF
+[Unit]
+Description=Docker Application Container Engine
+Documentation=https://docs.docker.com
+BindsTo=containerd.service
+After=network-online.target firewalld.service containerd.service
+Wants=network-online.target
+Requires=docker.socket
+[Service]
+Type=notify
+ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+ExecStartPost=/usr/sbin/iptables -P FORWARD ACCEPT
+ExecReload=/bin/kill -s HUP \$MAINPID
+TimeoutSec=0
+RestartSec=2
+Restart=always
+StartLimitBurst=3
+StartLimitInterval=60s
+LimitNOFILE=infinity
+LimitNPROC=infinity
+LimitCORE=infinity
+TasksMax=infinity
+Delegate=yes
+KillMode=process
+[Install]
+WantedBy=multi-user.target
+EOF
 
 #设置加速器
 curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://41935bf4.m.daocloud.io
