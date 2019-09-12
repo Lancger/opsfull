@@ -1,3 +1,15 @@
+## 一、备份原yum源
+
+```
+curl http://mirrors.aliyun.com/repo/Centos-7.repo >/etc/yum.repos.d/Centos-7.repo
+curl http://mirrors.aliyun.com/repo/epel-7.repo >/etc/yum.repos.d/epel-7.repo
+sed -i '/aliyuncs/d' /etc/yum.repos.d/Centos-7.repo
+yum makecache fast
+
+yum -y install yum-utils
+yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+yum install -y device-mapper-persistent-data lvm2
+```
 # 一、创建docker用户和用户组
 ```
 groupadd docker
