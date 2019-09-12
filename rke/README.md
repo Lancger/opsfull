@@ -23,7 +23,7 @@ EOF
 
 systemctl docker restart
 ```
-# 一、创建docker用户和用户组
+# 二、配置优化
 ```
 groupadd docker
 useradd docker -G docker
