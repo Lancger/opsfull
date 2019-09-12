@@ -166,6 +166,34 @@ kubectl get pods --all-namespaces
 kubectl describe pod pod-xxx -n namespace
 ```
 
+6、指令补全
+```
+yum install bash-completion -y
+
+source <(kubectl completion bash)
+echo "source <(kubectl completion bash)" >> ~/.bashrc
+```
+
+# 四、helm将rancher部署在k8s集群
+
+1、安装并配置helm客户端
+```
+#使用官方提供的脚本一键安装
+curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get > get_helm.sh
+chmod 700 get_helm.sh
+./get_helm.sh
+
+
+#手动下载安装
+#下载 Helm 
+wget https://storage.googleapis.com/kubernetes-helm/helm-v2.9.1-linux-amd64.tar.gz
+#解压 Helm
+tar -zxvf helm-v2.9.1-linux-amd64.tar.gz
+#复制客户端执行文件到 bin 目录下
+cp linux-amd64/helm /usr/local/bin/
+```
+
+2、配置helm客户端具有访问k8s集群的权限
 
 参考资料：
 
