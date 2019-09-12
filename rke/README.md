@@ -145,10 +145,10 @@ chmod 777 /tmp/cluster.yml
 su - docker 
 rke up --config /tmp/cluster.yml
 
-#为root用户配置kubectl访问k8s集群(因为这里指定了目录/tmp，所以kube_config_rancher-cluster.yml文件也在/tmp目录)
+#为root用户配置kubectl访问k8s集群(因为这里指定了目录/tmp，所以kube_config_cluster.yml文件也在/tmp目录)
 su - root
 mkdir -p /root/.kube
-cp /tmp/kube_config_rancher-cluster.yml /root/.kube/config
+cp /tmp/kube_config_cluster.yml /root/.kube/config
 ```
 
 4、安装kubectl
