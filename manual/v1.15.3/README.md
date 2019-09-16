@@ -91,8 +91,39 @@ cat >> /etc/hosts <<EOF
 EOF
 ```
 
+## 1.3、设置免密
 
+我们只在k8s-01上设置免密即可
 
+```
+wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo
+curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+yum install -y expect
+
+#分发公钥
+ssh-keygen -t rsa -P "" -f /root/.ssh/id_rsa
+for i in k8s-01 k8s-02 k8s-03 k8s-04;do
+expect -c "
+spawn ssh-copy-id -i /root/.ssh/id_rsa.pub root@$i
+        expect {
+                \"*yes/no*\" {send \"yes\r\"; exp_continue}
+                \"*password*\" {send \"123456\r\"; exp_continue}
+                \"*Password*\" {send \"123456\r\";}
+        } "
+done 
+
+#我这里密码是123456  大家按照自己主机的密码进行修改就可以
+```
+
+更新PATH变量 
+```
+[root@abcdocker-k8s01 ~]# echo 'PATH=/opt/k8s/bin:$PATH' >>/etc/profile
+[root@abcdocker-k8s01 ~]# source  /etc/profile
+[root@abcdocker-k8s01 ~]# env|grep PATH
+PATH=/opt/k8s/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
+```
+
+安装依赖包
 
 参考资料
 
