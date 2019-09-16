@@ -230,3 +230,5 @@ helm install stable/cert-manager \
 参考资料：
 
 http://www.acaiblog.cn/2019/03/15/RKE%E9%83%A8%E7%BD%B2rancher%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4/
+
+https://blog.csdn.net/login_sonata/article/details/93847888
