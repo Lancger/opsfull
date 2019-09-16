@@ -13,7 +13,7 @@ Flanneld 0.11.0
 
 ## 1.2、组件说明
 
-kube-apiserver
+### kube-apiserver
 
 ```
 使用节点本地Nginx 4层透明代理实现高可用 (也可以使用haproxy，只是起到代理apiserver的作用)
@@ -24,7 +24,7 @@ kube-apiserver
 使用https访问kubelet、etcd
 ```
 
-kube-controller-manager
+### kube-controller-manager
 ```
 3节点高可用 (在k8s中，有些组件需要选举，所以使用奇数为集群高可用方案)
 关闭非安全端口，使用10252接受https请求
@@ -32,12 +32,12 @@ kube-controller-manager
 使用approve kubelet证书签名请求(CSR)，证书过期后自动轮转
 各controller使用自己的ServiceAccount访问apiserver
 ```
-kube-scheduler
+### kube-scheduler
 ```
 3节点高可用；
 使用kubeconfig访问apiserver安全端口
 ```
-kubelet
+### kubelet
 ```
 使用kubeadm动态创建bootstrap token
 使用TLS bootstrap机制自动生成client和server证书，过期后自动轮转
@@ -45,13 +45,13 @@ kubelet
 关闭只读端口，在安全端口10250接受https请求，对请求进行认真和授权，拒绝匿名访问和非授权访问
 使用kubeconfig访问apiserver的安全端口
 ```
-kube-proxy
+### kube-proxy
 ```
 使用kubeconfig访问apiserver的安全端口
 在KubeProxyConfiguration类型JSON文件配置为主要参数
 使用ipvs代理模式
 ```
-集群插件
+### 集群插件
 ```
 DNS 使用功能、性能更好的coredns
 网络 使用Flanneld 作为集群网络插件
