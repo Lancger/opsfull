@@ -145,7 +145,11 @@ sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
 #如果开启了swap分区，kubelet会启动失败(可以通过设置参数——-fail-swap-on设置为false)
 ```
 
+升级内核
 
+```
+
+```
 
 
 
