@@ -112,6 +112,25 @@ spawn ssh-copy-id -i /root/.ssh/id_rsa.pub root@$i
         } "
 done 
 
+#vim ssh_copy.sh
+
+#!/bin/bash
+
+for i in `echo k8s-master1 k8s-master2 k8s-slave01 k8s-slave02 k8s-slave03`;do
+expect -c "
+spawn scp $1 root@$i:$1
+    expect {
+            \"*yes/no*\" {send \"yes\r\"; exp_continue}
+            \"*password*\" {send \"123456\r\"; exp_continue}
+            \"*Password*\" {send \"123456\r\";}
+    } "
+done
+
+
+使用
+ssh_copy.sh /etc/sysconfig/iptables
+
+
 #我这里密码是123456  大家按照自己主机的密码进行修改就可以
 ```
 更新PATH变量 
