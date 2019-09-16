@@ -114,7 +114,6 @@ done
 
 #我这里密码是123456  大家按照自己主机的密码进行修改就可以
 ```
-
 更新PATH变量 
 ```
 [root@abcdocker-k8s01 ~]# echo 'PATH=/opt/k8s/bin:$PATH' >>/etc/profile
@@ -123,7 +122,33 @@ done
 PATH=/opt/k8s/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
 ```
 
-安装依赖包
+## 1.4、安装依赖包
+
+在每台服务器上安装依赖包
+ 
+```
+yum install -y conntrack ntpdate ntp ipvsadm ipset jq iptables curl sysstat libseccomp wget
+```
+
+关闭防火墙 Linux 以及swap分区
+
+```
+systemctl stop firewalld
+systemctl disable firewalld
+iptables -F && iptables -X && iptables -F -t nat && iptables -X -t nat
+iptables -P FORWARD ACCEPT
+swapoff -a
+sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
+setenforce 0
+sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
+
+#如果开启了swap分区，kubelet会启动失败(可以通过设置参数——-fail-swap-on设置为false)
+```
+
+
+
+
+
 
 参考资料
 
