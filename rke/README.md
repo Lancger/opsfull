@@ -4,6 +4,7 @@ groupadd k8s
 useradd -g k8s k8s
 echo "123456" | passwd --stdin k8s
 
+setenforce 0
 sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config # 关闭selinux
 systemctl stop firewalld.service && systemctl disable firewalld.service # 关闭防火墙
 #echo 'LANG="en_US.UTF-8"' >> /etc/profile; source /etc/profile # 修改系统语言
