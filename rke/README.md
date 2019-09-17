@@ -151,6 +151,8 @@ rke up --config /tmp/cluster.yml
 su - root
 mkdir -p /root/.kube
 cp /tmp/kube_config_cluster.yml /root/.kube/config
+
+docker logs kube-proxy
 ```
 
 4、安装kubectl
