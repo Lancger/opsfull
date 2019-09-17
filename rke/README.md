@@ -1,8 +1,8 @@
 # 一、基础配置优化
 ```
-groupadd docker
-useradd -G docker docker
-echo "123456" | passwd --stdin docker
+groupadd k8s
+useradd -g k8s k8s
+echo "123456" | passwd --stdin k8s
 
 sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config # 关闭selinux
 systemctl stop firewalld.service && systemctl disable firewalld.service # 关闭防火墙
