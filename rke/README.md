@@ -3,6 +3,7 @@
 groupadd k8s
 useradd -g k8s k8s
 echo "123456" | passwd --stdin k8s
+usermod k8s -G docker  #注意这里需要将数组改为docker属组，不然会报错
 
 setenforce 0
 sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config # 关闭selinux
