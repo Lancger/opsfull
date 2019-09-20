@@ -33,6 +33,7 @@ Traefik 是一款开源的反向代理与负载均衡工具。它最大的优点
 首先，为安全起见我们这里使用 RBAC 安全认证方式：(rbac.yaml)：
 
 ```
+# vim rbac.yaml
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -90,6 +91,7 @@ clusterrolebinding.rbac.authorization.k8s.io "traefik-ingress-controller" create
 然后使用 Deployment 来管理 Pod，直接使用官方的 traefik 镜像部署即可（traefik.yaml）
 
 ```
+# vim traefik.yaml
 ---
 kind: Deployment
 apiVersion: extensions/v1beta1
@@ -114,7 +116,7 @@ spec:
       tolerations:
       - operator: "Exists"
       nodeSelector:
-        kubernetes.io/hostname: master   #注意这里使用自身机器master的地址可以使用kubectl get nodes来查看
+        kubernetes.io/hostname: master   #默认master是不允许被调度的，加上tolerations后允许被调度,然后这里使用自身机器master的地址,可以使用kubectl get nodes来查看
       containers:
       - image: traefik
         name: traefik-ingress-lb
@@ -181,3 +183,75 @@ traefik-ingress-service   NodePort    10.102.183.112   <none>        80:30539/TC
 ...
 ```
 现在在浏览器中输入 master_node_ip:30486 就可以访问到 traefik 的 dashboard 了：
+
+
+# 四、Ingress 对象
+
+现在我们是通过 NodePort 来访问 traefik 的 Dashboard 的，那怎样通过 ingress 来访问呢？ 首先，需要创建一个 ingress 对象：(ingress.yaml)
+
+```
+# vim ingress.yaml
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: traefik-web-ui
+  namespace: kube-system
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: traefik.haimaxy.com
+    http:
+      paths:
+      - backend:
+          serviceName: traefik-ingress-service
+          servicePort: 8080
+```
+
+然后为 traefik dashboard 创建对应的 ingress 对象：
+
+```
+$ kubectl create -f ingress.yaml
+ingress.extensions "traefik-web-ui" created
+```
+
+要注意上面的 ingress 对象的规则，特别是 rules 区域，我们这里是要为 traefik 的 dashboard 建立一个 ingress 对象，所以这里的 serviceName 对应的是上面我们创建的 traefik-ingress-service，端口也要注意对应 8080 端口，为了避免端口更改，这里的 servicePort 的值也可以替换成上面定义的 port 的名字：admin
+
+创建完成后，我们应该怎么来测试呢？
+
+第一步，在本地的/etc/hosts里面添加上 traefik.haimaxy.com 与 master 节点外网 IP 的映射关系
+
+第二步，在浏览器中访问：http://traefik.haimaxy.com 我们会发现并没有得到我们期望的 dashboard 界面，这是因为我们上面部署 traefik 的时候使用的是 NodePort 这种 Service 对象，所以我们只能通过上面的 30539 端口访问到我们的目标对象：http://traefik.haimaxy.com:30539
+
+
+加上端口后我们发现可以访问到 dashboard 了，而且在 dashboard 当中多了一条记录，正是上面我们创建的 ingress 对象的数据，我们还可以切换到 HEALTH 界面中，可以查看当前 traefik 代理的服务的整体的健康状态 
+
+第三步，上面我们可以通过自定义域名加上端口可以访问我们的服务了，但是我们平时服务别人的服务是不是都是直接用的域名啊，http 或者 https 的，几乎很少有在域名后面加上端口访问的吧？为什么？太麻烦啊，端口也记不住，要解决这个问题，怎么办，我们只需要把我们上面的 traefik 的核心应用的端口隐射到 master 节点上的 80 端口，是不是就可以了，因为 http 默认就是访问 80 端口，但是我们在 Service 里面是添加的一个 NodePort 类型的服务，没办法映射 80 端口，怎么办？这里就可以直接在 Pod 中指定一个 hostPort 即可，更改上面的 traefik.yaml 文件中的容器端口：
+
+```
+containers:
+- image: traefik
+name: traefik-ingress-lb
+ports:
+- name: http
+  containerPort: 80
+  hostPort: 80
+- name: admin
+  containerPort: 8080
+```
+
+添加以后hostPort: 80，然后更新应用：
+
+```
+$ kubectl apply -f traefik.yaml
+```
+
+更新完成后，这个时候我们在浏览器中直接使用域名方法测试下：
+
+
+第四步，正常来说，我们如果有自己的域名，我们可以将我们的域名添加一条 DNS 记录，解析到 master 的外网 IP 上面，这样任何人都可以通过域名来访问我的暴露的服务了。
+
+如果你有多个边缘节点的话，可以在每个边缘节点上部署一个 ingress-controller 服务，然后在边缘节点前面挂一个负载均衡器，比如 nginx，将所有的边缘节点均作为这个负载均衡器的后端，这样就可以实现 ingress-controller 的高可用和负载均衡了。
+
+到这里我们就通过 ingress 对象对外成功暴露了一个服务，下节课我们再来详细了解 traefik 的更多用法。
