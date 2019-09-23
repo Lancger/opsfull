@@ -1,4 +1,4 @@
-# 证书文件
+# 一、证书文件
 
 1、生成证书
 ```
@@ -30,7 +30,7 @@ secret "traefik-cert" deleted
 secret "first-k8s" deleted
 ```
 
-# 证书配置
+# 二、证书配置
 
 1、创建configMap(cm)
 
@@ -68,7 +68,7 @@ $ kubectl describe cm traefik-conf -n kube-system
 $ kubectl delete cm traefik-conf -n kube-system
 ```
 
-# traefik-ingress-controller文件
+# 三、traefik-ingress-controller文件
 
 1、创建文件
 ```
@@ -253,7 +253,7 @@ serviceaccount/traefik-ingress-controller created
 #删除资源
 $ kubectl delete -f traefik-controller-tls.yaml 
 ```
-# 命令行创建 https ingress 例子
+# 四、命令行创建 https ingress 例子
 ```
 # 创建示例应用
 $ kubectl run test-hello --image=nginx:alpine --port=80 --expose -n kube-system
@@ -287,13 +287,13 @@ $ kubectl apply -f /config/hello-tls.ing.yaml
 $ kubectl -n kube-system create secret tls traefik-cert --key=tls_default.key --cert=tls_default.crt
 
 ```
-#测试访问
+#测试访问（找到traefik-controller pod运行在哪个node节点上，然后绑定该节点的IP，然后访问该url）
 
 https://k8s.test.com:23457
 
   ![ingress测试](https://github.com/Lancger/opsfull/blob/master/images/ingress-k8s-02.png)
 
-# 测试deployment和ingress
+# 五、测试deployment和ingress
 ```
 $ vim nginx-ingress-deploy.yaml
 ---
