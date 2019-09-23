@@ -253,6 +253,36 @@ serviceaccount/traefik-ingress-controller created
 #删除资源
 $ kubectl delete -f traefik-controller-tls.yaml 
 ```
+# 命令行创建 https ingress 例子
+```
+# 创建示例应用
+$ kubectl run test-hello --image=nginx:alpine --port=80 --expose -n kube-system
+
+# hello-tls-ingress 示例
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: hello-tls-ingress
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: k8s.test.com
+    http:
+      paths:
+      - backend:
+          serviceName: test-hello
+          servicePort: 80
+  tls:
+  - secretName: traefik-cert
+  
+# 创建https ingress
+$ kubectl apply -f /etc/ansible/manifests/ingress/traefik/tls/hello-tls.ing.yaml
+
+# 注意根据hello示例，需要在default命名空间创建对应的secret: traefik-cert
+$ kubectl create secret tls traefik-cert --key=tls_default.key --cert=tls_default.crt
+```
+
 # 测试deployment和ingress
 ```
 $ vim nginx-ingress-deploy.yaml
