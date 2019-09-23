@@ -283,7 +283,7 @@ spec:
 # 创建https ingress
 $ kubectl apply -f /config/hello-tls.ing.yaml
 
-# 注意根据hello示例，需要在kube-system命名空间创建对应的secret: traefik-cert(这步在开篇已经创建了)
+# 注意根据hello示例，需要在kube-system命名空间创建对应的secret: traefik-cert(这步在开篇已经创建了，无须再创建)
 $ kubectl -n kube-system create secret tls traefik-cert --key=tls_default.key --cert=tls_default.crt
 
 ```
