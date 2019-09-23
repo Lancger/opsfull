@@ -366,5 +366,9 @@ spec:
           servicePort: 80
           
 $ kubectl apply -f nginx-ingress-deploy.yaml 
-$ kubectl delete -f nginx-ingress-deploy.yaml 
+$ kubectl delete -f nginx-ingress-deploy.yaml
 ```
+
+#访问测试
+https://k8s.first.com:23457/
+https://k8s.second.com:23457/
