@@ -5,7 +5,7 @@
 mkdir -p /ssl/{default,first,second}
 cd /ssl/default/
 openssl req -x509 -nodes -days 165 -newkey rsa:2048 -keyout tls.key -out tls.crt -subj "/CN=k8s.test.com"
-kubectl -n kube-system create secret tls traefik-cert --key=tls.key --cert=tls.crt
+kubectl -n kube-system create secret tls traefik-cert --key=tls_default.key --cert=tls_default.crt
 
 cd /ssl/first/
 openssl req -x509 -nodes -days 265 -newkey rsa:2048 -keyout tls_first.key -out tls_first.crt -subj "/CN=k8s.first.com"
@@ -13,7 +13,7 @@ kubectl -n kube-system create secret tls first-k8s --key=tls_first.key --cert=tl
 
 cd /ssl/second/
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls_second.key -out tls_second.crt -subj "/CN=k8s.second.com"
-kubectl -n kube-system create secret tls first-k8s --key=tls_second.key --cert=tls_second.crt
+kubectl -n kube-system create secret tls second-k8s --key=tls_second.key --cert=tls_second.crt
 
 #查看证书
 kubectl get secret traefik-cert first-k8s second-k8s -n kube-system
