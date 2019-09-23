@@ -4,7 +4,7 @@
 ```
 mkdir -p /ssl/{default,first,second}
 cd /ssl/default/
-openssl req -x509 -nodes -days 165 -newkey rsa:2048 -keyout tls.key -out tls.crt -subj "/CN=k8s.test.com"
+openssl req -x509 -nodes -days 165 -newkey rsa:2048 -keyout tls_default.key -out tls_default.crt -subj "/CN=k8s.test.com"
 kubectl -n kube-system create secret tls traefik-cert --key=tls_default.key --cert=tls_default.crt
 
 cd /ssl/first/
