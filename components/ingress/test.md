@@ -128,6 +128,10 @@ spec:
           name: traefik-conf
       #nodeSelector:
       #  node-role.kubernetes.io/traefik: "true"
+      tolerations:
+      - operator: "Exists"
+      nodeSelector:
+        kubernetes.io/hostname: 10.19.1.156    #指定traefik-ingress-controller跑在这个node节点上面
       containers:
       - image: traefik:v1.7.12
         imagePullPolicy: IfNotPresent
