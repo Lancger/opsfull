@@ -289,6 +289,7 @@ $ kubectl -n kube-system create secret tls traefik-cert --key=tls_default.key --
 # 测试访问：
 https://k8s.test.com:23457
 ```
+  ![ingress测试](https://github.com/Lancger/opsfull/blob/master/images/ingress-k8s-02.png)
 
 # 测试deployment和ingress
 ```
