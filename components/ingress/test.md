@@ -358,7 +358,7 @@ spec:
       - backend:
           serviceName: nginx-service
           servicePort: 80
-  - host: k8s.senond.com
+  - host: k8s.second.com
     http:
       paths:
       - backend:
