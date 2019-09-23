@@ -184,7 +184,6 @@ spec:
       nodePort: 23456
       name: http
     - protocol: TCP
-      # 
       port: 443
       nodePort: 23457
       name: https
