@@ -370,5 +370,12 @@ $ kubectl delete -f nginx-ingress-deploy.yaml
 ```
 
 #访问测试
+
 https://k8s.first.com:23457/
+
+  ![ingress测试](https://github.com/Lancger/opsfull/blob/master/images/ingress-k8s-03.png)
+
 https://k8s.second.com:23457/
+
+  ![ingress测试](https://github.com/Lancger/opsfull/blob/master/images/ingress-k8s-04.png)
+
