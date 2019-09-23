@@ -47,8 +47,8 @@ defaultEntryPoints = ["http", "https"]
     address = ":443"
     [entryPoints.https.tls]
       [[entryPoints.https.tls.certificates]]
-        CertFile = "/ssl/default/tls.crt"
-        KeyFile = "/ssl/default/tls.key"
+        CertFile = "/ssl/default/tls_default.crt"
+        KeyFile = "/ssl/default/tls_default.key"
       [[entryPoints.https.tls.certificates]]
         CertFile = "/ssl/first/tls_first.crt"
         KeyFile = "/ssl/first/tls_first.key"
