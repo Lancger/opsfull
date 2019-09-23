@@ -9,11 +9,11 @@ kubectl -n kube-system create secret tls traefik-cert --key=tls.key --cert=tls.c
 
 cd /ssl/first/
 openssl req -x509 -nodes -days 265 -newkey rsa:2048 -keyout tls_first.key -out tls_first.crt -subj "/CN=k8s.first.com"
-kubectl create secret generic first-k8s --from-file=tls_first.crt --from-file=tls_first.key -n kube-system
+kubectl -n kube-system create secret tls first-k8s --key=tls_first.key --cert=tls_first.crt
 
 cd /ssl/second/
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls_second.key -out tls_second.crt -subj "/CN=k8s.second.com"
-kubectl create secret generic second-k8s --from-file=tls_second.crt --from-file=tls_second.key -n kube-system
+kubectl -n kube-system create secret tls first-k8s --key=tls_second.key --cert=tls_second.crt
 
 #查看证书
 kubectl get secret traefik-cert first-k8s second-k8s -n kube-system
