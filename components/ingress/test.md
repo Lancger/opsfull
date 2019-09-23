@@ -259,6 +259,7 @@ $ kubectl delete -f traefik-controller-tls.yaml
 $ kubectl run test-hello --image=nginx:alpine --port=80 --expose -n kube-system
 
 # hello-tls-ingress 示例
+$ cd /config/
 $ vim hello-tls.ing.yaml
 
 apiVersion: extensions/v1beta1
