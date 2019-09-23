@@ -378,3 +378,11 @@ https://k8s.second.com:23457/
 
   ![ingress测试](https://github.com/Lancger/opsfull/blob/master/images/ingress-k8s-04.png)
 
+
+参考资料：
+
+参考资料：
+
+https://xuchao918.github.io/2019/03/01/Kubernetes-traefik-ingress%E4%BD%BF%E7%94%A8/ Kubernetes traefik ingress使用
+
+http://docs.kubernetes.org.cn/558.html
