@@ -260,10 +260,12 @@ $ kubectl run test-hello --image=nginx:alpine --port=80 --expose -n kube-system
 
 # hello-tls-ingress 示例
 $ vim hello-tls.ing.yaml
+
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: hello-tls-ingress
+  namespace: kube-system
   annotations:
     kubernetes.io/ingress.class: traefik
 spec:
