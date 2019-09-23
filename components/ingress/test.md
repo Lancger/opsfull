@@ -260,7 +260,7 @@ $ kubectl run test-hello --image=nginx:alpine --port=80 --expose -n kube-system
 
 # 删除示例应用（kubectl run 默认创建的是deployment资源应用 ）
 $ kubectl delete deployment test-hello -n kube-system
-$ kubectl delete sev test-hello -n kube-system
+$ kubectl delete svc test-hello -n kube-system
 
 # hello-tls-ingress 示例
 $ cd /config/
