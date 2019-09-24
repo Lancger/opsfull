@@ -254,4 +254,5 @@ $ kubectl apply -f traefik.yaml
 
 如果你有多个边缘节点的话，可以在每个边缘节点上部署一个 ingress-controller 服务，然后在边缘节点前面挂一个负载均衡器，比如 nginx，将所有的边缘节点均作为这个负载均衡器的后端，这样就可以实现 ingress-controller 的高可用和负载均衡了。
 
+
 到这里我们就通过 ingress 对象对外成功暴露了一个服务，下节课我们再来详细了解 traefik 的更多用法。
