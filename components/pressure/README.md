@@ -8,10 +8,18 @@ RR反射器还分为两种 可以由calico的节点服务承载 也可以是直�
 
 # 二、flanel网络组件压测
 
+```
+flannel受限于cpu压力
+```
   ![k8s网络组件flannel压测](https://github.com/Lancger/opsfull/blob/master/images/pressure_flannel_01.png)
 
 # 三、calico网络组件压测
 
+```
+calico则轻轻松松与宿主机性能相差无几
+
+如果单单一个集群 节点数超级多 如果不做BGP路由聚合 物理路由器或三层交换机会扛不住的
+```
   ![k8s网络组件calico压测](https://github.com/Lancger/opsfull/blob/master/images/pressure_calico_01.png)
 
 # 四、calico网络和宿主机压测
