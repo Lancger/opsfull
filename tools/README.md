@@ -18,6 +18,10 @@ hosts
 ```
 
 2、iptables多端口
-```
--A RH-Firewall-1-INPUT -s 13.138.33.20/32 -p tcp -m tcp -m multiport --dports 80,443 -j ACCEPT
+```bash
+#iptables多端口
+-A RH-Firewall-1-INPUT -s 13.138.33.20/32 -p tcp -m tcp -m multiport --dports 80,443,6443,20000:40000 -j ACCEPT
+
+#同步防火墙
+./ssh_copy.sh /etc/sysconfig/iptables_common /etc/sysconfig/iptables
 ```
