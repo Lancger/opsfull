@@ -17,7 +17,7 @@ spawn scp /etc/hosts root@slave03:/etc/hosts
 hosts 
 ```
 
-2、同步主机iptables
+2、iptables多端口
 ```
-
+-A RH-Firewall-1-INPUT -s 13.138.33.20/32 -p tcp -m tcp -m multiport --dports 80,443 -j ACCEPT
 ```
