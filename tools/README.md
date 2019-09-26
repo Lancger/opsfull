@@ -2,7 +2,7 @@
 
 1、同步主机host文件
 ```
-[root@master01 ~]# ./ssh_copy.sh /etc/hosts
+[root@master01 ~]# ./ssh_copy.sh /etc/hosts /etc/hosts
 spawn scp /etc/hosts root@master01:/etc/hosts
 hosts                                                                                                                                              100%  440   940.4KB/s   00:00    
 spawn scp /etc/hosts root@master02:/etc/hosts
