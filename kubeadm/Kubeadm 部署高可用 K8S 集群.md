@@ -13,7 +13,7 @@ Kuberctl： 1.13.4
 ```bash
 Master01： 二、三、四、五、六、七、八、九、十一
 Master02、Master03： 二、三、五、六、四、九
-node01、node02： 二、五、六、九
+node01、node02、node03： 二、五、六、九
 ```
 # 集群架构：
 
