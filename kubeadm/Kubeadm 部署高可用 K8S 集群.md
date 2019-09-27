@@ -636,6 +636,17 @@ vim /usr/lib/systemd/system/docker.service
 # 增加下面命令
 ExecStartPost=/usr/sbin/iptables -P FORWARD ACCEPT
 
+# 配置docker加速器
+cat > /etc/docker/daemon.json << \EOF
+{
+  "registry-mirrors": [
+    "https://dockerhub.azk8s.cn",
+    "https://i37dz0y4.mirror.aliyuncs.com"
+  ],
+  "insecure-registries": ["reg.hub.com"]
+}
+EOF
+
 # 重启Docker
 systemctl daemon-reload
 systemctl restart docker
