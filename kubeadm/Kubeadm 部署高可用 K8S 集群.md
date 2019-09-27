@@ -300,6 +300,9 @@ swapoff -a && sysctl -w vm.swappiness=0
 # 编辑 fstab 配置文件，注释掉标识为 Swap 设备的所有行
 vi /etc/fstab
 
+UUID=9be41058-76a6-4588-8e3f-5b44604d8de1 /                       xfs     defaults,noatime        0 0
+UUID=4489cc8f-1885-4e17-bfe7-8652fd1d3feb /boot                   xfs     defaults,noatime        0 0
+#UUID=0f5ae5f1-4872-471f-9f3a-f172a43fc1ff swap                    swap    defaults,noatime        0 0
 ```
 
 8、设置系统参数
