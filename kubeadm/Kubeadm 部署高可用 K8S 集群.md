@@ -88,14 +88,14 @@
 <table border="0">
     <tr>
         <td><strong>地址<strong></td>
-        <td><strong>主机名></td>
-        <td><strong>内存&CPU></td>
-        <td><strong>角色></td>
+        <td><strong>主机名</td>
+        <td><strong>内存&CPU</td>
+        <td><strong>角色</td>
     </tr>
     <tr>
         <td>10.19.2.200</td>
-        <td>—</td>
-        <td>—</td>
+        <td>-</td>
+        <td>-</td>
         <td>vip</td>
     </tr>
     <tr>
@@ -119,19 +119,19 @@
     <tr>
         <td>10.19.2.246</td>
         <td>k8s-node-01</td>
-        <td>2C & 2G</td>
+        <td>4C & 8G</td>
         <td>node</td>
     </tr>
     <tr>
         <td>10.19.2.247</td>
         <td>k8s-node-02</td>
-        <td>2C & 2G</td>
+        <td>4C & 8G</td>
         <td>node</td>
     </tr>
     <tr>
         <td>10.19.2.248</td>
         <td>k8s-node-03</td>
-        <td>2C & 2G</td>
+        <td>4C & 8G</td>
         <td>node</td>
     </tr>
 </table>
