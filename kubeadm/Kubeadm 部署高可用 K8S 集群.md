@@ -832,6 +832,10 @@ EOF
 ```
 kubeadm init --config kubeadm-config.yaml 
 ```
+日志
+```
+
+```
 
 ## 初始化失败
 ```bash
