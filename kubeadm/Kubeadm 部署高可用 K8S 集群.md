@@ -150,35 +150,35 @@
     </tr>
     <tr>
         <td>TCP</td>
-        <td>Inbound</td>
+        <td>Inbound 入口</td>
         <td>6443*</td>
         <td>Kubernetes API</td>
         <td>server All</td>
     </tr>
     <tr>
         <td>TCP</td>
-        <td>Inbound</td>
+        <td>Inbound 入口</td>
         <td>2379-2380</td>
         <td>etcd server</td>
         <td>client API kube-apiserver, etcd</td>
     </tr>
     <tr>
         <td>TCP</td>
-        <td>Inbound</td>
+        <td>Inbound 入口</td>
         <td>10250</td>
         <td>Kubernetes API</td>
         <td>Self, Control plane</td>
     </tr>
     <tr>
         <td>TCP</td>
-        <td>Inbound</td>
+        <td>Inbound 入口</td>
         <td>10251</td>
         <td>kube-scheduler</td>
         <td>Self</td>
     </tr>
     <tr>
         <td>TCP</td>
-        <td>Inbound</td>
+        <td>Inbound 入口</td>
         <td>10252</td>
         <td>kube-controller-manager</td>
         <td>Self</td>
@@ -197,14 +197,14 @@
     </tr>
     <tr>
         <td>TCP</td>
-        <td>Inbound</td>
+        <td>Inbound 入口</td>
         <td>10250</td>
         <td>Kubernetes API</td>
         <td>Self, Control plane</td>
     </tr>
     <tr>
         <td>TCP</td>
-        <td>Inbound</td>
+        <td>Inbound 入口</td>
         <td>30000-32767</td>
         <td>NodePort Services**</td>
         <td>All</td>
