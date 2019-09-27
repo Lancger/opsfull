@@ -876,7 +876,27 @@ echo "source <(kubectl completion bash)" >> ~/.bashrc
 ### 4、查看组件状态
 ```bash
 kubectl get cs
+
+NAME                 STATUS    MESSAGE              ERROR
+controller-manager   Healthy   ok                   
+scheduler            Healthy   ok                   
+etcd-0               Healthy   {"health": "true"}   
+
+# 查看pod状态
+[root@k8s-master-01 ~]# kubectl get pods --namespace=kube-system
+NAME                                    READY   STATUS    RESTARTS   AGE
+coredns-78d4cf999f-5zt5z                0/1     Pending   0          7m32s    ---coredns没有启动
+coredns-78d4cf999f-mkgsx                0/1     Pending   0          7m32s    ---coredns没有启动
+etcd-k8s-master-01                      1/1     Running   0          6m39s
+kube-apiserver-k8s-master-01            1/1     Running   0          6m43s
+kube-controller-manager-k8s-master-01   1/1     Running   0          6m32s
+kube-proxy-88s74                        1/1     Running   0          7m32s
+kube-scheduler-k8s-master-01            1/1     Running   0          6m45s
+
+可以看到coredns没有启动，这是由于还没有配置网络插件，接下来配置下后再重新查看启动状态
 ```
+
+
 
 
 ## 初始化失败
