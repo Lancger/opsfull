@@ -187,6 +187,30 @@
 
 - node 节点
 
+<table border="0">
+    <tr>
+        <td><strong>规则<strong></td>
+        <td><strong>方向></td>
+        <td><strong>端口范围</td>
+        <td><strong>作用></td>
+        <td><strong>使用者></td>
+    </tr>
+    <tr>
+        <td>TCP</td>
+        <td>Inbound</td>
+        <td>10250</td>
+        <td>Kubernetes API</td>
+        <td>Self, Control plane</td>
+    </tr>
+    <tr>
+        <td>TCP</td>
+        <td>Inbound</td>
+        <td>30000-32767</td>
+        <td>NodePort Services**</td>
+        <td>All</td>
+    </tr>
+</table>
+    
 ### 3、基础环境设置
 
 参考资料：
