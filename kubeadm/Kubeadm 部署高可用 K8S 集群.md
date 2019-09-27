@@ -627,6 +627,18 @@ Docker从1.13版本开始调整了默认的防火墙规则，禁用了iptables f
 ```
 
 
+
+## 初始化失败
+```bash
+kubeadm reset
+ifconfig cni0 down
+ip link delete cni0
+ifconfig flannel.1 down
+ip link delete flannel.1
+rm -rf /var/lib/cni/
+rm -rf /var/lib/etcd/*
+```
+
 参考资料：
 
 http://www.mydlq.club/article/4/
