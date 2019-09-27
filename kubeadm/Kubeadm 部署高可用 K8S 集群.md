@@ -783,6 +783,7 @@ reboot
 ### 1、创建kubeadm配置的yaml文件
 ```
 # 1、创建kubeadm配置的yaml文件
+
 cat > kubeadm-config.yaml << EOF
 apiServer:
   certSANs:
