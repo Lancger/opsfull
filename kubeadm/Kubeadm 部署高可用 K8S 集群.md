@@ -415,9 +415,9 @@ EOF
     state： 可以是MASTER或BACKUP，不过当其他节点keepalived启动时会将priority比较大的节点选举为MASTER，因此该项其实没有实质用途。
     priority： 用来选举master的，要成为master，那么这个选项的值最好高于其他机器50个点，该项取值范围是1-255（在此范围之外会被识别成默认值100）。
     
-注意上面配置script "killall -0 haproxy"   #根据进程名称检测进程是否存活，会在/var/log/messages每隔一秒执行检测的日志记录
+    注意上面配置script "killall -0 haproxy"   #根据进程名称检测进程是否存活，会在/var/log/messages每隔一秒执行检测的日志记录
 
-tail -100f /var/log/message
+# tail -100f /var/log/message
 
 Sep 27 10:54:16 tw19410s1 Keepalived_vrrp[9113]: /usr/bin/killall -0 haproxy exited with status 1
 ```
