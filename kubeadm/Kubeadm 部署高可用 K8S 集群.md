@@ -709,6 +709,103 @@ KillMode=process
 WantedBy=multi-user.target
 EOF
 ```
+
+## 六、安装kubeadm、kubelet
+
+### 1、配置可用的国内yum源用于安装：
+```
+cat <<EOF > /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64/
+enabled=1
+gpgcheck=0
+repo_gpgcheck=0
+gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
+EOF
+```
+
+### 2、安装kubelet
+
+```
+# 需要在每台机器上都安装以下的软件包：
+     kubeadm: 用来初始化集群的指令。
+     kubelet: 在集群中的每个节点上用来启动 pod 和 container 等。
+     kubectl: 用来与集群通信的命令行工具。
+
+# 查看kubelet版本列表
+yum list kubelet --showduplicates | sort -r 
+
+# 安装kubelet
+yum install -y kubelet-1.13.4-0
+
+# 启动kubelet并设置开机启动
+systemctl enable kubelet 
+systemctl start kubelet
+
+# 检查状态
+检查状态,发现是failed状态，正常，kubelet会10秒重启一次，等初始化master节点后即可正常
+systemctl status kubelet
+```
+
+### 3、安装kubeadm
+
+```
+# 负责初始化集群
+# 1、查看kubeadm版本列表
+yum list kubeadm --showduplicates | sort -r 
+
+# 2、安装kubeadm
+yum install -y kubeadm-1.13.4-0
+# 安装 kubeadm 时候会默认安装 kubectl ，所以不需要单独安装kubectl
+
+# 3、重启服务器
+为了防止发生某些未知错误，这里我们重启下服务器，方便进行后续操作
+reboot
+```
+
+### 七、初始化第一个kubernetes master节点
+```
+# 因为需要绑定虚拟IP，所以需要首先先查看虚拟IP启动这几台master机子哪台上
+
+可以看到 200 虚拟ip 和 56的ip 在一台机子上，所以初始化kubernetes第一个master要在master01机子上进行安装
+# 1、创建kubeadm配置的yaml文件
+cat > kubeadm-config.yaml << EOF
+apiServer:
+  certSANs:
+    - k8s-master-01
+    - k8s-master-02
+    - k8s-master-03
+    - master.k8s.io
+    - 10.19.2.56
+    - 10.19.2.57
+    - 10.19.2.58
+    - 10.19.2.200
+    - 127.0.0.1
+  extraArgs:
+    authorization-mode: Node,RBAC
+  timeoutForControlPlane: 4m0s
+apiVersion: kubeadm.k8s.io/v1beta1
+certificatesDir: /etc/kubernetes/pki
+clusterName: kubernetes
+controlPlaneEndpoint: "master.k8s.io:16443"
+controllerManager: {}
+dns: 
+  type: CoreDNS
+etcd:
+  local:    
+    dataDir: /var/lib/etcd
+imageRepository: registry.aliyuncs.com/google_containers
+kind: ClusterConfiguration
+kubernetesVersion: v1.13.4
+networking: 
+  dnsDomain: cluster.local  
+  podSubnet: 10.20.0.0/16
+  serviceSubnet: 10.10.0.0/16
+scheduler: {}
+EOF
+```
+
 ## 初始化失败
 ```bash
 kubeadm reset
