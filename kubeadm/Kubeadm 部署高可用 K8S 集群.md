@@ -221,9 +221,9 @@ Kubernetes 需要一定的环境来保证正常运行，如各个节点时间同
 
 2、修改hosts
 
-分别进入不同服务器，进入 /etc/hosts 进行编辑
+```bash
+#分别进入不同服务器，进入 /etc/hosts 进行编辑
 
-```
 cat > /etc/hosts << \EOF
 127.0.0.1     localhost  localhost.localdomain localhost4 localhost4.localdomain4
 ::1           localhost  localhost.localdomain localhost6 localhost6.localdomain6
@@ -239,9 +239,9 @@ EOF
 
 3、修改hostname
 
-分别进入不同的服务器修改 hostname 名称
+```bash
+#分别进入不同的服务器修改 hostname 名称
 
-```
 # 修改 10.19.2.56 服务器
 hostnamectl  set-hostname  k8s-master-01
 
@@ -263,15 +263,15 @@ hostnamectl  set-hostname  k8s-node-03
 
 4、主机时间同步
 
-将各个服务器的时间同步，并设置开机启动同步时间服务
+```bash
+#将各个服务器的时间同步，并设置开机启动同步时间服务
 
-```
 systemctl start chronyd.service
 systemctl enable chronyd.service
 ```
 
 5、关闭防火墙服务
-```
+```bash
 systemctl stop firewalld
 systemctl disable firewalld
 ```
