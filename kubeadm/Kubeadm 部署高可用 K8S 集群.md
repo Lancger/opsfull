@@ -17,7 +17,8 @@
 
 # 集群架构：
 
-
+  ![kubeadm高可用架构图](https://github.com/Lancger/opsfull/blob/master/images/kubeadm-ha.jpg)
+  
 参考资料：
 
 http://www.mydlq.club/article/4/
