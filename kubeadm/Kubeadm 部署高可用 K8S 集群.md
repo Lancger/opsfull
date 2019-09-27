@@ -765,10 +765,23 @@ reboot
 ```
 
 # 七、初始化第一个kubernetes master节点
+
 ```
 # 因为需要绑定虚拟IP，所以需要首先先查看虚拟IP启动这几台master机子哪台上
 
-可以看到 200 虚拟ip 和 56的ip 在一台机子上，所以初始化kubernetes第一个master要在master01机子上进行安装
+[root@k8s-master-01 ~]# ip address show eth0
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 00:50:56:be:86:af brd ff:ff:ff:ff:ff:ff
+    inet 10.19.2.56/22 brd 10.19.3.255 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet 10.19.2.200/32 scope global eth0
+       valid_lft forever preferred_lft forever
+
+可以看到虚拟IP 10.19.2.200  和 服务器IP 10.19.2.56在一台机子上，所以初始化kubernetes第一个master要在master01机子上进行安装
+```
+
+### 1、创建kubeadm配置的yaml文件
+```
 # 1、创建kubeadm配置的yaml文件
 cat > kubeadm-config.yaml << EOF
 apiServer:
@@ -804,6 +817,20 @@ networking:
   serviceSubnet: 10.10.0.0/16
 scheduler: {}
 EOF
+
+以下两个地方设置： - certSANs： 虚拟ip地址（为了安全起见，把所有集群地址都加上） - controlPlaneEndpoint： 虚拟IP:监控端口号
+
+配置说明：
+
+    imageRepository： registry.aliyuncs.com/google_containers (使用阿里云镜像仓库)
+    podSubnet： 10.20.0.0/16 (pod地址池)
+    serviceSubnet： 10.10.0.0/16
+
+```
+
+### 2、初始化第一个master节点
+```
+kubeadm init --config kubeadm-config.yaml 
 ```
 
 ## 初始化失败
