@@ -1066,10 +1066,52 @@ EOF
 ### 2、创建flanner相关role和pod
 
 ```
-kubectl apply -f kube-flannel.yaml
+# 应用生效
+[root@k8s-master-01 ~]# kubectl apply -f kube-flannel.yaml
+clusterrole.rbac.authorization.k8s.io/flannel created
+clusterrolebinding.rbac.authorization.k8s.io/flannel created
+serviceaccount/flannel created
+configmap/kube-flannel-cfg created
+daemonset.extensions/kube-flannel-ds-amd64 created
 
 # 等待一会时间，再次查看各个pods的状态
-kubectl get pods --namespace=kube-system
+[root@k8s-master-01 ~]# kubectl get pods --namespace=kube-system
+NAME                                    READY   STATUS    RESTARTS   AGE
+coredns-78d4cf999f-5zt5z                1/1     Running   0          12m    ---coredns启动成功
+coredns-78d4cf999f-mkgsx                1/1     Running   0          12m    ---coredns启动成功
+etcd-k8s-master-01                      1/1     Running   0          11m
+kube-apiserver-k8s-master-01            1/1     Running   0          12m
+kube-controller-manager-k8s-master-01   1/1     Running   0          11m
+kube-flannel-ds-amd64-7lj6m             1/1     Running   0          13s
+kube-proxy-88s74                        1/1     Running   0          12m
+kube-scheduler-k8s-master-01            1/1     Running   0          12m
+```
+
+
+# 九、加入集群
+
+### 1、Master加入集群构成高可用
+```
+复制秘钥到各个节点
+
+在master01 服务器上执行下面命令，将kubernetes相关文件复制到 master02、master03
+
+如果其他节点为初始化第一个master节点，则将该节点的配置文件复制到其余两个主节点，例如master03为第一个master节点，则将它的k8s配置复制到master02和master01。
+```
+- 复制文件到 master02
+```
+ssh root@master02.k8s.io mkdir -p /etc/kubernetes/pki/etcd
+scp /etc/kubernetes/admin.conf root@master02.k8s.io:/etc/kubernetes
+scp /etc/kubernetes/pki/{ca.*,sa.*,front-proxy-ca.*} root@master02.k8s.io:/etc/kubernetes/pki
+scp /etc/kubernetes/pki/etcd/ca.* root@master02.k8s.io:/etc/kubernetes/pki/etcd
+```
+- 复制文件到 master03
+
+```
+ssh root@master03.k8s.io mkdir -p /etc/kubernetes/pki/etcd
+scp /etc/kubernetes/admin.conf root@master03.k8s.io:/etc/kubernetes
+scp /etc/kubernetes/pki/{ca.*,sa.*,front-proxy-ca.*} root@master03.k8s.io:/etc/kubernetes/pki
+scp /etc/kubernetes/pki/etcd/ca.* root@master03.k8s.io:/etc/kubernetes/pki/etcd
 ```
 
 
