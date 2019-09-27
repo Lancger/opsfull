@@ -1197,9 +1197,26 @@ kubeadm join master.k8s.io:16443 --token 882ik4.9ib2kb0eftvuhb58 --discovery-tok
 如果是master加入，请在最后面加上 –experimental-control-plane 这个参数
 ```
 
+### 4、查看各个节点加入集群情况
+```
+kubectl get nodes -o wide
 
+```
 
+# 十、从集群中删除 Node
 
+- Master节点：
+
+```
+kubectl drain <node name> --delete-local-data --force --ignore-daemonsets
+kubectl delete node <node name>
+```
+
+- Slave节点：
+
+```
+kubeadm reset
+```
 
 
 
