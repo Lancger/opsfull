@@ -19,7 +19,7 @@ node01、node02： 二、五、六、九
 
   ![kubeadm高可用架构图](https://github.com/Lancger/opsfull/blob/master/images/kubeadm-ha.jpg)
  
-## 一、kuberadm 简介
+# 一、kuberadm 简介
 
 ### 1、Kuberadm 作用
 
@@ -81,7 +81,7 @@ kubeadm alpha： 预览一组可用的新功能以便从社区搜集反馈
     </tr>
 </table>
             
-## 二、前期准备
+# 二、前期准备
 
 ### 1、虚拟机分配说明
 
@@ -349,7 +349,7 @@ yum install -y epel-release
 yum install -y yum-utils device-mapper-persistent-data lvm2 net-tools conntrack-tools wget vim  ntpdate libseccomp libtool-ltdl
 ```
 
-## 三、安装Keepalived
+# 三、安装Keepalived
 
 - keepalived介绍： 是集群管理中保证集群高可用的一个服务软件，其功能类似于heartbeat，用来防止单点故障
 - Keepalived作用： 为haproxy提供vip（10.19.2.200）在三个haproxy实例之间提供主备，降低当其中一个haproxy失效的时对服务的影响。
@@ -452,7 +452,7 @@ kepplived 配置中 state 为 MASTER 的节点启动后，查看网络状态，�
 当关掉当前节点的keeplived服务后将进行虚拟IP转移，将会推选state 为 BACKUP 的节点的某一节点为新的MASTER，可以在那台节点上查看网卡，将会查看到虚拟IP
 ```
 
-## 四、安装haproxy
+# 四、安装haproxy
 
 &#8195;此处的haproxy为apiserver提供反向代理，haproxy将所有请求轮询转发到每个master节点上。相对于仅仅使用keepalived主备模式仅单个master节点承载流量，这种方式更加合理、健壮。
 
@@ -558,7 +558,7 @@ systemctl status haproxy
 ss -lnt | grep -E "16443|1080"
 ```
 
-## 五、安装Docker (所有节点)
+# 五、安装Docker (所有节点)
 
 ### 1、移除之前安装过的Docker
 ```bash
@@ -595,6 +595,35 @@ sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/cen
 ```bash
 sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 ```
+
+### 2、安装Docker：
+
+```
+# 显示docker-ce所有可安装版本：
+yum list docker-ce --showduplicates | sort -r
+
+# 安装指定docker版本
+sudo yum install docker-ce-18.06.1.ce-3.el7 -y
+
+# 启动docker并设置docker开机启动
+systemctl enable docker
+systemctl start docker
+
+# 确认一下iptables
+确认一下iptables filter表中FOWARD链的默认策略(pllicy)为ACCEPT。
+
+iptables -nvL
+
+Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 DOCKER-USER  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+    0     0 DOCKER-ISOLATION-STAGE-1  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+    0     0 ACCEPT     all  --  *      docker0  0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
+    0     0 DOCKER     all  --  *      docker0  0.0.0.0/0            0.0.0.0/0           
+    0     0 ACCEPT     all  --  docker0 !docker0  0.0.0.0/0            0.0.0.0/0           
+    0     0 ACCEPT     all  --  docker0 docker0  0.0.0.0/0            0.0.0.0/0            
+```
+
 
 参考资料：
 
