@@ -359,6 +359,7 @@ yum install -y yum-utils device-mapper-persistent-data lvm2 net-tools conntrack-
 ### 1、yum安装Keepalived
 ```bash
 # 安装keepalived
+chattr -i /etc/passwd* && chattr -i /etc/group* && chattr -i /etc/shadow* && chattr -i /etc/gshadow*
 yum install -y keepalived
 ```
 
