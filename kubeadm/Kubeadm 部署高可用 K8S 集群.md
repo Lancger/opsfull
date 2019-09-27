@@ -424,6 +424,15 @@ systemctl start keepalived
 # 查看启动状态
 systemctl status keepalived
 ```
+### 4、查看网络状态
+
+kepplived 配置中 state 为 MASTER 的节点启动后，查看网络状态，可以看到虚拟IP已经加入到绑定的网卡中
+
+```bash
+
+当关掉当前节点的keeplived服务后将进行虚拟IP转移，将会推选state 为 BACKUP 的节点的某一节点为新的MASTER，可以在那台节点上查看网卡，将会查看到虚拟IP
+```
+
 
 参考资料：
 
