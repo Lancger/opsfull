@@ -1114,15 +1114,18 @@ scp /etc/kubernetes/pki/{ca.*,sa.*,front-proxy-ca.*} root@master03.k8s.io:/etc/k
 scp /etc/kubernetes/pki/etcd/ca.* root@master03.k8s.io:/etc/kubernetes/pki/etcd
 ```
 - master节点加入集群
+
 master02 和 master03 服务器上都执行加入集群操作
-```
+
+```bash
 kubeadm join master.k8s.io:16443 --token i77yg1.1eype0c53jsanoge --discovery-token-ca-cert-hash sha256:8f0a817012ab333a057b6a7410e65971be20b95c1b75fc4015f8f3b6785f626f --experimental-control-plane
+```
+```bash
+# 如果加入失败想重新尝试，请输入 kubeadm reset 命令清除之前的设置，重新执行从“复制秘钥”和“加入集群”这两步
 
-如果加入失败想重新尝试，请输入 kubeadm reset 命令清除之前的设置，重新执行从“复制秘钥”和“加入集群”这两步
+# 如果是master加入，请在最后面加上 –experimental-control-plane 这个参数
 
-如果是master加入，请在最后面加上 –experimental-control-plane 这个参数
-
-显示安装过程:
+# 显示安装过程:
 
 This node has joined the cluster and a new control plane instance was created:
 
@@ -1141,7 +1144,7 @@ To start administering your cluster from this node, you need to run the followin
 Run 'kubectl get nodes' to see this node join the cluster.
 ```
 - 配置kubectl环境变量
-```
+```bash
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
