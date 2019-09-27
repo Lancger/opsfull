@@ -823,8 +823,8 @@ EOF
 配置说明：
 
     imageRepository： registry.aliyuncs.com/google_containers (使用阿里云镜像仓库)
-    podSubnet： 10.20.0.0/16 (pod地址池)
-    serviceSubnet： 10.10.0.0/16
+    podSubnet： 10.20.0.0/16 (#pod地址池)
+    serviceSubnet： 10.10.0.0/16 (#service地址池)
 
 ```
 
