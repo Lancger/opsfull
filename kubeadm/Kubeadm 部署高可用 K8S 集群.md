@@ -1113,7 +1113,53 @@ scp /etc/kubernetes/admin.conf root@master03.k8s.io:/etc/kubernetes
 scp /etc/kubernetes/pki/{ca.*,sa.*,front-proxy-ca.*} root@master03.k8s.io:/etc/kubernetes/pki
 scp /etc/kubernetes/pki/etcd/ca.* root@master03.k8s.io:/etc/kubernetes/pki/etcd
 ```
+- master节点加入集群
+master02 和 master03 服务器上都执行加入集群操作
+```
+kubeadm join master.k8s.io:16443 --token i77yg1.1eype0c53jsanoge --discovery-token-ca-cert-hash sha256:8f0a817012ab333a057b6a7410e65971be20b95c1b75fc4015f8f3b6785f626f --experimental-control-plane
 
+如果加入失败想重新尝试，请输入 kubeadm reset 命令清除之前的设置，重新执行从“复制秘钥”和“加入集群”这两步
+
+如果是master加入，请在最后面加上 –experimental-control-plane 这个参数
+
+显示安装过程:
+
+This node has joined the cluster and a new control plane instance was created:
+
+* Certificate signing request was sent to apiserver and approval was received.
+* The Kubelet was informed of the new secure connection details.
+* Master label and taint were applied to the new node.
+* The Kubernetes control plane instances scaled up.
+* A new etcd member was added to the local/stacked etcd cluster.
+
+To start administering your cluster from this node, you need to run the following as a regular user:
+
+        mkdir -p $HOME/.kube
+        sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+        sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+Run 'kubectl get nodes' to see this node join the cluster.
+```
+- 配置kubectl环境变量
+```
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
+
+### 2、node节点加入集群
+
+除了让master节点加入集群组成高可用外，slave节点也要加入集群中。
+
+这里将k8s-node-01、k8s-node-02、k8s-node-03加入集群，进行工作
+
+输入初始化k8s master时候提示的加入命令，如下：
+
+```
+kubeadm join master.k8s.io:16443 --token i77yg1.1eype0c53jsanoge --discovery-token-ca-cert-hash sha256:8f0a817012ab333a057b6a7410e65971be20b95c1b75fc4015f8f3b6785f626f
+
+如果是node加入，不需要加上 –experimental-control-plane 这个参数
+```
 
 ## 初始化失败
 ```bash
