@@ -42,17 +42,32 @@
 
 ### 3、功能版本
 
-```
-Area 	Maturity Level
-Command line UX 	GA
-Implementation 	GA
-Config file API 	beta
-CoreDNS 	GA
-kubeadm alpha subcommands 	alpha
-High availability 	alpha
-DynamicKubeletConfig 	alpha
-Self-hosting 	alpha
-```
+<table border="0">
+    <tr>
+        <td><strong>Area<strong></td>
+        <td><strong>Maturity Level<strong></td>
+    </tr>
+    <tr>
+        <td><a href="docs/coredns.md">Command line UX</a></td>
+        <td><a href="docs/dashboard.md">GA</a></td>
+    </tr>
+    <tr>
+        <td><a href="docs/coredns.md">1.CoreDNS部署</a></td>
+        <td><a href="docs/dashboard.md">2.Dashboard部署</a></td>
+    </tr>
+    <tr>
+        <td><a href="docs/coredns.md">1.CoreDNS部署</a></td>
+        <td><a href="docs/dashboard.md">2.Dashboard部署</a></td>
+    </tr>
+    <tr>
+        <td><a href="docs/coredns.md">1.CoreDNS部署</a></td>
+        <td><a href="docs/dashboard.md">2.Dashboard部署</a></td>
+    </tr>
+    <tr>
+        <td><a href="docs/coredns.md">1.CoreDNS部署</a></td>
+        <td><a href="docs/dashboard.md">2.Dashboard部署</a></td>
+    </tr>
+</table>
 
 参考资料：
 
