@@ -567,7 +567,7 @@ ss -lnt | grep -E "16443|1080"
 
 ### 1、移除之前安装过的Docker
 ```bash
-sudo yum remove docker \
+sudo yum remove -y docker \
                   docker-client \
                   docker-client-latest \
                   docker-common \
