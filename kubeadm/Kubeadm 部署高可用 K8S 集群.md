@@ -818,14 +818,15 @@ networking:
 scheduler: {}
 EOF
 
-以下两个地方设置： - certSANs： 虚拟ip地址（为了安全起见，把所有集群地址都加上） - controlPlaneEndpoint： 虚拟IP:监控端口号
+以下两个地方设置： 
+- certSANs： 虚拟ip地址（为了安全起见，把所有集群地址都加上） 
+- controlPlaneEndpoint： 虚拟IP:监控端口号
 
 配置说明：
 
     imageRepository： registry.aliyuncs.com/google_containers (使用阿里云镜像仓库)
     podSubnet： 10.20.0.0/16 (#pod地址池)
     serviceSubnet： 10.10.0.0/16 (#service地址池)
-
 ```
 
 ### 2、初始化第一个master节点
@@ -834,8 +835,43 @@ kubeadm init --config kubeadm-config.yaml
 ```
 日志
 ```
+Your Kubernetes master has initialized successfully!
 
+To start using your cluster, you need to run the following as a regular user:
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+You should now deploy a pod network to the cluster.
+Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+You can now join any number of machines by running the following on each node
+as root:
+
+  kubeadm join master.k8s.io:16443 --token i77yg1.1eype0c53jsanoge --discovery-token-ca-cert-hash sha256:8f0a817012ab333a057b6a7410e65971be20b95c1b75fc4015f8f3b6785f626f
 ```
+在此处看日志可以知道，通过
+```
+  kubeadm join master.k8s.io:16443 --token i77yg1.1eype0c53jsanoge --discovery-token-ca-cert-hash sha256:8f0a817012ab333a057b6a7410e65971be20b95c1b75fc4015f8f3b6785f626f
+```
+来让节点加入集群
+
+### 3、配置kubectl环境变量
+```bash
+# 配置环境变量
+
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
+
+### 4、查看组件状态
+```bash
+kubectl get cs
+```
+
 
 ## 初始化失败
 ```bash
