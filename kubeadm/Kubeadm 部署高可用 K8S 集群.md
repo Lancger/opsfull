@@ -1170,6 +1170,39 @@ kubeadm join master.k8s.io:16443 --token i77yg1.1eype0c53jsanoge --discovery-tok
 ```
 &#8195;node节点加入，不需要加上 –experimental-control-plane 这个参数
 
+### 3、如果忘记加入集群的token和sha256 (如正常则跳过)
+
+- 显示获取token列表
+
+```
+kubeadm token list
+```
+
+默认情况下 Token 过期是时间是24小时，如果 Token 过期以后，可以输入以下命令，生成新的 Token
+
+```
+kubeadm token create
+```
+
+- 获取ca证书sha256编码hash值
+
+```
+openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
+```
+
+拼接命令
+```
+kubeadm join master.k8s.io:16443 --token 882ik4.9ib2kb0eftvuhb58 --discovery-token-ca-cert-hash sha256:0b1a836894d930c8558b350feeac8210c85c9d35b6d91fde202b870f3244016a
+
+如果是master加入，请在最后面加上 –experimental-control-plane 这个参数
+```
+
+
+
+
+
+
+
 ## 初始化失败
 ```bash
 kubeadm reset
