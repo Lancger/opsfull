@@ -40,6 +40,19 @@
     kubeadm version： 打印 kubeadm 版本
     kubeadm alpha： 预览一组可用的新功能以便从社区搜集反馈
 
+### 3、功能版本
+
+```
+Area 	Maturity Level
+Command line UX 	GA
+Implementation 	GA
+Config file API 	beta
+CoreDNS 	GA
+kubeadm alpha subcommands 	alpha
+High availability 	alpha
+DynamicKubeletConfig 	alpha
+Self-hosting 	alpha
+```
 
 参考资料：
 
