@@ -213,6 +213,118 @@
     
 ### 3、基础环境设置
 
+Kubernetes 需要一定的环境来保证正常运行，如各个节点时间同步，主机名称解析，关闭防火墙等等。
+
+1、主机名称解析
+
+分布式系统环境中的多主机通信通常基于主机名称进行，这在 IP 地址存在变化的可能性时为主机提供了固定的访问人口，因此一般需要有专用的 DNS 服务负责解决各节点主机 不过，考虑到此处部署的是测试集群，因此为了降低系复杂度，这里将基于 hosts 的文件进行主机名称解析。
+
+2、修改hosts
+
+分别进入不同服务器，进入 /etc/hosts 进行编辑
+
+```
+cat > /etc/hosts << \EOF
+127.0.0.1     localhost  localhost.localdomain localhost4 localhost4.localdomain4
+::1           localhost  localhost.localdomain localhost6 localhost6.localdomain6
+10.19.2.200    master.k8s.io      k8s-vip
+10.19.2.56     master01.k8s.io    k8s-master-01
+10.19.2.57     master02.k8s.io    k8s-master-02
+10.19.2.58     master03.k8s.io    k8s-master-03
+10.19.2.246    node01.k8s.io      k8s-node-01
+10.19.2.247    node01.k8s.io      k8s-node-02
+10.19.2.248    node02.k8s.io      k8s-node-03
+EOF
+```
+
+3、修改hostname
+
+分别进入不同的服务器修改 hostname 名称
+
+```
+# 修改 10.19.2.56 服务器
+hostnamectl  set-hostname  k8s-master-01
+
+# 修改 10.19.2.57 服务器
+hostnamectl  set-hostname  k8s-master-02
+
+# 修改 10.19.2.58 服务器
+hostnamectl  set-hostname  k8s-master-03
+
+# 修改 10.19.2.246 服务器
+hostnamectl  set-hostname  k8s-node-01
+
+# 修改 10.19.2.247 服务器
+hostnamectl  set-hostname  k8s-node-02
+
+# 修改 10.19.2.248 服务器
+hostnamectl  set-hostname  k8s-node-03
+```
+
+4、主机时间同步
+
+将各个服务器的时间同步，并设置开机启动同步时间服务
+
+```
+systemctl start chronyd.service
+systemctl enable chronyd.service
+```
+
+5、关闭防火墙服务
+```
+systemctl stop firewalld
+systemctl disable firewalld
+```
+
+6、关闭并禁用SELinux
+```bash
+# 若当前启用了 SELinux 则需要临时设置其当前状态为 permissive
+setenforce 0
+
+# 编辑／etc/sysconfig selinux 文件，以彻底禁用 SELinux
+sed -i 's/^SELINUX=enforcing$/SELINUX=disabled/' /etc/selinux/config
+
+# 查看selinux状态
+getenforce 
+```
+如果为permissive，则执行reboot重新启动即可
+
+7、禁用 Swap 设备
+
+kubeadm 默认会预先检当前主机是否禁用了 Swap 设备，并在未用时强制止部署 过程因此，在主机内存资惊充裕的条件下，需要禁用所有的 Swap 设备
+
+```
+# 关闭当前已启用的所有 Swap 设备
+swapoff -a && sysctl -w vm.swappiness=0
+
+# 编辑 fstab 配置文件，注释掉标识为 Swap 设备的所有行
+vi /etc/fstab
+
+```
+
+8、设置系统参数
+
+设置允许路由转发，不对bridge的数据进行处理
+
+```bash
+#创建 /etc/sysctl.d/k8s.conf 文件
+
+cat > /etc/sysctl.d/k8s.conf << \EOF
+net.ipv4.ip_forward = 1
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+EOF
+
+#挂载br_netfilter
+modprobe br_netfilter
+
+#生效配置文件
+sysctl -p /etc/sysctl.d/k8s.conf
+
+#查看是否生成相关文件
+ls /proc/sys/net/bridge
+```
+
 参考资料：
 
 http://www.mydlq.club/article/4/
