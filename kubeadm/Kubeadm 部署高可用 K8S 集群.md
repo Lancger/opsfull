@@ -48,24 +48,36 @@
         <td><strong>Maturity Level<strong></td>
     </tr>
     <tr>
-        <td><a href="docs/coredns.md">Command line UX</a></td>
-        <td><a href="docs/dashboard.md">GA</a></td>
+        <td>Command line UX</td>
+        <td>GA</td>
     </tr>
     <tr>
-        <td><a href="docs/coredns.md">1.CoreDNS部署</a></td>
-        <td><a href="docs/dashboard.md">2.Dashboard部署</a></td>
+        <td>Implementation</td>
+        <td>GA</td>
     </tr>
     <tr>
-        <td><a href="docs/coredns.md">1.CoreDNS部署</a></td>
-        <td><a href="docs/dashboard.md">2.Dashboard部署</a></td>
+        <td>Config file API</td>
+        <td>beta</td>
     </tr>
     <tr>
-        <td><a href="docs/coredns.md">1.CoreDNS部署</a></td>
-        <td><a href="docs/dashboard.md">2.Dashboard部署</a></td>
+        <td>CoreDNS</td>
+        <td>GA</td>
     </tr>
     <tr>
-        <td><a href="docs/coredns.md">1.CoreDNS部署</a></td>
-        <td><a href="docs/dashboard.md">2.Dashboard部署</a></td>
+        <td>kubeadm alpha subcommands</td>
+        <td>alpha</td>
+    </tr>
+    <tr>
+        <td>High availability</td>
+        <td>alpha</td>
+    </tr>
+    <tr>
+        <td>DynamicKubeletConfig</td>
+        <td>alpha</td>
+    </tr>
+    <tr>
+        <td>Self-hosting</td>
+        <td>alpha</td>
     </tr>
 </table>
 
