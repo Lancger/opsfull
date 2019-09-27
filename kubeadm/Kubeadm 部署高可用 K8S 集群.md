@@ -1149,6 +1149,12 @@ Run 'kubectl get nodes' to see this node join the cluster.
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+# 指令补全
+
+yum install bash-completion -y
+source <(kubectl completion bash)
+echo "source <(kubectl completion bash)" >> ~/.bashrc
 ```
 
 ### 2、node节点加入集群
