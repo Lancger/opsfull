@@ -627,7 +627,7 @@ Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
     
 Docker从1.13版本开始调整了默认的防火墙规则，禁用了iptables filter表中FOWARD链，这样会引起Kubernetes集群中跨Node的Pod无法通信。但这里通过安装docker 1806，发现默认策略又改回了ACCEPT，这个不知道是从哪个版本改回的，因为我们线上版本使用的1706还是需要手动调整这个策略的。
 
-执行下面命令
+# 执行下面命令
 iptables -P FORWARD ACCEPT
 
 # 修改docker的配置
@@ -640,9 +640,61 @@ ExecStartPost=/usr/sbin/iptables -P FORWARD ACCEPT
 systemctl daemon-reload
 systemctl restart docker
 ```
+### 4、docker最终的服务文件
+```
+#注意，有变量的地方需要使用转义符号
 
+cat > /usr/lib/systemd/system/docker.service << EOF
+[Unit]
+Description=Docker Application Container Engine
+Documentation=https://docs.docker.com
+BindsTo=containerd.service
+After=network-online.target firewalld.service containerd.service
+Wants=network-online.target
+Requires=docker.socket
 
+[Service]
+Type=notify
+# the default is not to use systemd for cgroups because the delegate issues still
+# exists and systemd currently does not support the cgroup feature set required
+# for containers run by docker
+ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+ExecReload=/bin/kill -s HUP \$MAINPID
+ExecStartPost=/usr/sbin/iptables -P FORWARD ACCEPT
+TimeoutSec=0
+RestartSec=2
+Restart=always
 
+# Note that StartLimit* options were moved from "Service" to "Unit" in systemd 229.
+# Both the old, and new location are accepted by systemd 229 and up, so using the old location
+# to make them work for either version of systemd.
+StartLimitBurst=3
+
+# Note that StartLimitInterval was renamed to StartLimitIntervalSec in systemd 230.
+# Both the old, and new name are accepted by systemd 230 and up, so using the old name to make
+# this option work for either version of systemd.
+StartLimitInterval=60s
+
+# Having non-zero Limit*s causes performance problems due to accounting overhead
+# in the kernel. We recommend using cgroups to do container-local accounting.
+LimitNOFILE=infinity
+LimitNPROC=infinity
+LimitCORE=infinity
+
+# Comment TasksMax if your systemd version does not support it.
+# Only systemd 226 and above support this option.
+TasksMax=infinity
+
+# set delegate yes so that systemd does not reset the cgroups of docker containers
+Delegate=yes
+
+# kill only the docker process, not all processes in the cgroup
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
+EOF
+```
 ## 初始化失败
 ```bash
 kubeadm reset
