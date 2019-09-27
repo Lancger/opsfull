@@ -357,7 +357,7 @@ yum install -y yum-utils device-mapper-persistent-data lvm2 net-tools conntrack-
 yum install -y keepalived
 ```
 
-2、配置Keepalived
+### 2、配置Keepalived
 ```bash
 cat <<EOF > /etc/keepalived/keepalived.conf
 ! Configuration File for keepalived
@@ -411,10 +411,19 @@ EOF
     authentication： 认证区域，认证类型有PASS和HA（IPSEC），推荐使用PASS（密码只识别前8位）。
     state： 可以是MASTER或BACKUP，不过当其他节点keepalived启动时会将priority比较大的节点选举为MASTER，因此该项其实没有实质用途。
     priority： 用来选举master的，要成为master，那么这个选项的值最好高于其他机器50个点，该项取值范围是1-255（在此范围之外会被识别成默认值100）。
-
 ```
 
+### 3、启动Keepalived
+```bash
+# 设置开机启动
+systemctl enable keepalived
 
+# 启动keepalived
+systemctl start keepalived
+
+# 查看启动状态
+systemctl status keepalived
+```
 
 参考资料：
 
