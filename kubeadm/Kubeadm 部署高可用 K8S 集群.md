@@ -286,8 +286,10 @@ sed -i 's/^SELINUX=enforcing$/SELINUX=disabled/' /etc/selinux/config
 
 # 查看selinux状态
 getenforce 
-```
+
 如果为permissive，则执行reboot重新启动即可
+
+```
 
 7、禁用 Swap 设备
 
@@ -624,6 +626,19 @@ Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
     0     0 ACCEPT     all  --  docker0 docker0  0.0.0.0/0            0.0.0.0/0      
     
 Docker从1.13版本开始调整了默认的防火墙规则，禁用了iptables filter表中FOWARD链，这样会引起Kubernetes集群中跨Node的Pod无法通信。但这里通过安装docker 1806，发现默认策略又改回了ACCEPT，这个不知道是从哪个版本改回的，因为我们线上版本使用的1706还是需要手动调整这个策略的。
+
+执行下面命令
+iptables -P FORWARD ACCEPT
+
+# 修改docker的配置
+vim /usr/lib/systemd/system/docker.service
+
+# 增加下面命令
+ExecStartPost=/usr/sbin/iptables -P FORWARD ACCEPT
+
+# 重启Docker
+systemctl daemon-reload
+systemctl restart docker
 ```
 
 
