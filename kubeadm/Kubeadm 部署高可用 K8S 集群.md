@@ -1115,16 +1115,16 @@ scp /etc/kubernetes/pki/etcd/ca.* root@master03.k8s.io:/etc/kubernetes/pki/etcd
 ```
 - master节点加入集群
 
-master02 和 master03 服务器上都执行加入集群操作
+&#8195;master02 和 master03 服务器上都执行加入集群操作
 
 ```bash
 kubeadm join master.k8s.io:16443 --token i77yg1.1eype0c53jsanoge --discovery-token-ca-cert-hash sha256:8f0a817012ab333a057b6a7410e65971be20b95c1b75fc4015f8f3b6785f626f --experimental-control-plane
 ```
+&#8195;如果加入失败想重新尝试，请输入 kubeadm reset 命令清除之前的设置，重新执行从“复制秘钥”和“加入集群”这两步
+
+&#8195;如果是master加入，请在最后面加上 –experimental-control-plane 这个参数
+
 ```bash
-# 如果加入失败想重新尝试，请输入 kubeadm reset 命令清除之前的设置，重新执行从“复制秘钥”和“加入集群”这两步
-
-# 如果是master加入，请在最后面加上 –experimental-control-plane 这个参数
-
 # 显示安装过程:
 
 This node has joined the cluster and a new control plane instance was created:
@@ -1152,17 +1152,16 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 ### 2、node节点加入集群
 
-除了让master节点加入集群组成高可用外，slave节点也要加入集群中。
+&#8195;除了让master节点加入集群组成高可用外，slave节点也要加入集群中。
 
-这里将k8s-node-01、k8s-node-02、k8s-node-03加入集群，进行工作
+&#8195;这里将k8s-node-01、k8s-node-02、k8s-node-03加入集群，进行工作
 
-输入初始化k8s master时候提示的加入命令，如下：
+&#8195;输入初始化k8s master时候提示的加入命令，如下：
 
 ```
 kubeadm join master.k8s.io:16443 --token i77yg1.1eype0c53jsanoge --discovery-token-ca-cert-hash sha256:8f0a817012ab333a057b6a7410e65971be20b95c1b75fc4015f8f3b6785f626f
-
-如果是node加入，不需要加上 –experimental-control-plane 这个参数
 ```
+&#8195;node节点加入，不需要加上 –experimental-control-plane 这个参数
 
 ## 初始化失败
 ```bash
