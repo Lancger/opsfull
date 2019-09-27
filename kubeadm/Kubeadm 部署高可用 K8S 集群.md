@@ -352,7 +352,7 @@ yum install -y yum-utils device-mapper-persistent-data lvm2 net-tools conntrack-
 ## 三、安装Keepalived
 
 - keepalived介绍： 是集群管理中保证集群高可用的一个服务软件，其功能类似于heartbeat，用来防止单点故障
-- Keepalived作用： 为haproxy提供vip（192.168.2.10）在三个haproxy实例之间提供主备，降低当其中一个haproxy失效的时对服务的影响。
+- Keepalived作用： 为haproxy提供vip（10.19.2.200）在三个haproxy实例之间提供主备，降低当其中一个haproxy失效的时对服务的影响。
 
 ### 1、yum安装Keepalived
 ```bash
