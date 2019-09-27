@@ -461,6 +461,8 @@ kepplived 配置中 state 为 MASTER 的节点启动后，查看网络状态，�
 
 ### 1、yum安装haproxy
 ```bash
+chattr -i /etc/passwd* && chattr -i /etc/group* && chattr -i /etc/shadow* && chattr -i /etc/gshadow*
+
 yum install -y haproxy
 ```
 
