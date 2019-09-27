@@ -140,6 +140,50 @@
 
 - Master 节点
 
+<table border="0">
+    <tr>
+        <td><strong>规则<strong></td>
+        <td><strong>方向></td>
+        <td><strong>端口范围</td>
+        <td><strong>作用></td>
+        <td><strong>使用者></td>
+    </tr>
+    <tr>
+        <td>TCP</td>
+        <td>Inbound</td>
+        <td>6443*</td>
+        <td>Kubernetes API</td>
+        <td>server All</td>
+    </tr>
+    <tr>
+        <td>TCP</td>
+        <td>Inbound</td>
+        <td>2379-2380</td>
+        <td>etcd server</td>
+        <td>client API kube-apiserver, etcd</td>
+    </tr>
+    <tr>
+        <td>TCP</td>
+        <td>Inbound</td>
+        <td>10250</td>
+        <td>Kubernetes API</td>
+        <td>Self, Control plane</td>
+    </tr>
+    <tr>
+        <td>TCP</td>
+        <td>Inbound</td>
+        <td>10251</td>
+        <td>kube-scheduler</td>
+        <td>Self</td>
+    </tr>
+    <tr>
+        <td>TCP</td>
+        <td>Inbound</td>
+        <td>10252</td>
+        <td>kube-controller-manager</td>
+        <td>Self</td>
+    </tr>
+</table>
 
 - node 节点
 
