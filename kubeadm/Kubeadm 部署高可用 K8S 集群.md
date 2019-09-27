@@ -441,6 +441,13 @@ systemctl status keepalived
 kepplived 配置中 state 为 MASTER 的节点启动后，查看网络状态，可以看到虚拟IP已经加入到绑定的网卡中
 
 ```bash
+[root@k8s-master-01 ~]# ip address show eth0
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 00:50:56:be:86:af brd ff:ff:ff:ff:ff:ff
+    inet 10.19.2.56/22 brd 10.19.3.255 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet 10.19.2.200/32 scope global eth0
+       valid_lft forever preferred_lft forever
 
 当关掉当前节点的keeplived服务后将进行虚拟IP转移，将会推选state 为 BACKUP 的节点的某一节点为新的MASTER，可以在那台节点上查看网卡，将会查看到虚拟IP
 ```
