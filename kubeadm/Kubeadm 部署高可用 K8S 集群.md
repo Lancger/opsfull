@@ -145,8 +145,8 @@
         <td><strong>规则<strong></td>
         <td><strong>方向></td>
         <td><strong>端口范围</td>
-        <td><strong>作用></td>
-        <td><strong>使用者></td>
+        <td><strong>作用</td>
+        <td><strong>使用者</td>
     </tr>
     <tr>
         <td>TCP</td>
@@ -192,8 +192,8 @@
         <td><strong>规则<strong></td>
         <td><strong>方向</td>
         <td><strong>端口范围</td>
-        <td><strong>作用></td>
-        <td><strong>使用者></td>
+        <td><strong>作用</td>
+        <td><strong>使用者</td>
     </tr>
     <tr>
         <td>TCP</td>
