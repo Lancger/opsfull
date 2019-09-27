@@ -21,15 +21,15 @@
  
 ## 一、kuberadm 简介
 
-Kuberadm 作用
+### Kuberadm 作用
 
-Kubeadm 是一个工具，它提供了 kubeadm init 以及 kubeadm join 这两个命令作为快速创建 kubernetes 集群的最佳实践。
+&#8195;Kubeadm 是一个工具，它提供了 kubeadm init 以及 kubeadm join 这两个命令作为快速创建 kubernetes 集群的最佳实践。
 
 &#8195;kubeadm 通过执行必要的操作来启动和运行一个最小可用的集群。它被故意设计为只关心启动集群，而不是之前的节点准备工作。同样的，诸如安装各种各样值得拥有的插件，例如 Kubernetes Dashboard、监控解决方案以及特定云提供商的插件，这些都不在它负责的范围。
 
 &#8195;相反，我们期望由一个基于 kubeadm 从更高层设计的更加合适的工具来做这些事情；并且，理想情况下，使用 kubeadm 作为所有部署的基础将会使得创建一个符合期望的集群变得容易。
 
-Kuberadm 功能
+### Kuberadm 功能
 
     kubeadm init： 启动一个 Kubernetes 主节点
     kubeadm join： 启动一个 Kubernetes 工作节点并且将其加入到集群
