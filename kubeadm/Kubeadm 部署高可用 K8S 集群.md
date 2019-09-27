@@ -558,6 +558,43 @@ systemctl status haproxy
 ss -lnt | grep -E "16443|1080"
 ```
 
+## 五、安装Docker (所有节点)
+
+### 1、移除之前安装过的Docker
+```bash
+sudo yum remove docker \
+                  docker-client \
+                  docker-client-latest \
+                  docker-common \
+                  docker-latest \
+                  docker-latest-logrotate \
+                  docker-logrotate \
+                  docker-selinux \
+                  docker-engine-selinux \
+                  docker-ce-cli \
+                  docker-engine
+                  
+# 查看还有没有存在的docker组件
+rpm -qa|grep docker
+
+# 有则通过命令 yum -y remove XXX 来删除,比如：
+yum remove docker-ce-cli
+```
+
+### 2、配置docker的yum源
+
+下面两个镜像源选择其一即可，由于官方下载速度比较慢，推荐用阿里镜像源
+
+- 阿里镜像源
+
+```bash
+sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+```
+
+- Docker官方镜像源
+```bash
+sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+```
 
 参考资料：
 
