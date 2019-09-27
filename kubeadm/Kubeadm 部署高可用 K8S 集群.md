@@ -710,7 +710,7 @@ WantedBy=multi-user.target
 EOF
 ```
 
-## 六、安装kubeadm、kubelet
+# 六、安装kubeadm、kubelet
 
 ### 1、配置可用的国内yum源用于安装：
 ```
@@ -764,7 +764,7 @@ yum install -y kubeadm-1.13.4-0
 reboot
 ```
 
-### 七、初始化第一个kubernetes master节点
+# 七、初始化第一个kubernetes master节点
 ```
 # 因为需要绑定虚拟IP，所以需要首先先查看虚拟IP启动这几台master机子哪台上
 
