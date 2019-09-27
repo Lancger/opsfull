@@ -80,6 +80,65 @@
         <td>alpha</td>
     </tr>
 </table>
+            
+## 二、前期准备
+
+### 1、虚拟机分配说明
+
+<table border="0">
+    <tr>
+        <td><strong>地址<strong></td>
+        <td><strong>主机名></td>
+        <td><strong>内存&CPU></td>
+        <td><strong>角色></td>
+    </tr>
+    <tr>
+        <td>10.19.2.200</td>
+        <td>—</td>
+        <td>—</td>
+        <td>vip</td>
+    </tr>
+    <tr>
+        <td>10.19.2.56</td>
+        <td>k8s-master-01</td>
+        <td>2C & 2G</td>
+        <td>master</td>
+    </tr>
+    <tr>
+        <td>10.19.2.57</td>
+        <td>k8s-master-02</td>
+        <td>2C & 2G</td>
+        <td>master</td>
+    </tr>
+    <tr>
+        <td>10.19.2.58</td>
+        <td>k8s-master-03</td>
+        <td>2C & 2G</td>
+        <td>master</td>
+    </tr>
+    <tr>
+        <td>10.19.2.246</td>
+        <td>k8s-node-01</td>
+        <td>2C & 2G</td>
+        <td>node</td>
+    </tr>
+    <tr>
+        <td>10.19.2.247</td>
+        <td>k8s-node-02</td>
+        <td>2C & 2G</td>
+        <td>node</td>
+    </tr>
+    <tr>
+        <td>10.19.2.248</td>
+        <td>k8s-node-03</td>
+        <td>2C & 2G</td>
+        <td>node</td>
+    </tr>
+</table>
+
+### 2、各个节点端口占用
+
+### 3、基础环境设置
 
 参考资料：
 
