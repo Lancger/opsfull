@@ -160,11 +160,11 @@ su - root
 mkdir -p /root/.kube
 cp /tmp/kube_config_cluster.yml /root/.kube/config
 
-#其他master节点也需要同步该文件
+#其他master02 master03节点也需要同步该文件
 ssh root@k8s-master-02 mkdir -p /root/.kube
 scp /root/.kube/config root@k8s-master-02:/root/.kube/config
 
-ssh root@k8s-master-02 mkdir -p /root/.kube
+ssh root@k8s-master-03 mkdir -p /root/.kube
 scp /root/.kube/config root@k8s-master-03:/root/.kube/config
 
 #查看日志
