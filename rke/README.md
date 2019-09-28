@@ -3,7 +3,7 @@
 chattr -i /etc/passwd* && chattr -i /etc/group* && chattr -i /etc/shadow* && chattr -i /etc/gshadow*
 groupadd docker
 useradd -g docker docker
-echo "123456" | passwd --stdin docker
+echo "1Qaz2Wsx3Edc" | passwd --stdin docker
 usermod docker -G docker  #注意这里需要将数组改为docker属组，不然会报错
 
 setenforce 0
