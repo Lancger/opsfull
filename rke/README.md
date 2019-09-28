@@ -173,7 +173,22 @@ kubectl version
 
 5、检查k8s集群pod状态
 ```
-kubectl get pods --all-namespaces
+[root@master01 ~]# kubectl get pods --all-namespaces
+NAMESPACE       NAME                                      READY   STATUS      RESTARTS   AGE
+ingress-nginx   default-http-backend-7f8fbb85db-rxs9r     1/1     Running     0          106s
+ingress-nginx   nginx-ingress-controller-9vhbj            1/1     Running     0          10m
+ingress-nginx   nginx-ingress-controller-lhvk4            1/1     Running     0          10m
+kube-system     canal-9lhlr                               2/2     Running     0          10m
+kube-system     canal-xxz5p                               2/2     Running     0          10m
+kube-system     kube-dns-5fd74c7488-54dgp                 3/3     Running     0          10m
+kube-system     kube-dns-autoscaler-c89df977f-fb42z       1/1     Running     0          10m
+kube-system     metrics-server-7fbd549b78-8hftl           1/1     Running     0          10m
+kube-system     rke-ingress-controller-deploy-job-8c9c2   0/1     Completed   0          10m
+kube-system     rke-kubedns-addon-deploy-job-lp5tc        0/1     Completed   0          10m
+kube-system     rke-metrics-addon-deploy-job-j585d        0/1     Completed   0          10m
+kube-system     rke-network-plugin-deploy-job-xssrc       0/1     Completed   0          10m
+
+pod的状态只有以上两种状态为正常状态，若有其他状态则需要查看pod日志
 
 kubectl describe pod pod-xxx -n namespace
 ```
