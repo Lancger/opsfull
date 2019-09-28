@@ -112,6 +112,8 @@ root># docker info
 
 ## 三、RKE安装
 
+使用RKE安装，需要先安装好docker和设置好root和普通用户的免key登录
+
 1、下载RKE
 ```
 #可以从https://github.com/rancher/rke/releases下载安装包,本文使用版本v0.3.0.下载完后将安装包上传至任意节点.
