@@ -29,6 +29,12 @@ net.bridge.bridge-nf-call-iptables = 1
 vm.swappiness=0
 EOF
 sysctl --system
+
+#docker用户免密登录
+mkdir -p /home/docker/.ssh/
+chmod 700 /home/docker/.ssh/
+echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7bRm20od1b3rzW3ZPLB5NZn3jQesvfiz2p0WlfcYJrFHfF5Ap0ubIBUSQpVNLn94u8ABGBLboZL8Pjo+rXQPkIcObJxoKS8gz6ZOxcxJhl11JKxTz7s49nNYaNDIwB13KaNpvBEHVoW3frUnP+RnIKIIDsr1QCr9t64D9TE99mbNkEvDXr021UQi12Bf4KP/8gfYK3hDMRuX634/K8yu7+IaO1vEPNT8HDo9XGcvrOD1QGV+is8mrU53Xa2qTsto7AOb2J8M6n1mSZxgNz2oGc6ZDuN1iMBfHm4O/s5VEgbttzB2PtI0meKeaLt8VaqwTth631EN1ryjRYUuav7bf docker@k8s-master-01' > /home/docker/.ssh/authorized_keys
+chmod 400 /home/docker/.ssh/authorized_keys
 ```
 
 ## 二、基础环境准备
