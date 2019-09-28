@@ -1,5 +1,6 @@
 # 一、基础配置优化
 ```
+chattr -i /etc/passwd* && chattr -i /etc/group* && chattr -i /etc/shadow* && chattr -i /etc/gshadow*
 groupadd k8s
 useradd -g k8s k8s
 echo "123456" | passwd --stdin k8s
@@ -22,6 +23,7 @@ EOF
 sysctl -p
 
 cat <<EOF >  /etc/sysctl.d/k8s.conf
+net.ipv4.ip_forward=1
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
 vm.swappiness=0
