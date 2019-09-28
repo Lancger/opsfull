@@ -1,10 +1,10 @@
 # 一、基础配置优化
 ```
 chattr -i /etc/passwd* && chattr -i /etc/group* && chattr -i /etc/shadow* && chattr -i /etc/gshadow*
-groupadd k8s
-useradd -g k8s k8s
-echo "123456" | passwd --stdin k8s
-usermod k8s -G docker  #注意这里需要将数组改为docker属组，不然会报错
+groupadd docker
+useradd -g docker docker
+echo "123456" | passwd --stdin docker
+usermod docker -G docker  #注意这里需要将数组改为docker属组，不然会报错
 
 setenforce 0
 sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config # 关闭selinux
@@ -14,7 +14,6 @@ ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime # 修改时区（如果�
 
 # 性能调优
 cat >> /etc/sysctl.conf<<EOF
-net.ipv4.ip_forward=1
 net.bridge.bridge-nf-call-iptables=1
 net.ipv4.neigh.default.gc_thresh1=4096
 net.ipv4.neigh.default.gc_thresh2=6144
