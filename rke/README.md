@@ -8,6 +8,7 @@ usermod docker -G docker  #注意这里需要将数组改为docker属组，不�
 
 setenforce 0
 sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config # 关闭selinux
+systemctl daemon-reload
 systemctl stop firewalld.service && systemctl disable firewalld.service # 关闭防火墙
 #echo 'LANG="en_US.UTF-8"' >> /etc/profile; source /etc/profile # 修改系统语言
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime # 修改时区（如果需要修改）
