@@ -346,8 +346,8 @@ echo "* soft nofile 65536" >> /etc/security/limits.conf
 echo "* hard nofile 65536" >> /etc/security/limits.conf
 echo "* soft nproc 65536"  >> /etc/security/limits.conf
 echo "* hard nproc 65536"  >> /etc/security/limits.conf
-echo "* soft  memlock  unlimited"  >> /etc/security/limits.conf
-echo "* hard memlock  unlimited"  >> /etc/security/limits.conf
+echo "* soft memlock unlimited"  >> /etc/security/limits.conf
+echo "* hard memlock unlimited"  >> /etc/security/limits.conf
 ```
 
 10、安装依赖包以及相关工具
