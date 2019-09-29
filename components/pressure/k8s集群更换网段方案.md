@@ -25,3 +25,4 @@ etcd官方本来就有正式文档讲dns discovery部署
 
 这一点还真不算是kubeeasz的缺点 因为确实没有人做这件事
 ```
+
