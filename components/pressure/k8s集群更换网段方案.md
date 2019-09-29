@@ -1,9 +1,13 @@
 ```
 1、服务器IP更换网段  有什么解决方案吗？不重新搭建集群的话？
 
+方案一：
+
 改监听地址，重做集群证书
 
 不然还真不好搞的
+
+方案二：
 
 如果etcd一开始是静态的 那就不好玩了
 
@@ -23,7 +27,6 @@ etcd官方本来就有正式文档讲dns discovery部署
 
 只是k8s部分，官方部署没有提
 
-这一点还真不算是kubeeasz的缺点 因为确实没有人做这件事
 ```
 
 ![](https://github.com/Lancger/opsfull/blob/master/images/change_ip_01.png)
