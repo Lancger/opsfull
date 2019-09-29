@@ -26,3 +26,8 @@ etcd官方本来就有正式文档讲dns discovery部署
 这一点还真不算是kubeeasz的缺点 因为确实没有人做这件事
 ```
 
+![](https://github.com/Lancger/opsfull/blob/master/images/change_ip_01.png)
+
+![](https://github.com/Lancger/opsfull/blob/master/images/change_ip_02.png)
+
+![](https://github.com/Lancger/opsfull/blob/master/images/change_ip_05.png)
