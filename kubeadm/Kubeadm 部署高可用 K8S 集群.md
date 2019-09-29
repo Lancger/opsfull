@@ -219,7 +219,7 @@ kubeadm alpha： 预览一组可用的新功能以便从社区搜集反馈
 
 &#8195;分布式系统环境中的多主机通信通常基于主机名称进行，这在 IP 地址存在变化的可能性时为主机提供了固定的访问人口，因此一般需要有专用的 DNS 服务负责解决各节点主机 不过，考虑到此处部署的是测试集群，因此为了降低系复杂度，这里将基于 hosts 的文件进行主机名称解析。
 
-2、修改hosts
+2、修改hosts和免key登录
 
 ```bash
 #分别进入不同服务器，进入 /etc/hosts 进行编辑
@@ -235,6 +235,12 @@ cat > /etc/hosts << \EOF
 10.19.2.247   k8s-node-02     node02      node02.k8s.io
 10.19.2.248   k8s-node-03     node03      node03.k8s.io
 EOF
+
+#root用户免密登录
+mkdir -p /root/.ssh/
+chmod 700 /root/.ssh/
+echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7bRm20od1b3rzW3ZPLB5NZn3jQesvfiz2p0WlfcYJrFHfF5Ap0ubIBUSQpVNLn94u8ABGBLboZL8Pjo+rXQPkIcObJxoKS8gz6ZOxcxJhldudbadabdanKAAKAKKKKKKKKKKKKKKKKKKKKKKK root@k8s-master-01' > /root/.ssh/authorized_keys
+chmod 400 /root/.ssh/authorized_keys
 ```
 
 3、修改hostname
