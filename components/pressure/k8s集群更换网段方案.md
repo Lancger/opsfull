@@ -38,4 +38,6 @@ etcd官方本来就有正式文档讲dns discovery部署
 ![](https://github.com/Lancger/opsfull/blob/master/images/change_ip_06.png)
 
 
+来自：  广大群友讨论集锦
+
 https://github.com/etcd-io/etcd/blob/a4018f25c91fff8f4f15cd2cee9f026650c7e688/Documentation/clustering.md#dns-discovery  
