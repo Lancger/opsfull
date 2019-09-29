@@ -227,13 +227,13 @@ kubeadm alpha： 预览一组可用的新功能以便从社区搜集反馈
 cat > /etc/hosts << \EOF
 127.0.0.1     localhost  localhost.localdomain localhost4 localhost4.localdomain4
 ::1           localhost  localhost.localdomain localhost6 localhost6.localdomain6
-10.19.2.200    master.k8s.io      k8s-vip
-10.19.2.56     master01.k8s.io    k8s-master-01
-10.19.2.57     master02.k8s.io    k8s-master-02
-10.19.2.58     master03.k8s.io    k8s-master-03
-10.19.2.246    node01.k8s.io      k8s-node-01
-10.19.2.247    node01.k8s.io      k8s-node-02
-10.19.2.248    node02.k8s.io      k8s-node-03
+10.19.2.200   k8s-vip         master      master.k8s.io
+10.19.2.56    k8s-master-01   master01    master01.k8s.io
+10.19.2.57    k8s-master-02   master02    master02.k8s.io
+10.19.2.58    k8s-master-03   master03    master03.k8s.io
+10.19.2.246   k8s-node-01     node01      node01.k8s.io
+10.19.2.247   k8s-node-02     node02      node02.k8s.io
+10.19.2.248   k8s-node-03     node03      node03.k8s.io
 EOF
 ```
 
