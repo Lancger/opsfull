@@ -321,6 +321,7 @@ UUID=4489cc8f-1885-4e17-bfe7-8652fd1d3feb /boot                   xfs     defaul
 #创建 /etc/sysctl.d/k8s.conf 文件
 
 cat > /etc/sysctl.d/k8s.conf << \EOF
+vm.swappiness = 0
 net.ipv4.ip_forward = 1
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
