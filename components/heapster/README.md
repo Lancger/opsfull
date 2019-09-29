@@ -23,4 +23,6 @@ tcp        0      0 10.10.188.240:10255     0.0.0.0:*               LISTEN      
 10.10.188.242 是你节点的IP吧，正常的话浏览器访问http://IP:10255/stats/summary是有值的，你看下，如果没有那就是kubelet的配置出问题
 
 ```
-![heapster获取数据异常](https://github.com/Lancger/opsfull/blob/master/images/heapster-01.png)
+![heapster获取数据异常1](https://github.com/Lancger/opsfull/blob/master/images/heapster-01.png)
+
+![heapster获取数据异常2](https://github.com/Lancger/opsfull/blob/master/images/heapster-02.png)
