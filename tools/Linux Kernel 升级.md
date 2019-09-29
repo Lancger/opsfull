@@ -23,7 +23,8 @@ yum remove kernel-tools-libs.x86_64 kernel-tools.x86_64 -y
 yum --disablerepo=\* --enablerepo=elrepo-kernel install -y kernel-lt-tools.x86_64
 
 #查看默认启动顺序
-awk -F\' '$1=="menuentry " {print $2}' /etc/grub2.cfg  
+awk -F\' '$1=="menuentry " {print $2}' /etc/grub2.cfg
+
 CentOS Linux (4.4.183-1.el7.elrepo.x86_64) 7 (Core)  
 CentOS Linux (3.10.0-327.10.1.el7.x86_64) 7 (Core)  
 CentOS Linux (0-rescue-c52097a1078c403da03b8eddeac5080b) 7 (Core)
