@@ -650,7 +650,7 @@ sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/dock
 yum list docker-ce --showduplicates | sort -r
 
 # 安装指定docker版本
-sudo yum install docker-ce-18.06.1.ce-3.el7 -y
+sudo yum install docker-ce-18.09.9-3.el7.x86_64 -y
 
 # 启动docker并设置docker开机启动
 systemctl enable docker
