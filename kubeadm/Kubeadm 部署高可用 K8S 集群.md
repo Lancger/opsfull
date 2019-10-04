@@ -305,6 +305,8 @@ getenforce
 # 关闭当前已启用的所有 Swap 设备
 swapoff -a && sysctl -w vm.swappiness=0
 
+sed -ri 's/.*swap.*/#&/' /etc/fstab
+或
 # 编辑 fstab 配置文件，注释掉标识为 Swap 设备的所有行
 vi /etc/fstab
 
