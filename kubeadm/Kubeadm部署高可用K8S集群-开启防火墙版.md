@@ -1,7 +1,7 @@
 # 环境介绍：
 ```bash
 CentOS： 7.6
-Docker： 18.06.1-ce
+Docker： docker-ce-18.09.9
 Kubernetes： 1.13.4
 Kuberadm： 1.13.4
 Kuberlet： 1.13.4
