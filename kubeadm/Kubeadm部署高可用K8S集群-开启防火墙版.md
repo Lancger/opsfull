@@ -28,9 +28,6 @@ cat > /etc/sysconfig/iptables << \EOF
 -A FORWARD -j RH-Firewall-1-INPUT
 -A RH-Firewall-1-INPUT -i lo -j ACCEPT
 -A RH-Firewall-1-INPUT -p icmp -m icmp --icmp-type any -j ACCEPT
--A RH-Firewall-1-INPUT -s 192.168.56.11/32 -p tcp -m tcp --dport 22 -j ACCEPT
--A RH-Firewall-1-INPUT -s 192.168.56.12/32 -p tcp -m tcp --dport 22 -j ACCEPT
--A RH-Firewall-1-INPUT -s 192.168.56.13/32 -p tcp -m tcp --dport 22 -j ACCEPT
 -A RH-Firewall-1-INPUT -s 192.168.56.1/32 -p tcp -m tcp --dport 22 -j ACCEPT
 -A RH-Firewall-1-INPUT -p tcp -m tcp --dport 22 -j DROP
 #k8s
@@ -49,6 +46,7 @@ systemctl restart iptables.service
 systemctl enable iptables.service
 
 iptables -nvL
+
 ```
 # 集群架构：
 
