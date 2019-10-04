@@ -678,8 +678,11 @@ iptables -P FORWARD ACCEPT
 # 修改docker的配置
 vim /usr/lib/systemd/system/docker.service
 
-# 增加下面命令
+# 增加下面命令(ExecReload后面新增ExecStartPost=...)
+...
+ExecReload=/bin/kill -s HUP $MAINPID
 ExecStartPost=/usr/sbin/iptables -P FORWARD ACCEPT
+...
 
 # 配置docker加速器
 cat > /etc/docker/daemon.json << \EOF
