@@ -465,7 +465,7 @@ EOF
 -A RH-Firewall-1-INPUT -p vrrp -j ACCEPT
     
 #2、注意上面配置script "killall -0 haproxy"   #根据进程名称检测进程是否存活，会在/var/log/messages每隔一秒执行检测的日志记录
-# tail -100f /var/log/message
+# tail -100f /var/log/messages
 
 Sep 27 10:54:16 tw19410s1 Keepalived_vrrp[9113]: /usr/bin/killall -0 haproxy exited with status 1
 ```
