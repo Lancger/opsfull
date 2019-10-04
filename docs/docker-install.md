@@ -81,8 +81,9 @@ Type=notify
 # the default is not to use systemd for cgroups because the delegate issues still
 # exists and systemd currently does not support the cgroup feature set required
 # for containers run by docker
-ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock --exec-opt native.cgroupdriver=systemd
 ExecReload=/bin/kill -s HUP \$MAINPID
+ExecStartPost=/usr/sbin/iptables -P FORWARD ACCEPT
 TimeoutSec=0
 RestartSec=2
 Restart=always
