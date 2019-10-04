@@ -1,5 +1,19 @@
 # study_docker
 
+## 0.卸载旧版本
+```bash
+yum remove -y docker \
+docker-client \
+docker-client-latest \
+docker-common \
+docker-latest \
+docker-latest-logrotate \
+docker-logrotate \
+docker-selinux \
+docker-engine-selinux \
+docker-engine
+```
+
 ## 1.安装Docker
 
 第一步：使用国内Docker源
