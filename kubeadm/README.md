@@ -1,5 +1,5 @@
 # 一、初始化
-```
+```bash
 cat > /etc/hosts << \EOF
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
@@ -18,7 +18,9 @@ sed -i 's/SELINUXTYPE=.*/SELINUXTYPE=disabled/g' /etc/selinux/config
 # 关闭 swap
 swapoff -a
 sed -ir 's/.*swap.*/#&/' /etc/fstab
-或
+#或
+export Time=`date "+%Y%m%d%H%M%S"`
+
 yes | cp /etc/fstab /etc/fstab_bak
 cat /etc/fstab_bak |grep -v swap > /etc/fstab
 
