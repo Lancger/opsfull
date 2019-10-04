@@ -2,10 +2,10 @@
 ```bash
 CentOS： 7.6
 Docker： docker-ce-18.09.9
-Kubernetes： 1.13.4
-Kuberadm： 1.13.4
-Kuberlet： 1.13.4
-Kuberctl： 1.13.4
+Kubernetes： 1.15.3
+Kubeadm： 1.15.3
+Kubelet： 1.15.3
+Kubectl： 1.15.3
 ```  
 # 部署介绍：
 
