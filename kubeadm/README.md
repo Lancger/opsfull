@@ -15,8 +15,12 @@ setenforce 0
 sed -i 's/SELINUX=.*/SELINUX=disabled/g' /etc/selinux/config
 sed -i 's/SELINUXTYPE=.*/SELINUXTYPE=disabled/g' /etc/selinux/config
 
+# 关闭 swap
 swapoff -a
-sed -ri 's/.*swap.*/#&/' /etc/fstab
+sed -ir 's/.*swap.*/#&/' /etc/fstab
+或
+yes | cp /etc/fstab /etc/fstab_bak
+cat /etc/fstab_bak |grep -v swap > /etc/fstab
 
 cat > /etc/sysctl.d/k8s.conf << \EOF
 net.bridge.bridge-nf-call-ip6tables = 1
