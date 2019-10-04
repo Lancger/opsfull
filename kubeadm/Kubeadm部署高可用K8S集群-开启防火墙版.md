@@ -786,7 +786,7 @@ EOF
 yum list kubelet --showduplicates | sort -r 
 
 # 安装kubelet
-yum install -y kubelet-1.13.4-0
+yum install -y kubelet-1.15.3-0
 
 # 启动kubelet并设置开机启动
 systemctl enable kubelet 
@@ -805,7 +805,7 @@ systemctl status kubelet
 yum list kubeadm --showduplicates | sort -r 
 
 # 2、安装kubeadm
-yum install -y kubeadm-1.13.4-0
+yum install -y kubeadm-1.15.3-0
 # 安装 kubeadm 时候会默认安装 kubectl ，所以不需要单独安装kubectl
 
 # 3、重启服务器
