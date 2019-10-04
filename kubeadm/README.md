@@ -19,10 +19,11 @@ sed -i 's/SELINUXTYPE=.*/SELINUXTYPE=disabled/g' /etc/selinux/config
 swapoff -a
 sed -ir 's/.*swap.*/#&/' /etc/fstab
 #或
-export Time=`date "+%Y%m%d%H%M%S"`
-
 yes | cp /etc/fstab /etc/fstab_bak
 cat /etc/fstab_bak |grep -v swap > /etc/fstab
+
+#export Time=`date "+%Y%m%d%H%M%S"`
+#cp /etc/fstab /etc/fstab_$Time
 
 cat > /etc/sysctl.d/k8s.conf << \EOF
 net.bridge.bridge-nf-call-ip6tables = 1
