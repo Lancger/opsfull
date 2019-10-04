@@ -753,6 +753,10 @@ KillMode=process
 [Install]
 WantedBy=multi-user.target
 EOF
+
+# 重启Docker
+systemctl daemon-reload
+systemctl restart docker
 ```
 
 # 六、安装kubeadm、kubelet
