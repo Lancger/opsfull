@@ -793,8 +793,11 @@ systemctl enable kubelet
 systemctl start kubelet
 
 # 检查状态
-检查状态,发现是failed状态，正常，kubelet会10秒重启一次，等初始化master节点后即可正常
+检查状态,发现是failed状态，正常，kubelet会10秒重启一次，需等下面完成初始化master节点后即可正常
 systemctl status kubelet
+
+# 查看kubelet日志
+journalctl -u kubelet --no-pager
 ```
 
 ### 3、安装kubeadm
