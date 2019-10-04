@@ -129,6 +129,9 @@ cat > /etc/docker/daemon.json << \EOF
   "insecure-registries": ["reg.hub.com"]
 }
 EOF
+
+或者
+curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io
 ```
 
 ### 3.2、重新加载docker的配置文件
