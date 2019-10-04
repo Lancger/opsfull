@@ -72,6 +72,7 @@ curl -sSL https://get.daocloud.io/docker | sh
 
 ### 3.Docker服务文件
 ```bash
+# Docker从1.13版本开始调整了默认的防火墙规则，禁用了iptables filter表中FOWARD链，这样会引起Kubernetes集群中跨Node的Pod无法通信，执行下面命令
 #注意，有变量的地方需要使用转义符号
 
 cat > /usr/lib/systemd/system/docker.service << EOF
