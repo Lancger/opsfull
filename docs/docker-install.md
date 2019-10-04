@@ -20,6 +20,7 @@ docker-engine
 ```
 cd /etc/yum.repos.d/
 wget -O docker-ce.repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+
 #或
 yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 
