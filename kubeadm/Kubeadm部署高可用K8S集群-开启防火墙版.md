@@ -413,7 +413,7 @@ cat <<EOF > /etc/keepalived/keepalived.conf
 # 主要是配置故障发生时的通知对象以及机器标识。
 global_defs {
    # 标识本节点的字条串，通常为 hostname，但不一定非得是 hostname。故障发生时，邮件通知会用到。
-   router_id LVS_k8s
+   router_id LVS_K8S
 }
 
 # 用来做健康检查的，当时检查失败时会将 vrrp_instance 的 priority 减少相应的值。
@@ -437,7 +437,7 @@ vrrp_instance VI_1 {
         auth_pass 35f18af7190d51c9f7f78f37300a0cbd
     }
     virtual_ipaddress {
-        10.19.2.200   #虚拟ip，即VIP
+        192.168.56.200   #虚拟ip，即VIP
     }
     track_script {
         check_haproxy
