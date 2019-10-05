@@ -931,14 +931,14 @@ kubeadm join master.k8s.io:16443 --token wf0eoe.liqcp0nhtlov4ioi \
 
 用于初始化第二、三个 master 节点
 ```
-kubeadm join master.k8s.io:16443 --token 0cttr2.xtrrn8mjmnn7zhw9 \
-    --discovery-token-ca-cert-hash sha256:e369c057c475223658ccc843d6ff3bf66b3fbd11ecd486075217b5744e89fbdd \
-    --control-plane
+kubeadm join master.k8s.io:16443 --token wf0eoe.liqcp0nhtlov4ioi \
+    --discovery-token-ca-cert-hash sha256:e43bbb08bb5decae1ce0001f2988ff79095e6be5a3dea77a7c6af180562c7e56 \
+    --control-plane --certificate-key 6054323448a1aeb661b78763262db5c30e12026c54341400d48401a853194ec2
 ```
 用于初始化 worker 节点
 ```
-kubeadm join master.k8s.io:16443 --token 0cttr2.xtrrn8mjmnn7zhw9 \
-    --discovery-token-ca-cert-hash sha256:e369c057c475223658ccc843d6ff3bf66b3fbd11ecd486075217b5744e89fbdd
+kubeadm join master.k8s.io:16443 --token wf0eoe.liqcp0nhtlov4ioi \
+    --discovery-token-ca-cert-hash sha256:e43bbb08bb5decae1ce0001f2988ff79095e6be5a3dea77a7c6af180562c7e56
 ```
 
 ### 3、配置kubectl环境变量
