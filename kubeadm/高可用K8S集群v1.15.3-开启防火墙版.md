@@ -761,6 +761,7 @@ EOF
 # 重启Docker
 systemctl daemon-reload
 systemctl restart docker
+systemctl enable docker
 ```
 
 # 六、安装kubeadm、kubelet
