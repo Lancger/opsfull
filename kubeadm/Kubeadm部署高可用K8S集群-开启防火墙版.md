@@ -837,6 +837,8 @@ reboot
 ```
 # 1、创建kubeadm配置的yaml文件
 
+rm -f ./kubeadm-config.yaml
+
 cat > kubeadm-config.yaml << EOF
 apiServer:
   certSANs:
@@ -916,6 +918,7 @@ kubeadm join master.k8s.io:16443 --token i77yg1.1eype0c53jsanoge --discovery-tok
 ```bash
 # 配置环境变量
 
+rm -rf $HOME/.kube
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
