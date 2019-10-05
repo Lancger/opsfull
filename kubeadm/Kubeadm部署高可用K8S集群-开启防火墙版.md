@@ -895,7 +895,7 @@ kubeadm init --config kubeadm-config.yaml
 ```
 日志
 ```
-Your Kubernetes master has initialized successfully!
+Your Kubernetes control-plane has initialized successfully!
 
 To start using your cluster, you need to run the following as a regular user:
 
@@ -907,16 +907,30 @@ You should now deploy a pod network to the cluster.
 Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
   https://kubernetes.io/docs/concepts/cluster-administration/addons/
 
-You can now join any number of machines by running the following on each node
-as root:
+You can now join any number of control-plane nodes by copying certificate authorities 
+and service account keys on each node and then running the following as root:
 
-  kubeadm join master.k8s.io:16443 --token i77yg1.1eype0c53jsanoge --discovery-token-ca-cert-hash sha256:8f0a817012ab333a057b6a7410e65971be20b95c1b75fc4015f8f3b6785f626f
+  kubeadm join master.k8s.io:16443 --token 0cttr2.xtrrn8mjmnn7zhw9 \
+    --discovery-token-ca-cert-hash sha256:e369c057c475223658ccc843d6ff3bf66b3fbd11ecd486075217b5744e89fbdd \
+    --control-plane       
+
+Then you can join any number of worker nodes by running the following on each as root:
+
+kubeadm join master.k8s.io:16443 --token 0cttr2.xtrrn8mjmnn7zhw9 \
+    --discovery-token-ca-cert-hash sha256:e369c057c475223658ccc843d6ff3bf66b3fbd11ecd486075217b5744e89fbdd 
 ```
-在此处看日志可以知道，通过
+执行结果中
+用于初始化第二、三个 master 节点
 ```
-kubeadm join master.k8s.io:16443 --token i77yg1.1eype0c53jsanoge --discovery-token-ca-cert-hash sha256:8f0a817012ab333a057b6a7410e65971be20b95c1b75fc4015f8f3b6785f626f
+  kubeadm join master.k8s.io:16443 --token 0cttr2.xtrrn8mjmnn7zhw9 \
+    --discovery-token-ca-cert-hash sha256:e369c057c475223658ccc843d6ff3bf66b3fbd11ecd486075217b5744e89fbdd \
+    --control-plane
 ```
-来让节点加入集群
+用于初始化 worker 节点
+```
+kubeadm join master.k8s.io:16443 --token 0cttr2.xtrrn8mjmnn7zhw9 \
+    --discovery-token-ca-cert-hash sha256:e369c057c475223658ccc843d6ff3bf66b3fbd11ecd486075217b5744e89fbdd
+```
 
 ### 3、配置kubectl环境变量
 ```bash
