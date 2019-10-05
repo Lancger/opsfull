@@ -261,9 +261,9 @@ cat > /etc/hosts << \EOF
 127.0.0.1     localhost  localhost.localdomain localhost4 localhost4.localdomain4
 ::1           localhost  localhost.localdomain localhost6 localhost6.localdomain6
 192.168.56.200   k8s-vip         master      master.k8s.io
-192.168.56.56    k8s-master-01   master01    master01.k8s.io
-192.168.56.57    k8s-master-02   master02    master02.k8s.io
-192.168.56.58    k8s-master-03   master03    master03.k8s.io
+192.168.56.11    k8s-master-01   master01    master01.k8s.io
+192.168.56.12    k8s-master-02   master02    master02.k8s.io
+192.168.56.13    k8s-master-03   master03    master03.k8s.io
 192.168.56.246   k8s-node-01     node01      node01.k8s.io
 192.168.56.247   k8s-node-02     node02      node02.k8s.io
 192.168.56.248   k8s-node-03     node03      node03.k8s.io
@@ -281,13 +281,13 @@ chmod 400 /root/.ssh/authorized_keys
 ```bash
 #分别进入不同的服务器修改 hostname 名称
 
-# 修改 192.168.56.56 服务器
+# 修改 192.168.56.11 服务器
 hostnamectl  set-hostname  k8s-master-01
 
-# 修改 192.168.56.57 服务器
+# 修改 192.168.56.12 服务器
 hostnamectl  set-hostname  k8s-master-02
 
-# 修改 192.168.56.58 服务器
+# 修改 192.168.56.13 服务器
 hostnamectl  set-hostname  k8s-master-03
 
 # 修改 192.168.56.246 服务器
@@ -489,7 +489,7 @@ kepplived 配置中 state 为 MASTER 的节点启动后，查看网络状态，�
 [root@k8s-master-01 ~]# ip address show eth0
 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
     link/ether 00:50:56:be:86:af brd ff:ff:ff:ff:ff:ff
-    inet 192.168.56.56/22 brd 10.19.3.255 scope global eth0
+    inet 192.168.56.11/24 brd 192.168.56.255 scope global eth0
        valid_lft forever preferred_lft forever
     inet 192.168.56.200/32 scope global eth0
        valid_lft forever preferred_lft forever
@@ -572,9 +572,9 @@ frontend kubernetes-apiserver
 backend kubernetes-apiserver
     mode        tcp
     balance     roundrobin
-    server      master01.k8s.io   192.168.56.56:6443 check
-    server      master02.k8s.io   192.168.56.57:6443 check
-    server      master03.k8s.io   192.168.56.58:6443 check
+    server      master01.k8s.io   192.168.56.11:6443 check
+    server      master02.k8s.io   192.168.56.12:6443 check
+    server      master03.k8s.io   192.168.56.13:6443 check
 #---------------------------------------------------------------------
 # collection haproxy statistics message
 #---------------------------------------------------------------------
@@ -586,7 +586,7 @@ listen stats
     stats uri            /admin?stats
 EOF
 ```
-haproxy配置在其他master节点上(192.168.56.57和192.168.56.58)相同
+haproxy配置在其他master节点上(192.168.56.12和192.168.56.13)相同
 
 ### 3、启动并检测haproxy
 ```bash
