@@ -839,6 +839,10 @@ reboot
 
 rm -f ./kubeadm-config.yaml
 
+export APISERVER_NAME=master.k8s.io
+export POD_SUBNET=10.20.0.1/16
+export SVC_SUBNET=10.96.0.1/16
+
 cat > kubeadm-config.yaml << EOF
 apiServer:
   certSANs:
@@ -857,7 +861,7 @@ apiServer:
 apiVersion: kubeadm.k8s.io/v1beta1
 certificatesDir: /etc/kubernetes/pki
 clusterName: kubernetes
-controlPlaneEndpoint: "master.k8s.io:16443"
+controlPlaneEndpoint: "${APISERVER_NAME}:16443"
 controllerManager: {}
 dns: 
   type: CoreDNS
@@ -866,11 +870,11 @@ etcd:
     dataDir: /var/lib/etcd
 imageRepository: registry.aliyuncs.com/google_containers
 kind: ClusterConfiguration
-kubernetesVersion: v1.13.4
+kubernetesVersion: v1.15.3
 networking: 
   dnsDomain: cluster.local  
-  podSubnet: 10.20.0.0/16
-  serviceSubnet: 10.10.0.0/16
+  podSubnet: "${POD_SUBNET}"
+  serviceSubnet: "${SVC_SUBNET}"
 scheduler: {}
 EOF
 
