@@ -912,17 +912,20 @@ You should now deploy a pod network to the cluster.
 Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
   https://kubernetes.io/docs/concepts/cluster-administration/addons/
 
-You can now join any number of control-plane nodes by copying certificate authorities 
-and service account keys on each node and then running the following as root:
+You can now join any number of the control-plane node running the following command on each as root:
 
-  kubeadm join master.k8s.io:16443 --token 0cttr2.xtrrn8mjmnn7zhw9 \
-    --discovery-token-ca-cert-hash sha256:e369c057c475223658ccc843d6ff3bf66b3fbd11ecd486075217b5744e89fbdd \
-    --control-plane       
+  kubeadm join master.k8s.io:16443 --token wf0eoe.liqcp0nhtlov4ioi \
+    --discovery-token-ca-cert-hash sha256:e43bbb08bb5decae1ce0001f2988ff79095e6be5a3dea77a7c6af180562c7e56 \
+    --control-plane --certificate-key 6054323448a1aeb661b78763262db5c30e12026c54341400d48401a853194ec2
+
+Please note that the certificate-key gives access to cluster sensitive data, keep it secret!
+As a safeguard, uploaded-certs will be deleted in two hours; If necessary, you can use 
+"kubeadm init phase upload-certs --upload-certs" to reload certs afterward.
 
 Then you can join any number of worker nodes by running the following on each as root:
 
-kubeadm join master.k8s.io:16443 --token 0cttr2.xtrrn8mjmnn7zhw9 \
-    --discovery-token-ca-cert-hash sha256:e369c057c475223658ccc843d6ff3bf66b3fbd11ecd486075217b5744e89fbdd 
+kubeadm join master.k8s.io:16443 --token wf0eoe.liqcp0nhtlov4ioi \
+    --discovery-token-ca-cert-hash sha256:e43bbb08bb5decae1ce0001f2988ff79095e6be5a3dea77a7c6af180562c7e56
 ```
 ### 执行结果中
 
