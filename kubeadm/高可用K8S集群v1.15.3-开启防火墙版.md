@@ -153,19 +153,19 @@ kubeadm alpha： 预览一组可用的新功能以便从社区搜集反馈
         <td>master</td>
     </tr>
     <tr>
-        <td>192.168.56.246</td>
+        <td>192.168.56.14</td>
         <td>k8s-node-01</td>
         <td>4C & 8G</td>
         <td>node</td>
     </tr>
     <tr>
-        <td>192.168.56.247</td>
+        <td>192.168.56.15</td>
         <td>k8s-node-02</td>
         <td>4C & 8G</td>
         <td>node</td>
     </tr>
     <tr>
-        <td>192.168.56.248</td>
+        <td>192.168.56.16</td>
         <td>k8s-node-03</td>
         <td>4C & 8G</td>
         <td>node</td>
