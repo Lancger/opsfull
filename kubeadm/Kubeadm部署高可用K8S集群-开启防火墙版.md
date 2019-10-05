@@ -919,10 +919,11 @@ Then you can join any number of worker nodes by running the following on each as
 kubeadm join master.k8s.io:16443 --token 0cttr2.xtrrn8mjmnn7zhw9 \
     --discovery-token-ca-cert-hash sha256:e369c057c475223658ccc843d6ff3bf66b3fbd11ecd486075217b5744e89fbdd 
 ```
-执行结果中
+### 执行结果中
+
 用于初始化第二、三个 master 节点
 ```
-  kubeadm join master.k8s.io:16443 --token 0cttr2.xtrrn8mjmnn7zhw9 \
+kubeadm join master.k8s.io:16443 --token 0cttr2.xtrrn8mjmnn7zhw9 \
     --discovery-token-ca-cert-hash sha256:e369c057c475223658ccc843d6ff3bf66b3fbd11ecd486075217b5744e89fbdd \
     --control-plane
 ```
