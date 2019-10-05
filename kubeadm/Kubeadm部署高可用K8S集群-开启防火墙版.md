@@ -34,6 +34,7 @@ cat > /etc/sysconfig/iptables << \EOF
 -A RH-Firewall-1-INPUT -s 192.168.56.11/32 -j ACCEPT
 -A RH-Firewall-1-INPUT -s 192.168.56.12/32 -j ACCEPT
 -A RH-Firewall-1-INPUT -s 192.168.56.13/32 -j ACCEPT
+-A RH-Firewall-1-INPUT -s 192.168.56.14/32 -j ACCEPT
 -A RH-Firewall-1-INPUT -p vrrp -j ACCEPT
 -A RH-Firewall-1-INPUT -s 192.168.56.1/32 -p tcp -m multiport --dports 80,443,1080,6443,16443 -j ACCEPT
 #
