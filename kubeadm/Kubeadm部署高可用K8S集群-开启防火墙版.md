@@ -1335,3 +1335,5 @@ http://www.mydlq.club/article/4/
 https://kuboard.cn/install/install-kubernetes.html#%E5%88%9D%E5%A7%8B%E5%8C%96%E7%AC%AC%E4%B8%80%E4%B8%AAmaster%E8%8A%82%E7%82%B9
 
 https://blog.51cto.com/fengwan/2426528?source=dra  kubeadm搭建高可用kubernetes 1.15.1
+
+https://segmentfault.com/a/1190000018741112?utm_source=tag-newest  Kubernetes的几种主流部署方式02-kubeadm部署高可用集群
