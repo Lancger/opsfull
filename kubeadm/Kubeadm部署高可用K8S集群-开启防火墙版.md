@@ -830,7 +830,7 @@ reboot
     inet 192.168.56.200/32 scope global eth0
        valid_lft forever preferred_lft forever
 
-可以看到虚拟IP 192.168.56.200  和 服务器IP 192.168.56.56在一台机子上，所以初始化kubernetes第一个master要在master01机子上进行安装
+可以看到虚拟IP 192.168.56.200  和 服务器IP 192.168.56.11在一台机子上，所以初始化kubernetes第一个master要在master01机子上进行安装
 ```
 
 ### 1、创建kubeadm配置的yaml文件
