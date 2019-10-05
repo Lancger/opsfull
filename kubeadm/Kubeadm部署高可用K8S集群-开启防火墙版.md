@@ -126,43 +126,43 @@ kubeadm alpha： 预览一组可用的新功能以便从社区搜集反馈
         <td><strong>角色</td>
     </tr>
     <tr>
-        <td>10.19.2.200</td>
+        <td>192.168.56.200</td>
         <td>-</td>
         <td>-</td>
         <td>vip</td>
     </tr>
     <tr>
-        <td>10.19.2.56</td>
+        <td>192.168.56.11</td>
         <td>k8s-master-01</td>
         <td>2C & 2G</td>
         <td>master</td>
     </tr>
     <tr>
-        <td>10.19.2.57</td>
+        <td>192.168.56.12</td>
         <td>k8s-master-02</td>
         <td>2C & 2G</td>
         <td>master</td>
     </tr>
     <tr>
-        <td>10.19.2.58</td>
+        <td>192.168.56.13</td>
         <td>k8s-master-03</td>
         <td>2C & 2G</td>
         <td>master</td>
     </tr>
     <tr>
-        <td>10.19.2.246</td>
+        <td>192.168.56.246</td>
         <td>k8s-node-01</td>
         <td>4C & 8G</td>
         <td>node</td>
     </tr>
     <tr>
-        <td>10.19.2.247</td>
+        <td>192.168.56.247</td>
         <td>k8s-node-02</td>
         <td>4C & 8G</td>
         <td>node</td>
     </tr>
     <tr>
-        <td>10.19.2.248</td>
+        <td>192.168.56.248</td>
         <td>k8s-node-03</td>
         <td>4C & 8G</td>
         <td>node</td>
@@ -260,13 +260,13 @@ kubeadm alpha： 预览一组可用的新功能以便从社区搜集反馈
 cat > /etc/hosts << \EOF
 127.0.0.1     localhost  localhost.localdomain localhost4 localhost4.localdomain4
 ::1           localhost  localhost.localdomain localhost6 localhost6.localdomain6
-10.19.2.200   k8s-vip         master      master.k8s.io
-10.19.2.56    k8s-master-01   master01    master01.k8s.io
-10.19.2.57    k8s-master-02   master02    master02.k8s.io
-10.19.2.58    k8s-master-03   master03    master03.k8s.io
-10.19.2.246   k8s-node-01     node01      node01.k8s.io
-10.19.2.247   k8s-node-02     node02      node02.k8s.io
-10.19.2.248   k8s-node-03     node03      node03.k8s.io
+192.168.56.200   k8s-vip         master      master.k8s.io
+192.168.56.56    k8s-master-01   master01    master01.k8s.io
+192.168.56.57    k8s-master-02   master02    master02.k8s.io
+192.168.56.58    k8s-master-03   master03    master03.k8s.io
+192.168.56.246   k8s-node-01     node01      node01.k8s.io
+192.168.56.247   k8s-node-02     node02      node02.k8s.io
+192.168.56.248   k8s-node-03     node03      node03.k8s.io
 EOF
 
 #root用户免密登录
@@ -281,22 +281,22 @@ chmod 400 /root/.ssh/authorized_keys
 ```bash
 #分别进入不同的服务器修改 hostname 名称
 
-# 修改 10.19.2.56 服务器
+# 修改 192.168.56.56 服务器
 hostnamectl  set-hostname  k8s-master-01
 
-# 修改 10.19.2.57 服务器
+# 修改 192.168.56.57 服务器
 hostnamectl  set-hostname  k8s-master-02
 
-# 修改 10.19.2.58 服务器
+# 修改 192.168.56.58 服务器
 hostnamectl  set-hostname  k8s-master-03
 
-# 修改 10.19.2.246 服务器
+# 修改 192.168.56.246 服务器
 hostnamectl  set-hostname  k8s-node-01
 
-# 修改 10.19.2.247 服务器
+# 修改 192.168.56.247 服务器
 hostnamectl  set-hostname  k8s-node-02
 
-# 修改 10.19.2.248 服务器
+# 修改 192.168.56.248 服务器
 hostnamectl  set-hostname  k8s-node-03
 ```
 
@@ -396,7 +396,7 @@ yum install -y yum-utils device-mapper-persistent-data lvm2 net-tools conntrack-
 # 三、安装Keepalived
 
 - keepalived介绍： 是集群管理中保证集群高可用的一个服务软件，其功能类似于heartbeat，用来防止单点故障
-- Keepalived作用： 为haproxy提供vip（10.19.2.200）在三个haproxy实例之间提供主备，降低当其中一个haproxy失效的时对服务的影响。
+- Keepalived作用： 为haproxy提供vip（192.168.56.200）在三个haproxy实例之间提供主备，降低当其中一个haproxy失效的时对服务的影响。
 
 ### 1、yum安装Keepalived
 ```bash
@@ -489,9 +489,9 @@ kepplived 配置中 state 为 MASTER 的节点启动后，查看网络状态，�
 [root@k8s-master-01 ~]# ip address show eth0
 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
     link/ether 00:50:56:be:86:af brd ff:ff:ff:ff:ff:ff
-    inet 10.19.2.56/22 brd 10.19.3.255 scope global eth0
+    inet 192.168.56.56/22 brd 10.19.3.255 scope global eth0
        valid_lft forever preferred_lft forever
-    inet 10.19.2.200/32 scope global eth0
+    inet 192.168.56.200/32 scope global eth0
        valid_lft forever preferred_lft forever
 
 当关掉当前节点的keeplived服务后将进行虚拟IP转移，将会推选state 为 BACKUP 的节点的某一节点为新的MASTER，可以在那台节点上查看网卡，将会查看到虚拟IP
@@ -572,9 +572,9 @@ frontend kubernetes-apiserver
 backend kubernetes-apiserver
     mode        tcp
     balance     roundrobin
-    server      master01.k8s.io   10.19.2.56:6443 check
-    server      master02.k8s.io   10.19.2.57:6443 check
-    server      master03.k8s.io   10.19.2.58:6443 check
+    server      master01.k8s.io   192.168.56.56:6443 check
+    server      master02.k8s.io   192.168.56.57:6443 check
+    server      master03.k8s.io   192.168.56.58:6443 check
 #---------------------------------------------------------------------
 # collection haproxy statistics message
 #---------------------------------------------------------------------
@@ -586,7 +586,7 @@ listen stats
     stats uri            /admin?stats
 EOF
 ```
-haproxy配置在其他master节点上(10.19.2.57和10.19.2.58)相同
+haproxy配置在其他master节点上(192.168.56.57和192.168.56.58)相同
 
 ### 3、启动并检测haproxy
 ```bash
@@ -825,12 +825,12 @@ reboot
 [root@k8s-master-01 ~]# ip address show eth0
 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
     link/ether 00:50:56:be:86:af brd ff:ff:ff:ff:ff:ff
-    inet 10.19.2.56/22 brd 10.19.3.255 scope global eth0
+    inet 192.168.56.56/22 brd 10.19.3.255 scope global eth0
        valid_lft forever preferred_lft forever
-    inet 10.19.2.200/32 scope global eth0
+    inet 192.168.56.200/32 scope global eth0
        valid_lft forever preferred_lft forever
 
-可以看到虚拟IP 10.19.2.200  和 服务器IP 10.19.2.56在一台机子上，所以初始化kubernetes第一个master要在master01机子上进行安装
+可以看到虚拟IP 192.168.56.200  和 服务器IP 192.168.56.56在一台机子上，所以初始化kubernetes第一个master要在master01机子上进行安装
 ```
 
 ### 1、创建kubeadm配置的yaml文件
@@ -844,10 +844,10 @@ apiServer:
     - k8s-master-02
     - k8s-master-03
     - master.k8s.io
-    - 10.19.2.56
-    - 10.19.2.57
-    - 10.19.2.58
-    - 10.19.2.200
+    - 192.168.56.56
+    - 192.168.56.57
+    - 192.168.56.58
+    - 192.168.56.200
     - 127.0.0.1
   extraArgs:
     authorization-mode: Node,RBAC
