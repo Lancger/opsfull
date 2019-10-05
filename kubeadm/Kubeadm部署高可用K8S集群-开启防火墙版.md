@@ -850,9 +850,9 @@ apiServer:
     - k8s-master-02
     - k8s-master-03
     - master.k8s.io
-    - 192.168.56.56
-    - 192.168.56.57
-    - 192.168.56.58
+    - 192.168.56.11
+    - 192.168.56.12
+    - 192.168.56.13
     - 192.168.56.200
     - 127.0.0.1
   extraArgs:
@@ -885,8 +885,8 @@ EOF
 配置说明：
 
     imageRepository： registry.aliyuncs.com/google_containers (使用阿里云镜像仓库)
-    podSubnet： 10.20.0.0/16 (#pod地址池)
-    serviceSubnet： 10.10.0.0/16 (#service地址池)
+    podSubnet： 10.20.0.1/16 (#pod地址池)
+    serviceSubnet： 10.96.0.1/16 (#service地址池)
 ```
 
 ### 2、初始化第一个master节点
