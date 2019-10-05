@@ -972,6 +972,12 @@ kube-proxy-88s74                        1/1     Running   0          7m32s
 kube-scheduler-k8s-master-01            1/1     Running   0          6m45s
 
 可以看到coredns没有启动，这是由于还没有配置网络插件，接下来配置下后再重新查看启动状态
+
+#检查ETCD服务
+docker exec -it $(docker ps |grep etcd_etcd|awk '{print $1}') sh
+etcdctl --endpoints=https://192.168.56.11:2379 --ca-file=/etc/kubernetes/pki/etcd/ca.crt --cert-file=/etc/kubernetes/pki/etcd/server.crt --key-file=/etc/kubernetes/pki/etcd/server.key member list
+
+etcdctl --endpoints=https://192.168.56.11:2379 --ca-file=/etc/kubernetes/pki/etcd/ca.crt --cert-file=/etc/kubernetes/pki/etcd/server.crt --key-file=/etc/kubernetes/pki/etcd/server.key cluster-health
 ```
 # 八、安装网络插件
 
