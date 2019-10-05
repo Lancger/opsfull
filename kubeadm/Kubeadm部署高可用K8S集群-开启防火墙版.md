@@ -840,8 +840,8 @@ reboot
 rm -f ./kubeadm-config.yaml
 
 export APISERVER_NAME=master.k8s.io
-export POD_SUBNET=10.20.0.1/16
-export SVC_SUBNET=10.96.0.1/16
+export POD_SUBNET=10.20.0.0/16
+export SVC_SUBNET=10.96.0.0/16
 
 cat > kubeadm-config.yaml << EOF
 apiServer:
