@@ -267,9 +267,9 @@ cat > /etc/hosts << \EOF
 192.168.56.11    k8s-master-01   master01    master01.k8s.io
 192.168.56.12    k8s-master-02   master02    master02.k8s.io
 192.168.56.13    k8s-master-03   master03    master03.k8s.io
-192.168.56.246   k8s-node-01     node01      node01.k8s.io
-192.168.56.247   k8s-node-02     node02      node02.k8s.io
-192.168.56.248   k8s-node-03     node03      node03.k8s.io
+192.168.56.14    k8s-node-01     node01      node01.k8s.io
+192.168.56.15    k8s-node-02     node02      node02.k8s.io
+192.168.56.16    k8s-node-03     node03      node03.k8s.io
 EOF
 
 #root用户免密登录
@@ -293,13 +293,13 @@ hostnamectl  set-hostname  k8s-master-02
 # 修改 192.168.56.13 服务器
 hostnamectl  set-hostname  k8s-master-03
 
-# 修改 192.168.56.246 服务器
+# 修改 192.168.56.14 服务器
 hostnamectl  set-hostname  k8s-node-01
 
-# 修改 192.168.56.247 服务器
+# 修改 192.168.56.15 服务器
 hostnamectl  set-hostname  k8s-node-02
 
-# 修改 192.168.56.248 服务器
+# 修改 192.168.56.16 服务器
 hostnamectl  set-hostname  k8s-node-03
 ```
 
