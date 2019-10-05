@@ -989,6 +989,8 @@ kubectl apply -f calico.yaml
 
 ### 2、安装 flannel 网络插件
 ```bash
+export POD_SUBNET=10.20.0.0/16
+
 cat > kube-flannel.yaml << EOF
 ---
 kind: ClusterRole
@@ -1065,7 +1067,7 @@ data:
     }
   net-conf.json: |
     {
-      "Network": "10.20.0.0/16",
+      "Network": "${POD_SUBNET}",
       "Backend": {
         "Type": "vxlan"
       }
