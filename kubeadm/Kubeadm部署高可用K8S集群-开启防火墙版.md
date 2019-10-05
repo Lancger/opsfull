@@ -977,13 +977,15 @@ kube-scheduler-k8s-master-01            1/1     Running   0          6m45s
 ```
 # 安装 calico 网络插件
 # 参考文档 https://docs.projectcalico.org/v3.8/getting-started/kubernetes/
+
+export POD_SUBNET=10.20.0.0/16
 rm -f calico.yaml
 wget https://docs.projectcalico.org/v3.8/manifests/calico.yaml
 sed -i "s#192\.168\.0\.0/16#${POD_SUBNET}#" calico.yaml
 kubectl apply -f calico.yaml
 ```
 
-### 2、配置flannel插件的yaml文件
+### 2、安装 flannel 网络插件
 ```bash
 cat > kube-flannel.yaml << EOF
 ---
