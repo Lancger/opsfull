@@ -973,7 +973,17 @@ kube-scheduler-k8s-master-01            1/1     Running   0          6m45s
 ```
 # 八、安装网络插件
 
-### 1、配置flannel插件的yaml文件
+### 1、安装 calico 网络插件
+```
+# 安装 calico 网络插件
+# 参考文档 https://docs.projectcalico.org/v3.8/getting-started/kubernetes/
+rm -f calico.yaml
+wget https://docs.projectcalico.org/v3.8/manifests/calico.yaml
+sed -i "s#192\.168\.0\.0/16#${POD_SUBNET}#" calico.yaml
+kubectl apply -f calico.yaml
+```
+
+### 2、配置flannel插件的yaml文件
 ```bash
 cat > kube-flannel.yaml << EOF
 ---
