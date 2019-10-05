@@ -892,6 +892,8 @@ EOF
 ### 2、初始化第一个master节点
 ```
 kubeadm init --config kubeadm-config.yaml 
+
+#kubeadm init --config=kubeadm-config.yaml --upload-certs  #使用这个就不用做拷贝证书的操作
 ```
 日志
 ```
