@@ -480,12 +480,12 @@ spec:
   selector:
     k8s-app: kubernetes-dashboard
 EOF
-```
 
-3、创建dashboard
-```
 kubectl apply -f kubernetes-dashboard.yaml
+```
 
+3、查看dashboard
+```
 root># kubectl get pods -n kube-system -l k8s-app=kubernetes-dashboard
 NAME                                  READY   STATUS    RESTARTS   AGE
 kubernetes-dashboard-fcfb4cbc-dqbq9   1/1     Running   0          8m5s
