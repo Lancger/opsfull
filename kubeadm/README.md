@@ -199,9 +199,21 @@ vim kubernetes-dashboard.yaml
 ......
 2、# 修改Service为NodePort类型
 ......
-selector:
-  k8s-app: kubernetes-dashboard
-type: NodePort  # 新增这一行
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    k8s-app: kubernetes-dashboard
+  name: kubernetes-dashboard
+  namespace: kube-system
+spec:
+  type: NodePort   # 新增这一行，指定为NodePort方式
+  ports:
+    - port: 443
+      targetPort: 8443
+      nodePort: 32370  #新增这一行，指定固定node端口
+  selector:
+    k8s-app: kubernetes-dashboard
 ```
 
 2、创建dashboard
