@@ -367,6 +367,15 @@ E1006 12:30:53.935744       1 reflector.go:134] github.com/coredns/coredns/plugi
 E1006 12:30:53.935744       1 reflector.go:134] github.com/coredns/coredns/plugin/kubernetes/controller.go:317: Failed to list *v1.Endpoints: Get https://10.10.0.1:443/api/v1/endpoints?limit=500&resourceVersion=0: dial tcp 10.10.0.1:443: connect: no route to host
 log: exiting because of error: log: cannot create log: open /tmp/coredns.coredns-bccdc95cf-vlqxk.unknownuser.log.ERROR.20191006-123053.1: no such file or directory
 ```
+解决办法
+```
+实际上是主机防火墙的问题，需要添加
+iptables -A RH-Firewall-1-INPUT -s 10.10.0.0/16 -j ACCEPT
+
+其他参考
+https://medium.com/@cminion/quicknote-kubernetes-networking-issues-78f1e0d06e12
+https://github.com/coredns/coredns/issues/2325  
+```
 
 参考文档：
 
