@@ -152,7 +152,19 @@ ifconfig cni0 down && ip link delete cni0
 ifconfig flannel.1 down && ip link delete flannel.1
 rm -rf /var/lib/cni/
 
-#
+# 单独部署coredns
+# 不依赖kubeadm的方式，适用于不是使用kubeadm创建的k8s集群，或者kubeadm初始化集群之后，删除了dns相关部署
+# 在calico网络中也配置一个coredns # 10.96.0.10 为k8s官方指定的kube-dns地址
+
+wget https://raw.githubusercontent.com/coredns/deployment/master/kubernetes/coredns.yaml.sed
+wget https://raw.githubusercontent.com/coredns/deployment/master/kubernetes/deploy.sh
+chmod +x deploy.sh
+./deploy.sh -i 10.10.0.10 > coredns.yml  #这里从--service-cidr=10.10.0.0/16中选用10.10.0.10作为coredns地址
+kubectl apply -f coredns.yml
+
+# 查看
+kubectl get pods --namespace kube-system
+kubectl get svc --namespace kube-system
 ```
 
 # 四、Master操作
