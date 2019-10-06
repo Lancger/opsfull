@@ -98,7 +98,13 @@ systemctl enable kubelet.service
 #kubeadm config print init-defaults > kubeadm.yaml
 #kubeadm init --config kubeadm.yaml
 
-kubeadm init --kubernetes-version=v1.15.3 --pod-network-cidr=10.244.0.0/16  --apiserver-advertise-address=192.168.56.11 --apiserver-bind-port=6443
+kubeadm init \
+  --apiserver-advertise-address=192.168.56.11 \
+  --image-repository registry.aliyuncs.com/google_containers \
+  --kubernetes-version v1.15.3 \
+  --apiserver-bind-port=6443 \
+  --service-cidr=10.10.0.0/16 \
+  --pod-network-cidr=10.20.0.0/16
 
 #获取加入集群的指令
 kubeadm token create --print-join-command
@@ -257,4 +263,6 @@ https://github.com/kubernetes/dashboard/wiki/Creating-sample-user
 https://www.qikqiak.com/post/use-kubeadm-install-kubernetes-1.15.3/ 
 
 https://www.jianshu.com/p/351acb6811fd  
+
+https://www.jianshu.com/p/d0933d6ae162 kubeadm 1.15 安装
 
