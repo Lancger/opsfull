@@ -184,23 +184,24 @@ kubectl apply -f kube-flannel.yml
 wget https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
 
 vim kubernetes-dashboard.yaml
-# 修改镜像名称
+1、# 修改镜像名称
 ......
     spec:
       containers:
       - name: kubernetes-dashboard
-        image: registry.cn-hangzhou.aliyuncs.com/google_containers/kubernetes-dashboard-amd64:v1.10.1 #把k8s.gcr.io/kubernetes-dashboard-amd64:v1.10.1 换成阿里云的镜像
+        #image: k8s.gcr.io/kubernetes-dashboard-amd64:v1.10.1 #这个换成阿里云的镜像
+        image: registry.cn-hangzhou.aliyuncs.com/google_containers/kubernetes-dashboard-amd64:v1.10.1
         ports:
         - containerPort: 8443
           protocol: TCP
         args:
           - --auto-generate-certificates
 ......
-# 修改Service为NodePort类型
+2、# 修改Service为NodePort类型
 ......
 selector:
   k8s-app: kubernetes-dashboard
-type: NodePort
+type: NodePort  # 新增这一行
 ```
 
 2、创建dashboard
