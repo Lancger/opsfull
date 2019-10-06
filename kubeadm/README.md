@@ -19,8 +19,8 @@ sed -i 's/SELINUXTYPE=.*/SELINUXTYPE=disabled/g' /etc/selinux/config
 swapoff -a
 sed -ir 's/.*swap.*/#&/' /etc/fstab
 #或
-yes | cp /etc/fstab /etc/fstab_bak
-cat /etc/fstab_bak |grep -v swap > /etc/fstab
+#yes | cp /etc/fstab /etc/fstab_bak
+#cat /etc/fstab_bak |grep -v swap > /etc/fstab
 
 #export Time=`date "+%Y%m%d%H%M%S"`
 #cp /etc/fstab /etc/fstab_$Time
@@ -31,6 +31,7 @@ net.bridge.bridge-nf-call-iptables = 1
 net.ipv4.ip_forward = 1
 vm.swappiness = 0
 EOF
+
 modprobe br_netfilter
 sysctl -p /etc/sysctl.d/k8s.conf
 
