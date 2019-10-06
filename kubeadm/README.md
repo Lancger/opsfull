@@ -241,6 +241,13 @@ kubectl describe pod/coredns-5c98db65d4-mk254 -n kube-system
 
 1、master上部署flannel插件
 ```
+#插件镜像 network: flannel image（因墙的问题，需要从国内源下载）
+docker pull quay-mirror.qiniu.com/coreos/flannel:v0.11.0-amd64
+docker tag quay-mirror.qiniu.com/coreos/flannel:v0.11.0-amd64  quay.io/coreos/flannel:v0.11.0-amd64
+
+https://www.cnblogs.com/horizonli/p/10855666.html
+
+#部署flannel
 rm -f kube-flannel.yml
 wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 kubectl apply -f kube-flannel.yml
@@ -250,12 +257,6 @@ args:
 - --ip-masq
 - --kube-subnet-mgr
 - --iface=eth0
-
-#插件镜像 network: flannel image
-docker pull quay-mirror.qiniu.com/coreos/flannel:v0.11.0-amd64
-docker tag quay-mirror.qiniu.com/coreos/flannel:v0.11.0-amd64  quay.io/coreos/flannel:v0.11.0-amd64
-
-https://www.cnblogs.com/horizonli/p/10855666.html
 ```
 
 2、master上部署calico插件
