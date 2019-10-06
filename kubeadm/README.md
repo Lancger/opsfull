@@ -356,6 +356,12 @@ https://192.168.56.12:31513
 
 最终我们就完成了使用 kubeadm 搭建 v1.15.3 版本的 kubernetes 集群、coredns、ipvs、flannel。 
 
+# 九、问题排查
+
+```
+
+```
+
 参考文档：
 
 https://github.com/kubernetes/dashboard/wiki/Creating-sample-user
