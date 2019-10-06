@@ -116,13 +116,17 @@ kubeadm join 192.168.56.11:6443 --token 5avfk1.fwui1smk5utcu7m9     --discovery-
 # 三、Master操作
 ```
 #将 master 节点上面的 $HOME/.kube/config 文件拷贝到 node 节点对应的文件中
-
 mkdir -p $HOME/.kube
 cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 chown $(id -u):$(id -g) $HOME/.kube/config
 
 scp $HOME/.kube/config root@linux-node2:$HOME/.kube/config
 scp $HOME/.kube/config root@linux-node3:$HOME/.kube/config
+
+#指令补全
+yum install bash-completion -y
+source <(kubectl completion bash)
+echo "source <(kubectl completion bash)" >> ~/.bashrc
 ```
 
 # 四、Node操作
