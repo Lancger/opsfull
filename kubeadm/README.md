@@ -356,7 +356,7 @@ kubectl apply -f admin.yaml
 kubectl delete -f admin.yaml
 
 #获取token
-kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
+kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin | awk '{print $1}')
 ```
 
 https://192.168.56.12:31513
