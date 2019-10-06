@@ -186,12 +186,15 @@ wget https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/r
 vim kubernetes-dashboard.yaml
 # 修改镜像名称
 ......
-containers:
-- args:
-  - --auto-generate-certificates
-  image: gcr.azk8s.cn/google_containers/kubernetes-dashboard-amd64:v1.10.1
-  imagePullPolicy: IfNotPresent
-  
+    spec:
+      containers:
+      - name: kubernetes-dashboard
+        image: registry.cn-hangzhou.aliyuncs.com/google_containers/kubernetes-dashboard-amd64:v1.10.1 #把k8s.gcr.io/kubernetes-dashboard-amd64:v1.10.1 换成阿里云的镜像
+        ports:
+        - containerPort: 8443
+          protocol: TCP
+        args:
+          - --auto-generate-certificates
 ......
 # 修改Service为NodePort类型
 ......
