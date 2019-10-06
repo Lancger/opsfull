@@ -151,6 +151,8 @@ kubeadm reset
 ifconfig cni0 down && ip link delete cni0
 ifconfig flannel.1 down && ip link delete flannel.1
 rm -rf /var/lib/cni/
+
+#
 ```
 
 # 四、Master操作
@@ -344,4 +346,6 @@ https://www.qikqiak.com/post/use-kubeadm-install-kubernetes-1.15.3/
 https://www.jianshu.com/p/351acb6811fd  
 
 https://www.jianshu.com/p/d0933d6ae162 kubeadm 1.15 安装
+
+https://yq.aliyun.com/articles/680080/  单独部署coredns
 
