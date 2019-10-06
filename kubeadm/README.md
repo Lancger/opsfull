@@ -317,9 +317,9 @@ kubernetes-dashboard-fcfb4cbc-dqbq9   1/1     Running   0          8m5s
 
 root># kubectl get svc -n kube-system -l k8s-app=kubernetes-dashboard
 NAME                   TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)         AGE
-kubernetes-dashboard   NodePort   10.107.51.169   <none>        443:31513/TCP   8m25s
+kubernetes-dashboard   NodePort   192.168.56.11   <none>        443:32730/TCP   8m25s
 
-然后可以通过上面的 https://NodeIP:31513 端口去访问 Dashboard，要记住使用 https，Chrome不生效可以使用Firefox测试：
+然后可以通过上面的 https://NodeIP:32730 端口去访问 Dashboard，要记住使用 https，Chrome不生效可以使用Firefox测试：
 ```
 
 3、然后创建一个具有全局所有权限的用户来登录Dashboard：(admin.yaml)
