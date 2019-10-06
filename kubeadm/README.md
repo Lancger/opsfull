@@ -258,7 +258,7 @@ cat > admin.yaml << \EOF
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
-  name: admin-user
+  name: admin
   annotations:
     rbac.authorization.kubernetes.io/autoupdate: "true"
 roleRef:
@@ -267,14 +267,14 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 subjects:
 - kind: ServiceAccount
-  name: admin-user
+  name: admin
   namespace: kube-system
 
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: admin-user
+  name: admin
   namespace: kube-system
   labels:
     kubernetes.io/cluster-service: "true"
