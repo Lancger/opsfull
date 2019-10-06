@@ -267,9 +267,12 @@ wget https://docs.projectcalico.org/v3.8/manifests/calico.yaml
 sed -i "s#192\.168\.0\.0/16#${POD_SUBNET}#" calico.yaml
 kubectl apply -f calico.yaml
 
-https://www.cnblogs.com/goldsunshine/p/10701242.html
+https://www.cnblogs.com/goldsunshine/p/10701242.html  k8s网络之Calico网络
 ```
-
+3、性能对比
+```
+https://www.2cto.com/net/201701/591629.html  kubernetes flannel neutron calico三种网络方案性能测试分析
+```
 # 八、安装 Dashboard
 
 1、下载yaml文件
