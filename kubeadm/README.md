@@ -131,6 +131,7 @@ systemctl enable kubelet.service
 ```
 
 # 三、初始化集群
+1、初始化
 ```
 #kubeadm config print init-defaults > kubeadm.yaml
 #kubeadm init --config kubeadm.yaml
@@ -153,8 +154,9 @@ kubeadm reset
 ifconfig cni0 down && ip link delete cni0
 ifconfig flannel.1 down && ip link delete flannel.1
 rm -rf /var/lib/cni/
-
-# 单独部署coredns（选择操作）
+```
+2、单独部署coredns（选择操作）
+```
 # 不依赖kubeadm的方式，适用于不是使用kubeadm创建的k8s集群，或者kubeadm初始化集群之后，删除了dns相关部署
 # 在calico网络中也配置一个coredns # 10.96.0.10 为k8s官方指定的kube-dns地址
 rm -f coredns.yaml.sed deploy.sh coredns.yml
