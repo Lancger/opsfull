@@ -165,6 +165,11 @@ kubectl apply -f coredns.yml
 # 查看
 kubectl get pods --namespace kube-system
 kubectl get svc --namespace kube-system
+
+#删除coredns
+kubectl delete deployment coredns -n kube-system
+kubectl delete svc kube-dns -n kube-system
+kubectl delete cm coredns -n kube-system
 ```
 
 # 四、Master操作
