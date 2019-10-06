@@ -358,6 +358,8 @@ https://192.168.56.12:31513
 
 # 九、问题排查
 
+  ![coredns异常问题](https://github.com/Lancger/opsfull/blob/master/images/coredns-01.png)
+  
 ```
 
 ```
