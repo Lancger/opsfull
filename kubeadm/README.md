@@ -174,7 +174,16 @@ kubernetes-dashboard-fcfb4cbc-dqbq9               1/1     Running   0          4
 kubectl describe pod/coredns-5c98db65d4-mk254 -n kube-system
 ```
 
-# 五、master上部署flannel插件
+# 五、网络插件部署
+
+1、master上部署flannel插件
+```
+wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+kubectl apply -f kube-flannel.yml
+```
+
+2、master上部署calico插件
 ```
 wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 
