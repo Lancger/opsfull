@@ -266,6 +266,8 @@ rm -f calico.yaml
 wget https://docs.projectcalico.org/v3.8/manifests/calico.yaml
 sed -i "s#192\.168\.0\.0/16#${POD_SUBNET}#" calico.yaml
 kubectl apply -f calico.yaml
+
+https://www.cnblogs.com/goldsunshine/p/10701242.html
 ```
 
 # 八、安装 Dashboard
