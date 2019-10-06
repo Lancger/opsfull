@@ -184,6 +184,7 @@ kubectl describe pod/coredns-5c98db65d4-mk254 -n kube-system
 
 1、master上部署flannel插件
 ```
+rm -f kube-flannel.yml
 wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 kubectl apply -f kube-flannel.yml
 ```
