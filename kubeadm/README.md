@@ -358,10 +358,14 @@ https://192.168.56.12:31513
 
 # 九、问题排查
 
+1、coredns异常问题
+
   ![coredns异常问题](https://github.com/Lancger/opsfull/blob/master/images/coredns-01.png)
   
 ```
-
+E1006 12:30:53.935744       1 reflector.go:134] github.com/coredns/coredns/plugin/kubernetes/controller.go:317: Failed to list *v1.Endpoints: Get https://10.10.0.1:443/api/v1/endpoints?limit=500&resourceVersion=0: dial tcp 10.10.0.1:443: connect: no route to host
+E1006 12:30:53.935744       1 reflector.go:134] github.com/coredns/coredns/plugin/kubernetes/controller.go:317: Failed to list *v1.Endpoints: Get https://10.10.0.1:443/api/v1/endpoints?limit=500&resourceVersion=0: dial tcp 10.10.0.1:443: connect: no route to host
+log: exiting because of error: log: cannot create log: open /tmp/coredns.coredns-bccdc95cf-vlqxk.unknownuser.log.ERROR.20191006-123053.1: no such file or directory
 ```
 
 参考文档：
