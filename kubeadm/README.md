@@ -185,15 +185,16 @@ kubectl describe pod/coredns-5c98db65d4-mk254 -n kube-system
 1、master上部署flannel插件
 ```
 wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
-
 kubectl apply -f kube-flannel.yml
 ```
 
 2、master上部署calico插件
 ```
-wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
-
-kubectl apply -f kube-flannel.yml
+export POD_SUBNET=10.244.0.0/16
+rm -f calico.yaml
+wget https://docs.projectcalico.org/v3.8/manifests/calico.yaml
+sed -i "s#192\.168\.0\.0/16#${POD_SUBNET}#" calico.yaml
+kubectl apply -f calico.yaml
 ```
 
 # 六、安装 Dashboard
