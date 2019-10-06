@@ -250,6 +250,12 @@ args:
 - --ip-masq
 - --kube-subnet-mgr
 - --iface=eth0
+
+#插件镜像 network: flannel image
+docker pull quay-mirror.qiniu.com/coreos/flannel:v0.11.0-amd64
+docker tag quay-mirror.qiniu.com/coreos/flannel:v0.11.0-amd64  quay.io/coreos/flannel:v0.11.0-amd64
+
+https://www.cnblogs.com/horizonli/p/10855666.html
 ```
 
 2、master上部署calico插件
