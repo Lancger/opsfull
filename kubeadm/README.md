@@ -15,10 +15,12 @@ cat > /etc/sysconfig/iptables << \EOF
 -A RH-Firewall-1-INPUT -p icmp -m icmp --icmp-type any -j ACCEPT
 -A RH-Firewall-1-INPUT -s 192.168.56.0/24 -p tcp -m tcp --dport 22 -j ACCEPT
 -A RH-Firewall-1-INPUT -p tcp -m tcp --dport 22 -j DROP
-#k8s
+# k8s
 -A RH-Firewall-1-INPUT -s 192.168.56.11/32 -j ACCEPT
 -A RH-Firewall-1-INPUT -s 192.168.56.12/32 -j ACCEPT
 -A RH-Firewall-1-INPUT -s 192.168.56.13/32 -j ACCEPT
+-A RH-Firewall-1-INPUT -s 10.10.0.0/16 -j ACCEPT
+-A RH-Firewall-1-INPUT -s 10.244.0.0/16 -j ACCEPT
 -A RH-Firewall-1-INPUT -p vrrp -j ACCEPT
 -A RH-Firewall-1-INPUT -s 192.168.56.1/32 -p tcp -m multiport --dports 80,443,1080,6443,16443 -j ACCEPT
 #
