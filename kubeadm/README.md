@@ -17,10 +17,10 @@ sed -i 's/SELINUXTYPE=.*/SELINUXTYPE=disabled/g' /etc/selinux/config
 
 # 关闭 swap
 swapoff -a
-sed -ir 's/.*swap.*/#&/' /etc/fstab
+#sed -ir 's/.*swap.*/#&/' /etc/fstab
 #或
-#yes | cp /etc/fstab /etc/fstab_bak
-#cat /etc/fstab_bak |grep -v swap > /etc/fstab
+yes | cp /etc/fstab /etc/fstab_bak
+cat /etc/fstab_bak |grep -v swap > /etc/fstab
 
 #export Time=`date "+%Y%m%d%H%M%S"`
 #cp /etc/fstab /etc/fstab_$Time
@@ -50,7 +50,7 @@ yum install -y ipset ipvsadm
 
 yum install chrony -y
 systemctl enable chronyd
-systemctl start chronyd
+systemctl restart chronyd
 chronyc sources
 
 yum install -y yum-utils \
@@ -152,7 +152,7 @@ linux-node3.example.com   NotReady   <none>   4m58s   v1.15.3
 
 可以看到是 NotReady 状态，这是因为还没有安装网络插件，接下来安装网络插件，可以在文档 https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/ 中选择我们自己的网络插件，这里我们安装 flannel:
 
-iptables -I RH-Firewall-1-INPUT -s 10.96.0.0/12 -j ACCEPT
+iptables -I RH-Firewall-1-INPUT -s 10.96.0.0/16 -j ACCEPT
 service iptables save
 
 root># kubectl get pods -n kube-system
@@ -279,6 +279,7 @@ https://192.168.56.12:31513
 最终我们就完成了使用 kubeadm 搭建 v1.15.3 版本的 kubernetes 集群、coredns、ipvs、flannel。 
 
 参考文档：
+
 https://github.com/kubernetes/dashboard/wiki/Creating-sample-user
 
 https://www.qikqiak.com/post/use-kubeadm-install-kubernetes-1.15.3/ 
