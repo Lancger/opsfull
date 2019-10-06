@@ -187,6 +187,12 @@ kubectl describe pod/coredns-5c98db65d4-mk254 -n kube-system
 rm -f kube-flannel.yml
 wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 kubectl apply -f kube-flannel.yml
+
+#另外需要注意的是如果你的节点有多个网卡的话，需要在 kube-flannel.yml 中使用--iface参数指定集群主机内网网卡的名称，否则可能会出现 dns 无法解析。flanneld 启动参数加上--iface=<iface-name>
+args:
+- --ip-masq
+- --kube-subnet-mgr
+- --iface=eth0
 ```
 
 2、master上部署calico插件
