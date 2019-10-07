@@ -149,10 +149,12 @@ kubeadm token create --print-join-command
 
 kubeadm join 192.168.56.11:6443 --token 5avfk1.fwui1smk5utcu7m9     --discovery-token-ca-cert-hash sha256:6730e91a516d8bf3e26d8f5eddd6409a224f8703b94f6ecde2b1fd7481bbbd25
 
-#如果你的集群安装过程中遇到了其他问题，我们可以使用下面的命令来进行重置：
-kubeadm reset
-ifconfig cni0 down && ip link delete cni0
-ifconfig flannel.1 down && ip link delete flannel.1
+#集群初始化如果遇到问题，可以使用下面的命令进行清理
+yes | kubeadm reset
+ifconfig cni0 down
+ip link delete cni0
+ifconfig flannel.1 down
+ip link delete flannel.1
 rm -rf /var/lib/cni/
 ```
 2、单独部署coredns（选择操作）
