@@ -281,7 +281,6 @@ kubectl run --image=nginx nginx-web-1 --image-pull-policy='IfNotPresent'
 #以不同方式暴露出去
 kubectl expose deployment nginx-web-1 --port=80 --target-port=80
 kubectl expose deployment nginx-web-1 --port=80 --target-port=80 --type=NodePort
-kubectl expose deployment nginx-web-1 --port=80 --target-port=80 --nodePort=30163 --type=NodePort
 
 root># kubectl exec -it nginx-web-1-5cc49f46bc-kn46r -- \
                sh -c "echo hello>/usr/share/nginx/html/index.html"
