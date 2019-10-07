@@ -247,6 +247,13 @@ kube-scheduler-linux-node1.example.com            1/1     Running   0          1
 kubernetes-dashboard-fcfb4cbc-dqbq9               1/1     Running   0          4m43s
 
 kubectl describe pod/coredns-5c98db65d4-mk254 -n kube-system
+
+#创建services
+kubectl run --image=nginx nginx-web-1 --image-pull-policy='IfNotPresent'
+
+#以不同方式暴露出去
+kubectl expose deployment nginx-web-1 --port=80 --target-port=80
+kubectl expose deployment nginx-web-1 --port=80 --target-port=80 --type=NodePort
 ```
 
 # 七、网络插件部署
