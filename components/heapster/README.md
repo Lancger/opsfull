@@ -1,4 +1,5 @@
 # 一、问题现象
+heapster:  已经被k8s给舍弃掉了
 ```bash
 heapster logs这个报错啥情况 
 E0918 16:56:05.022867       1 manager.go:101] Error in scraping containers from kubelet_summary:10.10.188.242:10255: Get http://10.10.188.242:10255/stats/summary/: dial tcp 10.10.188.242:10255: getsockopt: connection refused
