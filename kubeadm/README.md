@@ -291,7 +291,7 @@ default       nginx-web-1   NodePort    10.10.43.53   <none>        80:30163/TCP
 root># curl 10.10.43.53   
 hello
 
-#显示iptables规则
+#显示iptables规则(注意这里kube-proxy需要使用ipvs模式，上面主机预设的iptables策略才生效)
 iptables -nvL --line-number
 
 #删除规则
