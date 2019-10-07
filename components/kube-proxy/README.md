@@ -17,3 +17,5 @@ IPVS
 参考资料：
 
 https://ywnz.com/linuxyffq/2530.html  解析从外部访问Kubernetes集群中应用的几种方法  
+
+https://www.jianshu.com/p/b2d13cec7091  浅谈 k8s service&kube-proxy  
