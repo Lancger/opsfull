@@ -188,6 +188,33 @@ kubectl delete node demo-worker-x-x
 #worker 节点的名字可以通过在第一个 master 节点 demo-master-a-1 上执行 kubectl get nodes 命令获得
 ```
 
+4、kube-proxy开启ipvs
+```
+1、#修改ConfigMap的kube-system/kube-proxy中的config.conf，把 mode: "" 改为mode: “ipvs" 保存退出即可
+
+root># kubectl edit cm kube-proxy -n kube-system
+configmap/kube-proxy edited
+
+2、#删除之前的proxy pod
+root># kubectl get pod -n kube-system |grep kube-proxy |awk '{system("kubectl delete pod "$1" -n kube-system")}'
+
+3、#查看proxy运行状态
+root># kubectl get pod -n kube-system | grep kube-proxy
+
+4、#查看日志,如果有 `Using ipvs Proxier.` 说明kube-proxy的ipvs 开启成功!
+root># kubectl logs kube-proxy-54qnw -n kube-system
+I0518 20:24:09.319160       1 server_others.go:176] Using ipvs Proxier.
+W0518 20:24:09.319751       1 proxier.go:386] IPVS scheduler not specified, use rr by default
+I0518 20:24:09.320035       1 server.go:562] Version: v1.14.2
+I0518 20:24:09.334372       1 conntrack.go:52] Setting nf_conntrack_max to 131072
+I0518 20:24:09.334853       1 config.go:102] Starting endpoints config controller
+I0518 20:24:09.334916       1 controller_utils.go:1027] Waiting for caches to sync for endpoints config controller
+I0518 20:24:09.334945       1 config.go:202] Starting service config controller
+I0518 20:24:09.334976       1 controller_utils.go:1027] Waiting for caches to sync for service config controller
+I0518 20:24:09.435153       1 controller_utils.go:1034] Caches are synced for service config controller
+I0518 20:24:09.435271       1 controller_utils.go:1034] Caches are synced for endpoints config controller
+```
+
 # 四、Master操作
 ```
 #将 master 节点上面的 $HOME/.kube/config 文件拷贝到 node 节点对应的文件中
