@@ -19,3 +19,7 @@ IPVS
 https://ywnz.com/linuxyffq/2530.html  解析从外部访问Kubernetes集群中应用的几种方法  
 
 https://www.jianshu.com/p/b2d13cec7091  浅谈 k8s service&kube-proxy  
+
+https://www.codercto.com/a/90806.html  探究K8S Service内部iptables路由规则
+
+https://blog.51cto.com/goome/2369150  k8s实践7:ipvs结合iptables使用过程分析
