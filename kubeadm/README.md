@@ -621,7 +621,6 @@ iptables -A RH-Firewall-1-INPUT -s 10.10.0.0/16 -j ACCEPT
 https://medium.com/@cminion/quicknote-kubernetes-networking-issues-78f1e0d06e12
 https://github.com/coredns/coredns/issues/2325  
 ```
-
 参考文档：
 
 https://www.cnblogs.com/lovesKey/p/10888006.html  centos7下用kubeadm安装k8s集群并使用ipvs做高可用方案
