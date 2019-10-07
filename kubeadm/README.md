@@ -177,6 +177,16 @@ kubectl delete deployment coredns -n kube-system
 kubectl delete svc kube-dns -n kube-system
 kubectl delete cm coredns -n kube-system
 ```
+3、集群移除节点
+```
+1、#移除work节点
+在准备移除的 worker 节点上执行
+kubeadm reset
+
+2、在第一个 master 节点 demo-master-a-1 上执行
+kubectl delete node demo-worker-x-x
+#worker 节点的名字可以通过在第一个 master 节点 demo-master-a-1 上执行 kubectl get nodes 命令获得
+```
 
 # 四、Master操作
 ```
