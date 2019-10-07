@@ -623,6 +623,8 @@ https://github.com/coredns/coredns/issues/2325
 ```
 参考文档：
 
+https://www.cnblogs.com/liyongjian5179/p/11417794.html   使用kubeadm安装Kubernetes 1.15.3 并开启 ipvs
+
 https://www.cnblogs.com/lovesKey/p/10888006.html  centos7下用kubeadm安装k8s集群并使用ipvs做高可用方案
 
 https://github.com/kubernetes/dashboard/wiki/Creating-sample-user
