@@ -1,6 +1,6 @@
-```
-Kube-Proxy简述
+# Kube-Proxy简述
 
+```
 运行在每个节点上，监听 API Server 中服务对象的变化，再通过管理 IPtables 来实现网络的转发
 Kube-Proxy 目前支持三种模式：
 
