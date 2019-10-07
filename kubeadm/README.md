@@ -290,6 +290,12 @@ default       nginx-web-1   NodePort    10.10.43.53   <none>        80:30163/TCP
 
 root># curl 10.10.43.53   
 hello
+
+#显示iptables规则
+iptables -nvL --line-number
+
+#删除规则
+iptables -D RH-Firewall-1-INPUT 4
 ```
 
 # 七、网络插件部署
