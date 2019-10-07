@@ -23,3 +23,5 @@ https://www.jianshu.com/p/b2d13cec7091  浅谈 k8s service&kube-proxy
 https://www.codercto.com/a/90806.html  探究K8S Service内部iptables路由规则
 
 https://blog.51cto.com/goome/2369150  k8s实践7:ipvs结合iptables使用过程分析
+
+https://blog.csdn.net/xinghun_4/article/details/50492041  kubernetes中port、target port、node port的对比分析，以及kube-proxy代理
