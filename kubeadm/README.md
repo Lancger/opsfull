@@ -629,7 +629,7 @@ https://github.com/kubernetes/dashboard/wiki/Creating-sample-user
 
 https://www.qikqiak.com/post/use-kubeadm-install-kubernetes-1.15.3/ 
 
-https://www.jianshu.com/p/351acb6811fd  
+https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/  官方文档 
 
 https://www.jianshu.com/p/d0933d6ae162 kubeadm 1.15 安装
 
