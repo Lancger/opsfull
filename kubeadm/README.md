@@ -137,8 +137,8 @@ systemctl enable kubelet.service
 ```
 
 # 三、初始化集群
-1、初始化
-```
+1、命令行初始化
+```bash
 #kubeadm config print init-defaults > kubeadm.yaml
 #kubeadm init --config kubeadm.yaml
 
@@ -163,6 +163,33 @@ ifconfig flannel.1 down
 ip link delete flannel.1
 rm -rf /var/lib/cni/
 ```
+2、通过配置文件进行初始化
+```bash
+
+```
+3、初始化进行的操作
+```bash
+初始化操作主要经历了下面15个步骤，每个阶段均输出均使用[步骤名称]作为开头：
+
+    1、[init]：指定版本进行初始化操作
+    2、[preflight] ：初始化前的检查和下载所需要的Docker镜像文件。
+    3、[kubelet-start] ：生成kubelet的配置文件”/var/lib/kubelet/config.yaml”，没有这个文件kubelet无法启动，所以初始化之前的kubelet实际上启动失败。
+    4、[certificates]：生成Kubernetes使用的证书，存放在/etc/kubernetes/pki目录中。
+    5、[kubeconfig] ：生成 KubeConfig 文件，存放在/etc/kubernetes目录中，组件之间通信需要使用对应文件。
+    6、[control-plane]：使用/etc/kubernetes/manifest目录下的YAML文件，安装 Master 组件。
+    7、[etcd]：使用/etc/kubernetes/manifest/etcd.yaml安装Etcd服务。
+    8、[wait-control-plane]：等待control-plan部署的Master组件启动。
+    9、[apiclient]：检查Master组件服务状态。
+    10、[uploadconfig]：更新配置
+    11、[kubelet]：使用configMap配置kubelet。
+    12、[patchnode]：更新CNI信息到Node上，通过注释的方式记录。
+    13、[mark-control-plane]：为当前节点打标签，打了角色Master，和不可调度标签，这样默认就不会使用Master节点来运行Pod。
+    14、[bootstrap-token]：生成token记录下来，后边使用kubeadm join往集群中添加节点时会用到
+    15、[addons]：安装附加组件CoreDNS和kube-proxy
+    
+kubectl默认会在执行的用户家目录下面的.kube目录下寻找config文件。这里是将在初始化时[kubeconfig]步骤生成的admin.conf拷贝到.kube/config。
+```
+
 2、单独部署coredns（选择操作）
 ```
 # 不依赖kubeadm的方式，适用于不是使用kubeadm创建的k8s集群，或者kubeadm初始化集群之后，删除了dns相关部署
