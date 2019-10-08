@@ -72,9 +72,11 @@ net.ipv4.ip_forward = 1
 vm.swappiness = 0
 EOF
 
+#加载 br_netfilter 模块
 modprobe br_netfilter
 sysctl -p /etc/sysctl.d/k8s.conf
 
+#创建/etc/sysconfig/modules/ipvs.modules文件,保证在节点重启后能自动加载所需模块
 cat > /etc/sysconfig/modules/ipvs.modules <<EOF
 #!/bin/bash
 modprobe -- ip_vs
