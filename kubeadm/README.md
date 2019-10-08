@@ -428,6 +428,8 @@ https://www.2cto.com/net/201701/591629.html  kubernetes flannel neutron calico�
 ```
 # 八、安装 Dashboard
 
+使用 dashboard 最好把浏览器的默认语言设置为英文，不然在进入容器操作的时候会有bug，会出现重影
+
 1、下载yaml文件
 ```
 wget https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
