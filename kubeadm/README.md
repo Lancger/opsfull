@@ -210,7 +210,7 @@ etcd:
 #imageRepository: k8s.gcr.io
 imageRepository: registry.aliyuncs.com/google_containers #国内不能访问 Google，修改为阿里云
 kind: ClusterConfiguration
-kubernetesVersion: v1.15.0 # 修改版本号
+kubernetesVersion: v1.15.3 # 修改版本号
 networking:
   dnsDomain: cluster.local
   # 配置成 flannel 的默认网段
@@ -716,6 +716,8 @@ https://github.com/coredns/coredns/issues/2325
 参考文档：
 
 https://www.cnblogs.com/liyongjian5179/p/11417794.html   使用kubeadm安装Kubernetes 1.15.3 并开启 ipvs
+
+https://www.jianshu.com/p/8bc61078bded 
 
 https://www.cnblogs.com/lovesKey/p/10888006.html  centos7下用kubeadm安装k8s集群并使用ipvs做高可用方案
 
