@@ -139,9 +139,6 @@ systemctl enable kubelet.service
 # 三、初始化集群
 1、命令行初始化
 ```bash
-#kubeadm config print init-defaults > kubeadm.yaml
-#kubeadm init --config kubeadm.yaml
-
 kubeadm init \
   --apiserver-advertise-address=192.168.56.11 \
   --image-repository registry.aliyuncs.com/google_containers \
@@ -165,7 +162,64 @@ rm -rf /var/lib/cni/
 ```
 2、通过配置文件进行初始化
 ```bash
+#在 master 节点配置 kubeadm 初始化文件，可以通过如下命令导出默认的初始化配置：
+root># kubeadm config print init-defaults > kubeadm.yaml
+```
+```
+#然后根据我们自己的需求修改配置，比如修改 imageRepository 的值，kube-proxy 的模式为 ipvs，另外需要注意的是我们这里是准备安装 flannel 网络插件的，需要将 networking.podSubnet 设置为 10.244.0.0/16：
 
+rm -f kubeadm.yaml
+cat > kubeadm.yaml << \EOF
+apiVersion: kubeadm.k8s.io/v1beta2
+bootstrapTokens:
+- groups:
+  - system:bootstrappers:kubeadm:default-node-token
+  token: abcdef.0123456789abcdef
+  ttl: 24h0m0s
+  usages:
+  - signing
+  - authentication
+kind: InitConfiguration
+localAPIEndpoint:
+  advertiseAddress: 192.168.56.11 #修改为主节点 IP
+  bindPort: 6443
+  #controlPlaneEndpoint: 1.1.1.100 #如果前面配置了负载均衡，此处填写vip地址
+nodeRegistration:
+  criSocket: /var/run/dockershim.sock
+  name: linux-node1.example.com
+  taints:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/master
+---
+apiServer:
+  timeoutForControlPlane: 4m0s
+apiVersion: kubeadm.k8s.io/v1beta2
+certificatesDir: /etc/kubernetes/pki
+clusterName: kubernetes
+controllerManager: {}
+dns:
+  type: CoreDNS #dns 类型
+etcd:
+  local:
+    dataDir: /var/lib/etcd
+#imageRepository: k8s.gcr.io
+imageRepository: registry.aliyuncs.com/google_containers #国内不能访问 Google，修改为阿里云
+kind: ClusterConfiguration
+kubernetesVersion: v1.15.0 # 修改版本号
+networking:
+  dnsDomain: cluster.local
+  # 配置成 flannel 的默认网段
+  serviceSubnet: 10.96.0.0/12
+  podSubnet: 10.244.0.0/16
+scheduler: {}
+---
+# 开启 IPVS 模式
+apiVersion: kubeproxy.config.k8s.io/v1alpha1
+kind: KubeProxyConfiguration
+mode: ipvs # kube-proxy 模式
+EOF
+
+kubeadm init --config kubeadm.yaml
 ```
 3、初始化进行的操作
 ```bash
