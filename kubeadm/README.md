@@ -166,9 +166,14 @@ rm -rf /var/lib/cni/
 root># kubeadm config print init-defaults > kubeadm.yaml
 ```
 ```
-#然后根据我们自己的需求修改配置，比如修改 imageRepository 的值，kube-proxy 的模式为 ipvs，另外需要注意的是我们这里是准备安装 flannel 网络插件的，需要将 networking.podSubnet 设置为 10.244.0.0/16：
+#然后根据我们自己的需求修改配置，比如修改 imageRepository 的值，kube-proxy 的模式为 ipvs
+
+如果是 flannel 网络插件的，需要将 networking.podSubnet 设置为默认的 10.244.0.0/16
+
+如果是 Calico 网络插件的，配置成 Calico 的默认网段 podSubnet: 192.168.0.0/16，这个也可以修改Calico的配置文件调整
 
 rm -f kubeadm.yaml
+
 cat > kubeadm.yaml << \EOF
 apiVersion: kubeadm.k8s.io/v1beta2
 bootstrapTokens:
