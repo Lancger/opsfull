@@ -15,15 +15,19 @@ cat > /etc/sysconfig/iptables << \EOF
 -A RH-Firewall-1-INPUT -p icmp -m icmp --icmp-type any -j ACCEPT
 -A RH-Firewall-1-INPUT -s 192.168.56.0/24 -p tcp -m tcp --dport 22 -j ACCEPT
 -A RH-Firewall-1-INPUT -p tcp -m tcp --dport 22 -j DROP
-# k8s
+### k8s ###
 -A RH-Firewall-1-INPUT -s 192.168.56.11/32 -j ACCEPT
 -A RH-Firewall-1-INPUT -s 192.168.56.12/32 -j ACCEPT
 -A RH-Firewall-1-INPUT -s 192.168.56.13/32 -j ACCEPT
--A RH-Firewall-1-INPUT -s 10.10.0.0/16 -j ACCEPT
+# serviceSubnet rules
+-A RH-Firewall-1-INPUT -s 10.96.0.0/12 -j ACCEPT
+# podSubnet rules
 -A RH-Firewall-1-INPUT -s 10.244.0.0/16 -j ACCEPT
+# keepalived rules
 -A RH-Firewall-1-INPUT -p vrrp -j ACCEPT
--A RH-Firewall-1-INPUT -s 192.168.56.1/32 -p tcp -m multiport --dports 80,443,1080,6443,16443 -j ACCEPT
-#
+# port rules
+-A RH-Firewall-1-INPUT -s 192.168.56.1/32 -p tcp -m multiport --dports 80,443,1080,6443,16443,30000:32767 -j ACCEPT
+### k8s ###
 -A RH-Firewall-1-INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
 -A RH-Firewall-1-INPUT -j REJECT --reject-with icmp-host-prohibited
 COMMIT
@@ -141,7 +145,7 @@ kubeadm init \
   --image-repository registry.aliyuncs.com/google_containers \
   --kubernetes-version v1.15.3 \
   --apiserver-bind-port=6443 \
-  --service-cidr=10.10.0.0/16 \
+  --service-cidr=10.96.0.0/12 \
   --pod-network-cidr=10.244.0.0/16    #这里使用这个是因为官方flannel使用的这个段地址，不然的话,kube-flannel.yml那里需要调整
 
 #获取加入集群的指令
