@@ -715,6 +715,27 @@ iptables -A RH-Firewall-1-INPUT -s 10.10.0.0/16 -j ACCEPT
 https://medium.com/@cminion/quicknote-kubernetes-networking-issues-78f1e0d06e12
 https://github.com/coredns/coredns/issues/2325  
 ```
+
+2、kubelet异常问题
+
+```
+问题现象：
+
+kubelet fails to get cgroup stats for docker and kubelet services
+
+解决办法
+
+cat > /etc/sysconfig/kubelet <<\EOF
+KUBELET_EXTRA_ARGS=--runtime-cgroups=/systemd/system.slice --kubelet-cgroups=/systemd/system.slice
+EOF
+
+systemctl restart kubelet
+
+https://stackoverflow.com/questions/46726216/kubelet-fails-to-get-cgroup-stats-for-docker-and-kubelet-services  
+
+https://www.twblogs.net/a/5cc87d63bd9eee1ac2ed736b
+```
+
 参考文档：
 
 https://www.cnblogs.com/liyongjian5179/p/11417794.html   使用kubeadm安装Kubernetes 1.15.3 并开启 ipvs
