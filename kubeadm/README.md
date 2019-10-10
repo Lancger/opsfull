@@ -723,7 +723,7 @@ https://github.com/coredns/coredns/issues/2325
 
 kubelet fails to get cgroup stats for docker and kubelet services
 
-解决办法
+解决办法:
 
 cat > /etc/sysconfig/kubelet <<\EOF
 KUBELET_EXTRA_ARGS=--runtime-cgroups=/systemd/system.slice --kubelet-cgroups=/systemd/system.slice
