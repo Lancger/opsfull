@@ -596,7 +596,7 @@ haproxy配置在其他master节点上(10.19.1.137和10.19.1.138)相同
 systemctl enable haproxy
 
 # 开启haproxy
-systemctl start haproxy
+systemctl restart haproxy
 
 # 查看启动状态
 systemctl status haproxy
