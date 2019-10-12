@@ -962,7 +962,6 @@ kubeadm join master.k8s.io:16443 --token 0cttr2.xtrrn8mjmnn7zhw9 \
 
 export APISERVER_IP=10.19.1.200
 export APISERVER_NAME=master.k8s.io
-echo "${APISERVER_IP}    ${APISERVER_NAME}" >> /etc/hosts
 
 kubeadm join master.k8s.io:6443 --token 0cttr2.xtrrn8mjmnn7zhw9 \
     --discovery-token-ca-cert-hash sha256:e369c057c475223658ccc843d6ff3bf66b3fbd11ecd486075217b5744e89fbdd \
@@ -972,7 +971,6 @@ kubeadm join master.k8s.io:6443 --token 0cttr2.xtrrn8mjmnn7zhw9 \
 ```
 export APISERVER_IP=10.19.1.200
 export APISERVER_NAME=master.k8s.io
-echo "${APISERVER_IP}    ${APISERVER_NAME}" >> /etc/hosts
 
 kubeadm join master.k8s.io:16443 --token 0cttr2.xtrrn8mjmnn7zhw9 \
     --discovery-token-ca-cert-hash sha256:e369c057c475223658ccc843d6ff3bf66b3fbd11ecd486075217b5744e89fbdd
