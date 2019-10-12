@@ -129,43 +129,43 @@ kubeadm alpha： 预览一组可用的新功能以便从社区搜集反馈
         <td><strong>角色</td>
     </tr>
     <tr>
-        <td>192.168.56.200</td>
+        <td>10.19.1.200</td>
         <td>-</td>
         <td>-</td>
         <td>vip</td>
     </tr>
     <tr>
-        <td>192.168.56.11</td>
+        <td>10.19.1.136</td>
         <td>k8s-master-01</td>
         <td>2C & 2G</td>
         <td>master</td>
     </tr>
     <tr>
-        <td>192.168.56.12</td>
+        <td>10.19.1.137</td>
         <td>k8s-master-02</td>
         <td>2C & 2G</td>
         <td>master</td>
     </tr>
     <tr>
-        <td>192.168.56.13</td>
+        <td>10.19.1.138</td>
         <td>k8s-master-03</td>
         <td>2C & 2G</td>
         <td>master</td>
     </tr>
     <tr>
-        <td>192.168.56.14</td>
+        <td>10.19.1.139</td>
         <td>k8s-node-01</td>
         <td>4C & 8G</td>
         <td>node</td>
     </tr>
     <tr>
-        <td>192.168.56.15</td>
+        <td>10.19.1.140</td>
         <td>k8s-node-02</td>
         <td>4C & 8G</td>
         <td>node</td>
     </tr>
     <tr>
-        <td>192.168.56.16</td>
+        <td>10.19.1.141</td>
         <td>k8s-node-03</td>
         <td>4C & 8G</td>
         <td>node</td>
@@ -263,13 +263,11 @@ kubeadm alpha： 预览一组可用的新功能以便从社区搜集反馈
 cat > /etc/hosts << \EOF
 127.0.0.1     localhost  localhost.localdomain localhost4 localhost4.localdomain4
 ::1           localhost  localhost.localdomain localhost6 localhost6.localdomain6
-192.168.56.200   k8s-vip         master      master.k8s.io
-192.168.56.11    k8s-master-01   master01    master01.k8s.io
-192.168.56.12    k8s-master-02   master02    master02.k8s.io
-192.168.56.13    k8s-master-03   master03    master03.k8s.io
-192.168.56.14    k8s-node-01     node01      node01.k8s.io
-192.168.56.15    k8s-node-02     node02      node02.k8s.io
-192.168.56.16    k8s-node-03     node03      node03.k8s.io
+10.19.1.200      k8s-vip         master      master.k8s.io
+10.19.1.136      k8s-master-01   master01    master01.k8s.io
+10.19.1.137      k8s-master-02   master02    master02.k8s.io
+10.19.1.138      k8s-master-03   master03    master03.k8s.io
+10.19.1.139      k8s-node-01     node01      node01.k8s.io
 EOF
 
 #root用户免密登录
