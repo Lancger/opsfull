@@ -881,6 +881,11 @@ networking:
   podSubnet: "${POD_SUBNET}"
   serviceSubnet: "${SVC_SUBNET}"
 scheduler: {}
+---
+# 开启 IPVS 模式
+apiVersion: kubeproxy.config.k8s.io/v1alpha1
+kind: KubeProxyConfiguration
+mode: ipvs # kube-proxy 模式
 EOF
 
 以下两个地方设置： 
