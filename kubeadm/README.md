@@ -735,7 +735,9 @@ cat > /etc/sysconfig/kubelet <<\EOF
 KUBELET_EXTRA_ARGS=--runtime-cgroups=/systemd/system.slice --kubelet-cgroups=/systemd/system.slice
 EOF
 
+systemctl daemon-reload
 systemctl restart kubelet
+systemctl status kubelet
 
 https://stackoverflow.com/questions/46726216/kubelet-fails-to-get-cgroup-stats-for-docker-and-kubelet-services  
 
