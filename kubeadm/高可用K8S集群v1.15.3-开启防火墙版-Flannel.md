@@ -574,9 +574,9 @@ frontend kubernetes-apiserver
 backend kubernetes-apiserver
     mode        tcp
     balance     roundrobin
-    server      master01.k8s.io   192.168.56.11:6443 check
-    server      master02.k8s.io   192.168.56.12:6443 check
-    server      master03.k8s.io   192.168.56.13:6443 check
+    server      master01.k8s.io   10.19.1.136:6443 check
+    server      master02.k8s.io   10.19.1.137:6443 check
+    server      master03.k8s.io   10.19.1.138:6443 check
 #---------------------------------------------------------------------
 # collection haproxy statistics message
 #---------------------------------------------------------------------
@@ -588,7 +588,7 @@ listen stats
     stats uri            /admin?stats
 EOF
 ```
-haproxy配置在其他master节点上(192.168.56.12和192.168.56.13)相同
+haproxy配置在其他master节点上(10.19.1.137和10.19.1.138)相同
 
 ### 3、启动并检测haproxy
 ```bash
