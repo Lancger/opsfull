@@ -699,6 +699,8 @@ EOF
 # 重启Docker
 systemctl daemon-reload
 systemctl restart docker
+
+docker info|grep -i cgroup
 ```
 ### 4、docker最终的服务文件
 ```
