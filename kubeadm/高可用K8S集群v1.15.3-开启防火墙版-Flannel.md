@@ -851,38 +851,56 @@ export APISERVER_NAME=master.k8s.io
 export POD_SUBNET=10.244.0.0/16
 export SVC_SUBNET=10.96.0.0/12
 
-cat > kubeadm-config.yaml << EOF
+cat <<EOF > ./kubeadm-config.yaml
+apiVersion: kubeadm.k8s.io/v1beta2
+bootstrapTokens:
+- groups:
+  - system:bootstrappers:kubeadm:default-node-token
+  token: abcdef.0123456789abcdef
+  ttl: 24h0m0s
+  usages:
+  - signing
+  - authentication
+kind: InitConfiguration
+localAPIEndpoint:
+  advertiseAddress: 10.19.1.136  #这里填写第一个初始化的master的ip
+  bindPort: 6443
+nodeRegistration:
+  criSocket: /var/run/dockershim.sock
+  name: k8s-master-01 #注意这里需要调整为自己的节点
+  taints:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/master
+---
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: ClusterConfiguration
+clusterName: kubernetes
+kubernetesVersion: v1.15.3
+certificatesDir: /etc/kubernetes/pki
+controllerManager: {}
+controlPlaneEndpoint: "${APISERVER_NAME}:16443" # 这里写vip的地址或域名加上端口
+imageRepository: registry.aliyuncs.com/google_containers # 使用阿里云镜像
 apiServer:
+  timeoutForControlPlane: 4m0s
   certSANs:
     - k8s-master-01
     - k8s-master-02
     - k8s-master-03
     - master.k8s.io
-    - 192.168.56.11
-    - 192.168.56.12
-    - 192.168.56.13
-    - 192.168.56.200
+    - 10.19.1.200
+    - 10.19.1.136
+    - 10.19.1.137
+    - 10.19.1.138
     - 127.0.0.1
-  extraArgs:
-    authorization-mode: Node,RBAC
-  timeoutForControlPlane: 4m0s
-apiVersion: kubeadm.k8s.io/v1beta2
-certificatesDir: /etc/kubernetes/pki
-clusterName: kubernetes
-controlPlaneEndpoint: "${APISERVER_NAME}:16443"
-controllerManager: {}
-dns: 
+dns:
   type: CoreDNS
 etcd:
-  local:    
+  local:
     dataDir: /var/lib/etcd
-imageRepository: registry.aliyuncs.com/google_containers
-kind: ClusterConfiguration
-kubernetesVersion: v1.15.3
-networking: 
-  dnsDomain: cluster.local  
-  podSubnet: "${POD_SUBNET}"
-  serviceSubnet: "${SVC_SUBNET}"
+networking:
+  dnsDomain: cluster.local
+  podSubnet: ${POD_SUBNET}
+  serviceSubnet: ${SVC_SUBNET}
 scheduler: {}
 ---
 # 开启 IPVS 模式
@@ -890,6 +908,8 @@ apiVersion: kubeproxy.config.k8s.io/v1alpha1
 kind: KubeProxyConfiguration
 mode: ipvs # kube-proxy 模式
 EOF
+
+kubeadm init --config=kubeadm-config.yaml --upload-certs
 
 以下两个地方设置： 
 - certSANs： 虚拟ip地址（为了安全起见，把所有集群地址都加上） 
