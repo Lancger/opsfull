@@ -1384,6 +1384,8 @@ rm -rf /var/lib/etcd/*
 
 参考资料：
 
+https://github.com/kubernetes/kubernetes/issues/33618   Issue when using kubeadm with multiple network interfaces #33618
+
 http://www.mydlq.club/article/4/
 
 https://kuboard.cn/install/install-kubernetes.html#%E5%88%9D%E5%A7%8B%E5%8C%96%E7%AC%AC%E4%B8%80%E4%B8%AAmaster%E8%8A%82%E7%82%B9
