@@ -164,6 +164,7 @@ ip link delete cni0
 ifconfig flannel.1 down
 ip link delete flannel.1
 rm -rf /var/lib/cni/
+rm -f $HOME/.kube/config
 ```
 2、通过配置文件进行初始化
 ```bash
