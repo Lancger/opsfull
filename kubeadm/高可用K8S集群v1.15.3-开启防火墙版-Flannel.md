@@ -958,36 +958,16 @@ kubeadm join master.k8s.io:16443 --token 0cttr2.xtrrn8mjmnn7zhw9 \
 
 用于初始化第二、三个 master 节点
 ```
-#注意一定要加上这个(原因为服务器有多网卡，不执行这个，--advertise-address会绑定到其他的地址，例如公网）
-
-export APISERVER_IP=10.19.1.200
-export APISERVER_NAME=master.k8s.io
-
 kubeadm join master.k8s.io:6443 --token 0cttr2.xtrrn8mjmnn7zhw9 \
     --discovery-token-ca-cert-hash sha256:e369c057c475223658ccc843d6ff3bf66b3fbd11ecd486075217b5744e89fbdd \
     --control-plane
 ```
 用于初始化 worker 节点
 ```
-export APISERVER_IP=10.19.1.200
-export APISERVER_NAME=master.k8s.io
-
 kubeadm join master.k8s.io:16443 --token 0cttr2.xtrrn8mjmnn7zhw9 \
     --discovery-token-ca-cert-hash sha256:e369c057c475223658ccc843d6ff3bf66b3fbd11ecd486075217b5744e89fbdd
 ```
-集群初始化kubeadm reset重装，然后重新执行kubeadm join操作
-```
-yes | kubeadm reset
-ifconfig cni0 down
-ip link delete cni0
-ifconfig flannel.1 down
-ip link delete flannel.1
-rm -rf /var/lib/cni/
-rm -f $HOME/.kube/config
-systemctl restart kubelet
-systemctl status kubelet
-journalctl -f -u kubelet
-```
+
 
 ### 3、配置kubectl环境变量
 ```bash
@@ -1373,13 +1353,29 @@ kubeadm reset
 
 ## 初始化失败
 ```bash
-kubeadm reset
+yes | kubeadm reset
 ifconfig cni0 down
 ip link delete cni0
 ifconfig flannel.1 down
 ip link delete flannel.1
 rm -rf /var/lib/cni/
-rm -rf /var/lib/etcd/*
+rm -f $HOME/.kube/config
+
+systemctl restart kubelet
+systemctl status kubelet
+journalctl -f -u kubelet
+```
+
+## 问题汇总：
+
+1、多网卡监听问题
+```
+k8s master组件在多网卡环境下，会监听到服务器外网IP问题
+
+https://github.com/kubernetes/kubernetes/issues/33618
+
+#解决方案
+@danielschonfeld The kubelet flag you should set is --hostname-override
 ```
 
 参考资料：
