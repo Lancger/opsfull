@@ -959,16 +959,21 @@ kubeadm join master.k8s.io:16443 --token 0cttr2.xtrrn8mjmnn7zhw9 \
 用于初始化第二、三个 master 节点
 ```
 #注意一定要加上这个(原因为服务器有多网卡，不执行这个，--advertise-address会绑定到其他的地址，例如公网）
-export APISERVER_IP=10.19.1.137
+
+export APISERVER_IP=10.19.1.200
 export APISERVER_NAME=master.k8s.io
 echo "${APISERVER_IP}    ${APISERVER_NAME}" >> /etc/hosts
 
-kubeadm join master.k8s.io:16443 --token 0cttr2.xtrrn8mjmnn7zhw9 \
+kubeadm join master.k8s.io:6443 --token 0cttr2.xtrrn8mjmnn7zhw9 \
     --discovery-token-ca-cert-hash sha256:e369c057c475223658ccc843d6ff3bf66b3fbd11ecd486075217b5744e89fbdd \
     --control-plane
 ```
 用于初始化 worker 节点
 ```
+export APISERVER_IP=10.19.1.200
+export APISERVER_NAME=master.k8s.io
+echo "${APISERVER_IP}    ${APISERVER_NAME}" >> /etc/hosts
+
 kubeadm join master.k8s.io:16443 --token 0cttr2.xtrrn8mjmnn7zhw9 \
     --discovery-token-ca-cert-hash sha256:e369c057c475223658ccc843d6ff3bf66b3fbd11ecd486075217b5744e89fbdd
 ```
