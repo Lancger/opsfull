@@ -306,7 +306,7 @@ hostnamectl  set-hostname  k8s-node-03
 ```bash
 #将各个服务器的时间同步，并设置开机启动同步时间服务
 
-systemctl start chronyd.service
+systemctl restart chronyd.service
 systemctl enable chronyd.service
 ```
 
