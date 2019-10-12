@@ -826,15 +826,19 @@ reboot
 ```
 # 因为需要绑定虚拟IP，所以需要首先先查看虚拟IP启动这几台master机子哪台上
 
-[root@k8s-master-01 ~]# ip address show eth0
-2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
-    link/ether 00:50:56:be:86:af brd ff:ff:ff:ff:ff:ff
-    inet 192.168.56.56/22 brd 10.19.3.255 scope global eth0
+[root@k8s-master-01 ~]# ip address show bond0
+6: bond0: <BROADCAST,MULTICAST,MASTER,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 6c:92:bf:27:9e:ed brd ff:ff:ff:ff:ff:ff
+    inet 10.19.1.136/22 brd 10.19.3.255 scope global bond0
        valid_lft forever preferred_lft forever
-    inet 192.168.56.200/32 scope global eth0
+    inet 10.19.1.200/32 scope global bond0
+       valid_lft forever preferred_lft forever
+7: bond0.101@bond0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 6c:92:bf:27:9e:ed brd ff:ff:ff:ff:ff:ff
+    inet 16.201.26.36/24 brd 16.201.26.255 scope global bond0.101
        valid_lft forever preferred_lft forever
 
-可以看到虚拟IP 192.168.56.200  和 服务器IP 192.168.56.11在一台机子上，所以初始化kubernetes第一个master要在master01机子上进行安装
+可以看到虚拟IP 10.19.1.200  和 服务器IP 10.19.1.136 在一台机子上，所以初始化kubernetes第一个master要在master01机子上进行安装
 ```
 
 ### 1、创建kubeadm配置的yaml文件
