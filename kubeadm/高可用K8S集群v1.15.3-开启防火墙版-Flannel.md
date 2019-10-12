@@ -967,6 +967,19 @@ kubeadm join master.k8s.io:16443 --token 0cttr2.xtrrn8mjmnn7zhw9 \
 kubeadm join master.k8s.io:16443 --token 0cttr2.xtrrn8mjmnn7zhw9 \
     --discovery-token-ca-cert-hash sha256:e369c057c475223658ccc843d6ff3bf66b3fbd11ecd486075217b5744e89fbdd
 ```
+集群初始化kubeadm reset重装，然后重新执行kubeadm join操作
+```
+yes | kubeadm reset
+ifconfig cni0 down
+ip link delete cni0
+ifconfig flannel.1 down
+ip link delete flannel.1
+rm -rf /var/lib/cni/
+rm -f $HOME/.kube/config
+systemctl restart kubelet
+systemctl status kubelet
+journalctl -f -u kubelet
+```
 
 ### 3、配置kubectl环境变量
 ```bash
