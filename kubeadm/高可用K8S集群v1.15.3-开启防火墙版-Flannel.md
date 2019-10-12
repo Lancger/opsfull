@@ -282,22 +282,22 @@ chmod 400 /root/.ssh/authorized_keys
 ```bash
 #分别进入不同的服务器修改 hostname 名称
 
-# 修改 192.168.56.11 服务器
+# 修改 10.19.1.136 服务器
 hostnamectl  set-hostname  k8s-master-01
 
-# 修改 192.168.56.12 服务器
+# 修改 10.19.1.137 服务器
 hostnamectl  set-hostname  k8s-master-02
 
-# 修改 192.168.56.13 服务器
+# 修改 10.19.1.138 服务器
 hostnamectl  set-hostname  k8s-master-03
 
-# 修改 192.168.56.14 服务器
+# 修改 10.19.1.139 服务器
 hostnamectl  set-hostname  k8s-node-01
 
-# 修改 192.168.56.15 服务器
+# 修改 10.19.1.140 服务器
 hostnamectl  set-hostname  k8s-node-02
 
-# 修改 192.168.56.16 服务器
+# 修改 10.19.1.141 服务器
 hostnamectl  set-hostname  k8s-node-03
 ```
 
