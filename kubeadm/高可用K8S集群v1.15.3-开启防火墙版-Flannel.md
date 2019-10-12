@@ -958,6 +958,9 @@ kubeadm join master.k8s.io:16443 --token 0cttr2.xtrrn8mjmnn7zhw9 \
 
 用于初始化第二、三个 master 节点
 ```
+#注意一定要加上这个
+export APISERVER_NAME=master.k8s.io
+
 kubeadm join master.k8s.io:16443 --token 0cttr2.xtrrn8mjmnn7zhw9 \
     --discovery-token-ca-cert-hash sha256:e369c057c475223658ccc843d6ff3bf66b3fbd11ecd486075217b5744e89fbdd \
     --control-plane
