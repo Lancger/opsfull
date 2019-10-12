@@ -1370,18 +1370,15 @@ journalctl -f -u kubelet
 ```
 k8s master组件在多网卡环境下，会监听到服务器外网IP问题
 
-vim /var/lib/kubelet/kubeadm-flags.env
-添加
-KUBELET_HOSTNAME="--hostname-override=k8s-master-01"
-
-cat > /var/lib/kubelet/kubeadm-flags.env << \EOF
-KUBELET_KUBEADM_ARGS="--cgroup-driver=systemd --network-plugin=cni --pod-infra-container-image=registry.aliyuncs.com/google_containers/pause:3.1"
-KUBELET_HOSTNAME="--hostname-override=k8s-master-01"
+cat > /etc/sysconfig/kubelet <<\EOF
+KUBELET_EXTRA_ARGS=--runtime-cgroups=/systemd/system.slice --kubelet-cgroups=/systemd/system.slice --hostname-override=k8s-master-01
 EOF
 
 systemctl daemon-reload
 systemctl restart kubelet
 systemctl status kubelet
+
+#查看kubelet日志
 journalctl -f -u kubelet
 
 https://github.com/kubernetes/kubernetes/issues/33618
