@@ -1,5 +1,7 @@
 # 一、防火墙配置
 ```
+chattr -i /etc/passwd* && chattr -i /etc/group* && chattr -i /etc/shadow* && chattr -i /etc/gshadow*
+
 yum install iptables iptables-services -y
 
 cat > /etc/sysconfig/iptables << \EOF
