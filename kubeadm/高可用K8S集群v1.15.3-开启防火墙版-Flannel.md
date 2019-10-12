@@ -429,8 +429,8 @@ vrrp_script check_haproxy {
 
 # rp_instance用来定义对外提供服务的 VIP 区域及其相关属性。
 vrrp_instance VI_1 {
-    state MASTER   #当前节点为MASTER，其他两个节点设置为BACKUP
-    interface eth0 #改为自己的网卡
+    state MASTER   #当前节点为MASTER，其他两个节点设置为 BACKUP
+    interface bond0 #改为自己的网卡
     virtual_router_id 51
     priority 250
     advert_int 1
@@ -439,7 +439,7 @@ vrrp_instance VI_1 {
         auth_pass 35f18af7190d51c9f7f78f37300a0cbd
     }
     virtual_ipaddress {
-        192.168.56.200   #虚拟ip，即VIP
+        10.19.1.200   #虚拟ip，即VIP
     }
     track_script {
         check_haproxy
