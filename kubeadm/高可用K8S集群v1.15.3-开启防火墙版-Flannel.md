@@ -1373,7 +1373,7 @@ k8s master组件在多网卡环境下，会监听到服务器外网IP问题
 #注意--hostname-override的值写kubectl get nodes显示的结果
 
 cat > /etc/sysconfig/kubelet <<\EOF
-KUBELET_EXTRA_ARGS=--runtime-cgroups=/systemd/system.slice --kubelet-cgroups=/systemd/system.slice --hostname-override=10.19.1.136
+KUBELET_EXTRA_ARGS=--runtime-cgroups=/systemd/system.slice --kubelet-cgroups=/systemd/system.slice --hostname-override=k8s-master-01
 EOF
 
 systemctl daemon-reload
