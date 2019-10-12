@@ -739,6 +739,9 @@ systemctl daemon-reload
 systemctl restart kubelet
 systemctl status kubelet
 
+#查看kubelet日志
+journalctl -f -u kubelet
+
 https://stackoverflow.com/questions/46726216/kubelet-fails-to-get-cgroup-stats-for-docker-and-kubelet-services  
 
 https://www.twblogs.net/a/5cc87d63bd9eee1ac2ed736b
