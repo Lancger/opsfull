@@ -478,7 +478,7 @@ Sep 27 10:54:16 tw19410s1 Keepalived_vrrp[9113]: /usr/bin/killall -0 haproxy exi
 systemctl enable keepalived
 
 # 启动keepalived
-systemctl start keepalived
+systemctl restart keepalived
 
 # 查看启动状态
 systemctl status keepalived
