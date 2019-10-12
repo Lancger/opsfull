@@ -136,6 +136,9 @@ systemctl daemon-reload
 systemctl restart kubelet.service
 kubeadm version
 systemctl enable kubelet.service
+
+#kubelet.service服务位置
+/lib/systemd/system/kubelet.service
 ```
 
 # 三、初始化集群
