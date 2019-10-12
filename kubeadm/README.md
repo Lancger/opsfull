@@ -722,7 +722,7 @@ https://medium.com/@cminion/quicknote-kubernetes-networking-issues-78f1e0d06e12
 https://github.com/coredns/coredns/issues/2325  
 ```
 
-2、kubelet异常问题
+2、kubelet异常问题1
 
 ```
 问题现象：
@@ -745,6 +745,33 @@ journalctl -f -u kubelet
 https://stackoverflow.com/questions/46726216/kubelet-fails-to-get-cgroup-stats-for-docker-and-kubelet-services  
 
 https://www.twblogs.net/a/5cc87d63bd9eee1ac2ed736b
+```
+
+3、kubelet异常问题2
+```
+failed to create kubelet: misconfiguration: kubelet cgroup driver: "cgroupfs" is different from docker cgroup driver: "systemd"
+
+#解决办法
+添加如下内容--cgroup-driver=systemd
+
+[root@tw19336 ~]# cat /usr/lib/systemd/system/kubelet.service.d/10-kubeadm.conf
+# Note: This dropin only works with kubeadm and kubelet v1.11+
+[Service]
+Environment="KUBELET_KUBECONFIG_ARGS=--bootstrap-kubeconfig=/etc/kubernetes/bootstrap-kubelet.conf --kubeconfig=/etc/kubernetes/kubelet.conf --cgroup-driver=systemd"
+Environment="KUBELET_CONFIG_ARGS=--config=/var/lib/kubelet/config.yaml"
+# This is a file that "kubeadm init" and "kubeadm join" generates at runtime, populating the KUBELET_KUBEADM_ARGS variable dynamically
+EnvironmentFile=-/var/lib/kubelet/kubeadm-flags.env
+# This is a file that the user can use for overrides of the kubelet args as a last resort. Preferably, the user should use
+# the .NodeRegistration.KubeletExtraArgs object in the configuration files instead. KUBELET_EXTRA_ARGS should be sourced from this file.
+EnvironmentFile=-/etc/sysconfig/kubelet
+ExecStart=
+ExecStart=/usr/bin/kubelet $KUBELET_KUBECONFIG_ARGS $KUBELET_CONFIG_ARGS $KUBELET_KUBEADM_ARGS $KUBELET_EXTRA_ARGS
+
+
+systemctl daemon-reload
+systemctl restart kubelet
+systemctl status kubelet
+https://www.cnblogs.com/hongdada/p/9771857.html
 ```
 
 参考文档：
