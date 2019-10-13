@@ -61,6 +61,7 @@ iptables -nvL
 
 2、hosts.deny配置(注意需要注释掉)
 sed -ri 's/.*all:all.*/#all:all/g' /etc/hosts.deny
+cat /etc/hosts.deny
 ```
 # 集群架构：
 
