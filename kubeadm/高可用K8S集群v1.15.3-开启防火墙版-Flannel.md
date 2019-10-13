@@ -17,6 +17,7 @@ node01、node02、node03： 二、五、六、九
 ```
 # 防火墙配置
 ```bash
+1、防火墙策略
 yum install iptables iptables-services -y
 
 cat > /etc/sysconfig/iptables << \EOF
@@ -57,6 +58,9 @@ systemctl restart iptables.service
 systemctl enable iptables.service
 
 iptables -nvL
+
+2、hosts.deny配置(注意需要注释掉)
+sed -i 's@all:all@#all:all@g' /etc/hosts.deny
 ```
 # 集群架构：
 
