@@ -867,6 +867,7 @@ reboot
 
 rm -f ./kubeadm-config.yaml
 
+export MASTER_NODE1=10.19.1.136
 export APISERVER_NAME=master.k8s.io
 export POD_SUBNET=10.244.0.0/16
 export SVC_SUBNET=10.96.0.0/12
@@ -883,7 +884,7 @@ bootstrapTokens:
   - authentication
 kind: InitConfiguration
 localAPIEndpoint:
-  advertiseAddress: 10.19.1.136  #这里填写第一个初始化的master的ip
+  advertiseAddress: ${MASTER_NODE1}  #这里填写第一个初始化的master的ip
   bindPort: 6443
 nodeRegistration:
   criSocket: /var/run/dockershim.sock
