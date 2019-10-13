@@ -340,7 +340,6 @@ sed -i 's/^SELINUX=enforcing$/SELINUX=disabled/' /etc/selinux/config
 getenforce 
 
 如果为permissive，则执行reboot重新启动即可
-
 ```
 
 7、禁用 Swap 设备
@@ -939,6 +938,10 @@ kubeadm init --config=kubeadm-config.yaml --upload-certs
 kubeadm init --config=kubeadm-config.yaml --upload-certs  #使用这个就不用做拷贝证书的操作
 
 kubeadm init --config kubeadm-config.yaml  #使用这个还需要手动做拷贝证书的操作
+
+#验证下端口是否通
+nc -v master.k8s.io 6443
+nc -v master.k8s.io 16443
 ```
 日志
 ```
