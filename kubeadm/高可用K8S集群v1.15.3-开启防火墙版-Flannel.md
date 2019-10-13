@@ -622,6 +622,9 @@ systemctl status haproxy
 ### 4、检测haproxy端口
 ```bash
 ss -lnt | grep -E "16443|1080"
+
+nc -zv master.k8s.io 16443
+nc -zv master.k8s.io 1080
 ```
 
 # 五、安装Docker (所有节点)
