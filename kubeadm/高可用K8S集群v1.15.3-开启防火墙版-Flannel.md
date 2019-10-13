@@ -955,11 +955,24 @@ nc -zv master.k8s.io 16443
 ```
 日志
 ```
+
+Your Kubernetes control-plane has initialized successfully!
+
+To start using your cluster, you need to run the following as a regular user:
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+You should now deploy a pod network to the cluster.
+Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
 You can now join any number of the control-plane node running the following command on each as root:
 
   kubeadm join master.k8s.io:16443 --token abcdef.0123456789abcdef \
-    --discovery-token-ca-cert-hash sha256:6922eb3866203c4892358e3849ebe7123534eb324be8633840d65aab258eaadf \
-    --control-plane --certificate-key e31b189c732a124a40bbaa308fda5e90ebd664313bf72eec6437729c0e557954
+    --discovery-token-ca-cert-hash sha256:ab6da874166785bfe75acc4d6fd622bf821a7451837332e3a21a6106e346c8d5 \
+    --control-plane --certificate-key 13284467f0141778898ffa33d340c0598cb757c6aa016f00da2165cd3eab4523
 
 Please note that the certificate-key gives access to cluster sensitive data, keep it secret!
 As a safeguard, uploaded-certs will be deleted in two hours; If necessary, you can use 
@@ -968,20 +981,28 @@ As a safeguard, uploaded-certs will be deleted in two hours; If necessary, you c
 Then you can join any number of worker nodes by running the following on each as root:
 
 kubeadm join master.k8s.io:16443 --token abcdef.0123456789abcdef \
-    --discovery-token-ca-cert-hash sha256:6922eb3866203c4892358e3849ebe7123534eb324be8633840d65aab258eaadf
+    --discovery-token-ca-cert-hash sha256:ab6da874166785bfe75acc4d6fd622bf821a7451837332e3a21a6106e346c8d5
 ```
 ### 执行结果中
 
 用于初始化第二、三个 master 节点
 ```
-kubeadm join master.k8s.io:16443 --token abcdef.0123456789abcdef \
-    --discovery-token-ca-cert-hash sha256:6922eb3866203c4892358e3849ebe7123534eb324be8633840d65aab258eaadf \
-    --control-plane --certificate-key e31b189c732a124a40bbaa308fda5e90ebd664313bf72eec6437729c0e557954
+#初始化第二个master节点
+export MASTER_NODE2=10.19.1.137
+kubeadm join master.k8s.io:16443 --apiserver-advertise-address ${MASTER_NODE2} --token abcdef.0123456789abcdef \
+    --discovery-token-ca-cert-hash sha256:ab6da874166785bfe75acc4d6fd622bf821a7451837332e3a21a6106e346c8d5 \
+    --control-plane --certificate-key 13284467f0141778898ffa33d340c0598cb757c6aa016f00da2165cd3eab4523
+
+#初始化第三个master节点    
+export MASTER_NODE3=10.19.1.138
+kubeadm join master.k8s.io:16443 --apiserver-advertise-address ${MASTER_NODE3} --token abcdef.0123456789abcdef \
+    --discovery-token-ca-cert-hash sha256:ab6da874166785bfe75acc4d6fd622bf821a7451837332e3a21a6106e346c8d5 \
+    --control-plane --certificate-key 13284467f0141778898ffa33d340c0598cb757c6aa016f00da2165cd3eab4523
 ```
 用于初始化 worker 节点
 ```
 kubeadm join master.k8s.io:16443 --token abcdef.0123456789abcdef \
-    --discovery-token-ca-cert-hash sha256:6922eb3866203c4892358e3849ebe7123534eb324be8633840d65aab258eaadf
+    --discovery-token-ca-cert-hash sha256:ab6da874166785bfe75acc4d6fd622bf821a7451837332e3a21a6106e346c8d5
 ```
 
 
