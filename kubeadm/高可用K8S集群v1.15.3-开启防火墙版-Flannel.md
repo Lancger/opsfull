@@ -443,19 +443,18 @@ vrrp_instance VI_1 {
     state MASTER   #当前节点为MASTER，其他两个节点设置为 BACKUP
     interface bond0 #改为自己的网卡
     virtual_router_id 51
-    priority 250
+    priority 200
     advert_int 1
     authentication {
         auth_type PASS
         auth_pass 35f18af7190d51c9f7f78f37300a0cbd
     }
     virtual_ipaddress {
-        10.19.1.200   #虚拟ip，即VIP
+        10.19.1.200/22  #虚拟ip，即VIP
     }
     track_script {
         check_haproxy
     }
-
 }
 EOF
 ```
@@ -476,11 +475,18 @@ EOF
 # 1、注意防火墙需要放开vrrp协议(不然会出现脑裂现象，三台主机都存在VIP的情况)
 #-A INPUT -p vrrp -j ACCEPT
 -A RH-Firewall-1-INPUT -p vrrp -j ACCEPT
-    
-#2、注意上面配置script "killall -0 haproxy"   #根据进程名称检测进程是否存活，会在/var/log/messages每隔一秒执行检测的日志记录
+
+# 2、注意上面配置script "killall -0 haproxy"   #根据进程名称检测进程是否存活，会在/var/log/messages每隔一秒执行检测的日志记录
 # tail -100f /var/log/messages
 
 Sep 27 10:54:16 tw19410s1 Keepalived_vrrp[9113]: /usr/bin/killall -0 haproxy exited with status 1
+
+# 3、“VRRP实例的绑定到IP”对于所使用的网卡需要合法
+比如使用网卡“bond0”，该网卡的掩码为“255.255.255.0”，那么所使用的“VRRP实例的绑定到IP”的掩码也必须为“255.255.255.0”，即具有“xxx.xxx.xxx.xxx/24”的形式。
+
+tcpdump -ani any vrrp | grep vrid
+
+特别需要注意的是，同一网段中的virtual_router_id(vrid)的值不能重复，否则会干扰其他Keepalived集群的正常运行。
 ```
 
 ### 3、启动Keepalived
