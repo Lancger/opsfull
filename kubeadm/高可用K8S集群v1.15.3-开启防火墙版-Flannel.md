@@ -1350,6 +1350,7 @@ ip link delete flannel.1
 rm -rf /var/lib/cni/
 rm -f $HOME/.kube/config
 
+systemctl restart docker
 systemctl restart kubelet
 systemctl status kubelet
 journalctl -f -u kubelet
