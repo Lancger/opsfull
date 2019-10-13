@@ -946,8 +946,8 @@ kubeadm init --config=kubeadm-config.yaml --upload-certs  #使用这个就不用
 kubeadm init --config kubeadm-config.yaml  #使用这个还需要手动做拷贝证书的操作
 
 #验证下端口是否通
-nc -v master.k8s.io 6443
-nc -v master.k8s.io 16443
+nc -zv master.k8s.io 6443
+nc -zv master.k8s.io 16443
 ```
 日志
 ```
