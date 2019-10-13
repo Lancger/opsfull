@@ -60,7 +60,7 @@ systemctl enable iptables.service
 iptables -nvL
 
 2、hosts.deny配置(注意需要注释掉)
-sed -i 's@all:all@#all:all@g' /etc/hosts.deny
+sed -ri 's/.*all:all.*/#all:all/g' /etc/hosts.deny
 ```
 # 集群架构：
 
