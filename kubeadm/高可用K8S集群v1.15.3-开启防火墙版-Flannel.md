@@ -1363,16 +1363,20 @@ k8s master组件在多网卡环境下，会监听到服务器外网IP问题
 
 #注意--hostname-override的值写kubectl get nodes显示的结果
 
+#修改kubelet启动参数
 cat > /etc/sysconfig/kubelet <<\EOF
-KUBELET_EXTRA_ARGS=--runtime-cgroups=/systemd/system.slice --kubelet-cgroups=/systemd/system.slice --hostname-override=k8s-master-01
+KUBELET_EXTRA_ARGS=--runtime-cgroups=/systemd/system.slice --kubelet-cgroups=/systemd/system.slice --hostname-override=k8s-master-01 --node-ip=10.19.1.136
 EOF
 
+#重启kubelet服务
 systemctl daemon-reload
 systemctl restart kubelet
 systemctl status kubelet
 
 #查看kubelet日志
 journalctl -f -u kubelet
+
+https://blog.csdn.net/qianghaohao/article/details/98588427  kubeadm + vagrant 部署多节点 k8s 的一个坑(多网卡问题)
 
 https://github.com/kubernetes/kubernetes/issues/33618
 
