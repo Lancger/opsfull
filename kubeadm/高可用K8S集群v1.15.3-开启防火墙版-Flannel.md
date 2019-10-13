@@ -1399,3 +1399,6 @@ https://blog.51cto.com/fengwan/2426528?source=dra  kubeadm搭建高可用kuberne
 https://segmentfault.com/a/1190000018741112?utm_source=tag-newest  Kubernetes的几种主流部署方式02-kubeadm部署高可用集群
 
 https://www.cnblogs.com/hongdada/p/9771857.html  Docker中的Cgroup Driver:Cgroupfs 与 Systemd
+
+https://juejin.im/entry/5b0aa39551882538be0d2e21  centos7使用kubeadm配置高可用集群(多master 多网卡，需主动修改组件信息)
+
