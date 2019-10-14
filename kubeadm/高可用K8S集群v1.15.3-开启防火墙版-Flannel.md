@@ -1257,9 +1257,23 @@ kube-proxy-88s74                        1/1     Running   0          12m
 kube-scheduler-k8s-master-01            1/1     Running   0          12m
 
 # 加入更换了网络插件，需要把coredns的pod重新创建，不然网络coredns的pod网络不通
+# 查看
+kubectl get pods --namespace kube-system
+kubectl get svc --namespace kube-system
 
+#删除coredns
+kubectl delete deployment coredns -n kube-system
+kubectl delete svc kube-dns -n kube-system
+kubectl delete cm coredns -n kube-system
+
+#重新部署coredns
+rm -f coredns.yaml.sed deploy.sh coredns.yml
+wget https://raw.githubusercontent.com/coredns/deployment/master/kubernetes/coredns.yaml.sed
+wget https://raw.githubusercontent.com/coredns/deployment/master/kubernetes/deploy.sh
+chmod +x deploy.sh
+./deploy.sh -i 10.96.0.10 > coredns.yml  #这里从--service-cidr=10.96.0.0/16中选用10.96.0.10作为coredns地址
+kubectl apply -f coredns.yml
 ```
-
 
 # 九、加入集群
 
