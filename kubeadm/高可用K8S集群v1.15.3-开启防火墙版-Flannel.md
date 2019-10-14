@@ -1255,6 +1255,9 @@ kube-controller-manager-k8s-master-01   1/1     Running   0          11m
 kube-flannel-ds-amd64-7lj6m             1/1     Running   0          13s
 kube-proxy-88s74                        1/1     Running   0          12m
 kube-scheduler-k8s-master-01            1/1     Running   0          12m
+
+# 加入更换了网络插件，需要把coredns的pod重新创建，不然网络coredns的pod网络不通
+
 ```
 
 
