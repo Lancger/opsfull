@@ -450,7 +450,7 @@ vrrp_instance VI_1 {
         auth_pass 35f18af7190d51c9f7f78f37300a0cbd
     }
     virtual_ipaddress {
-        10.19.1.200/22  #虚拟ip，即VIP
+        10.19.1.200/22  #虚拟VIP，即VIP,注意掩码一定要写，不然会出现VIP端口，部分机器正常，部分机器异常问题
     }
     track_script {
         check_haproxy
