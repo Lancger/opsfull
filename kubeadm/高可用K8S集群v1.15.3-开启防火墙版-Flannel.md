@@ -1194,6 +1194,7 @@ spec:
         args:
         - --ip-masq
         - --kube-subnet-mgr
+        - --iface=bond0
         resources:
           requests:
             cpu: "100m"
