@@ -263,13 +263,13 @@ kubeadm alpha： 预览一组可用的新功能以便从社区搜集反馈
 cat > /etc/hosts << \EOF
 127.0.0.1     localhost  localhost.localdomain localhost4 localhost4.localdomain4
 ::1           localhost  localhost.localdomain localhost6 localhost6.localdomain6
-192.168.56.200   k8s-vip         master      master.k8s.io
-192.168.56.11    k8s-master-01   master01    master01.k8s.io
-192.168.56.12    k8s-master-02   master02    master02.k8s.io
-192.168.56.13    k8s-master-03   master03    master03.k8s.io
-192.168.56.14    k8s-node-01     node01      node01.k8s.io
-192.168.56.15    k8s-node-02     node02      node02.k8s.io
-192.168.56.16    k8s-node-03     node03      node03.k8s.io
+10.10.1.100   k8s-vip         master      master.k8s.io
+10.10.0.24    k8s-master-01   master01    master01.k8s.io
+10.10.0.32    k8s-master-02   master02    master02.k8s.io
+10.10.0.23    k8s-master-03   master03    master03.k8s.io
+10.10.0.25    k8s-node-01     node01      node01.k8s.io
+10.10.0.29    k8s-node-02     node02      node02.k8s.io
+10.10.0.12    k8s-node-03     node03      node03.k8s.io
 EOF
 
 #root用户免密登录
@@ -284,22 +284,22 @@ chmod 400 /root/.ssh/authorized_keys
 ```bash
 #分别进入不同的服务器修改 hostname 名称
 
-# 修改 192.168.56.11 服务器
+# 修改 10.10.0.24 服务器
 hostnamectl  set-hostname  k8s-master-01
 
-# 修改 192.168.56.12 服务器
+# 修改 10.10.0.32 服务器
 hostnamectl  set-hostname  k8s-master-02
 
-# 修改 192.168.56.13 服务器
+# 修改 10.10.0.23 服务器
 hostnamectl  set-hostname  k8s-master-03
 
-# 修改 192.168.56.14 服务器
+# 修改 10.10.0.25 服务器
 hostnamectl  set-hostname  k8s-node-01
 
-# 修改 192.168.56.15 服务器
+# 修改 10.10.0.29 服务器
 hostnamectl  set-hostname  k8s-node-02
 
-# 修改 192.168.56.16 服务器
+# 修改 10.10.0.12 服务器
 hostnamectl  set-hostname  k8s-node-03
 ```
 
