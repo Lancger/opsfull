@@ -129,43 +129,43 @@ kubeadm alpha： 预览一组可用的新功能以便从社区搜集反馈
         <td><strong>角色</td>
     </tr>
     <tr>
-        <td>192.168.56.200</td>
+        <td>10.10.1.100</td>
         <td>-</td>
         <td>-</td>
         <td>vip</td>
     </tr>
     <tr>
-        <td>192.168.56.11</td>
+        <td>10.10.0.24</td>
         <td>k8s-master-01</td>
         <td>2C & 2G</td>
         <td>master</td>
     </tr>
     <tr>
-        <td>192.168.56.12</td>
+        <td>10.10.0.32</td>
         <td>k8s-master-02</td>
         <td>2C & 2G</td>
         <td>master</td>
     </tr>
     <tr>
-        <td>192.168.56.13</td>
+        <td>10.10.0.23</td>
         <td>k8s-master-03</td>
         <td>2C & 2G</td>
         <td>master</td>
     </tr>
     <tr>
-        <td>192.168.56.14</td>
+        <td>10.10.0.25</td>
         <td>k8s-node-01</td>
         <td>4C & 8G</td>
         <td>node</td>
     </tr>
     <tr>
-        <td>192.168.56.15</td>
+        <td>10.10.0.29</td>
         <td>k8s-node-02</td>
         <td>4C & 8G</td>
         <td>node</td>
     </tr>
     <tr>
-        <td>192.168.56.16</td>
+        <td>10.10.0.12</td>
         <td>k8s-node-03</td>
         <td>4C & 8G</td>
         <td>node</td>
