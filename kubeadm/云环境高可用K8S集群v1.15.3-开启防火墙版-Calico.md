@@ -545,6 +545,9 @@ EOF
 
 # 安装kubelet、kubeadm、kubectl
 yum install -y kubelet-1.15.3 kubeadm-1.15.3 kubectl-1.15.3
+
+systemctl restart kubelet.service
+systemctl enable kubelet.service
 ```
 
 ### 2、安装kubelet
@@ -599,7 +602,7 @@ reboot
 ```
 1、# 配置文件初始化
 # 替换 apiserver.demo 为 您想要的 dnsName
-export APISERVER_NAME=master.k8s-vip.io
+export APISERVER_NAME=master.k8s.io
 
 # Kubernetes 容器组所在的网段，该网段安装完成后，由 kubernetes 创建，事先并不存在于您的物理网络中
 export POD_SUBNET=10.244.0.0/16
