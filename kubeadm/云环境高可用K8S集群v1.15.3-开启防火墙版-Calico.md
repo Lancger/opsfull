@@ -444,7 +444,13 @@ ExecReload=/bin/kill -s HUP $MAINPID
 ExecStartPost=/usr/sbin/iptables -P FORWARD ACCEPT
 ...
 
-# 配置docker加速器
+# 修改docker Cgroup Driver为systemd
+sed -i "s#^ExecStart=/usr/bin/dockerd.*#ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock --exec-opt native.cgroupdriver=systemd#g" /usr/lib/systemd/system/docker.service
+
+# 设置 docker 镜像，提高 docker 镜像下载速度和稳定性
+curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io
+
+# 或者直接配置文件docker加速器
 cat > /etc/docker/daemon.json << \EOF
 {
   "registry-mirrors": [
