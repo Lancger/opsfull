@@ -453,6 +453,7 @@ curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2
 # 或者直接配置文件docker加速器
 cat > /etc/docker/daemon.json << \EOF
 {
+  "exec-opts": ["native.cgroupdriver=systemd"],
   "registry-mirrors": [
     "https://dockerhub.azk8s.cn",
     "https://i37dz0y4.mirror.aliyuncs.com"
@@ -464,6 +465,8 @@ EOF
 # 重启Docker
 systemctl daemon-reload
 systemctl restart docker
+
+docker info|grep -i Cgroupdriver
 ```
 ### 4、docker最终的服务文件
 ```
