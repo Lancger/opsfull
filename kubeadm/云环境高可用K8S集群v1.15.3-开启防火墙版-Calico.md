@@ -599,6 +599,7 @@ reboot
 
 初始化 master 节点时，如果因为中间某些步骤的配置出错，想要重新初始化 master 节点，请先执行 kubeadm reset 操作
 
+1、配置文件初始化master
 ```
 1、# 配置文件初始化
 # 替换 apiserver.demo 为 您想要的 dnsName
@@ -632,7 +633,7 @@ cp -i /etc/kubernetes/admin.conf /root/.kube/config
 
 ```
 
-### 1、创建kubeadm配置的yaml文件
+2、命令行初始化第一个master
 ```
 # 1、创建kubeadm配置的yaml文件
 
@@ -686,6 +687,34 @@ EOF
     imageRepository： registry.aliyuncs.com/google_containers (使用阿里云镜像仓库)
     podSubnet： 10.20.0.1/16 (#pod地址池)
     serviceSubnet： 10.96.0.1/16 (#service地址池)
+```
+
+3、查看初始化配置文件
+```
+# 查看kubeadm配置文件
+root># kubeadm config view
+apiServer:
+  extraArgs:
+    authorization-mode: Node,RBAC
+  timeoutForControlPlane: 4m0s
+apiVersion: kubeadm.k8s.io/v1beta2
+certificatesDir: /etc/kubernetes/pki
+clusterName: kubernetes
+controlPlaneEndpoint: master.k8s.io:6443
+controllerManager: {}
+dns:
+  type: CoreDNS
+etcd:
+  local:
+    dataDir: /var/lib/etcd
+imageRepository: k8s.gcr.io
+kind: ClusterConfiguration
+kubernetesVersion: v1.15.3
+networking:
+  dnsDomain: cluster.local
+  podSubnet: 10.244.0.0/16
+  serviceSubnet: 10.96.0.0/12
+scheduler: {}
 ```
 
 ### 2、初始化第一个master节点
