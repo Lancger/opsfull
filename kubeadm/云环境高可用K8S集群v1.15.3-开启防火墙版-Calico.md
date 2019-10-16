@@ -592,18 +592,41 @@ reboot
 
 # 七、初始化第一个kubernetes master节点
 
+以 root 身份在 k8s-master-01 机器上执行
+
+初始化 master 节点时，如果因为中间某些步骤的配置出错，想要重新初始化 master 节点，请先执行 kubeadm reset 操作
+
 ```
-# 因为需要绑定虚拟IP，所以需要首先先查看虚拟IP启动这几台master机子哪台上
+1、# 配置文件初始化
+# 替换 apiserver.demo 为 您想要的 dnsName
+export APISERVER_NAME=master.k8s-vip.io
 
-[root@k8s-master-01 ~]# ip address show eth0
-2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
-    link/ether 00:50:56:be:86:af brd ff:ff:ff:ff:ff:ff
-    inet 192.168.56.56/22 brd 10.19.3.255 scope global eth0
-       valid_lft forever preferred_lft forever
-    inet 192.168.56.200/32 scope global eth0
-       valid_lft forever preferred_lft forever
+# Kubernetes 容器组所在的网段，该网段安装完成后，由 kubernetes 创建，事先并不存在于您的物理网络中
+export POD_SUBNET=10.244.0.0/16
+export SVC_SUBNET=10.96.0.0/12
 
-可以看到虚拟IP 192.168.56.200  和 服务器IP 192.168.56.11在一台机子上，所以初始化kubernetes第一个master要在master01机子上进行安装
+rm -f ./kubeadm-config.yaml
+cat <<EOF > ./kubeadm-config.yaml
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: ClusterConfiguration
+kubernetesVersion: v1.15.3
+imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
+controlPlaneEndpoint: "${APISERVER_NAME}:6443"
+networking:
+  serviceSubnet: "${SVC_SUBNET}"
+  podSubnet: "${POD_SUBNET}"
+  dnsDomain: "cluster.local"
+EOF
+
+# kubeadm init
+# 根据您服务器网速的情况，您需要等候 3 - 10 分钟
+kubeadm init --config=kubeadm-config.yaml --upload-certs
+
+# 配置 kubectl
+rm -rf /root/.kube/
+mkdir /root/.kube/
+cp -i /etc/kubernetes/admin.conf /root/.kube/config
+
 ```
 
 ### 1、创建kubeadm配置的yaml文件
