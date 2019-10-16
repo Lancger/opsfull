@@ -466,7 +466,7 @@ EOF
 systemctl daemon-reload
 systemctl restart docker
 
-docker info|grep -i Cgroupdriver
+docker info|grep -i Cgroup
 ```
 ### 4、docker最终的服务文件
 ```
