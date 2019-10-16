@@ -410,7 +410,7 @@ yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce
 yum list docker-ce --showduplicates | sort -r
 
 # 安装指定docker版本
-yum install -y docker-ce-18.09.7 docker-ce-cli-18.09.7 containerd.io
+yum install -y docker-ce-18.09.9 docker-ce-cli-18.09.9 containerd.io
 
 # 启动docker并设置docker开机启动
 systemctl enable docker
