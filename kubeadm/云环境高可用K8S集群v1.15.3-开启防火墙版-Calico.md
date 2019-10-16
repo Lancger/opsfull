@@ -542,6 +542,9 @@ gpgcheck=0
 repo_gpgcheck=0
 gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
 EOF
+
+# 安装kubelet、kubeadm、kubectl
+yum install -y kubelet-1.15.3 kubeadm-1.15.3 kubectl-1.15.3
 ```
 
 ### 2、安装kubelet
