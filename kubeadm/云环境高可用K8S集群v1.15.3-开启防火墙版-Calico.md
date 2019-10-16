@@ -359,7 +359,7 @@ echo "* hard memlock unlimited"  >> /etc/security/limits.conf
 ```bash
 yum install -y epel-release
 
-yum install -y yum-utils device-mapper-persistent-data lvm2 net-tools conntrack-tools wget vim  ntpdate libseccomp libtool-ltdl
+yum install -y yum-utils nfs-utils device-mapper-persistent-data lvm2 net-tools conntrack-tools wget vim  ntpdate libseccomp libtool-ltdl
 ```
 
 # 三、安装Keepalived
