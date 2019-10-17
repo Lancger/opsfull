@@ -546,6 +546,7 @@ EOF
 # 安装kubelet、kubeadm、kubectl
 yum install -y kubelet-1.16.1 kubeadm-1.16.1 kubectl-1.16.1
 
+systemctl daemon-reload
 systemctl restart kubelet.service
 systemctl enable kubelet.service
 ```
@@ -565,8 +566,9 @@ yum list kubelet --showduplicates | sort -r
 yum install -y kubelet-1.16.1
 
 # 启动kubelet并设置开机启动
+systemctl daemon-reload
 systemctl enable kubelet 
-systemctl start kubelet
+systemctl restart kubelet
 
 # 检查状态
 检查状态,发现是failed状态，正常，kubelet会10秒重启一次，需等下面完成初始化master节点后即可正常
