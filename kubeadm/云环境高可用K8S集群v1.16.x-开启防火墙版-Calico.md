@@ -2,11 +2,11 @@
 ```bash
 CentOS： 7.6
 Docker： docker-ce-18.09.9
-Kubernetes： 1.16.x
+Kubernetes： 1.16.1
 - calico 3.8.2
-- Kubeadm： 1.16.x
+- Kubeadm： 1.16.1
 - nginx-ingress 1.5.3
-- Kubelet： 1.16.x
+- Kubelet： 1.16.1
 ```  
 # 部署介绍：
 ```
