@@ -815,11 +815,11 @@ etcdctl --endpoints=https://192.168.56.11:2379 --ca-file=/etc/kubernetes/pki/etc
 ### 1、安装 calico 网络插件
 ```
 # 安装 calico 网络插件
-# 参考文档 https://docs.projectcalico.org/v3.8/getting-started/kubernetes/
+# 参考文档 https://docs.projectcalico.org/v3.9/getting-started/kubernetes/
 
-export POD_SUBNET=10.20.0.0/16
+export POD_SUBNET=10.244.0.0/16
 rm -f calico.yaml
-wget https://docs.projectcalico.org/v3.8/manifests/calico.yaml
+wget https://docs.projectcalico.org/v3.9/manifests/calico.yaml
 sed -i "s#192\.168\.0\.0/16#${POD_SUBNET}#" calico.yaml
 kubectl apply -f calico.yaml
 ```
