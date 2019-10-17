@@ -2,11 +2,11 @@
 ```bash
 CentOS： 7.6
 Docker： docker-ce-18.09.9
-Kubernetes： 1.15.3
+Kubernetes： 1.16.x
 - calico 3.8.2
-- Kubeadm： 1.15.3
+- Kubeadm： 1.16.x
 - nginx-ingress 1.5.3
-- Kubelet： 1.15.3
+- Kubelet： 1.16.x
 ```  
 # 部署介绍：
 ```
@@ -544,7 +544,7 @@ gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors
 EOF
 
 # 安装kubelet、kubeadm、kubectl
-yum install -y kubelet-1.15.3 kubeadm-1.15.3 kubectl-1.15.3
+yum install -y kubelet-1.16.x kubeadm-1.16.x kubectl-1.16.x
 
 systemctl restart kubelet.service
 systemctl enable kubelet.service
@@ -562,7 +562,7 @@ systemctl enable kubelet.service
 yum list kubelet --showduplicates | sort -r 
 
 # 安装kubelet
-yum install -y kubelet-1.15.3-0
+yum install -y kubelet-1.16.x-0
 
 # 启动kubelet并设置开机启动
 systemctl enable kubelet 
@@ -584,7 +584,7 @@ journalctl -u kubelet --no-pager
 yum list kubeadm --showduplicates | sort -r 
 
 # 2、安装kubeadm
-yum install -y kubeadm-1.15.3-0
+yum install -y kubeadm-1.16.x-0
 
 # 安装 kubeadm 时候会默认安装 kubectl ，所以不需要单独安装kubectl
 
@@ -613,7 +613,7 @@ rm -f ./kubeadm-config.yaml
 cat <<EOF > ./kubeadm-config.yaml
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
-kubernetesVersion: v1.15.3
+kubernetesVersion: v1.16.x
 imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
 controlPlaneEndpoint: "${APISERVER_NAME}:6443"
 networking:
@@ -670,7 +670,7 @@ etcd:
     dataDir: /var/lib/etcd
 imageRepository: registry.aliyuncs.com/google_containers
 kind: ClusterConfiguration
-kubernetesVersion: v1.15.3
+kubernetesVersion: v1.16.x
 networking: 
   dnsDomain: cluster.local  
   podSubnet: "${POD_SUBNET}"
@@ -709,7 +709,7 @@ etcd:
     dataDir: /var/lib/etcd
 imageRepository: k8s.gcr.io
 kind: ClusterConfiguration
-kubernetesVersion: v1.15.3
+kubernetesVersion: v1.16.x
 networking:
   dnsDomain: cluster.local
   podSubnet: 10.244.0.0/16
