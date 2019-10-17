@@ -562,7 +562,7 @@ systemctl enable kubelet.service
 yum list kubelet --showduplicates | sort -r 
 
 # 安装kubelet
-yum install -y kubelet-1.16.1-0
+yum install -y kubelet-1.16.1
 
 # 启动kubelet并设置开机启动
 systemctl enable kubelet 
@@ -613,7 +613,7 @@ rm -f ./kubeadm-config.yaml
 cat <<EOF > ./kubeadm-config.yaml
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
-kubernetesVersion: v1.16.x
+kubernetesVersion: v1.16.1
 imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
 controlPlaneEndpoint: "${APISERVER_NAME}:6443"
 networking:
@@ -670,7 +670,7 @@ etcd:
     dataDir: /var/lib/etcd
 imageRepository: registry.aliyuncs.com/google_containers
 kind: ClusterConfiguration
-kubernetesVersion: v1.16.x
+kubernetesVersion: v1.16.1
 networking: 
   dnsDomain: cluster.local  
   podSubnet: "${POD_SUBNET}"
@@ -709,7 +709,7 @@ etcd:
     dataDir: /var/lib/etcd
 imageRepository: k8s.gcr.io
 kind: ClusterConfiguration
-kubernetesVersion: v1.16.x
+kubernetesVersion: v1.16.1
 networking:
   dnsDomain: cluster.local
   podSubnet: 10.244.0.0/16
