@@ -1045,7 +1045,11 @@ rm -rf /var/lib/etcd/*
 
 # 十一、安装Kubernetes Dashboard 2.0
 ```
+#安装
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta4/aio/deploy/recommended.yaml
+
+#卸载
+kubectl delete -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta4/aio/deploy/recommended.yaml
 ```
 
 
