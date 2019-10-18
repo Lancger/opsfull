@@ -1043,6 +1043,12 @@ rm -rf /var/lib/cni/
 rm -rf /var/lib/etcd/*
 ```
 
+# 十一、安装Kubernetes Dashboard 2.0
+```
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta4/aio/deploy/recommended.yaml
+```
+
+
 参考资料：
 
 http://www.mydlq.club/article/4/
