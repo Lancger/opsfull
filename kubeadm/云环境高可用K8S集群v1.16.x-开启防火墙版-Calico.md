@@ -625,7 +625,7 @@ reboot
 
 1、配置文件初始化master
 ```
-1、# 配置文件初始化
+1、# 精简配置文件初始化
 # 替换 apiserver.demo 为 您想要的 dnsName
 export APISERVER_NAME=master.k8s.io
 
@@ -656,60 +656,86 @@ mkdir /root/.kube/
 yes | cp -i /etc/kubernetes/admin.conf /root/.kube/config
 ```
 
-2、命令行初始化第一个master
+2、详细配置文件初始化
 ```
 # 1、创建kubeadm配置的yaml文件
 
 rm -f ./kubeadm-config.yaml
 
+export VER=v1.6.1
+export MASTER_NODE1=10.10.0.24
 export APISERVER_NAME=master.k8s.io
-export POD_SUBNET=10.20.0.0/16
-export SVC_SUBNET=10.96.0.0/16
+export POD_SUBNET=10.244.0.0/16
+export SVC_SUBNET=10.96.0.0/12
 
-cat > kubeadm-config.yaml << EOF
+cat <<EOF > ./kubeadm-config.yaml
+apiVersion: kubeadm.k8s.io/v1beta2
+bootstrapTokens:
+- groups:
+  - system:bootstrappers:kubeadm:default-node-token
+  token: abcdef.0123456789abcdef
+  ttl: 24h0m0s
+  usages:
+  - signing
+  - authentication
+kind: InitConfiguration
+localAPIEndpoint:
+  advertiseAddress: ${MASTER_NODE1}  #这里填写第一个初始化的master的ip
+  bindPort: 6443
+nodeRegistration:
+  criSocket: /var/run/dockershim.sock
+  name: k8s-master-01 #注意这里需要调整为自己的节点
+  taints:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/master
+---
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: ClusterConfiguration
+clusterName: kubernetes
+kubernetesVersion: ${VER}
+certificatesDir: /etc/kubernetes/pki
+controllerManager: {}
+controlPlaneEndpoint: "${APISERVER_NAME}:16443" # 这里写vip的地址或域名加上端口
+imageRepository: k8s.gcr.io
+#imageRepository: registry.aliyuncs.com/google_containers # 使用阿里云镜像
 apiServer:
+  timeoutForControlPlane: 4m0s
   certSANs:
     - k8s-master-01
     - k8s-master-02
     - k8s-master-03
     - master.k8s.io
-    - 192.168.56.11
-    - 192.168.56.12
-    - 192.168.56.13
-    - 192.168.56.200
+    - 10.10.1.100
+    - 10.10.0.24
+    - 10.10.0.32
+    - 10.10.0.23
     - 127.0.0.1
-  extraArgs:
-    authorization-mode: Node,RBAC
-  timeoutForControlPlane: 4m0s
-apiVersion: kubeadm.k8s.io/v1beta1
-certificatesDir: /etc/kubernetes/pki
-clusterName: kubernetes
-controlPlaneEndpoint: "${APISERVER_NAME}:16443"
-controllerManager: {}
-dns: 
+dns:
   type: CoreDNS
 etcd:
-  local:    
+  local:
     dataDir: /var/lib/etcd
-imageRepository: registry.aliyuncs.com/google_containers
-kind: ClusterConfiguration
-kubernetesVersion: v1.16.1
-networking: 
-  dnsDomain: cluster.local  
-  podSubnet: "${POD_SUBNET}"
-  serviceSubnet: "${SVC_SUBNET}"
+networking:
+  dnsDomain: cluster.local
+  podSubnet: ${POD_SUBNET}
+  serviceSubnet: ${SVC_SUBNET}
 scheduler: {}
+---
+apiVersion: kubeproxy.config.k8s.io/v1alpha1
+kind: KubeProxyConfiguration
+mode: ipvs # kube-proxy 模式
 EOF
+
+kubeadm init --config=kubeadm-config.yaml --upload-certs
 
 以下两个地方设置： 
 - certSANs： 虚拟ip地址（为了安全起见，把所有集群地址都加上） 
-- controlPlaneEndpoint： 虚拟IP:监控端口号
+- controlPlaneEndpoint： VIP:端口号
 
 配置说明：
-
     imageRepository： registry.aliyuncs.com/google_containers (使用阿里云镜像仓库)
-    podSubnet： 10.20.0.1/16 (#pod地址池)
-    serviceSubnet： 10.96.0.1/16 (#service地址池)
+    podSubnet： 10.244.0.0/16 (#pod地址池)
+    serviceSubnet： 10.96.0.0/12 (#service地址池)
 ```
 
 3、查看初始化配置文件
