@@ -546,7 +546,7 @@ gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors
 EOF
 
 # 安装kubelet、kubeadm、kubectl
-yum install -y kubelet-1.16.1 kubeadm-1.16.1 kubectl-1.16.1
+yum install -y kubelet-1.16.1 kubeadm-1.16.1 kubectl-1.16.1 --disableexcludes=kubernetes
 
 systemctl daemon-reload
 systemctl restart kubelet.service
@@ -565,7 +565,11 @@ gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cl
 EOF
 
 # 安装kubelet、kubeadm、kubectl
-yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
+yum install -y kubelet-1.16.1 kubeadm-1.16.1 kubectl-1.16.1 --disableexcludes=kubernetes
+
+systemctl daemon-reload
+systemctl restart kubelet.service
+systemctl enable kubelet.service
 ```
 
 
