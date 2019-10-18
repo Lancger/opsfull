@@ -2,11 +2,11 @@
 ```bash
 CentOS： 7.6
 Docker： docker-ce-18.09.9
-Kubernetes： 1.15.3
+Kubernetes： 1.16.1
 - calico 3.8.2
-- Kubeadm： 1.15.3
+- Kubeadm： 1.16.1
 - nginx-ingress 1.5.3
-- Kubelet： 1.15.3
+- Kubelet： 1.16.1
 ```  
 # 部署介绍：
 ```
@@ -544,8 +544,9 @@ gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors
 EOF
 
 # 安装kubelet、kubeadm、kubectl
-yum install -y kubelet-1.15.3 kubeadm-1.15.3 kubectl-1.15.3
+yum install -y kubelet-1.16.1 kubeadm-1.16.1 kubectl-1.16.1
 
+systemctl daemon-reload
 systemctl restart kubelet.service
 systemctl enable kubelet.service
 ```
@@ -562,11 +563,12 @@ systemctl enable kubelet.service
 yum list kubelet --showduplicates | sort -r 
 
 # 安装kubelet
-yum install -y kubelet-1.15.3-0
+yum install -y kubelet-1.16.1
 
 # 启动kubelet并设置开机启动
+systemctl daemon-reload
 systemctl enable kubelet 
-systemctl start kubelet
+systemctl restart kubelet
 
 # 检查状态
 检查状态,发现是failed状态，正常，kubelet会10秒重启一次，需等下面完成初始化master节点后即可正常
@@ -584,7 +586,7 @@ journalctl -u kubelet --no-pager
 yum list kubeadm --showduplicates | sort -r 
 
 # 2、安装kubeadm
-yum install -y kubeadm-1.15.3-0
+yum install -y kubeadm-1.16.1
 
 # 安装 kubeadm 时候会默认安装 kubectl ，所以不需要单独安装kubectl
 
@@ -613,7 +615,7 @@ rm -f ./kubeadm-config.yaml
 cat <<EOF > ./kubeadm-config.yaml
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
-kubernetesVersion: v1.15.3
+kubernetesVersion: v1.16.1
 imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
 controlPlaneEndpoint: "${APISERVER_NAME}:6443"
 networking:
@@ -670,7 +672,7 @@ etcd:
     dataDir: /var/lib/etcd
 imageRepository: registry.aliyuncs.com/google_containers
 kind: ClusterConfiguration
-kubernetesVersion: v1.15.3
+kubernetesVersion: v1.16.1
 networking: 
   dnsDomain: cluster.local  
   podSubnet: "${POD_SUBNET}"
@@ -709,7 +711,7 @@ etcd:
     dataDir: /var/lib/etcd
 imageRepository: k8s.gcr.io
 kind: ClusterConfiguration
-kubernetesVersion: v1.15.3
+kubernetesVersion: v1.16.1
 networking:
   dnsDomain: cluster.local
   podSubnet: 10.244.0.0/16
@@ -813,11 +815,11 @@ etcdctl --endpoints=https://192.168.56.11:2379 --ca-file=/etc/kubernetes/pki/etc
 ### 1、安装 calico 网络插件
 ```
 # 安装 calico 网络插件
-# 参考文档 https://docs.projectcalico.org/v3.8/getting-started/kubernetes/
+# 参考文档 https://docs.projectcalico.org/v3.9/getting-started/kubernetes/
 
-export POD_SUBNET=10.20.0.0/16
+export POD_SUBNET=10.244.0.0/16
 rm -f calico.yaml
-wget https://docs.projectcalico.org/v3.8/manifests/calico.yaml
+wget https://docs.projectcalico.org/v3.9/manifests/calico.yaml
 sed -i "s#192\.168\.0\.0/16#${POD_SUBNET}#" calico.yaml
 kubectl apply -f calico.yaml
 ```
