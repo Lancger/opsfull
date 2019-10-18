@@ -810,15 +810,25 @@ kubeadm join master.k8s.io:16443 --token wf0eoe.liqcp0nhtlov4ioi \
 ### 执行结果中
 
 用于初始化第二、三个 master 节点
+
 ```
-kubeadm join master.k8s.io:16443 --token wf0eoe.liqcp0nhtlov4ioi \
-    --discovery-token-ca-cert-hash sha256:e43bbb08bb5decae1ce0001f2988ff79095e6be5a3dea77a7c6af180562c7e56 \
-    --control-plane --certificate-key 6054323448a1aeb661b78763262db5c30e12026c54341400d48401a853194ec2
+#初始化第二个master节点
+export MASTER_NODE2=10.10.0.32
+kubeadm join master.k8s.io:16443 --apiserver-advertise-address ${MASTER_NODE2} --token abcdef.0123456789abcdef \
+    --discovery-token-ca-cert-hash sha256:ab6da874166785bfe75acc4d6fd622bf821a7451837332e3a21a6106e346c8d5 \
+    --control-plane --certificate-key 13284467f0141778898ffa33d340c0598cb757c6aa016f00da2165cd3eab4523
+
+#初始化第三个master节点    
+export MASTER_NODE3=10.10.0.23
+kubeadm join master.k8s.io:16443 --apiserver-advertise-address ${MASTER_NODE3} --token abcdef.0123456789abcdef \
+    --discovery-token-ca-cert-hash sha256:ab6da874166785bfe75acc4d6fd622bf821a7451837332e3a21a6106e346c8d5 \
+    --control-plane --certificate-key 13284467f0141778898ffa33d340c0598cb757c6aa016f00da2165cd3eab4523
 ```
+
 用于初始化 worker 节点
 ```
-kubeadm join master.k8s.io:16443 --token wf0eoe.liqcp0nhtlov4ioi \
-    --discovery-token-ca-cert-hash sha256:e43bbb08bb5decae1ce0001f2988ff79095e6be5a3dea77a7c6af180562c7e56
+kubeadm join master.k8s.io:16443 --token abcdef.0123456789abcdef \
+    --discovery-token-ca-cert-hash sha256:ab6da874166785bfe75acc4d6fd622bf821a7451837332e3a21a6106e346c8d5
 ```
 
 ### 3、配置kubectl环境变量
