@@ -382,7 +382,7 @@ kubernetes-dashboard-fcfb4cbc-dqbq9               1/1     Running   0          4
 kubectl describe pod/coredns-5c98db65d4-mk254 -n kube-system
 
 #创建Deployment
-kubectl run --image=nginx nginx-web-1 --image-pull-policy='IfNotPresent' --replicas=5
+kubectl run --image=nginx nginx-web-1 --image-pull-policy='IfNotPresent' --replicas=3
 
 #以不同方式暴露出去
 kubectl expose deployment nginx-web-1 --port=80 --target-port=80
@@ -393,6 +393,9 @@ root># kubectl exec -it nginx-web-1-5cc49f46bc-kn46r -- \
 
 root># kubectl get svc -A
 default       nginx-web-1   NodePort    10.10.43.53   <none>        80:30163/TCP             101s
+
+root># kubectl get endpoints
+nginx-web-1   10.244.154.193:80,10.244.44.193:80,10.244.89.129:80   5m27s
 
 root># curl 10.10.43.53   
 hello
