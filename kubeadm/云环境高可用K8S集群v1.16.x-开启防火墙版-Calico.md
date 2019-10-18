@@ -638,7 +638,7 @@ cat <<EOF > ./kubeadm-config.yaml
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
 kubernetesVersion: v1.16.1
-imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
+#imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
 controlPlaneEndpoint: "${APISERVER_NAME}:6443"
 networking:
   serviceSubnet: "${SVC_SUBNET}"
@@ -653,8 +653,7 @@ kubeadm init --config=kubeadm-config.yaml --upload-certs
 # 配置 kubectl
 rm -rf /root/.kube/
 mkdir /root/.kube/
-cp -i /etc/kubernetes/admin.conf /root/.kube/config
-
+yes | cp -i /etc/kubernetes/admin.conf /root/.kube/config
 ```
 
 2、命令行初始化第一个master
