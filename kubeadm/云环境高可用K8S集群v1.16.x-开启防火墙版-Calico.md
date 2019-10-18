@@ -531,7 +531,9 @@ systemctl enable docker
 
 # 六、安装kubeadm、kubelet
 
-### 1、配置可用的国内yum源用于安装：
+### 1、配置yum源用于安装：
+
+- 1、配置国内yum源
 ```
 cat <<EOF > /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
@@ -550,6 +552,22 @@ systemctl daemon-reload
 systemctl restart kubelet.service
 systemctl enable kubelet.service
 ```
+- 2、kubeadm 官方镜像源
+```
+cat <<EOF > /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+EOF
+
+# 安装kubelet、kubeadm、kubectl
+yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
+```
+
 
 ### 2、安装kubelet
 
