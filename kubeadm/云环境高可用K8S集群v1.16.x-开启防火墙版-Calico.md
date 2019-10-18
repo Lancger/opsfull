@@ -623,13 +623,20 @@ reboot
 
 初始化 master 节点时，如果因为中间某些步骤的配置出错，想要重新初始化 master 节点，请先执行 kubeadm reset 操作
 
-1、配置文件初始化master
+```bash
+#查看初始化配置文件
+
+kubeadm config view
 ```
-1、# 精简配置文件初始化
+
+1、精简配置文件初始化
+
+```
 # 替换 apiserver.demo 为 您想要的 dnsName
 export APISERVER_NAME=master.k8s.io
 
 # Kubernetes 容器组所在的网段，该网段安装完成后，由 kubernetes 创建，事先并不存在于您的物理网络中
+export VER=v1.6.1
 export POD_SUBNET=10.244.0.0/16
 export SVC_SUBNET=10.96.0.0/12
 
@@ -637,7 +644,7 @@ rm -f ./kubeadm-config.yaml
 cat <<EOF > ./kubeadm-config.yaml
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
-kubernetesVersion: v1.16.1
+kubernetesVersion: ${VER}
 #imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
 controlPlaneEndpoint: "${APISERVER_NAME}:6443"
 networking:
@@ -657,6 +664,7 @@ yes | cp -i /etc/kubernetes/admin.conf /root/.kube/config
 ```
 
 2、详细配置文件初始化
+
 ```
 # 1、创建kubeadm配置的yaml文件
 
