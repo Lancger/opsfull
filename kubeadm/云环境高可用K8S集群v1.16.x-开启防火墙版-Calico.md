@@ -2,11 +2,11 @@
 ```bash
 CentOS： 7.6
 Docker： docker-ce-18.09.9
-Kubernetes： 1.16.1
+Kubernetes： 1.16.2
 - calico 3.8.2
-- Kubeadm： 1.16.1
+- Kubeadm： 1.16.2
 - nginx-ingress 1.5.3
-- Kubelet： 1.16.1
+- Kubelet： 1.16.2
 ```  
 # 部署介绍：
 ```
@@ -546,7 +546,7 @@ gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors
 EOF
 
 # 安装kubelet、kubeadm、kubectl
-yum install -y kubelet-1.16.1 kubeadm-1.16.1 kubectl-1.16.1 --disableexcludes=kubernetes
+yum install -y kubelet-1.16.2 kubeadm-1.16.2 kubectl-1.16.2 --disableexcludes=kubernetes
 
 systemctl daemon-reload
 systemctl restart kubelet.service
@@ -565,7 +565,7 @@ gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cl
 EOF
 
 # 安装kubelet、kubeadm、kubectl
-yum install -y kubelet-1.16.1 kubeadm-1.16.1 kubectl-1.16.1 --disableexcludes=kubernetes
+yum install -y kubelet-1.16.2 kubeadm-1.16.2 kubectl-1.16.2 --disableexcludes=kubernetes
 
 systemctl daemon-reload
 systemctl restart kubelet.service
@@ -585,7 +585,7 @@ systemctl enable kubelet.service
 yum list kubelet --showduplicates | sort -r 
 
 # 安装kubelet
-yum install -y kubelet-1.16.1
+yum install -y kubelet-1.16.2
 
 # 启动kubelet并设置开机启动
 systemctl daemon-reload
@@ -608,7 +608,7 @@ journalctl -u kubelet --no-pager
 yum list kubeadm --showduplicates | sort -r 
 
 # 2、安装kubeadm
-yum install -y kubeadm-1.16.1
+yum install -y kubeadm-1.16.2
 
 # 安装 kubeadm 时候会默认安装 kubectl ，所以不需要单独安装kubectl
 
@@ -636,7 +636,7 @@ kubeadm config view
 export APISERVER_NAME=master.k8s.io
 
 # Kubernetes 容器组所在的网段，该网段安装完成后，由 kubernetes 创建，事先并不存在于您的物理网络中
-export VER=v1.6.1
+export VER=v1.16.2
 export POD_SUBNET=10.244.0.0/16
 export SVC_SUBNET=10.96.0.0/12
 
@@ -670,7 +670,7 @@ yes | cp -i /etc/kubernetes/admin.conf /root/.kube/config
 
 rm -f ./kubeadm-config.yaml
 
-export VER=v1.6.1
+export VER=v1.16.2
 export MASTER_NODE1=10.10.0.24
 export APISERVER_NAME=master.k8s.io
 export POD_SUBNET=10.244.0.0/16
@@ -766,7 +766,7 @@ etcd:
     dataDir: /var/lib/etcd
 imageRepository: k8s.gcr.io
 kind: ClusterConfiguration
-kubernetesVersion: v1.16.1
+kubernetesVersion: v1.16.2
 networking:
   dnsDomain: cluster.local
   podSubnet: 10.244.0.0/16
