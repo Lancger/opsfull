@@ -381,7 +381,7 @@ kubernetes-dashboard-fcfb4cbc-dqbq9               1/1     Running   0          4
 
 kubectl describe pod/coredns-5c98db65d4-mk254 -n kube-system
 
-#创建services
+#创建Deployment
 kubectl run --image=nginx nginx-web-1 --image-pull-policy='IfNotPresent'
 
 #以不同方式暴露出去
