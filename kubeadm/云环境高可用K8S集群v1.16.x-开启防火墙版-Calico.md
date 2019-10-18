@@ -619,9 +619,9 @@ reboot
 
 # 七、初始化第一个kubernetes master节点
 
-以 root 身份在 k8s-master-01 机器上执行
+以 `root` 身份在 `k8s-master-01` 机器上执行
 
-初始化 master 节点时，如果因为中间某些步骤的配置出错，想要重新初始化 master 节点，请先执行 kubeadm reset 操作
+初始化 `master` 节点时，如果因为中间某些步骤的配置出错，想要重新初始化 `master` 节点，请先执行 `kubeadm reset` 操作
 
 ```bash
 #查看初始化配置文件
