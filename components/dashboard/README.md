@@ -307,9 +307,9 @@ metadata:
   name: k8s-dashboard
   namespace: kube-system
   annotations:
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/secure-backends: "true"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
 
 spec:
   tls:
