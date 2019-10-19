@@ -1,0 +1,244 @@
+# 一、Deamonset方式部署traefik-controller-ingress
+
+https://github.com/containous/traefik/blob/v1.7/examples/k8s/traefik-ds.yaml
+
+这里使用的DaemonSet，只是用traefik-ds.yaml ，traefik-rbac.yaml ， ui.yaml
+
+```bash
+kubectl delete -f traefik-ds.yaml
+
+rm -f ./traefik-ds.yaml
+
+cat >traefik-ds.yaml<<\EOF
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: traefik-ingress-controller
+  namespace: kube-system
+---
+kind: DaemonSet
+apiVersion: extensions/v1beta1
+metadata:
+  name: traefik-ingress-controller
+  namespace: kube-system
+  labels:
+    k8s-app: traefik-ingress-lb
+spec:
+  template:
+    metadata:
+      labels:
+        k8s-app: traefik-ingress-lb
+        name: traefik-ingress-lb
+    spec:
+      serviceAccountName: traefik-ingress-controller
+      terminationGracePeriodSeconds: 60
+      #=======添加nodeSelector信息：只在master节点创建=======
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        operator: "Equal"
+        value: ""
+        effect: NoSchedule
+      nodeSelector:
+        node-role.kubernetes.io/master: ""
+      #===================================================
+      containers:
+      - image: traefik:v1.7
+        name: traefik-ingress-lb
+        ports:
+        - name: http
+          containerPort: 80
+          hostPort: 80
+        - name: admin
+          containerPort: 8080
+          hostPort: 8080
+        securityContext:
+          capabilities:
+            drop:
+            - ALL
+            add:
+            - NET_BIND_SERVICE
+        args:
+        - --api
+        - --kubernetes
+        - --logLevel=INFO
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: traefik-ingress-service
+  namespace: kube-system
+spec:
+  selector:
+    k8s-app: traefik-ingress-lb
+  ports:
+    - protocol: TCP
+      port: 80
+      name: web
+    - protocol: TCP
+      port: 8080
+      name: admin
+EOF
+
+kubectl apply -f traefik-ds.yaml
+```
+
+# 二、traefik-rbac配置
+
+https://github.com/containous/traefik/blob/v1.7/examples/k8s/traefik-rbac.yaml
+
+```
+kubectl delete -f traefik-rbac.yaml
+
+rm -f ./traefik-rbac.yaml
+
+cat >traefik-rbac.yaml<<\EOF
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: traefik-ingress-controller
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - services
+      - endpoints
+      - secrets
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - extensions
+    resources:
+      - ingresses
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+    - extensions
+    resources:
+    - ingresses/status
+    verbs:
+    - update
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: traefik-ingress-controller
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: traefik-ingress-controller
+subjects:
+- kind: ServiceAccount
+  name: traefik-ingress-controller
+  namespace: kube-system
+---
+EOF
+
+kubectl apply -f traefik-rbac.yaml
+```
+
+# 三、traefik-ui使用traefik进行代理
+
+https://github.com/containous/traefik/blob/v1.7/examples/k8s/ui.yaml
+
+1、代理方式一
+
+```bash
+kubectl delete -f ui.yaml
+
+rm -f ./ui.yaml
+
+cat >ui.yaml<<\EOF
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik-web-ui
+  namespace: kube-system
+spec:
+  selector:
+    k8s-app: traefik-ingress-lb
+  ports:
+  - name: web
+    port: 80
+    targetPort: 8080
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: traefik-web-ui
+  namespace: kube-system
+spec:
+  rules:
+  - host: traefik-ui.devops.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: traefik-web-ui
+          servicePort: web
+---
+EOF
+
+kubectl apply -f ui.yaml
+```
+
+2、代理方式二
+
+```
+kubectl delete -f traefik-ui.yaml
+
+rm -f ./traefik-ui.yaml
+
+cat >traefik-ui.yaml<<\EOF
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: traefik-ingress-service
+  namespace: kube-system
+spec:
+  selector:
+    k8s-app: traefik-ingress-lb
+  ports:
+    - protocol: TCP
+      # 该端口为 traefik ingress-controller的服务端口
+      port: 80
+      name: web
+    - protocol: TCP
+      # 该端口为 traefik 的管理WEB界面
+      port: 8080
+      name: admin
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: traefik-web-ui
+  namespace: kube-system
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: traefik-ui.devops.com
+    http:
+      paths:
+      - backend:
+          serviceName: traefik-ingress-service
+          #servicePort: 8080
+          servicePort: admin  #跟上面service的name对应
+---
+EOF
+
+kubectl apply -f traefik-ui.yaml
+```
+
+访问测试 `http://traefik-ui.devops.com`
+
+参考资料：
+
+https://blog.csdn.net/oyym_mv/article/details/86986510  Kubernetes实录(11) kubernetes使用traefik作为反向代理（Deamonset模式）
