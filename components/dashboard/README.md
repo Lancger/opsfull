@@ -209,5 +209,40 @@ EOF
 
 kubectl apply -f kubernetes-dashboard.yaml
 ```
+## 2、然后创建一个具有全局所有权限的用户来登录Dashboard：(admin.yaml)
+```
+cat > admin.yaml << \EOF
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: admin
+  annotations:
+    rbac.authorization.kubernetes.io/autoupdate: "true"
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- kind: ServiceAccount
+  name: admin
+  namespace: kube-system
 
-## 2、访问测试 `https://nodeip:32370`
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: admin
+  namespace: kube-system
+  labels:
+    kubernetes.io/cluster-service: "true"
+    addonmanager.kubernetes.io/mode: Reconcile
+EOF
+
+kubectl apply -f admin.yaml
+
+kubectl delete -f admin.yaml
+
+#获取token
+kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin | awk '{print $1}')
+```
+## 3、访问测试 `https://nodeip:32370`
