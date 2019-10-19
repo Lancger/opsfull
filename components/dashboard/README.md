@@ -270,7 +270,7 @@ kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | gre
 
 mkdir -p /etc/certs/
 cd /etc/certs/
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./tls.key -out ./tls.crt -subj "/CN=192.168.56.11"
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./tls.key -out ./tls.crt -subj "/CN=dashboard.k8s-devops.com"
 
 #将会产生两个文件tls.key和tls.crt，你可以改成自己的文件名或放在特定的目录下（如果你是为公共服务器创建的，请保证这个不会被别人访问到）。后面的192.168.56.11是我的服务器IP地址，你可以改成自己的。
 ```
