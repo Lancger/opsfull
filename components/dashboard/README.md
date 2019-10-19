@@ -289,7 +289,7 @@ kubectl -n kube-system create secret tls k8s-dashboard-secret --key /etc/certs/t
 3、配置Ingress 路由
 
 ```bash
-#将下面的内容保存为文件dashboard-ingress.yaml。里面的 /dashboard 设定为访问Kubernetes dashboard服务，/web 只是为了测试和占位，如果没有安装nginx，将会返回找不到服务的消息。
+#将下面的内容保存为文件dashboard-ingress.yaml。里面的 / 设定为访问Kubernetes dashboard服务，/web 只是为了测试和占位，如果没有安装nginx，将会返回找不到服务的消息。
 
 cat >dashboard-ingress.yaml<<\EOF
 apiVersion: extensions/v1beta1
@@ -306,9 +306,10 @@ spec:
   tls:
    - secretName: k8s-dashboard-secret
   rules:
-   - http:
+   - host: dashboard.k8s-devops.com
+     http:
       paths:
-      - path: /dashboard
+      - path: /
         backend:
           serviceName: kubernetes-dashboard
           servicePort: 443
