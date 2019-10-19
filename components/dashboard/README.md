@@ -279,7 +279,7 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./tls.key -out ./tls
 ```bash
 #下一步，将这两个文件的信息创建为一个Kubernetes的secret访问凭证，我将名称指定为 k8s-dashboard-secret ，这在后面的Ingress配置时将会用到。如果你修改了这个名字，注意后面的Ingress配置yaml文件也需要同步修改。
 
-kubectl -n kube-system create secret tls k8s-dashboard-secret --key ./tls.key --cert ./tls.crt
+kubectl -n kube-system create secret tls k8s-dashboard-secret --key /etc/certs/tls.key --cert /etc/certs//tls.crt
 
 #注意：
     #上面命令的参数 -n 指定凭证安装的命名空间。
