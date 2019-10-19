@@ -237,8 +237,10 @@ EOF
 kubectl apply -f traefik-ui.yaml
 ```
 
-访问测试 `http://traefik-ui.devops.com`
+# 四、访问测试 
+
+`http://traefik-ui.devops.com`
 
 参考资料：
 
-https://blog.csdn.net/oyym_mv/article/details/86986510  Kubernetes实录(11) kubernetes使用traefik作为反向代理（Deamonset模式）
+https://blog.csdn.net/oyym_mv/article/details/86986510  kubernetes使用traefik作为反向代理（Deamonset模式）
