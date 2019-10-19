@@ -282,8 +282,8 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./tls.key -out ./tls
 kubectl -n kube-system create secret tls k8s-dashboard-secret --key ./tls.key --cert ./tls.crt
 
 #注意：
-  上面命令的参数 -n 指定凭证安装的命名空间。
-  为了安全考虑，Ingress所有的资源（凭证、路由、服务）必须在同一个命名空间。
+    #上面命令的参数 -n 指定凭证安装的命名空间。
+    #为了安全考虑，Ingress所有的资源（凭证、路由、服务）必须在同一个命名空间。
 ```
 
 3、配置Ingress 路由
@@ -320,9 +320,10 @@ EOF
 
 kubectl apply -n kube-system -f dashboard-ingress.yaml
 
-注意
-    上面的annotations部分是必须的，以提供https和https service的支持。不过，不同的Ingress Controller可能的实现（或版本）有所不同，需要安装相应的实现（版本）进行设置。
-    参见，#issue:https://github.com/kubernetes/ingress-nginx/issues/2460
+#注意
+    #上面的annotations部分是必须的，以提供https和https service的支持。不过，不同的Ingress Controller可能的实现（或版本）有所不同，需要安装相应的实现（版本）进行设置。
+    
+    #参见，#issue:https://github.com/kubernetes/ingress-nginx/issues/2460
 ```
 
 
