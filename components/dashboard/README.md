@@ -258,8 +258,71 @@ kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | gre
 
 ## 2、使用Ingress方式访问
 
+1、创建和安装加密访问凭证
+
+通过https进行访问必需要使用证书和密钥，在Kubernetes中可以通过配置一个加密凭证（TLS secret）来提供。
+
+```bash
+1、创建 tls secret
+
+这里只是拿来自己使用，创建一个自己签名的证书。如果是公共服务，建议去数字证书颁发机构去申请一个正式的数字证书（需要一些服务费用）；或者使用Let's encrypt去申请一个免费的（后面有介绍）；如果使用Cloudflare可以自动生成证书和https转接服务，但是需要将域名迁移过去，高级功能是收费的。
+
+#https://github.com/kubernetes/contrib/blob/master/ingress/controllers/nginx/examples/tls/README.md
+
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./tls.key -out ./tls.crt -subj "/CN=192.168.199.230"
+
+将会产生两个文件tls.key和tls.crt，你可以改成自己的文件名或放在特定的目录下（如果你是为公共服务器创建的，请保证这个不会被别人访问到）。后面的192.168.199.230是我的服务器IP地址，你可以改成自己的。
+
+```
+2、安装 tls secret
+
+```
+下一步，将这两个文件的信息创建为一个Kubernetes的secret访问凭证，我将名称指定为 k8s-dashboard-secret ，这在后面的Ingress配置时将会用到。如果你修改了这个名字，注意后面的Ingress配置yaml文件也需要同步修改。
+
+kubectl -n kube-system create secret tls k8s-dashboard-secret --key ./tls.key --cert ./tls.crt
+
+注意：
+  上面命令的参数 -n 指定凭证安装的命名空间。
+  为了安全考虑，Ingress所有的资源（凭证、路由、服务）必须在同一个命名空间。
 ```
 
+3、配置Ingress 路由
+
+```bash
+#将下面的内容保存为文件dashboard-ingress.yaml。里面的 /dashboard 设定为访问Kubernetes dashboard服务，/web 只是为了测试和占位，如果没有安装nginx，将会返回找不到服务的消息。
+
+cat >dashboard-ingress.yaml<<\EOF
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: k8s-dashboard
+  namespace: kube-system
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/secure-backends: "true"
+
+spec:
+  tls:
+   - secretName: k8s-dashboard-secret
+  rules:
+   - http:
+      paths:
+      - path: /dashboard
+        backend:
+          serviceName: kubernetes-dashboard
+          servicePort: 443
+      - path: /web
+        backend:
+          serviceName: my-nginx
+          servicePort: 80
+EOF
+
+kubectl apply -n kube-system -f dashboard-ingress.yaml
+
+注意
+    上面的annotations部分是必须的，以提供https和https service的支持。不过，不同的Ingress Controller可能的实现（或版本）有所不同，需要安装相应的实现（版本）进行设置。
+    参见，#issue:https://github.com/kubernetes/ingress-nginx/issues/2460
 ```
 
 
