@@ -1,4 +1,7 @@
 # 一、安装dashboard v1.10.1
+
+## 1.使用NodePort方式暴露访问
+
 ```
 wget https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
 
@@ -207,4 +210,4 @@ EOF
 kubectl apply -f kubernetes-dashboard.yaml
 ```
 
-```
+访问测试 `https://nodeip:32370`
