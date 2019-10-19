@@ -2,7 +2,7 @@
 
 ## 1、使用NodePort方式暴露访问
 
-1、安装dashboard
+1、下载对应的yaml文件
 ```
 wget https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
 
@@ -21,8 +21,10 @@ vim kubernetes-dashboard.yaml
         args:
           - --auto-generate-certificates
 ......
+```
 
 2、# 修改Service为NodePort类型
+```
 ......
 kind: Service
 apiVersion: v1
