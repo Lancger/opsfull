@@ -258,7 +258,7 @@ kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | gre
 
 ## 2、使用Ingress方式访问
 
-```
+```bash
 #清理NodePort方式的dashboard
 kubectl delete -f kubernetes-dashboard.yaml
 
