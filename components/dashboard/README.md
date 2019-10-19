@@ -254,3 +254,15 @@ kubectl delete -f admin.yaml
 kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin | awk '{print $1}')
 ```
 5、访问测试 `https://nodeip:32370`
+
+
+## 2、使用Ingress方式访问
+
+```
+
+```
+
+
+参考资料：
+
+https://my.oschina.net/u/2306127/blog/1930169?from=timeline&isappinstalled=0  Kubernetes dashboard 通过 Ingress 提供HTTPS访问
