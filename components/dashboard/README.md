@@ -279,7 +279,7 @@ kubectl apply -n kube-system -f kubernetes-dashboard.yaml
 
 mkdir -p /etc/certs/
 cd /etc/certs/
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./tls.key -out ./tls.crt -subj "/CN=dashboard.k8s-devops.com"
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./tls.key -out ./tls.crt -subj "/CN=dashboard.devops.com"
 
 #将会产生两个文件tls.key和tls.crt，你可以改成自己的文件名或放在特定的目录下（如果你是为公共服务器创建的，请保证这个不会被别人访问到）。后面的192.168.56.11是我的服务器IP地址，你可以改成自己的。
 ```
@@ -288,7 +288,9 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./tls.key -out ./tls
 ```bash
 #下一步，将这两个文件的信息创建为一个Kubernetes的secret访问凭证，我将名称指定为 k8s-dashboard-secret ，这在后面的Ingress配置时将会用到。如果你修改了这个名字，注意后面的Ingress配置yaml文件也需要同步修改。
 
-kubectl -n kube-system create secret tls k8s-dashboard-secret --key /etc/certs/tls.key --cert /etc/certs//tls.crt
+kubectl -n kube-system delete secret k8s-dashboard-secret
+
+kubectl -n kube-system create secret tls k8s-dashboard-secret --key /etc/certs/tls.key --cert /etc/certs/tls.crt
 
 #注意：
     #上面命令的参数 -n 指定凭证安装的命名空间。
@@ -315,7 +317,7 @@ spec:
   tls:
    - secretName: k8s-dashboard-secret
   rules:
-   - host: dashboard.k8s-devops.com
+   - host: dashboard.devops.com
      http:
       paths:
       - path: /
