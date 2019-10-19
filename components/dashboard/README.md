@@ -258,6 +258,15 @@ kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | gre
 
 ## 2、使用Ingress方式访问
 
+```
+#清理NodePort方式的dashboard
+kubectl delete -f kubernetes-dashboard.yaml
+
+wget https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
+
+kubectl apply -n kube-system -f kubernetes-dashboard.yaml
+```
+
 1、创建和安装加密访问凭证
 
 通过https进行访问必需要使用证书和密钥，在Kubernetes中可以通过配置一个加密凭证（TLS secret）来提供。
