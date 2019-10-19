@@ -262,6 +262,8 @@ kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | gre
 #清理NodePort方式的dashboard
 kubectl delete -f kubernetes-dashboard.yaml
 
+rm -f kubernetes-dashboard.yaml
+
 wget https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
 
 kubectl apply -n kube-system -f kubernetes-dashboard.yaml
