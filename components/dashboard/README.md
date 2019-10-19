@@ -2,10 +2,12 @@
 
 ## 1、使用NodePort方式暴露访问
 
+1、安装dashboard
 ```
 wget https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
 
 vim kubernetes-dashboard.yaml
+
 1、# 修改镜像名称
 ......
     spec:
@@ -19,6 +21,7 @@ vim kubernetes-dashboard.yaml
         args:
           - --auto-generate-certificates
 ......
+
 2、# 修改Service为NodePort类型
 ......
 kind: Service
@@ -37,7 +40,9 @@ spec:
   selector:
     k8s-app: kubernetes-dashboard
 ```
-2、dashboard最终文件
+
+3、dashboard最终文件
+
 ```
 cat > kubernetes-dashboard.yaml << \EOF
 # Copyright 2017 The Kubernetes Authors.
@@ -209,7 +214,8 @@ EOF
 
 kubectl apply -f kubernetes-dashboard.yaml
 ```
-## 2、然后创建一个具有全局所有权限的用户来登录Dashboard：(admin.yaml)
+
+4、然后创建一个具有全局所有权限的用户来登录Dashboard：(admin.yaml)
 ```
 cat > admin.yaml << \EOF
 kind: ClusterRoleBinding
@@ -245,4 +251,4 @@ kubectl delete -f admin.yaml
 #获取token
 kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin | awk '{print $1}')
 ```
-## 3、访问测试 `https://nodeip:32370`
+5、访问测试 `https://nodeip:32370`
