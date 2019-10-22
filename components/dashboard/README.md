@@ -334,7 +334,6 @@ spec:
         backend:
           serviceName: kubernetes-dashboard
           servicePort: 443
-      - path: /web
 EOF
 
 kubectl apply -n kube-system -f dashboard-ingress.yaml
