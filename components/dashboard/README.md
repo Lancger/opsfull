@@ -325,7 +325,8 @@ metadata:
     kubernetes.io/ingress.class: traefik
 spec:
   tls:
-   - secretName: k8s-dashboard-secret
+   - secretName: traefik-cert   #注意这里需要跟traefik.toml文件设置的证书挂钩
+   #- secretName: k8s-dashboard-secret
   rules:
    - host: dashboard.devops.com
      http:
