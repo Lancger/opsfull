@@ -287,10 +287,6 @@ mkdir -p /etc/certs/ssl/default
 cd /etc/certs/ssl/default/
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls_default.key -out tls_default.crt -subj "/CN=dashboard.devops.com"
 
-#查看证书
-kubectl get secret k8s-dashboard-secret -n kube-system
-kubectl describe secret k8s-dashboard-secret -n kube-system
-
 #将会产生两个文件tls_default.key和tls_default.crt，你可以改成自己的文件名或放在特定的目录下（如果你是为公共服务器创建的，请保证这个不会被别人访问到）。后面的dashboard.devops.com是我的服务器IP地址，你可以改成自己的。
 ```
 2、安装 tls secret
@@ -303,6 +299,11 @@ cd /etc/certs/ssl/default/
 kubectl -n kube-system delete secret k8s-dashboard-secret
 
 kubectl -n kube-system create secret tls k8s-dashboard-secret --key=tls_default.key --cert=tls_default.crt
+
+#查看证书
+kubectl get secret k8s-dashboard-secret -n kube-system
+
+kubectl describe secret k8s-dashboard-secret -n kube-system
 
 #注意：
     #上面命令的参数 -n 指定凭证安装的命名空间。
