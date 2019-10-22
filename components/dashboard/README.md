@@ -279,11 +279,20 @@ kubectl apply -n kube-system -f kubernetes-dashboard.yaml
 #这里只是拿来自己使用，创建一个自己签名的证书。如果是公共服务，建议去数字证书颁发机构去申请一个正式的数字证书（需要一些服务费用）；或者使用Let's encrypt去申请一个免费的（后面有介绍）；如果使用Cloudflare可以自动生成证书和https转接服务，但是需要将域名迁移过去，高级功能是收费的。
 #https://github.com/kubernetes/contrib/blob/master/ingress/controllers/nginx/examples/tls/README.md
 
-mkdir -p /etc/certs/ssl/
-cd /etc/certs/ssl/
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./tls.key -out ./tls.crt -subj "/CN=dashboard.devops.com"
+kubectl delete secret k8s-dashboard-secret -n kube-system
 
-#将会产生两个文件tls.key和tls.crt，你可以改成自己的文件名或放在特定的目录下（如果你是为公共服务器创建的，请保证这个不会被别人访问到）。后面的192.168.56.11是我的服务器IP地址，你可以改成自己的。
+rm -rf /etc/certs/ssl/
+
+mkdir -p /etc/certs/ssl/default
+cd /etc/certs/ssl/default/
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls_default.key -out tls_default.crt -subj "/CN=dashboard.devops.com"
+kubectl -n kube-system create secret tls k8s-dashboard-secret --key=tls_default.key --cert=tls_default.crt
+
+#查看证书
+kubectl get secret k8s-dashboard-secret -n kube-system
+kubectl describe secret k8s-dashboard-secret -n kube-system
+
+#将会产生两个文件tls.key和tls.crt，你可以改成自己的文件名或放在特定的目录下（如果你是为公共服务器创建的，请保证这个不会被别人访问到）。后面的dashboard.devops.com是我的服务器IP地址，你可以改成自己的。
 ```
 2、安装 tls secret
 
