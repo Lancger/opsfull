@@ -292,7 +292,7 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./tls.key -out ./tls
 
 kubectl -n kube-system delete secret k8s-dashboard-secret
 
-kubectl -n kube-system create secret tls k8s-dashboard-secret --key /etc/certs/tls.key --cert /etc/certs/tls.crt
+kubectl -n kube-system create secret tls k8s-dashboard-secret --key /etc/certs/ssl/tls.key --cert /etc/certs/ssl/tls.crt
 
 #注意：
     #上面命令的参数 -n 指定凭证安装的命名空间。
