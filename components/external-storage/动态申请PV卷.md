@@ -195,6 +195,43 @@ kubectl apply -f test-claim.yaml
 #查看创建的PV和PVC
 kubectl get pvc -A
 kubectl get pv -A
+
+然后，我们进入到NFS的export目录，可以看到对应该volume name的目录已经创建出来了。
+其中volume的名字是namespace，PVC name以及uuid的组合：
+```
+
+# 三、创建测试Pod
+
+```
+cat > test-pod.yaml <<\EOF
+kind: Pod
+apiVersion: v1
+metadata:
+  name: test-pod
+spec:
+  containers:
+  - name: test-pod
+    image: busybox:latest
+    command:
+      - "/bin/sh"
+    args:
+      - "-c"
+      - "touch /mnt/SUCCESS && exit 0 || exit 1"
+    volumeMounts:
+      - name: nfs-pvc
+        mountPath: "/mnt"
+  restartPolicy: "Never"
+  volumes:
+    - name: nfs-pvc
+      persistentVolumeClaim:
+        claimName: test-claim
+EOF
+
+#创建pod
+kubectl apply -f test-pod.yaml
+
+#查看创建的pod
+kubectl get pod -o wide
 ```
 
 
