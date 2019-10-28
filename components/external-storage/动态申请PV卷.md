@@ -87,6 +87,8 @@ storage class的定义，需要注意的是：provisioner属性要等于驱动�
 此处可以不修改，或者修改provisioner的名字，需要与上面的deployment的PROVISIONER_NAME名字一致。
 
 ```
+kubectl delete -f class.yaml -n kube-system
+
 cat > class.yaml << -EOF
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
@@ -98,10 +100,10 @@ parameters:
 EOF
 
 #部署class.yaml
-kubectl apply -f class.yaml
+kubectl apply -f class.yaml -n kube-system
 
 #查看创建的storageclass
-kubectl get sc
+kubectl get sc -n kube-system
 ```
 
 4、配置授权
