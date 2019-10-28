@@ -192,7 +192,7 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: 1Mi
+      storage: 30Gi
 EOF
 
 #创建PVC
