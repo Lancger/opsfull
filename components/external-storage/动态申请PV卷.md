@@ -13,6 +13,13 @@ K8S的外部NFS驱动，可以按照其工作方式（是作为NFS server还是N
 本文将介绍使用nfs-client-provisioner这个应用，利用NFS Server给Kubernetes作为持久存储的后端，并且动态提供PV。前提条件是有已经安装好的NFS服务器，并且NFS服务器与Kubernetes的Slave节点都能网络连通。将nfs-client驱动做一个deployment部署到K8S集群中，然后对外提供存储服务。
 nfs-client-provisioner 是一个Kubernetes的简易NFS的外部provisioner，本身不提供NFS，需要现有的NFS服务器提供存储
 
+1、部署nfs-client-provisioner
+首先克隆仓库获取yaml文件
+```
+git clone https://github.com/kubernetes-incubator/external-storage.git
+cp -R external-storage/nfs-client/deploy/ /root/
+cd deploy
+```
 
 参考文档：
 
