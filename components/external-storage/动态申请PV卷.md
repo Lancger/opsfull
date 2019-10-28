@@ -25,6 +25,9 @@ cd deploy
 这里修改的参数包括NFS服务器所在的IP地址（192.168.92.56），以及NFS服务器共享的路径（/nfs/data），两处都需要修改为你实际的NFS服务器和共享目录。另外修改nfs-client-provisioner镜像从dockerhub拉取。
 
 ```
+export NFS_ADDRESS='10.19.1.156'
+export NFS_DIR='/nfs/data'
+
 cat > deployment.yaml <<\EOF
 apiVersion: v1
 kind: ServiceAccount
@@ -32,11 +35,14 @@ metadata:
   name: nfs-client-provisioner
 ---
 kind: Deployment
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 metadata:
   name: nfs-client-provisioner
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: nfs-client-provisioner
   strategy:
     type: Recreate
   template:
@@ -56,14 +62,14 @@ spec:
             - name: PROVISIONER_NAME
               value: nfs-client
             - name: NFS_SERVER
-              value: 10.19.1.156
+              value: ${NFS_ADDRESS}
             - name: NFS_PATH
-              value: /nfs/data
+              value: ${NFS_DIR}
       volumes:
         - name: nfs-client-root
           nfs:
-            server: 10.19.1.156
-            path: /nfs/data
+            server: ${NFS_ADDRESS}
+            path: ${NFS_DIR}
 EOF
 ```
 
