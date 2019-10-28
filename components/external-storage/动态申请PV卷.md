@@ -25,6 +25,8 @@ cd deploy
 这里修改的参数包括NFS服务器所在的IP地址（192.168.92.56），以及NFS服务器共享的路径（/nfs/data），两处都需要修改为你实际的NFS服务器和共享目录。另外修改nfs-client-provisioner镜像从dockerhub拉取。
 
 ```
+kubectl delete -f deployment.yaml -n kube-system
+
 export NFS_ADDRESS='10.19.1.156'
 export NFS_DIR='/nfs/data'
 
@@ -73,10 +75,10 @@ spec:
 EOF
 
 #部署deployment.yaml
-kubectl apply -f deployment.yaml
+kubectl apply -f deployment.yaml -n kube-system
 
 #查看创建的pod
-kubectl get pod -o wide -A
+kubectl get pod -o wide -n kube-system
 ```
 
 3、创建StorageClass
@@ -107,6 +109,8 @@ kubectl get sc
 如果集群启用了RBAC，则必须执行如下命令授权provisioner。
 
 ```
+kubectl delete -f rbac.yaml -n kube-system
+
 cat > rbac.yaml << -EOF
 kind: ServiceAccount
 apiVersion: v1
@@ -169,7 +173,7 @@ roleRef:
 EOF
 
 #创建 RBAC
-kubectl apply -f rbac.yaml
+kubectl apply -f rbac.yaml -n kube-system
 ```
 
 # 二、创建测试PVC
