@@ -89,7 +89,7 @@ storage class的定义，需要注意的是：provisioner属性要等于驱动�
 ```
 kubectl delete -f class.yaml -n kube-system
 
-cat > class.yaml << -EOF
+cat > class.yaml <<-EOF
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
