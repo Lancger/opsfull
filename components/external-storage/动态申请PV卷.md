@@ -113,7 +113,7 @@ kubectl get sc -n kube-system
 ```
 kubectl delete -f rbac.yaml -n kube-system
 
-cat > rbac.yaml << -EOF
+cat > rbac.yaml <<-EOF
 kind: ServiceAccount
 apiVersion: v1
 metadata:
