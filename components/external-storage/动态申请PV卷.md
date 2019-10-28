@@ -75,8 +75,33 @@ EOF
 #部署deployment.yaml
 kubectl apply -f deployment.yaml
 
+#查看创建的pod
+kubectl get pod -o wide -A
+```
+
+3、创建StorageClass
+
+storage class的定义，需要注意的是：provisioner属性要等于驱动所传入的环境变量PROVISIONER_NAME的值。否则，驱动不知道知道如何绑定storage class。
+此处可以不修改，或者修改provisioner的名字，需要与上面的deployment的PROVISIONER_NAME名字一致。
 
 ```
+cat > class.yaml <<\EOF
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: managed-nfs-storage
+provisioner: nfs-client  # or choose another name, must match deployment's env PROVISIONER_NAME'
+parameters:
+  archiveOnDelete: "false"
+EOF
+
+#部署class.yaml
+kubectl apply -f class.yaml
+
+#查看创建的storageclass
+kubectl get sc
+```
+
 
 参考文档：
 
