@@ -28,7 +28,7 @@ cd deploy
 export NFS_ADDRESS='10.19.1.156'
 export NFS_DIR='/nfs/data'
 
-cat > deployment.yaml <<\EOF
+cat > deployment.yaml <<-EOF
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -85,7 +85,7 @@ storage class的定义，需要注意的是：provisioner属性要等于驱动�
 此处可以不修改，或者修改provisioner的名字，需要与上面的deployment的PROVISIONER_NAME名字一致。
 
 ```
-cat > class.yaml << \EOF
+cat > class.yaml << -EOF
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
@@ -107,7 +107,7 @@ kubectl get sc
 如果集群启用了RBAC，则必须执行如下命令授权provisioner。
 
 ```
-cat > rbac.yaml << \EOF
+cat > rbac.yaml << -EOF
 kind: ServiceAccount
 apiVersion: v1
 metadata:
