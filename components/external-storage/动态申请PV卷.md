@@ -94,7 +94,7 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: managed-nfs-storage
-provisioner: nfs-client  # or choose another name, must match deployment's env PROVISIONER_NAME'
+provisioner: fuseim.pri/ifs  # or choose another name, must match deployment's env PROVISIONER_NAME'
 parameters:
   archiveOnDelete: "false"
 EOF
