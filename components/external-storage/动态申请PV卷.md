@@ -20,6 +20,52 @@ git clone https://github.com/kubernetes-incubator/external-storage.git
 cp -R external-storage/nfs-client/deploy/ /root/
 cd deploy
 ```
+2、修改deployment.yaml文件
+
+这里修改的参数包括NFS服务器所在的IP地址（192.168.92.56），以及NFS服务器共享的路径（/nfs/data），两处都需要修改为你实际的NFS服务器和共享目录。另外修改nfs-client-provisioner镜像从dockerhub拉取。
+
+```
+cat > deployment.yaml <<\EOF
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nfs-client-provisioner
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: nfs-client-provisioner
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: nfs-client-provisioner
+    spec:
+      serviceAccountName: nfs-client-provisioner
+      containers:
+        - name: nfs-client-provisioner
+          #image: quay.io/external_storage/nfs-client-provisioner:latest
+          image: quay-mirror.qiniu.com/external_storage/nfs-client-provisioner:latest
+          volumeMounts:
+            - name: nfs-client-root
+              mountPath: /persistentvolumes
+          env:
+            - name: PROVISIONER_NAME
+              value: nfs-client
+            - name: NFS_SERVER
+              value: 10.19.1.156
+            - name: NFS_PATH
+              value: /nfs/data
+      volumes:
+        - name: nfs-client-root
+          nfs:
+            server: 10.19.1.156
+            path: /nfs/data
+EOF
+```
 
 参考文档：
 
