@@ -55,8 +55,8 @@ spec:
       serviceAccountName: nfs-client-provisioner
       containers:
         - name: nfs-client-provisioner
-          #image: quay.io/external_storage/nfs-client-provisioner:latest
-          image: quay-mirror.qiniu.com/external_storage/nfs-client-provisioner:latest
+          image: quay.io/external_storage/nfs-client-provisioner:latest
+          #image: quay-mirror.qiniu.com/external_storage/nfs-client-provisioner:latest
           volumeMounts:
             - name: nfs-client-root
               mountPath: /persistentvolumes
