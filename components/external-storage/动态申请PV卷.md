@@ -196,11 +196,11 @@ spec:
 EOF
 
 #创建PVC
-kubectl apply -f test-claim.yaml
+kubectl apply -f test-claim.yaml -n kube-system
 
 #查看创建的PV和PVC
-kubectl get pvc -A
-kubectl get pv -A
+kubectl get pvc -n kube-system
+kubectl get pv -n kube-system
 
 然后，我们进入到NFS的export目录，可以看到对应该volume name的目录已经创建出来了。
 其中volume的名字是namespace，PVC name以及uuid的组合：
