@@ -172,6 +172,30 @@ EOF
 kubectl apply -f rbac.yaml
 ```
 
+# 二、创建测试PVC
+```
+cat > test-claim.yaml <<\EOF
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: test-claim
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "managed-nfs-storage"
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Mi
+EOF
+
+#创建PVC
+kubectl apply -f test-claim.yaml
+
+#查看创建的PV和PVC
+kubectl get pvc -A
+kubectl get pv -A
+```
 
 
 参考文档：
