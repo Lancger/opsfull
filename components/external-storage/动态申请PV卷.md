@@ -71,6 +71,11 @@ spec:
             server: ${NFS_ADDRESS}
             path: ${NFS_DIR}
 EOF
+
+#部署deployment.yaml
+kubectl apply -f deployment.yaml
+
+
 ```
 
 参考文档：
