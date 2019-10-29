@@ -803,3 +803,6 @@ https://www.jianshu.com/p/d0933d6ae162 kubeadm 1.15 安装
 
 https://yq.aliyun.com/articles/680080/  单独部署coredns
 
+https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/ha-topology/#stacked-etcd-topology  etcd-stacked-cluster
+
+https://www.kubernetes.org.cn/5021.html  etcd-stacked-cluster
