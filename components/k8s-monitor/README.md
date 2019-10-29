@@ -78,7 +78,9 @@ spec:
   resources:
     requests:
       storage: 200Gi
-      
+
+kubectl apply -f grafana-pvc.yaml
+
 #vim grafana/grafana-deployment.yaml
 ......
       volumes:
@@ -95,6 +97,7 @@ spec:
         name: grafana-dashboards
 ......
 
+kubectl apply -f grafana/grafana-deployment.yaml
 ```
 参考资料：
 
