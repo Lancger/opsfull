@@ -48,9 +48,9 @@ kubectl describe svc mysql-production -n mos-namespace
 
 # 三、测试连接数据库
 ```bash
-kubectl run --image=centos:7.2.1511 centos7-app --replicas=1 -n mos-namespace
+kubectl delete deployment centos7-app -n mos-namespace
 
-
+kubectl run --image=centos:7.2.1511 centos7-app -it --port=8080 --replicas=1 -n mos-namespace
 ```
 参考资料：
 
