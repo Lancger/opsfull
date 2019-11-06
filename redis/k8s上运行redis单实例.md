@@ -51,7 +51,7 @@ repl-diskless-sync no
 repl-diskless-sync-delay 5
 repl-disable-tcp-nodelay no
 slave-priority 100
-requirepass ibalife
+requirepass redispassword     # redis密码
 maxclients 30000
 appendonly no
 appendfilename "appendonly.aof"
@@ -126,6 +126,17 @@ kubectl apply -f mos_redis.yaml
 kubectl get pods -n mos-namespace
 
 # 注意：configMap 会挂在 /usr/local/etc/redis/redis.conf 上。与 mountPath 和 configMap 下的 path 一同指定
+```
+
+# 四、验证redis实例
+
+```bash
+kubectl exec -it mos-redis-ff5577db7-bnr6g /bin/bash -n mos-namespace
+
+# redis-cli -a redispassword
+# 127.0.0.1:6379> set a b
+# 127.0.0.1:6379> get a
+"b"
 ```
 参考文档：
 
