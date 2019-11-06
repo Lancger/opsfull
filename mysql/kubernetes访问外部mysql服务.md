@@ -77,3 +77,5 @@ mysql -hmysql-production -uroot -p'password'
 参考资料：
 
 https://blog.csdn.net/hxpjava1/article/details/80040407   使用kubernetes访问外部服务mysql/redis
+
+https://blog.csdn.net/liyingke112/article/details/76204038  
