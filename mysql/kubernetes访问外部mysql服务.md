@@ -18,6 +18,7 @@ subsets:
       - ip: 10.198.1.155
     ports:
       - port: 3306
+        protocol: TCP
 EOF
 
 kubectl apply -f mysql-endpoints.yaml
