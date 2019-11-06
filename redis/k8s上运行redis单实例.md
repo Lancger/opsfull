@@ -14,6 +14,70 @@ kubectl apply -f mos_namespace.yaml
 # 查看 namespace
 kubectl get namespace -A
 ```
+
+# 二、创建一个 configmap
+
+```
+mkdir config && cd config
+
+# 创建redis配置文件
+cat > redis.conf <<\EOF
+#daemonize yes
+pidfile /data0/redis.pid
+port 6379
+tcp-backlog 30000
+timeout 0
+tcp-keepalive 10
+loglevel notice
+logfile /data0/redis.log
+databases 16
+#save 900 1
+#save 300 10
+#save 60 10000
+stop-writes-on-bgsave-error no
+rdbcompression yes
+rdbchecksum yes
+dbfilename dump.rdb
+dir /data0
+slave-serve-stale-data yes
+slave-read-only yes
+repl-diskless-sync no
+repl-diskless-sync-delay 5
+repl-disable-tcp-nodelay no
+slave-priority 100
+requirepass ibalife
+maxclients 30000
+appendonly no
+appendfilename "appendonly.aof"
+appendfsync everysec
+no-appendfsync-on-rewrite no
+auto-aof-rewrite-percentage 100
+auto-aof-rewrite-min-size 64mb
+aof-load-truncated yes
+lua-time-limit 5000
+slowlog-log-slower-than 10000
+slowlog-max-len 128
+latency-monitor-threshold 0
+notify-keyspace-events KEA
+hash-max-ziplist-entries 512
+hash-max-ziplist-value 64
+list-max-ziplist-entries 512
+list-max-ziplist-value 64
+set-max-intset-entries 1000
+zset-max-ziplist-entries 128
+zset-max-ziplist-value 64
+hll-sparse-max-bytes 3000
+activerehashing yes
+client-output-buffer-limit normal 0 0 0
+client-output-buffer-limit slave 256mb 64mb 60
+client-output-buffer-limit pubsub 32mb 8mb 60
+hz 10
+EOF
+
+# 在mos-namespace中创建 configmap
+kubectl create configmap redis-conf --from-file=redis.conf -n mos-namespace
+```
+
 参考文档：
 
 https://www.cnblogs.com/klvchen/p/10862607.html 
