@@ -48,6 +48,9 @@ kubectl describe svc mysql-production -n mos-namespace
 
 # 三、测试连接数据库
 ```bash
+# 查看 mos-namespace 下的pod资源
+kubectl get pods -n mos-namespace
+
 # 清理命令行创建的deployment
 kubectl delete deployment centos7-app -n mos-namespace
 
