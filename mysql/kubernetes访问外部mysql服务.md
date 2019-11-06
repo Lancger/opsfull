@@ -1,6 +1,4 @@
-`
-k8s访问集群外独立的服务最好的方式是采用Endpoint方式(可以看作是将k8s集群之外的服务抽象为内部服务)，以mysql服务为例
-`
+`k8s访问集群外独立的服务最好的方式是采用Endpoint方式(可以看作是将k8s集群之外的服务抽象为内部服务)，以mysql服务为例`
 
 # 一、创建endpoints
 ```bash
@@ -15,7 +13,7 @@ metadata:
   namespace: mos-namespace
 subsets:
   - addresses:
-      - ip: 10.198.1.155
+      - ip: 10.198.1.155   #需要注意策略需要开通好
     ports:
       - port: 3306
         protocol: TCP
