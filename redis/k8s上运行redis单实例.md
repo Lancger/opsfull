@@ -20,7 +20,7 @@ kubectl get namespace -A
 
 # 二、创建一个 configmap
 
-```
+```bash
 mkdir config && cd config
 
 # 清理configmap
@@ -85,7 +85,7 @@ kubectl create configmap redis-conf --from-file=redis.conf -n mos-namespace
 ```
 
 # 三、创建 redis 容器
-```
+```bash
 cat > mos_redis.yaml <<\EOF
 apiVersion: extensions/v1beta1
 kind: Deployment
