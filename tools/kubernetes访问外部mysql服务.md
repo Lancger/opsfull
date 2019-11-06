@@ -55,7 +55,7 @@ spec:
     spec:
       containers:
       - name: mysql
-        image: docker.io/mysql:5.6
+        image: docker.io/mysql:5.7
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3306
