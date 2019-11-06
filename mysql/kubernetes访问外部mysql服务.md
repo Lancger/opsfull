@@ -33,6 +33,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mysql-production
+  namespace: mos-namespace
 spec:
   ports:
     - port: 3306
@@ -48,6 +49,7 @@ apiVersion: v1
 kind: ReplicationController
 metadata:
   name: mysql
+  namespace: mos-namespace
 spec:
   replicas: 1
   selector:
