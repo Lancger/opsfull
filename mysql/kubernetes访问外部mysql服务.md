@@ -40,6 +40,7 @@ metadata:
 spec:
   ports:
     - port: 3306
+      protocol: TCP
 EOF
 
 kubectl apply -f mysql-service.yaml
