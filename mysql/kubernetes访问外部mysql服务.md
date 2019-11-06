@@ -80,7 +80,7 @@ ping mysql-production
 nc -zv mysql-production 3306
 
 # 连接测试
-mysql -h'mysql-production' -uroot -p'password'
+mysql -h'mysql-production' -u'root' -p'password'
 ```
 参考资料：
 
