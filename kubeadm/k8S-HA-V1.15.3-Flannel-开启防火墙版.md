@@ -141,43 +141,43 @@ kubeadm alpha： 预览一组可用的新功能以便从社区搜集反馈
         <td><strong>角色</td>
     </tr>
     <tr>
-        <td>10.19.1.200</td>
+        <td>10.199.1.200</td>
         <td>-</td>
         <td>-</td>
         <td>vip</td>
     </tr>
     <tr>
-        <td>10.19.1.136</td>
+        <td>10.199.1.136</td>
         <td>k8s-master-01</td>
         <td>2C & 2G</td>
         <td>master</td>
     </tr>
     <tr>
-        <td>10.19.1.137</td>
+        <td>10.199.1.137</td>
         <td>k8s-master-02</td>
         <td>2C & 2G</td>
         <td>master</td>
     </tr>
     <tr>
-        <td>10.19.1.138</td>
+        <td>10.199.1.138</td>
         <td>k8s-master-03</td>
         <td>2C & 2G</td>
         <td>master</td>
     </tr>
     <tr>
-        <td>10.19.1.139</td>
+        <td>10.199.1.139</td>
         <td>k8s-node-01</td>
         <td>4C & 8G</td>
         <td>node</td>
     </tr>
     <tr>
-        <td>10.19.1.140</td>
+        <td>10.199.1.140</td>
         <td>k8s-node-02</td>
         <td>4C & 8G</td>
         <td>node</td>
     </tr>
     <tr>
-        <td>10.19.1.141</td>
+        <td>10.199.1.141</td>
         <td>k8s-node-03</td>
         <td>4C & 8G</td>
         <td>node</td>
@@ -275,11 +275,11 @@ kubeadm alpha： 预览一组可用的新功能以便从社区搜集反馈
 cat > /etc/hosts << \EOF
 127.0.0.1     localhost  localhost.localdomain localhost4 localhost4.localdomain4
 ::1           localhost  localhost.localdomain localhost6 localhost6.localdomain6
-10.19.1.200      k8s-vip         master      master.k8s.io
-10.19.1.136      k8s-master-01   master01    master01.k8s.io
-10.19.1.137      k8s-master-02   master02    master02.k8s.io
-10.19.1.138      k8s-master-03   master03    master03.k8s.io
-10.19.1.139      k8s-node-01     node01      node01.k8s.io
+10.199.1.200      k8s-vip         master      master.k8s.io
+10.199.1.136      k8s-master-01   master01    master01.k8s.io
+10.199.1.137      k8s-master-02   master02    master02.k8s.io
+10.199.1.138      k8s-master-03   master03    master03.k8s.io
+10.199.1.139      k8s-node-01     node01      node01.k8s.io
 EOF
 
 #root用户免密登录
@@ -294,22 +294,22 @@ chmod 400 /root/.ssh/authorized_keys
 ```bash
 #分别进入不同的服务器修改 hostname 名称
 
-# 修改 10.19.1.136 服务器
+# 修改 10.199.1.136 服务器
 hostnamectl  set-hostname  k8s-master-01
 
-# 修改 10.19.1.137 服务器
+# 修改 10.199.1.137 服务器
 hostnamectl  set-hostname  k8s-master-02
 
-# 修改 10.19.1.138 服务器
+# 修改 10.199.1.138 服务器
 hostnamectl  set-hostname  k8s-master-03
 
-# 修改 10.19.1.139 服务器
+# 修改 10.199.1.139 服务器
 hostnamectl  set-hostname  k8s-node-01
 
-# 修改 10.19.1.140 服务器
+# 修改 10.199.1.140 服务器
 hostnamectl  set-hostname  k8s-node-02
 
-# 修改 10.19.1.141 服务器
+# 修改 10.199.1.141 服务器
 hostnamectl  set-hostname  k8s-node-03
 ```
 
@@ -450,7 +450,7 @@ vrrp_instance VI_1 {
         auth_pass 35f18af7190d51c9f7f78f37300a0cbd
     }
     virtual_ipaddress {
-        10.19.1.200/22  #虚拟VIP，即VIP,注意掩码一定要写，不然会出现VIP端口，部分机器正常，部分机器异常问题
+        10.199.1.200/22  #虚拟VIP，即VIP,注意掩码一定要写，不然会出现VIP端口，部分机器正常，部分机器异常问题
     }
     track_script {
         check_haproxy
@@ -508,9 +508,9 @@ kepplived 配置中 state 为 MASTER 的节点启动后，查看网络状态，�
 [root@k8s-master-01 ~]# ip address show bond0
 6: bond0: <BROADCAST,MULTICAST,MASTER,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
     link/ether 6c:92:bf:27:9e:ed brd ff:ff:ff:ff:ff:ff
-    inet 10.19.1.136/22 brd 10.19.3.255 scope global bond0
+    inet 10.199.1.136/22 brd 10.19.3.255 scope global bond0
        valid_lft forever preferred_lft forever
-    inet 10.19.1.200/32 scope global bond0
+    inet 10.199.1.200/32 scope global bond0
        valid_lft forever preferred_lft forever
 
 当关掉当前节点的keeplived服务后将进行虚拟IP转移，将会推选state 为 BACKUP 的节点的某一节点为新的MASTER，可以在那台节点上查看网卡，将会查看到虚拟IP
@@ -591,9 +591,9 @@ frontend kubernetes-apiserver
 backend kubernetes-apiserver
     mode        tcp
     balance     roundrobin
-    server      master01.k8s.io   10.19.1.136:6443 check
-    server      master02.k8s.io   10.19.1.137:6443 check
-    server      master03.k8s.io   10.19.1.138:6443 check
+    server      master01.k8s.io   10.199.1.136:6443 check
+    server      master02.k8s.io   10.199.1.137:6443 check
+    server      master03.k8s.io   10.199.1.138:6443 check
 #---------------------------------------------------------------------
 # collection haproxy statistics message
 #---------------------------------------------------------------------
@@ -605,7 +605,7 @@ listen stats
     stats uri            /admin?stats
 EOF
 ```
-haproxy配置在其他master节点上(10.19.1.137和10.19.1.138)相同
+haproxy配置在其他master节点上(10.199.1.137和10.199.1.138)相同
 
 ### 3、启动并检测haproxy
 ```bash
@@ -849,16 +849,16 @@ reboot
 [root@k8s-master-01 ~]# ip address show bond0
 6: bond0: <BROADCAST,MULTICAST,MASTER,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
     link/ether 6c:92:bf:27:9e:ed brd ff:ff:ff:ff:ff:ff
-    inet 10.19.1.136/22 brd 10.19.3.255 scope global bond0
+    inet 10.199.1.136/22 brd 10.19.3.255 scope global bond0
        valid_lft forever preferred_lft forever
-    inet 10.19.1.200/32 scope global bond0
+    inet 10.199.1.200/32 scope global bond0
        valid_lft forever preferred_lft forever
 7: bond0.101@bond0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
     link/ether 6c:92:bf:27:9e:ed brd ff:ff:ff:ff:ff:ff
     inet 16.201.26.36/24 brd 16.201.26.255 scope global bond0.101
        valid_lft forever preferred_lft forever
 
-可以看到虚拟IP 10.19.1.200  和 服务器IP 10.19.1.136 在一台机子上，所以初始化kubernetes第一个master要在master01机子上进行安装
+可以看到虚拟IP 10.199.1.200  和 服务器IP 10.199.1.136 在一台机子上，所以初始化kubernetes第一个master要在master01机子上进行安装
 ```
 
 ### 1、创建kubeadm配置的yaml文件
@@ -867,7 +867,7 @@ reboot
 
 rm -f ./kubeadm-config.yaml
 
-export MASTER_NODE1=10.19.1.136
+export MASTER_NODE1=10.199.1.136
 export APISERVER_NAME=master.k8s.io
 export POD_SUBNET=10.244.0.0/16
 export SVC_SUBNET=10.96.0.0/12
@@ -908,10 +908,10 @@ apiServer:
     - k8s-master-02
     - k8s-master-03
     - master.k8s.io
-    - 10.19.1.200
-    - 10.19.1.136
-    - 10.19.1.137
-    - 10.19.1.138
+    - 10.199.1.200
+    - 10.199.1.136
+    - 10.199.1.137
+    - 10.199.1.138
     - 127.0.0.1
 dns:
   type: CoreDNS
@@ -988,13 +988,13 @@ kubeadm join master.k8s.io:16443 --token abcdef.0123456789abcdef \
 用于初始化第二、三个 master 节点
 ```
 #初始化第二个master节点
-export MASTER_NODE2=10.19.1.137
+export MASTER_NODE2=10.199.1.137
 kubeadm join master.k8s.io:16443 --apiserver-advertise-address ${MASTER_NODE2} --token abcdef.0123456789abcdef \
     --discovery-token-ca-cert-hash sha256:ab6da874166785bfe75acc4d6fd622bf821a7451837332e3a21a6106e346c8d5 \
     --control-plane --certificate-key 13284467f0141778898ffa33d340c0598cb757c6aa016f00da2165cd3eab4523
 
 #初始化第三个master节点    
-export MASTER_NODE3=10.19.1.138
+export MASTER_NODE3=10.199.1.138
 kubeadm join master.k8s.io:16443 --apiserver-advertise-address ${MASTER_NODE3} --token abcdef.0123456789abcdef \
     --discovery-token-ca-cert-hash sha256:ab6da874166785bfe75acc4d6fd622bf821a7451837332e3a21a6106e346c8d5 \
     --control-plane --certificate-key 13284467f0141778898ffa33d340c0598cb757c6aa016f00da2165cd3eab4523
@@ -1430,7 +1430,7 @@ k8s master组件在多网卡环境下，会监听到服务器外网IP问题
 
 #修改kubelet启动参数
 cat > /etc/sysconfig/kubelet <<\EOF
-KUBELET_EXTRA_ARGS=--runtime-cgroups=/systemd/system.slice --kubelet-cgroups=/systemd/system.slice --hostname-override=k8s-master-01 --node-ip=10.19.1.136
+KUBELET_EXTRA_ARGS=--runtime-cgroups=/systemd/system.slice --kubelet-cgroups=/systemd/system.slice --hostname-override=k8s-master-01 --node-ip=10.199.1.136
 EOF
 
 #重启kubelet服务
@@ -1466,4 +1466,3 @@ https://segmentfault.com/a/1190000018741112?utm_source=tag-newest  Kubernetes的
 https://www.cnblogs.com/hongdada/p/9771857.html  Docker中的Cgroup Driver:Cgroupfs 与 Systemd
 
 https://juejin.im/entry/5b0aa39551882538be0d2e21  centos7使用kubeadm配置高可用集群(多master 多网卡，需主动修改组件信息)
-
