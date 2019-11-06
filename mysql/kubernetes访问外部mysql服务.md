@@ -20,7 +20,9 @@ subsets:
       - port: 3306
 EOF
 
-kubectl apply -f mysql-endpoints.yaml 
+kubectl apply -f mysql-endpoints.yaml
+
+kubectl describe endpoints -n mos-namespace
 ```
 
 # 二、创建service
