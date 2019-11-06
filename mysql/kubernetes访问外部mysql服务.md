@@ -71,6 +71,8 @@ yum install -y mariadb.x86_64 mariadb-libs.x86_64
 kubectl exec `kubectl get pods -n mos-namespace|grep centos7-app|awk '{print $1}'` -it /bin/bash -n mos-namespace
 
 ping mysql-production
+
+mysql -hmysql-production -uroot -p'password'
 ```
 参考资料：
 
