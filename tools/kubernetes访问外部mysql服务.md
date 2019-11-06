@@ -38,8 +38,32 @@ kubectl apply -f mysql-service.yaml
 ```
 
 # 三、测试连接数据库
-```
-
+```bash
+cat > mysql-rc.yaml <<\EOF
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: mysql
+spec:
+  replicas: 1
+  selector:
+    app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: docker.io/mysql:5.6
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "123456"
+          
+kubectl apply -f mysql-rc.yaml
 ```
 参考资料：
 
