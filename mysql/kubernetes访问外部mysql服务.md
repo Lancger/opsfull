@@ -48,33 +48,9 @@ kubectl describe svc mysql-production -n mos-namespace
 
 # 三、测试连接数据库
 ```bash
-cat > mysql-rc.yaml <<\EOF
-apiVersion: v1
-kind: ReplicationController
-metadata:
-  name: mysql
-  namespace: mos-namespace
-spec:
-  replicas: 1
-  selector:
-    app: mysql
-  template:
-    metadata:
-      labels:
-        app: mysql
-    spec:
-      containers:
-      - name: mysql
-        image: docker.io/mysql:5.7
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 3306
-        env:
-        - name: MYSQL_ROOT_PASSWORD
-          value: "123456"
-EOF
+kubectl run --image=centos7 centos7-app --replicas=1 -n mos-namespace
 
-kubectl apply -f mysql-rc.yaml
+
 ```
 参考资料：
 
