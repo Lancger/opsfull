@@ -46,7 +46,7 @@ kubectl apply -f mysql-service.yaml
 kubectl describe svc mysql-production -n mos-namespace
 ```
 
-# 三、测试连接数据库
+# 三、安装centos7基础镜像
 ```bash
 # 查看 mos-namespace 下的pod资源
 kubectl get pods -n mos-namespace
@@ -63,6 +63,14 @@ kubectl exec `kubectl get pods -n mos-namespace|grep centos7-app|awk '{print $1}
 # 安装mysql客户端
 yum install vim net-tools -y
 yum install -y mariadb.x86_64 mariadb-libs.x86_64
+```
+
+# 四、测试数据库连接
+
+```bash
+kubectl exec `kubectl get pods -n mos-namespace|grep centos7-app|awk '{print $1}'` -it /bin/bash -n mos-namespace
+
+ping mysql-production
 ```
 参考资料：
 
