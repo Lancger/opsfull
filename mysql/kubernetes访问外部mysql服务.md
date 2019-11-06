@@ -40,6 +40,8 @@ spec:
 EOF
 
 kubectl apply -f mysql-service.yaml
+
+kubectl describe svc mysql-production -n mos-namespace
 ```
 
 # 三、测试连接数据库
