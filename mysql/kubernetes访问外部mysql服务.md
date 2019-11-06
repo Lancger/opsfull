@@ -62,7 +62,7 @@ kubectl run --image=centos:7.2.1511 centos7-app -it --port=8080 --replicas=1 -n 
 kubectl exec `kubectl get pods -n mos-namespace|grep centos7-app|awk '{print $1}'` -it /bin/bash -n mos-namespace
 
 # 安装mysql客户端
-yum install vim net-tools telnet -y
+yum install vim net-tools telnet nc -y
 yum install -y mariadb.x86_64 mariadb-libs.x86_64
 ```
 
@@ -71,8 +71,13 @@ yum install -y mariadb.x86_64 mariadb-libs.x86_64
 ```bash
 kubectl exec `kubectl get pods -n mos-namespace|grep centos7-app|awk '{print $1}'` -it /bin/bash -n mos-namespace
 
+# 检查网络连通性
 ping mysql-production
 
+# 测试mysql服务端口是否OK
+nc -zv mysql-production 3306
+
+# 连接测试
 mysql -hmysql-production -uroot -p'password'
 ```
 参考资料：
