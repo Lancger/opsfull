@@ -86,6 +86,9 @@ kubectl create configmap redis-conf --from-file=redis.conf -n mos-namespace
 
 # 三、创建 redis 容器
 ```bash
+# 清理pod
+kubectl delete -f mos_redis.yaml 
+
 cat > mos_redis.yaml <<\EOF
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -123,7 +126,6 @@ kubectl apply -f mos_redis.yaml
 kubectl get pods -n mos-namespace
 
 # 注意：configMap 会挂在 /usr/local/etc/redis/redis.conf 上。与 mountPath 和 configMap 下的 path 一同指定
-
 ```
 参考文档：
 
