@@ -112,7 +112,7 @@ spec:
      volumes:
      - name: mos
        configMap:
-         name: mos-redis-conf
+         name: redis-conf
          items:
            - key: redis.conf
              path: redis/redis.conf
