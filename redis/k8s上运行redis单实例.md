@@ -6,7 +6,7 @@ cat > mos_namespace.yaml <<\EOF
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: mos
+  name: mos-namespace
 EOF
 
 kubectl apply -f mos_namespace.yaml
