@@ -61,7 +61,7 @@ kubectl run --image=centos:7.2.1511 centos7-app -it --port=8080 --replicas=1 -n 
 kubectl exec `kubectl get pods -n mos-namespace|grep centos7-app|awk '{print $1}'` -it /bin/bash -n mos-namespace
 
 # 安装mysql客户端
-yum install vim net-tools -y
+yum install vim net-tools telnet -y
 yum install -y mariadb.x86_64 mariadb-libs.x86_64
 ```
 
