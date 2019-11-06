@@ -4,13 +4,15 @@ k8s访问集群外独立的服务最好的方式是采用Endpoint方式(可以�
 
 # 一、创建endpoints
 ```bash
+kubectl delete -f mysql-endpoints.yaml 
+
 #创建 mysql-endpoints.yaml
 cat > mysql-endpoints.yaml <<\EOF
 kind: Endpoints
 apiVersion: v1
 metadata:
   name: mysql-production
-  namespace: default
+  namespace: mos-namespace
 subsets:
   - addresses:
       - ip: 10.198.1.155
@@ -23,6 +25,8 @@ kubectl apply -f mysql-endpoints.yaml
 
 # 二、创建service
 ```bash
+kubectl delete -f mysql-service.yaml
+
 #创建 mysql-service.yaml
 cat > mysql-service.yaml <<\EOF
 apiVersion: v1
