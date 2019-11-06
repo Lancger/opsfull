@@ -62,7 +62,8 @@ spec:
         env:
         - name: MYSQL_ROOT_PASSWORD
           value: "123456"
-          
+EOF
+
 kubectl apply -f mysql-rc.yaml
 ```
 参考资料：
