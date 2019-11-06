@@ -29,13 +29,13 @@ kubectl delete configmap redis-conf -n mos-namespace
 # 创建redis配置文件
 cat > redis.conf <<\EOF
 #daemonize yes
-pidfile /data0/redis.pid
+pidfile /data/redis.pid
 port 6379
 tcp-backlog 30000
 timeout 0
 tcp-keepalive 10
 loglevel notice
-logfile /data0/redis.log
+logfile /data/redis.log
 databases 16
 #save 900 1
 #save 300 10
@@ -44,7 +44,7 @@ stop-writes-on-bgsave-error no
 rdbcompression yes
 rdbchecksum yes
 dbfilename dump.rdb
-dir /data0
+dir /data
 slave-serve-stale-data yes
 slave-read-only yes
 repl-diskless-sync no
