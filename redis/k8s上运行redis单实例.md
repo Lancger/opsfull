@@ -1,5 +1,8 @@
 # 一、创建namespace
 ```bash
+# 清理 namespace
+kubectl delete -f mos_namespace.yaml
+
 # 创建一个专用的 namespace
 cat > mos_namespace.yaml <<\EOF
 ---
@@ -19,6 +22,9 @@ kubectl get namespace -A
 
 ```
 mkdir config && cd config
+
+# 清理configmap
+kubectl delete configmap redis-conf -n mos-namespace
 
 # 创建redis配置文件
 cat > redis.conf <<\EOF
