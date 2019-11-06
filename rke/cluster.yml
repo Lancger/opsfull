@@ -1,7 +1,7 @@
 # If you intened to deploy Kubernetes in an air-gapped environment,
 # please consult the documentation on how to configure custom RKE images.
 nodes:
-- address: 10.19.1.156
+- address: 10.198.1.156
   port: "22"
   internal_address: ""
   role:
@@ -14,7 +14,7 @@ nodes:
   ssh_key: ""
   ssh_key_path: ~/.ssh/id_rsa
   labels: {}
-- address: 10.19.1.157
+- address: 10.198.1.157
   port: "22"
   internal_address: ""
   role:
@@ -27,7 +27,7 @@ nodes:
   ssh_key: ""
   ssh_key_path: ~/.ssh/id_rsa
   labels: {}
-- address: 10.19.1.158
+- address: 10.198.1.158
   port: "22"
   internal_address: ""
   role:
@@ -38,7 +38,7 @@ nodes:
   ssh_key: ""
   ssh_key_path: ~/.ssh/id_rsa
   labels: {}
-- address: 10.19.1.159
+- address: 10.198.1.159
   port: "22"
   internal_address: ""
   role:
@@ -49,7 +49,7 @@ nodes:
   ssh_key: ""
   ssh_key_path: ~/.ssh/id_rsa
   labels: {}
-- address: 10.19.1.160
+- address: 10.198.1.160
   port: "22"
   internal_address: ""
   role:
