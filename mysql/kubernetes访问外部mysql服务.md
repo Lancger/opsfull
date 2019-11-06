@@ -48,7 +48,7 @@ kubectl describe svc mysql-production -n mos-namespace
 
 # 三、测试连接数据库
 ```bash
-kubectl run --image=centos7 centos7-app --replicas=1 -n mos-namespace
+kubectl run --image=centos:7.2.1511 centos7-app --replicas=1 -n mos-namespace
 
 
 ```
