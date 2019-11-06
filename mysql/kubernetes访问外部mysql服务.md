@@ -69,6 +69,7 @@ yum install -y mariadb.x86_64 mariadb-libs.x86_64
 # 四、测试数据库连接
 
 ```bash
+# 进入到容器
 kubectl exec `kubectl get pods -n mos-namespace|grep centos7-app|awk '{print $1}'` -it /bin/bash -n mos-namespace
 
 # 检查网络连通性
@@ -78,7 +79,7 @@ ping mysql-production
 nc -zv mysql-production 3306
 
 # 连接测试
-mysql -hmysql-production -uroot -p'password'
+mysql -h'mysql-production' -uroot -p'password'
 ```
 参考资料：
 
