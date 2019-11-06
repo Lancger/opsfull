@@ -17,6 +17,8 @@ subsets:
     ports:
       - port: 3306
 EOF
+
+kubectl apply -f mysql-endpoints.yaml 
 ```
 
 # 二、创建service
@@ -31,6 +33,8 @@ spec:
   ports:
     - port: 3306
 EOF
+
+kubectl apply -f mysql-service.yaml
 ```
 
 # 三、测试连接数据库
