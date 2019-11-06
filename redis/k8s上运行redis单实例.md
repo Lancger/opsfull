@@ -12,7 +12,7 @@ EOF
 kubectl apply -f mos_namespace.yaml
 
 # 查看 namespace
-kubectl get namespace -n mos
+kubectl get namespace -A
 ```
 参考文档：
 
