@@ -3,7 +3,7 @@ k8s访问集群外独立的服务最好的方式是采用Endpoint方式(可以�
 `
 
 # 一、创建endpoints
-```
+```bash
 #创建 mysql-endpoints.yaml
 cat > mysql-endpoints.yaml <<\EOF
 kind: Endpoints
@@ -20,7 +20,7 @@ EOF
 ```
 
 # 二、创建service
-```
+```bash
 #创建 mysql-service.yaml
 cat > mysql-service.yaml <<\EOF
 apiVersion: v1
@@ -31,6 +31,11 @@ spec:
   ports:
     - port: 3306
 EOF
+```
+
+# 三、测试连接数据库
+```
+
 ```
 参考资料：
 
