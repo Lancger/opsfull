@@ -1,10 +1,10 @@
 # 一、创建namespace
 ```bash
 # 清理 namespace
-kubectl delete -f mos_namespace.yaml
+kubectl delete -f mos-namespace.yaml
 
 # 创建一个专用的 namespace
-cat > mos_namespace.yaml <<\EOF
+cat > mos-namespace.yaml <<\EOF
 ---
 apiVersion: v1
 kind: Namespace
@@ -12,7 +12,7 @@ metadata:
   name: mos-namespace
 EOF
 
-kubectl apply -f mos_namespace.yaml
+kubectl apply -f mos-namespace.yaml
 
 # 查看 namespace
 kubectl get namespace -A
