@@ -167,6 +167,7 @@ spec:
     protocol: TCP
     port: 80
     targetPort: wdport
+    nodePort: 32380     #新增这一行，指定固定node端口
 EOF
 
 # 创建资源和服务
