@@ -108,7 +108,11 @@ yum install -y mariadb.x86_64 mariadb-libs.x86_64
 nc -zv mysql-wordpress-production 3306
 
 # 连接测试
-mysql -h'mysql-wordpress-production' -u'root' -p'rootPassW0rd'
+mysql -h'mysql-wordpress-production' -u'root' -p'rootPassW0rd'  # 这里使用域名测试
+
+mysql -h'10.98.71.162' -u'root' -p'rootPassW0rd'   # 这里使用集群IP测试
+
+mysql -h'10.244.1.101' -u'root' -p'rootPassW0rd'   # 这里使用Endpoints IP测试
 ```
 
 参考文档：
