@@ -4,9 +4,11 @@
 
 # 二、创建一个MySQL的Deployment对象
 
-- 1、创建服务,并使用Service暴露服务给集群内部使用
+- 1、创建namespace空间,并使用Service暴露服务给集群内部使用
 
 ```bash
+kubectl create namespace blog
+
 kubectl delete -f wordpress-db.yaml
 
 cat > wordpress-db.yaml <<\EOF
