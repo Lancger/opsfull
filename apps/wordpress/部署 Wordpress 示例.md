@@ -306,6 +306,12 @@ kubectl delete -f wordpress-all.yaml
 
 cat > wordpress-all.yaml <<\EOF
 ---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: blog
+
+---
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
@@ -346,7 +352,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql
+  name: mysql-wordpress-production
   namespace: blog
 spec:
   selector:
@@ -356,7 +362,6 @@ spec:
     protocol: TCP
     port: 3306
     targetPort: dbport
-
 
 ---
 apiVersion: apps/v1beta1
@@ -429,11 +434,11 @@ spec:
   - name: wordpressport
     protocol: TCP
     port: 80
-    nodePort: 32255
+    nodePort: 32380
     targetPort: wdport
 EOF
 
-kubectl delete -f wordpress-all.yaml
+kubectl apply -f wordpress-all.yaml
 ```
 
 参考文档：
