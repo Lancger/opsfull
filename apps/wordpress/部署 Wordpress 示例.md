@@ -251,7 +251,7 @@ resources:
 kubectl run -i --tty load-generator --image=busybox /bin/sh
 
 If you don't see a command prompt, try pressing enter.
-/ # while true; do wget -q -O- http://wordpress:80; done
+$ while true; do wget -q -O- http://wordpress:80; done
 
 4、观察Deployment的副本数是否有变化
 kubectl get deployment wordpress-deploy
