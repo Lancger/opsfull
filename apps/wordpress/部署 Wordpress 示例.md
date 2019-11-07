@@ -80,16 +80,16 @@ kubectl create -f wordpress-db.yaml
 
 ```bash
 $ kubectl describe svc wordpress-mysql -n blog
-Name:              mysql-wordpress-production
+Name:              wordpress-mysql
 Namespace:         blog
 Labels:            <none>
 Annotations:       <none>
 Selector:          app=mysql
 Type:              ClusterIP
-IP:                10.98.71.162
+IP:                10.104.88.234
 Port:              mysqlport  3306/TCP
 TargetPort:        dbport/TCP
-Endpoints:         10.244.1.101:3306
+Endpoints:         10.244.1.115:3306
 Session Affinity:  None
 Events:            <none>
 ```
@@ -113,9 +113,9 @@ nc -zv wordpress-mysql 3306
 # 连接测试
 mysql -h'wordpress-mysql' -u'root' -p'rootPassW0rd'  # 这里使用域名测试
 
-mysql -h'10.98.71.162' -u'root' -p'rootPassW0rd'   # 这里使用集群IP测试
+mysql -h'10.104.88.234' -u'root' -p'rootPassW0rd'   # 这里使用集群IP测试，这个经常会变
 
-mysql -h'10.244.1.101' -u'root' -p'rootPassW0rd'   # 这里使用Endpoints IP测试
+mysql -h'10.244.1.115' -u'root' -p'rootPassW0rd'   # 这里使用Endpoints IP测试,这个经常会变
 ```
 
 # 三、创建Wordpress服务Deployment对象
