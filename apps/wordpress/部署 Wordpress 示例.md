@@ -117,8 +117,42 @@ mysql -h'10.244.1.101' -u'root' -p'rootPassW0rd'   # 这里使用Endpoints IP测
 
 # 三、创建Wordpress服务Deployment对象
 
-```
+```bash
+kubectl delete -f wordpress.yaml
 
+cat > wordpress.yaml <<\EOF
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: wordpress-deploy
+  namespace: blog
+  labels:
+    app: wordpress
+spec:
+  template:
+    metadata:
+      labels:
+        app: wordpress
+    spec:
+      containers:
+      - name: wordpress
+        image: wordpress
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+          name: wdport
+        env:
+        - name: WORDPRESS_DB_HOST
+          value: mysql-wordpress-production:3306
+        - name: WORDPRESS_DB_USER
+          value: wordpress
+        - name: WORDPRESS_DB_PASSWORD
+          value: wordpress
+EOF
+
+kubectl create -f wordpress.yaml
+
+$ kubectl get pods -n blog
 ```
 
 参考文档：
