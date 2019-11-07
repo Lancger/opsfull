@@ -211,7 +211,7 @@ http://192.168.56.11:32380/
 
 我们前面说过liveness probe和rediness probe是提高应用稳定性非常重要的方法:
 
-```
+```bash
 livenessProbe:
   tcpSocket:
     port: 80
@@ -223,14 +223,15 @@ readinessProbe:
   initialDelaySeconds: 5
   periodSeconds: 10
 
+#增加上面两个探针，每10s检测一次应用是否可读，每3s检测一次应用是否存活
 ```
 
 ## 第二. 增加 HPA
 
 让我们的应用能够自动应对流量高峰期：
 
-```
-$ kubectl autoscale deployment wordpress-deploy --cpu-percent=10 --min=1 --max=10 -n blog
+```bash
+kubectl autoscale deployment wordpress-deploy --cpu-percent=10 --min=1 --max=10 -n blog
 deployment "wordpress-deploy" autoscaled
 ```
 
