@@ -121,6 +121,7 @@ mysql -h'10.244.1.101' -u'root' -p'rootPassW0rd'   # 这里使用Endpoints IP测
 kubectl delete -f wordpress.yaml
 
 cat > wordpress.yaml <<\EOF
+---
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
@@ -148,11 +149,29 @@ spec:
           value: wordpress
         - name: WORDPRESS_DB_PASSWORD
           value: wordpress
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wordpress
+  namespace: blog
+spec:
+  type: NodePort
+  selector:
+    app: wordpress
+  ports:
+  - name: wordpressport
+    protocol: TCP
+    port: 80
+    targetPort: wdport
 EOF
 
 kubectl create -f wordpress.yaml
 
-$ kubectl get pods -n blog
+kubectl get pods -n blog
+
+kubectl get svc -n blog
 ```
 
 参考文档：
