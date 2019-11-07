@@ -60,7 +60,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql-wordpress-production
+  name: wordpress-mysql
   namespace: blog
 spec:
   selector:
@@ -79,7 +79,7 @@ kubectl create -f wordpress-db.yaml
 - 2、查看创建的svc服务
 
 ```bash
-$ kubectl describe svc mysql-wordpress-production -n blog
+$ kubectl describe svc wordpress-mysql -n blog
 Name:              mysql-wordpress-production
 Namespace:         blog
 Labels:            <none>
@@ -108,10 +108,10 @@ yum install vim net-tools telnet nc -y
 yum install -y mariadb.x86_64 mariadb-libs.x86_64
 
 # 测试mysql服务端口是否OK
-nc -zv mysql-wordpress-production 3306
+nc -zv wordpress-mysql 3306
 
 # 连接测试
-mysql -h'mysql-wordpress-production' -u'root' -p'rootPassW0rd'  # 这里使用域名测试
+mysql -h'wordpress-mysql' -u'root' -p'rootPassW0rd'  # 这里使用域名测试
 
 mysql -h'10.98.71.162' -u'root' -p'rootPassW0rd'   # 这里使用集群IP测试
 
@@ -159,7 +159,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: wordpress
+  name: wordpress-service
   namespace: blog
 spec:
   type: NodePort
@@ -183,7 +183,7 @@ kubectl get pods -n blog
 kubectl get svc -n blog
 
 NAME                         TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
-mysql-wordpress-production   ClusterIP   10.98.71.162   <none>        3306/TCP       18m
+wordpress-service   ClusterIP   10.98.71.162   <none>        3306/TCP       18m
 wordpress                    NodePort    10.105.91.50   <none>        80:32380/TCP   113s
 ```
 
