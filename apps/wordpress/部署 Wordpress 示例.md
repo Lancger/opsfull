@@ -4,6 +4,8 @@
 
 # 二、创建一个MySQL的Deployment对象
 
+- 创建服务,并使用Service暴露服务给集群内部使用
+
 ```
 kubectl delete -f wordpress-db.yaml
 
@@ -63,6 +65,13 @@ spec:
 EOF
 
 kubectl create -f wordpress-db.yaml
+```
+
+- 查看创建的svc服务
+
+```
+$ kubectl describe svc mysql -n blog
+
 ```
 
 参考文档：
