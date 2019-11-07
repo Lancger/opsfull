@@ -302,7 +302,7 @@ initContainers:
 # 六、优化文件合并
 
 ```bash
-kubectl create -f wordpress-all.yaml
+kubectl delete -f wordpress-all.yaml
 
 cat > wordpress-all.yaml <<\EOF
 ---
