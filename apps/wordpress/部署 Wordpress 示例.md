@@ -409,6 +409,8 @@ spec:
 EOF
 
 kubectl apply -f wordpress-all.yaml
+
+kubectl get pods -n blog
 ```
 
 参考文档：
