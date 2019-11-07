@@ -108,7 +108,7 @@ yum install -y mariadb.x86_64 mariadb-libs.x86_64
 nc -zv mysql-wordpress-production 3306
 
 # 连接测试
-mysql -h'mysql-wordpress-production' -u'root' -p'password'
+mysql -h'mysql-wordpress-production' -u'root' -p'rootPassW0rd'
 ```
 
 参考文档：
