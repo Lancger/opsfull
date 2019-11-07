@@ -129,11 +129,14 @@ EOF
 ```
 ## 3.1、配置docker加速器
 ```bash
+mkdir -p /data0/docker-data
+
 cat > /etc/docker/daemon.json << \EOF
 {
-  "registry-mirrors": [
-    "https://dockerhub.azk8s.cn",
-    "https://i37dz0y4.mirror.aliyuncs.com"
+  "exec-opts": ["native.cgroupdriver=systemd"],
+  "data-root": "/data0/docker-data",
+  "registry-mirrors" : [
+    "https://ot2k4d59.mirror.aliyuncs.com/"
   ],
   "insecure-registries": ["reg.hub.com"]
 }
