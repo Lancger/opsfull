@@ -177,12 +177,18 @@ kubectl create -f wordpress.yaml
 kubectl get pods -n blog
 
 # 查看创建的svc资源
-kubectl get svc -n blog
+$ kubectl get svc -n blog
+NAME                         TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+mysql-wordpress-production   ClusterIP   10.98.71.162   <none>        3306/TCP       18m
+wordpress                    NodePort    10.105.91.50   <none>        80:32380/TCP   113s
 ```
 
 # 四、访问测试
 
-```
+```bash
+可以看到wordpress服务产生了一个32380的端口，现在我们是不是就可以通过任意节点的NodeIP加上32255端口，就可以访问我们的wordpress应用了，在浏览器中打开，如果看到wordpress跳转到了安装页面，证明我们的嗯安装是没有任何问题的了，如果没有出现预期的效果，那么就需要去查看下Pod的日志来查看问题了：
+
+http://192.168.56.11:32380/
 ```
 
 参考文档：
