@@ -237,7 +237,7 @@ readinessProbe:
 kubectl autoscale deployment wordpress-deploy --cpu-percent=10 --min=1 --max=10 -n blog
 deployment "wordpress-deploy" autoscaled
 
-# 我们用kubectl autoscale命令为我们的wordpress-deploy创建一个HPA对象，最小的 pod 副本数为1，最大为10，HPA会根据设定的 cpu使用率（10%）动态的增加或者减少pod数量。当然最好我们也为Pod声明一些资源限制：
+我们用kubectl autoscale命令为我们的wordpress-deploy创建一个HPA对象，最小的 pod 副本数为1，最大为10，HPA会根据设定的 cpu使用率（10%）动态的增加或者减少pod数量。当然最好我们也为Pod声明一些资源限制：
 
 resources:
   limits:
