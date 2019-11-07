@@ -115,6 +115,12 @@ mysql -h'10.98.71.162' -u'root' -p'rootPassW0rd'   # 这里使用集群IP测试
 mysql -h'10.244.1.101' -u'root' -p'rootPassW0rd'   # 这里使用Endpoints IP测试
 ```
 
+# 三、创建Wordpress服务Deployment对象
+
+```
+
+```
+
 参考文档：
 
 https://www.qikqiak.com/k8s-book/docs/31.%E9%83%A8%E7%BD%B2%20Wordpress%20%E7%A4%BA%E4%BE%8B.html   
