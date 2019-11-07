@@ -1,8 +1,10 @@
-`Wordpress应用主要涉及到两个镜像：wordpress和mysql，wordpress是应用的核心程序，mysql是用于数据存储的。现在我们来看看如何来部署我们的这个wordpress应用`
+# 一、简述
+
+Wordpress应用主要涉及到两个镜像：wordpress和mysql，wordpress是应用的核心程序，mysql是用于数据存储的。现在我们来看看如何来部署我们的这个wordpress应用
 
 这个服务主要有2个pod资源，优先使用Deployment来管理我们的Pod。
 
-# 一、创建一个MySQL的Deployment对象
+# 二、创建一个MySQL的Deployment对象
 
 ```
 kubectl delete -f wordpress-db.yaml
