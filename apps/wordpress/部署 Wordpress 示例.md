@@ -191,6 +191,8 @@ wordpress                    NodePort    10.105.91.50   <none>        80:32380/T
 http://192.168.56.11:32380/
 ```
 
+![wordpress](https://github.com/Lancger/opsfull/blob/master/images/wordpress-01.png)
+
 
 
 参考文档：
