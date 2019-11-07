@@ -247,13 +247,14 @@ resources:
     cpu: 100m
     memory: 100Mi
     
-3、更新Deployment后，我们可以可以来测试下上面的HPA是否会生效：
+2、更新Deployment后，我们可以可以来测试下上面的HPA是否会生效：
 kubectl run -i --tty load-generator --image=busybox /bin/sh
 
 If you don't see a command prompt, try pressing enter.
-$ while true; do wget -q -O- http://wordpress:80; done
 
-4、观察Deployment的副本数是否有变化
+while true; do wget -q -O- http://wordpress:80; done
+
+3、观察Deployment的副本数是否有变化
 kubectl get deployment wordpress-deploy
 
 NAME        DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
