@@ -256,7 +256,20 @@ wordpress-deploy   3         3         3            3           4d
 
 ```
 
+# 第三. 增加滚动更新策略
 
+这样可以保证我们在更新应用的时候服务不会被中断：
+
+```
+replicas: 2
+revisionHistoryLimit: 10
+minReadySeconds: 5
+strategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxSurge: 1
+    maxUnavailable: 1
+```
 
 参考文档：
 
