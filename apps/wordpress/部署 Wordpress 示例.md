@@ -207,11 +207,34 @@ http://192.168.56.11:32380/
 
 所以要保证我们的网站能够非常稳定的提供服务，我们做得还不够，我们可以通过做些什么事情来提高网站的稳定性呢？
 
-第一. 增加健康检测，我们前面说过liveness probe和rediness probe是提高应用稳定性非常重要的方法:
+## 第一. 增加健康检测
+
+我们前面说过liveness probe和rediness probe是提高应用稳定性非常重要的方法:
+
+```
+livenessProbe:
+  tcpSocket:
+    port: 80
+  initialDelaySeconds: 3
+  periodSeconds: 3
+readinessProbe:
+  tcpSocket:
+    port: 80
+  initialDelaySeconds: 5
+  periodSeconds: 10
 
 ```
 
+## 第二. 增加 HPA
+
+让我们的应用能够自动应对流量高峰期：
+
 ```
+$ kubectl autoscale deployment wordpress-deploy --cpu-percent=10 --min=1 --max=10 -n blog
+deployment "wordpress-deploy" autoscaled
+```
+
+
 
 参考文档：
 
