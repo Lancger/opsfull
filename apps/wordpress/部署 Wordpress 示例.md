@@ -76,17 +76,17 @@ kubectl create -f wordpress-db.yaml
 - 2、查看创建的svc服务
 
 ```bash
-$ kubectl describe svc mysql -n blog
-Name:              mysql
+$ kubectl describe svc mysql-wordpress-production -n blog
+Name:              mysql-wordpress-production
 Namespace:         blog
 Labels:            <none>
 Annotations:       <none>
 Selector:          app=mysql
 Type:              ClusterIP
-IP:                10.111.154.250
+IP:                10.98.71.162
 Port:              mysqlport  3306/TCP
 TargetPort:        dbport/TCP
-Endpoints:         10.244.1.98:3306
+Endpoints:         10.244.1.101:3306
 Session Affinity:  None
 Events:            <none>
 ```
