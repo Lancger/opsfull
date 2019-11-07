@@ -71,9 +71,6 @@ EOF
 
 # 创建资源和服务
 kubectl create -f wordpress-db.yaml
-
-# 验证创建的mysql资源服务可用性
-
 ```
 
 - 2、查看创建的svc服务
@@ -92,6 +89,26 @@ TargetPort:        dbport/TCP
 Endpoints:         10.244.1.98:3306
 Session Affinity:  None
 Events:            <none>
+```
+
+- 3、验证创建的mysql资源服务可用性
+
+```bash
+# 命令行跑一个centos7的bash基础容器
+kubectl run --image=centos:7.2.1511 centos7-app -it --port=8080 --replicas=1 -n blog
+
+# 进入到容器
+kubectl exec `kubectl get pods -n blog|grep centos7-app|awk '{print $1}'` -it /bin/bash -n blog
+
+# 安装mysql客户端
+yum install vim net-tools telnet nc -y
+yum install -y mariadb.x86_64 mariadb-libs.x86_64
+
+# 测试mysql服务端口是否OK
+nc -zv mysql-production 3306
+
+# 连接测试
+mysql -h'mysql-production' -u'root' -p'password'
 ```
 
 参考文档：
