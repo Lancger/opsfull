@@ -57,7 +57,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql
+  name: mysql-wordpress-production
   namespace: blog
 spec:
   selector:
@@ -105,10 +105,10 @@ yum install vim net-tools telnet nc -y
 yum install -y mariadb.x86_64 mariadb-libs.x86_64
 
 # 测试mysql服务端口是否OK
-nc -zv mysql-production 3306
+nc -zv mysql-wordpress-production 3306
 
 # 连接测试
-mysql -h'mysql-production' -u'root' -p'password'
+mysql -h'mysql-wordpress-production' -u'root' -p'password'
 ```
 
 参考文档：
