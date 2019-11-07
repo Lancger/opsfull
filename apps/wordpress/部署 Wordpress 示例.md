@@ -6,7 +6,7 @@
 
 - 1、创建服务,并使用Service暴露服务给集群内部使用
 
-```
+```bash
 kubectl delete -f wordpress-db.yaml
 
 cat > wordpress-db.yaml <<\EOF
@@ -69,7 +69,7 @@ kubectl create -f wordpress-db.yaml
 
 - 2、查看创建的svc服务
 
-```
+```bash
 $ kubectl describe svc mysql -n blog
 
 ```
