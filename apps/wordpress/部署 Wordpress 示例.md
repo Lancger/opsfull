@@ -231,12 +231,12 @@ readinessProbe:
 让我们的应用能够自动应对流量高峰期：
 
 ```bash
-1、创建HPA资源
+1、创建HPA资源（一定要设置Pod的资源限制参数: request, 否则HPA不会工作）
 
 kubectl autoscale deployment wordpress-deploy --cpu-percent=10 --min=1 --max=10 -n blog
 deployment "wordpress-deploy" autoscaled
 
-2、我们用kubectl autoscale命令为我们的wordpress-deploy创建一个HPA对象，最小的 pod 副本数为1，最大为10，HPA会根据设定的 cpu使用率（10%）动态的增加或者减少pod数量。当然最好我们也为Pod声明一些资源限制：
+# 我们用kubectl autoscale命令为我们的wordpress-deploy创建一个HPA对象，最小的 pod 副本数为1，最大为10，HPA会根据设定的 cpu使用率（10%）动态的增加或者减少pod数量。当然最好我们也为Pod声明一些资源限制：
 
 resources:
   limits:
@@ -249,7 +249,7 @@ resources:
 3、更新Deployment后，我们可以可以来测试下上面的HPA是否会生效：
 $ kubectl run -i --tty load-generator --image=busybox /bin/sh
 If you don't see a command prompt, try pressing enter.
-/ # while true; do wget -q -O- http://10.244.1.62:80; done
+/ # while true; do wget -q -O- http://wordpress:80; done
 
 4、观察Deployment的副本数是否有变化
 $ kubectl get deployment wordpress-deploy
