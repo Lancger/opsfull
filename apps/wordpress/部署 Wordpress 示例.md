@@ -313,16 +313,45 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: blog
-
 ---
-apiVersion: apps/v1beta1
-kind: Deployment
+apiVersion: v1
+kind: Service
 metadata:
-  name: mysql-deploy
+  name: mysql
   namespace: blog
-  labels:
-    app: mysql
 spec:
+  clusterIP: None
+  ports:
+  - name: mysql
+    port: 3306
+  selector:
+    app: mysql
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wordpress
+  namespace: blog
+spec:
+  ports:
+  - name: wordpress
+    port: 80
+    targetPort: 80
+  selector:
+    app: wordpress
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+  namespace: blog
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  serviceName: mysql 
+  replicas: 1
   template:
     metadata:
       labels:
@@ -331,114 +360,52 @@ spec:
       containers:
       - name: mysql
         image: mysql:5.7
-        ports:
-        - containerPort: 3306
-          name: dbport
         env:
-        - name: MYSQL_ROOT_PASSWORD
-          value: rootPassW0rd
-        - name: MYSQL_DATABASE
-          value: wordpress
-        - name: MYSQL_USER
-          value: wordpress
-        - name: MYSQL_PASSWORD
-          value: wordpress
-        volumeMounts:
-        - name: db
-          mountPath: /var/lib/mysql
-      volumes:
-      - name: db
-        hostPath:
-          path: /var/lib/mysql
-
+        - name: MYSQL_ALLOW_EMPTY_PASSWORD
+          value: "true"
+        livenessProbe:
+          exec:
+            command: ["mysqladmin", "ping"]
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+        readinessProbe:
+          exec:
+            # Check we can execute queries over TCP (skip-networking is off).
+            command: ["mysql", "-h", "127.0.0.1", "-e", "SELECT 1"]
+          initialDelaySeconds: 5
+          periodSeconds: 2
+          timeoutSeconds: 1
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: mysql-wordpress-production
-  namespace: blog
-spec:
-  selector:
-    app: mysql
-  ports:
-  - name: mysqlport
-    protocol: TCP
-    port: 3306
-    targetPort: dbport
-
----
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: wordpress-deploy
+  name: wordpress
   namespace: blog
-  labels:
-    app: wordpress
 spec:
-  revisionHistoryLimit: 10
-  minReadySeconds: 5
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wordpress
   template:
     metadata:
       labels:
         app: wordpress
     spec:
-      initContainers:
-      - name: init-db
-        image: busybox
-        command: ['sh', '-c', 'until nslookup mysql; do echo waiting for mysql service; sleep 2; done;']
       containers:
       - name: wordpress
-        image: wordpress
-        imagePullPolicy: IfNotPresent
+        image: wordpress:4
         ports:
         - containerPort: 80
-          name: wdport
         env:
         - name: WORDPRESS_DB_HOST
-          value: mysql:3306
-        - name: WORDPRESS_DB_USER
-          value: wordpress
+          value: mysql
         - name: WORDPRESS_DB_PASSWORD
-          value: wordpress
-        livenessProbe:
-          tcpSocket:
-            port: 80
-          initialDelaySeconds: 3
-          periodSeconds: 3
-        readinessProbe:
-          tcpSocket:
-            port: 80
-          initialDelaySeconds: 5
-          periodSeconds: 10
-        resources:
-          limits:
-            cpu: 200m
-            memory: 200Mi
-          requests:
-            cpu: 100m
-            memory: 100Mi
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: wordpress
-  namespace: blog
-spec:
-  selector:
-    app: wordpress
-  type: NodePort
-  ports:
-  - name: wordpressport
-    protocol: TCP
-    port: 80
-    nodePort: 32380
-    targetPort: wdport
+          value: ""
+      initContainers:
+      - name: init-mysql
+        image: busybox
+        command: ['sh', '-c', 'until nslookup mysql; do echo waiting for mysql; sleep 2; done;']
 EOF
 
 kubectl apply -f wordpress-all.yaml
