@@ -234,7 +234,7 @@ readinessProbe:
 kubectl autoscale deployment wordpress-deploy --cpu-percent=10 --min=1 --max=10 -n blog
 deployment "wordpress-deploy" autoscaled
 
-# 1、我们用kubectl autoscale命令为我们的wordpress-deploy创建一个HPA对象，最小的 pod 副本数为1，最大为10，HPA会根据设定的 cpu使用率（10%）动态的增加或者减少pod数量。当然最好我们也为Pod声明一些资源限制：
+1、我们用kubectl autoscale命令为我们的wordpress-deploy创建一个HPA对象，最小的 pod 副本数为1，最大为10，HPA会根据设定的 cpu使用率（10%）动态的增加或者减少pod数量。当然最好我们也为Pod声明一些资源限制：
 
 resources:
   limits:
@@ -244,23 +244,22 @@ resources:
     cpu: 100m
     memory: 100Mi
     
-# 2、更新Deployment后，我们可以可以来测试下上面的HPA是否会生效：
+2、更新Deployment后，我们可以可以来测试下上面的HPA是否会生效：
 $ kubectl run -i --tty load-generator --image=busybox /bin/sh
 If you don't see a command prompt, try pressing enter.
 / # while true; do wget -q -O- http://10.244.1.62:80; done
 
-# 3、观察Deployment的副本数是否有变化
+3、观察Deployment的副本数是否有变化
 $ kubectl get deployment wordpress-deploy
 NAME        DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 wordpress-deploy   3         3         3            3           4d
-
 ```
 
 ## 第三. 增加滚动更新策略
 
 这样可以保证我们在更新应用的时候服务不会被中断：
 
-```
+```bash
 replicas: 2
 revisionHistoryLimit: 10
 minReadySeconds: 5
@@ -275,7 +274,7 @@ strategy:
 
 `如果mysql服务被重新创建了的话，它的clusterIP非常有可能就变化了，所以上面我们环境变量中的WORDPRESS_DB_HOST的值就会有问题，就会导致访问不了数据库服务了，这个地方我们可以直接使用Service的名称来代替host，这样即使clusterIP变化了，也不会有任何影响，这个我们会在后面的服务发现的章节和大家深入讲解的`
 
-```
+```bash
 env:
 - name: WORDPRESS_DB_HOST
   value: mysql-wordpress-production:3306
@@ -285,7 +284,7 @@ env:
 
 `在部署wordpress服务的时候，mysql服务以前启动起来了吗？如果没有启动起来是不是我们也没办法连接数据库了啊？该怎么办，是不是在启动wordpress应用之前应该去检查一下mysql服务，如果服务正常的话我们就开始部署应用了，这是不是就是InitContainer的用法`
 
-```
+```bash
 initContainers:
 - name: init-db
   image: busybox
@@ -296,7 +295,7 @@ initContainers:
 
 # 六、优化文件合并
 
-```
+```bash
 kubectl create -f wordpress-all.yaml
 
 cat > wordpress-all.yaml <<\EOF
