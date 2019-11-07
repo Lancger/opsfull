@@ -118,8 +118,10 @@ mysql -h'10.244.1.101' -u'root' -p'rootPassW0rd'   # 这里使用Endpoints IP测
 # 三、创建Wordpress服务Deployment对象
 
 ```bash
+# 清理wordpress资源
 kubectl delete -f wordpress.yaml
 
+# 编写wordpress的deployment文件
 cat > wordpress.yaml <<\EOF
 ---
 apiVersion: apps/v1beta1
@@ -167,11 +169,19 @@ spec:
     targetPort: wdport
 EOF
 
+# 创建资源和服务
 kubectl create -f wordpress.yaml
 
+# 查看创建的pod资源
 kubectl get pods -n blog
 
+# 查看创建的svc资源
 kubectl get svc -n blog
+```
+
+# 四、访问测试
+
+```
 ```
 
 参考文档：
