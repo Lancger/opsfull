@@ -71,6 +71,9 @@ EOF
 
 # 创建资源和服务
 kubectl create -f wordpress-db.yaml
+
+# 验证创建的mysql资源服务可用性
+
 ```
 
 - 2、查看创建的svc服务
