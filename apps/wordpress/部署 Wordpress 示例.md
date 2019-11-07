@@ -7,10 +7,13 @@
 - 1、创建namespace空间,并使用Service暴露服务给集群内部使用
 
 ```bash
+# 创建blog命名空间
 kubectl create namespace blog
 
+# 清理wordpress-db资源
 kubectl delete -f wordpress-db.yaml
 
+# 编写mysql的deployment文件
 cat > wordpress-db.yaml <<\EOF
 ---
 apiVersion: apps/v1beta1
@@ -66,6 +69,7 @@ spec:
     targetPort: dbport
 EOF
 
+# 创建资源和服务
 kubectl create -f wordpress-db.yaml
 ```
 
