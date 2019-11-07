@@ -73,7 +73,18 @@ kubectl create -f wordpress-db.yaml
 
 ```bash
 $ kubectl describe svc mysql -n blog
-
+Name:              mysql
+Namespace:         blog
+Labels:            <none>
+Annotations:       <none>
+Selector:          app=mysql
+Type:              ClusterIP
+IP:                10.111.154.250
+Port:              mysqlport  3306/TCP
+TargetPort:        dbport/TCP
+Endpoints:         10.244.1.98:3306
+Session Affinity:  None
+Events:            <none>
 ```
 
 参考文档：
