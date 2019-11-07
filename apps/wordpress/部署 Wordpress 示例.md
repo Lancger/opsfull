@@ -256,7 +256,7 @@ wordpress-deploy   3         3         3            3           4d
 
 ```
 
-# 第三. 增加滚动更新策略
+## 第三. 增加滚动更新策略
 
 这样可以保证我们在更新应用的时候服务不会被中断：
 
@@ -270,6 +270,28 @@ strategy:
     maxSurge: 1
     maxUnavailable: 1
 ```
+
+## 第四. 使用Service的名称来代替host
+
+`如果mysql服务被重新创建了的话，它的clusterIP非常有可能就变化了，所以上面我们环境变量中的WORDPRESS_DB_HOST的值就会有问题，就会导致访问不了数据库服务了，这个地方我们可以直接使用Service的名称来代替host，这样即使clusterIP变化了，也不会有任何影响，这个我们会在后面的服务发现的章节和大家深入讲解的`
+
+```
+env:
+- name: WORDPRESS_DB_HOST
+  value: mysql-wordpress-production:3306
+```
+
+## 第五. 容器启动顺序
+
+`在部署wordpress服务的时候，mysql服务以前启动起来了吗？如果没有启动起来是不是我们也没办法连接数据库了啊？该怎么办，是不是在启动wordpress应用之前应该去检查一下mysql服务，如果服务正常的话我们就开始部署应用了，这是不是就是InitContainer的用法`
+
+```
+initContainers:
+- name: init-db
+  image: busybox
+  command: ['sh', '-c', 'until nslookup mysql; do echo waiting for mysql service; sleep 2; done;']
+```
+
 
 参考文档：
 
