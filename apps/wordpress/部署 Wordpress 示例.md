@@ -177,7 +177,8 @@ kubectl create -f wordpress.yaml
 kubectl get pods -n blog
 
 # 查看创建的svc资源
-$ kubectl get svc -n blog
+kubectl get svc -n blog
+
 NAME                         TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
 mysql-wordpress-production   ClusterIP   10.98.71.162   <none>        3306/TCP       18m
 wordpress                    NodePort    10.105.91.50   <none>        80:32380/TCP   113s
@@ -247,12 +248,14 @@ resources:
     memory: 100Mi
     
 3、更新Deployment后，我们可以可以来测试下上面的HPA是否会生效：
-$ kubectl run -i --tty load-generator --image=busybox /bin/sh
+kubectl run -i --tty load-generator --image=busybox /bin/sh
+
 If you don't see a command prompt, try pressing enter.
 / # while true; do wget -q -O- http://wordpress:80; done
 
 4、观察Deployment的副本数是否有变化
-$ kubectl get deployment wordpress-deploy
+kubectl get deployment wordpress-deploy
+
 NAME        DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 wordpress-deploy   3         3         3            3           4d
 ```
