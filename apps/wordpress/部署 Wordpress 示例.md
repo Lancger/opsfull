@@ -182,9 +182,9 @@ kubectl get pods -n blog
 # 查看创建的svc资源
 kubectl get svc -n blog
 
-NAME                         TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
-wordpress-service   ClusterIP   10.98.71.162   <none>        3306/TCP       18m
-wordpress                    NodePort    10.105.91.50   <none>        80:32380/TCP   113s
+NAME                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+wordpress-mysql     ClusterIP   10.104.88.234    <none>        3306/TCP       3m36s
+wordpress-service   NodePort    10.111.212.108   <none>        80:32380/TCP   12s
 ```
 
 # 四、访问测试
