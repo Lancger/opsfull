@@ -298,7 +298,7 @@ strategy:
 ```bash
 env:
 - name: WORDPRESS_DB_HOST
-  value: mysql-wordpress-production:3306
+  value: wordpress-mysql:3306
 ```
 
 ## 第五. 容器启动顺序
