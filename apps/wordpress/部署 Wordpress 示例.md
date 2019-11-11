@@ -98,7 +98,8 @@ Events:            <none>
 
 ```bash
 # 命令行跑一个centos7的bash基础容器
-kubectl run --image=centos:7.2.1511 centos7-app -it --port=8080 --replicas=1 -n blog
+$ kubectl run mysql-test --rm -it --image=alpine /bin/sh
+kubectl run centos7-app --rm -it --image=centos:7.2.1511 -n blog
 
 # 进入到容器
 kubectl exec `kubectl get pods -n blog|grep centos7-app|awk '{print $1}'` -it /bin/bash -n blog
