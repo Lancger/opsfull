@@ -24,3 +24,5 @@
 参考文档：
 
 https://blog.51cto.com/wzlinux/2330295   Kubernetes 之 MySQL 持久存储和故障转移(十一)
+
+https://qingmu.io/2019/08/11/Run-mysql-on-kubernetes/ 从部署mysql聊一聊有状态服务和PV及PVC
