@@ -1,22 +1,22 @@
 # 一、PVC
 
-资源需要指定：
+PVC资源需要指定：
 
-1.accessMode：访问模型；对象列表：
+1、accessMode：访问模型；对象列表：
 
     ReadWriteOnce – the volume can be mounted as read-write by a single node：  RWO - ReadWriteOnce一人读写
     ReadOnlyMany – the volume can be mounted read-only by many nodes：          ROX - ReadOnlyMany 多人只读
     ReadWriteMany – the volume can be mounted as read-write by many nodes：     RWX - ReadWriteMany多人读写
     
-2.resource：资源限制（比如：定义5GB空间，我们期望对应的存储空间至少5GB。）  
+2、resource：资源限制（比如：定义5GB空间，我们期望对应的存储空间至少5GB。）  
 
-3.selector：标签选择器。不加标签，就会在所有PV找最佳匹配。
+3、selector：标签选择器。不加标签，就会在所有PV找最佳匹配。
 
-4.storageClassName：存储类名称：
+4、storageClassName：存储类名称：
 
-5.volumeMode：指后端存储卷的模式。可以用于做类型限制，哪种类型的PV可以被当前claim所使用。
+5、volumeMode：指后端存储卷的模式。可以用于做类型限制，哪种类型的PV可以被当前claim所使用。
 
-6.volumeName：卷名称，指定后端PVC（相当于绑定）
+6、volumeName：卷名称，指定后端PVC（相当于绑定）
 
 
 # 二、PV
