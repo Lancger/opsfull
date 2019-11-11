@@ -57,10 +57,10 @@ spec:
     - noresvport
 EOF
 
-#部署pv到集群中
+# 部署pv到集群中
 kubectl apply -f mysql-static-pv.yaml
 
-#查看pv
+# 查看pv
 kubectl get pv
 ```
 
