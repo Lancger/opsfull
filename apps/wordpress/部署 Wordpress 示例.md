@@ -268,6 +268,11 @@ $ kubectl get deployment wordpress-deploy
 
 NAME        DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 wordpress-deploy   3         3         3            3           4d
+
+4、删除HPA
+$ kubectl delete HorizontalPodAutoscaler  wordpress-deploy -n blog
+
+horizontalpodautoscaler.autoscaling "wordpress-deploy" deleted
 ```
 
 ## 第三. 增加滚动更新策略
