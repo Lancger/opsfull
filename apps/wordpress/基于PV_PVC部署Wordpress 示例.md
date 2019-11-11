@@ -1,6 +1,6 @@
 # 一、PVC
 
-&#8195;PVC资源需要指定：
+## PVC资源需要指定：
 
 1、accessMode：访问模型；对象列表：
 
@@ -21,13 +21,13 @@
 
 # 二、PV
 
-&#8195;PV和PVC是一一对应关系，当有PV被某个PVC所占用时，会显示banding，其它PVC不能再使用绑定过的PV。
+1、PV和PVC是一一对应关系，当有PV被某个PVC所占用时，会显示banding，其它PVC不能再使用绑定过的PV。
 
-&#8195;PVC一旦绑定PV，就相当于是一个存储卷，此时PVC可以被多个Pod所使用。（PVC支不支持被多个Pod访问，取决于访问模型accessMode的定义）。
+2、PVC一旦绑定PV，就相当于是一个存储卷，此时PVC可以被多个Pod所使用。（PVC支不支持被多个Pod访问，取决于访问模型accessMode的定义）。
 
-&#8195;PVC若没有找到合适的PV时，则会处于pending状态。
+3、PVC若没有找到合适的PV时，则会处于pending状态。
 
-PV的reclaim policy选项：
+4、PV的reclaim policy选项：
 
     默认是Retain保留，保留生成的数据。
     可以改为recycle回收，删除生成的数据，回收pv
@@ -35,9 +35,9 @@ PV的reclaim policy选项：
    
 # 三、两者差异
 
-PV是属于集群级别的，不能定义在名称空间中
+1、PV是属于集群级别的，不能定义在名称空间中
 
-PVC时属于名称空间级别的。
+2、PVC时属于名称空间级别的。
 
 参考文档：
 
