@@ -402,7 +402,7 @@ spec:
       initContainers:
       - name: init-db
         image: busybox
-        command: ['sh', '-c', 'until nslookup mysql; do echo waiting for mysql service; sleep 2; done;']
+        command: ['sh', '-c', 'until nslookup wordpress-mysql; do echo waiting for mysql service; sleep 2; done;']
       containers:
       - name: wordpress
         image: wordpress
