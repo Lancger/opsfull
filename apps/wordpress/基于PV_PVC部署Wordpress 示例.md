@@ -1,4 +1,18 @@
-# 一、PVC
+# 一、PV
+
+1、PV和PVC是一一对应关系，当有PV被某个PVC所占用时，会显示banding，其它PVC不能再使用绑定过的PV。
+
+2、PVC一旦绑定PV，就相当于是一个存储卷，此时PVC可以被多个Pod所使用。（PVC支不支持被多个Pod访问，取决于访问模型accessMode的定义）。
+
+3、PVC若没有找到合适的PV时，则会处于pending状态。
+
+4、PV的reclaim policy选项：
+
+    默认是Retain保留，保留生成的数据。
+    可以改为recycle回收，删除生成的数据，回收pv
+    delete，删除，pvc解除绑定后，pv也就自动删除。
+
+# 二、PVC
 
 ## PVC资源需要指定：
 
@@ -18,20 +32,6 @@
 
 6、volumeName：卷名称，指定后端PVC（相当于绑定）
 
-
-# 二、PV
-
-1、PV和PVC是一一对应关系，当有PV被某个PVC所占用时，会显示banding，其它PVC不能再使用绑定过的PV。
-
-2、PVC一旦绑定PV，就相当于是一个存储卷，此时PVC可以被多个Pod所使用。（PVC支不支持被多个Pod访问，取决于访问模型accessMode的定义）。
-
-3、PVC若没有找到合适的PV时，则会处于pending状态。
-
-4、PV的reclaim policy选项：
-
-    默认是Retain保留，保留生成的数据。
-    可以改为recycle回收，删除生成的数据，回收pv
-    delete，删除，pvc解除绑定后，pv也就自动删除。
    
 # 三、两者差异
 
