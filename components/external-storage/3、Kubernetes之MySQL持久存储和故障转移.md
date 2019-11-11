@@ -86,6 +86,9 @@ EOF
 
 # 创建pvc资源
 kubectl apply -f mysql-pvc.yaml
+
+# 查看pvc
+kubectl get pvc
 ```
 
 参考文档：
