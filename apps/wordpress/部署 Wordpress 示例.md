@@ -446,6 +446,19 @@ EOF
 kubectl apply -f wordpress-all.yaml
 
 watch kubectl get pods -n blog
+
+# 检测mysql服务
+$ kubectl run mysql-test --rm -it --image=alpine /bin/sh -n blog
+
+$ nslookup wordpress-mysql
+Name:      wordpress-mysql
+Address 1: 10.99.230.27 wordpress-mysql.blog.svc.cluster.local
+
+$ ping wordpress-mysql
+PING wordpress-mysql (10.99.230.27): 56 data bytes
+64 bytes from 10.99.230.27: seq=0 ttl=64 time=0.124 ms
+64 bytes from 10.99.230.27: seq=0 ttl=64 time=0.124 ms
+
 ```
 
 参考文档：
