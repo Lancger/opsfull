@@ -33,7 +33,7 @@ metadata:
   name: mysql-static-pv
 spec:
   capacity:
-    storage: 10Gi
+    storage: 100Gi
 
   accessModes:
     - ReadWriteOnce
@@ -65,7 +65,25 @@ kubectl get pv
 2、创建PVC
 
 ```bash
+# 清理PVC资源
+kubectl delete -f mysql-pvc.yaml 
 
+# 编写pvc yaml文件
+cat > mysql-static-pv.yaml <<\EOF
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-static-pvc
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Gi
+EOF
+
+# 创建PVC资源
+kubectl apply -f mysql-pvc.yaml
 ```
 
 参考文档：
