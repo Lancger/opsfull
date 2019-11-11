@@ -21,7 +21,7 @@ PV就好比是一个仓库，我们需要先购买一个仓库，即定义一个
 PVC就好比租户，pv和pvc是一对一绑定的，挂载到POD中，一个pvc可以被多个pod挂载。
 ```
 
-1、创建 PV 和 PVC
+1、创建 PV
 
 ```bash
 kubectl delete -f mysql-static-pv.yaml
@@ -55,7 +55,17 @@ spec:
     - noresvport
 EOF
 
+#部署PV到集群中
 kubectl apply -f mysql-static-pv.yaml
+
+#查看PV
+kubectl get pv
+```
+
+2、创建PVC
+
+```bash
+
 ```
 
 参考文档：
