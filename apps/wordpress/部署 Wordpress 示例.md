@@ -366,7 +366,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql
+  name: wordpress-mysql
   namespace: blog
 spec:
   selector:
