@@ -4,9 +4,9 @@ PVC资源需要指定：
 
 1、accessMode：访问模型；对象列表：
 
-    ReadWriteOnce – the volume can be mounted as read-write by a single node：  RWO - ReadWriteOnce一人读写
-    ReadOnlyMany – the volume can be mounted read-only by many nodes：          ROX - ReadOnlyMany 多人只读
-    ReadWriteMany – the volume can be mounted as read-write by many nodes：     RWX - ReadWriteMany多人读写
+    ReadWriteOnce – the volume can be mounted as read-write by a single node：  RWO - ReadWriteOnce  一人读写
+    ReadOnlyMany – the volume can be mounted read-only by many nodes：          ROX - ReadOnlyMany   多人只读
+    ReadWriteMany – the volume can be mounted as read-write by many nodes：     RWX - ReadWriteMany  多人读写
     
 2、resource：资源限制（比如：定义5GB空间，我们期望对应的存储空间至少5GB。）  
 
