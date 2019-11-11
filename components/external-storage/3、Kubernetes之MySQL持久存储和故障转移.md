@@ -24,8 +24,10 @@ PVC就好比租户，pv和pvc是一对一绑定的，挂载到POD中，一个pvc
 1、创建 PV
 
 ```bash
+# 清理pv资源
 kubectl delete -f mysql-static-pv.yaml
 
+# 编写pv yaml资源文件
 cat > mysql-static-pv.yaml <<\EOF
 apiVersion: v1
 kind: PersistentVolume
@@ -55,20 +57,20 @@ spec:
     - noresvport
 EOF
 
-#部署PV到集群中
+#部署pv到集群中
 kubectl apply -f mysql-static-pv.yaml
 
-#查看PV
+#查看pv
 kubectl get pv
 ```
 
 2、创建PVC
 
 ```bash
-# 清理PVC资源
+# 清理pvc资源
 kubectl delete -f mysql-pvc.yaml 
 
-# 编写pvc yaml文件
+# 编写pvc yaml资源文件
 cat > mysql-static-pv.yaml <<\EOF
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -82,7 +84,7 @@ spec:
       storage: 100Gi
 EOF
 
-# 创建PVC资源
+# 创建pvc资源
 kubectl apply -f mysql-pvc.yaml
 ```
 
