@@ -6,6 +6,8 @@ PersistentVolumeClaim（PVC）：让用户不需要关心具体的Volume实现�
 
 容器与PV、PVC之间的关系，可以如下图所示：
 
+  ![PV](https://github.com/Lancger/opsfull/blob/master/images/pv01.png)
+
 总的来说，PV是提供者，PVC是消费者，消费的过程就是绑定
 
 
