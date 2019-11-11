@@ -48,3 +48,5 @@ PersistentVolumeClaim (PVC) 是对 PV 的申请 (Claim)。PVC 通常由普通用
 参考文档：
 
 https://blog.csdn.net/weixin_42973226/article/details/86501693  基于rook-ceph部署wordpress
+
+https://www.cnblogs.com/benjamin77/p/9944268.html  k8s的持久化存储PV&&PVC
