@@ -412,7 +412,7 @@ spec:
           name: wdport
         env:
         - name: WORDPRESS_DB_HOST
-          value: mysql:3306
+          value: wordpress-mysql:3306
         - name: WORDPRESS_DB_USER
           value: wordpress
         - name: WORDPRESS_DB_PASSWORD
