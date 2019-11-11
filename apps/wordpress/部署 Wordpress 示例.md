@@ -237,7 +237,7 @@ readinessProbe:
 ```bash
 1、创建HPA资源（一定要设置Pod的资源限制参数: request, 否则HPA不会工作）
 
-kubectl autoscale deployment wordpress-deploy --cpu-percent=10 --min=1 --max=10 -n blog
+$ kubectl autoscale deployment wordpress-deploy --cpu-percent=10 --min=1 --max=10 -n blog
 
 deployment "wordpress-deploy" autoscaled
 
@@ -251,15 +251,20 @@ resources:
     cpu: 100m
     memory: 100Mi
     
+# 查看HPA
+$ kubectl get HorizontalPodAutoscaler -A 
+NAMESPACE   NAME               REFERENCE                     TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
+blog        wordpress-deploy   Deployment/wordpress-deploy   <unknown>/10%   1         10        1          4m19s
+
 2、更新Deployment后，我们可以可以来测试下上面的HPA是否会生效：
-kubectl run -i --tty load-generator --image=busybox /bin/sh
+$ kubectl run -i --tty load-generator --image=busybox /bin/sh
 
 If you don't see a command prompt, try pressing enter.
 
 while true; do wget -q -O- http://wordpress:80; done
 
 3、观察Deployment的副本数是否有变化
-kubectl get deployment wordpress-deploy
+$ kubectl get deployment wordpress-deploy
 
 NAME        DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 wordpress-deploy   3         3         3            3           4d
