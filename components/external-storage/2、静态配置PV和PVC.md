@@ -193,4 +193,54 @@ $ kubectl get pv
 NAME          CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                STORAGECLASS   REASON   AGE
 nfs-pv001     20Gi       RWO            Recycle          Bound    default/nfs-pvc001   nfs                     17m
 nfs-pv002     30Gi       RWO            Recycle          Bound    default/nfs-pvc002   nfs                     17m
+
+# 从 kubectl get pvc 和 kubectl get pv 的输出可以看到 pvc001 和pvc002分别绑定到pv001和pv002，申请成功。注意pvc绑定到对应pv通过labels标签方式实现，也可以不指定，将随机绑定到pv。
+```
+
+# 六、Pod 中使用存储
+
+```bash
+# 与使用普通 Volume 的格式类似，在 volumes 中通过 persistentVolumeClaim 指定使用nfs-pvc001和nfs-pvc002申请的 Volume。
+```
+1、nfs-pod001.yaml 
+
+```bash
+cat > nfs-pod001.yaml <<\EOF
+kind: Pod
+apiVersion: v1
+metadata:
+  name: nfs-pod001
+spec:
+  containers:
+    - name: myfrontend
+      image: nginx
+      volumeMounts:
+      - mountPath: "/var/www/html"
+        name: nfs-pv001
+  volumes:
+    - name: nfs-pv001
+      persistentVolumeClaim:
+        claimName: nfs-pvc001
+EOF
+```
+
+2、nfs-pod002.yaml
+```bash
+cat > nfs-pod002.yaml <<\EOF
+kind: Pod
+apiVersion: v1
+metadata:
+  name: nfs-pod002
+spec:
+  containers:
+    - name: myfrontend
+      image: nginx
+      volumeMounts:
+      - mountPath: "/var/www/html"
+        name: nfs-pv002
+  volumes:
+    - name: nfs-pv002
+      persistentVolumeClaim:
+        claimName: nfs-pvc002
+EOF
 ```
