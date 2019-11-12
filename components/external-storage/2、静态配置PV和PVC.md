@@ -22,10 +22,11 @@ exportfs -r
 systemctl restart rpcbind && systemctl restart nfs
 
 #查看挂载点
-$ exportfs
-/data/nfs        <world>
-/data/nfs/pv001  <world>
-/data/nfs/pv002  <world>
+$ showmount -e 192.168.56.11
+Export list for 192.168.56.11:
+/data/nfs/pv002 *
+/data/nfs/pv001 *
+/data/nfs       *
 ```
 
 # 二、创建PV
