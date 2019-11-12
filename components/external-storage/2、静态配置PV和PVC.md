@@ -127,6 +127,58 @@ nfs-pv002     30Gi       RWO            Recycle          Available           nfs
 
 接下来创建2个名为pvc001和pvc002的PVC，配置文件 nfs-pvc001.yaml 如下：
 
-```bash
+1、nfs-pvc001.yaml
 
+```bash
+# 清理pvc资源
+kubectl delete -f nfs-pvc001.yaml
+
+# 编写pvc资源文件
+cat > nfs-pvc001.yaml <<\EOF           
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-pvc001
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: nfs
+  selector:
+    matchLabels:
+      pv: nfs-pv001
+EOF
+
+# 部署pvc到集群中
+kubectl apply -f nfs-pvc001.yaml
 ```
+
+2、nfs-pvc002.yaml
+```bash
+# 清理pvc资源
+kubectl delete -f nfs-pvc002.yaml
+
+# 编写pvc资源文件
+cat > nfs-pvc002.yaml <<\EOF           
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-pvc002
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: nfs
+  selector:
+    matchLabels:
+      pv: nfs-pv001
+EOF
+
+# 部署pvc到集群中
+kubectl apply -f nfs-pvc002.yaml
+```
+
