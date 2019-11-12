@@ -312,8 +312,11 @@ kubectl exec nfs-pod001 touch /var/www/html/index001.html
 kubectl exec nfs-pod002 touch /var/www/html/index002.html
 
 # 登录到nfs-server上面查看文件是否创建成功
-ls /data/nfs/pv001/
-ls /data/nfs/pv002/
+$ ls /data/nfs/pv001/
+index001.html
+
+$ ls /data/nfs/pv002/
+index002.html
 ```
 
 ## 02、进入pod查看挂载情况
