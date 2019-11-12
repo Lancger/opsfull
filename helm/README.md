@@ -79,7 +79,7 @@ kubectl get pvc
 ## 1、创建tls secret
 
 ```bash
-openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -keyout ./tls.key -out ./tls.crt -subj "/CN=192.168.56.11"
+openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -keyout ./tls.key -out ./tls.crt -subj "/CN=k8s.test.com"
 ```
 
 ## 2、安装tls secret
@@ -104,7 +104,7 @@ ingress:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
   tls:
-    - secretName: hongda-com-tls-secret
+    - secretName: dashboard-tls-secret
       hosts:
       - k8s.test.com
 nodeSelector:
