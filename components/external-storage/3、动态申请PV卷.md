@@ -200,7 +200,9 @@ EOF
 kubectl apply -f nfs-storage.yaml
 
 #查看创建的storageclass
-kubectl get sc
+$ kubectl get sc
+NAME                    PROVISIONER      AGE
+nfs-storage (default)   nfs-client       3m38s
 ```
 
 # 四、创建PVC
@@ -233,7 +235,9 @@ spec:
 EOF
 
 #创建PVC
-kubectl apply -f test-claim.yaml -n kube-public
+$ kubectl apply -f test-claim.yaml -n kube-public
+NAME         STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+test-claim   Bound    pvc-593f241f-a75f-459a-af18-a672e5090921   100Gi      RWX            nfs-storage    3s
 
 #查看创建的PV和PVC
 kubectl get pvc -n kube-public
