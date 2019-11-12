@@ -20,20 +20,6 @@ Table of Contents
 
 ### 01. 创建PV
 
-
-#### 1.1 Kubernetes的特性
-
-# 一、介绍
-
-
-### 01. 部署目的
-
-nfs-server上操作，添加pv卷对应目录,这里创建2个pv卷，则添加2个pv卷的目录作为挂载点。
-
-# 二、操作
-
-### 01. 创建PV
-
 ```bash
 # 创建pv卷对应的目录
 mkdir -p /data/nfs/pv001
@@ -58,6 +44,21 @@ Export list for 192.168.56.11:
 /data/nfs/pv001 *
 /data/nfs       *
 ```
+
+#### 1.1 Kubernetes的特性
+
+# 一、介绍
+
+
+### 01. 部署目的
+
+nfs-server上操作，添加pv卷对应目录,这里创建2个pv卷，则添加2个pv卷的目录作为挂载点。
+
+# 二、操作
+
+### 01. 创建PV
+
+
 
 ### 02. PV配置参数介绍
 
