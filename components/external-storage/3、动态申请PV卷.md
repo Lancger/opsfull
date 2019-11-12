@@ -104,20 +104,25 @@ storage class的定义，需要注意的是：provisioner属性要等于驱动�
 此处可以不修改，或者修改provisioner的名字，需要与上面的deployment的`PROVISIONER_NAME`名字一致。
 
 ```
-kubectl delete -f class.yaml
+# 清理storageclass资源
+kubectl delete -f nfs-storage.yaml
 
-cat > class.yaml <<-EOF
+# 编写yaml
+cat >nfs-storage.yaml<<-EOF
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: managed-nfs-storage
-provisioner: fuseim.pri/ifs # or choose another name, must match deployment's env PROVISIONER_NAME'
+provisioner: nfs-client  #---动态卷分配者名称，必须和上面创建的"PROVISIONER_NAME"变量中设置的Name一致
 parameters:
-  archiveOnDelete: "false"
+  archiveOnDelete: "true"  #---设置为"false"时删除PVC不会保留数据,"true"则保留数据
+mountOptions: 
+  - hard        #指定为硬挂载方式
+  - nfsvers=4   #指定NFS版本，这个需要根据 NFS Server 版本号设置
 EOF
 
 #部署class.yaml
-kubectl apply -f class.yaml
+kubectl apply -f nfs-storage.yaml
 
 #查看创建的storageclass
 kubectl get sc
