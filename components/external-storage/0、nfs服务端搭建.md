@@ -11,7 +11,7 @@ chmod -R 666 /nfs/data
 
 #编辑export文件
 vim /etc/exports
-/nfs/data *(rw,no_root_squash,sync)
+/nfs/data 192.168.56.0/24(rw,async,no_root_squash)
 
 #配置生效
 exportfs -r
