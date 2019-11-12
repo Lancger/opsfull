@@ -280,3 +280,7 @@ EOF
 # 创建pod资源
 kubectl apply -f nfs-pod002.yaml
 ```
+
+参考资料：
+
+https://blog.csdn.net/networken/article/details/86697018  kubernetes部署NFS持久存储
