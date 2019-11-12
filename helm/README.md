@@ -199,6 +199,8 @@ openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -keyout ./tls.key -out ./tl
 
 ## 2、安装tls secret
 ```bash
+kubectl delete secret dashboard-tls-secret -n kube-system
+
 kubectl -n kube-system  create secret tls dashboard-tls-secret --key ./tls.key --cert ./tls.crt
 
 kubectl get secret -n kube-system |grep dashboard
