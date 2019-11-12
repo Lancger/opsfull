@@ -40,8 +40,8 @@ exportfs -r
 systemctl restart rpcbind && systemctl restart nfs
 
 # 查看挂载点
-$ showmount -e 192.168.56.11
-Export list for 192.168.56.11:
+$ showmount -e localhost
+Export list for localhost:
 /data/nfs/pv002 *
 /data/nfs/pv001 *
 /data/nfs       *
