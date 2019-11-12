@@ -136,10 +136,15 @@ kubectl get sc
 
 ```bash
 # 清理rbac授权
-kubectl delete -f nfs-rbac.yaml
+kubectl delete -f nfs-rbac.yaml -n kube-system
 
 # 编写yaml
 cat >nfs-rbac.yaml<<-EOF
+---
+kind: ServiceAccount
+apiVersion: v1
+metadata:
+  name: nfs-client-provisioner
 ---
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
@@ -166,7 +171,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: nfs-client-provisioner
-    namespace: kube-system      #替换成你要部署NFS Provisioner的 Namespace
+    namespace: kube-system
 roleRef:
   kind: ClusterRole
   name: nfs-client-provisioner-runner
@@ -188,7 +193,8 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: nfs-client-provisioner
-    namespace: kube-system      #替换成你要部署NFS Provisioner的 Namespace
+    # replace with namespace where provisioner is deployed
+    namespace: kube-system
 roleRef:
   kind: Role
   name: leader-locking-nfs-client-provisioner
@@ -196,7 +202,7 @@ roleRef:
 EOF
 
 # 应用授权
-kubectl apply -f nfs-rbac.yaml
+kubectl apply -f nfs-rbac.yaml -n kube-system
 ```
 
 # 四、创建PVC
