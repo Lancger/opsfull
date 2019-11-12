@@ -278,6 +278,10 @@ kubectl describe pod `kubectl get pod -A|grep dashboard|awk '{print $2}'` -n kub
 
 4、访问
 ```bash
+#获取token
+kubectl describe -n kube-system secret/`kubectl -n kube-system get secret | grep kubernetes-dashboard-token|awk '{print $1}'`
+
+#访问
 https://k8s.test.com
 ```
 
