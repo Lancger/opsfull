@@ -76,9 +76,73 @@ kubectl get pvc
 
 # 二、Helm 安装部署Kubernetes的dashboard
 
+## 1、创建tls secret
+
 ```bash
+openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -keyout ./tls.key -out ./tls.crt -subj "/CN=192.168.56.11"
+```
+
+## 2、安装tls secret
+```bash
+kubectl -n kube-system  create secret tls dashboard-tls-secret --key ./tls.key --cert ./tls.crt
+
+kubectl get secret -n kube-system |grep dashboard
+```
+
+## 3、安装
+
+```bash
+cat >kubernetes-dashboard.yaml<<\EOF
+image:
+  repository: k8s.gcr.io/kubernetes-dashboard-amd64
+  tag: v1.10.1
+ingress:
+  enabled: true
+  hosts: 
+    - k8s.test.com
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+  tls:
+    - secretName: hongda-com-tls-secret
+      hosts:
+      - k8s.test.com
+nodeSelector:
+    node-role.kubernetes.io/edge: ''
+tolerations:
+    - key: node-role.kubernetes.io/master
+      operator: Exists
+      effect: NoSchedule
+    - key: node-role.kubernetes.io/master
+      operator: Exists
+      effect: PreferNoSchedule
+rbac:
+  clusterAdminRole: true
+EOF
+
+相比默认配置，修改了以下配置项：
+
+  ingress.enabled - 置为 true 开启 Ingress，用 Ingress 将 Kubernetes Dashboard 服务暴露出来，以便让我们浏览器能够访问
+  
+  ingress.annotations - 指定 ingress.class 为 nginx，让我们安装 Nginx Ingress Controller 来反向代理 Kubernetes Dashboard 服务；由于 Kubernetes Dashboard 后端服务是以 https 方式监听的，而 Nginx Ingress Controller 默认会以 HTTP 协议将请求转发给后端服务，用secure-backends这个 annotation 来指示 Nginx Ingress Controller 以 HTTPS 协议将请求转发给后端服务
+  
+  ingress.hosts - 这里替换为证书配置的域名
+  
+  Ingress.tls - secretName 配置为 cert-manager 生成的免费证书所在的 Secret 资源名称，hosts 替换为证书配置的域名
+  
+  rbac.clusterAdminRole - 置为 true 让 dashboard 的权限够大，这样我们可以方便操作多个 namespace
 
 ```
+
+## 4、命令安装
+
+```bash
+helm install stable/kubernetes-dashboard \
+-n kubernetes-dashboard \
+--namespace kube-system  \
+-f kubernetes-dashboard.yaml
+```
+
 
 参考文档：
 
