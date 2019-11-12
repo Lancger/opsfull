@@ -94,7 +94,7 @@ yum install -y nfs-utils rpcbind
 #客户端创建目录，然后执行挂载
 mkdir -p /mnt/nfs
 
-mount -t nfs 192.168.56.11:/nfs/data  /mnt/nfs
+mount -t nfs -o nolock,vers=4 192.168.56.11:/nfs/data /mnt/nfs
 
 #或者直接写到/etc/fstab文件中
 vim /etc/fstab
@@ -102,6 +102,15 @@ vim /etc/fstab
 
 #挂载
 mount -a
+
+#卸载挂载
+umount /mnt/nfs
+
+#查看nfs服务端信息
+nfsstat -s
+
+#查看nfs客户端信息
+nfsstat -c
 ```
 
 参考文档：
