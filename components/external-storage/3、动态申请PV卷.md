@@ -1,20 +1,3 @@
-Table of Contents
-=================
-
-   * [Kubernetes 中部署 NFS Provisioner 为 NFS 提供动态分配卷](#kubernetes-中部署-nfs-provisioner-为-nfs-提供动态分配卷)
-      * [一、NFS Provisioner 简介](#一nfs-provisioner-简介)
-      * [二、External NFS驱动的工作原理](#二external-nfs驱动的工作原理)
-         * [1、nfs-client](#1nfs-client)
-         * [2、nfs](#2nfs)
-      * [三、部署服务](#三部署服务)
-         * [1、配置授权](#1配置授权)
-         * [2、部署nfs-client-provisioner](#2部署nfs-client-provisioner)
-         * [3、部署NFS Provisioner](#3部署nfs-provisioner)
-         * [4、创建StorageClass](#4创建storageclass)
-   * [四、创建PVC](#四创建pvc)
-   * [五、创建测试Pod](#五创建测试pod)
-      * [01、进入 NFS Server 服务器验证是否创建对应文件](#01进入-nfs-server-服务器验证是否创建对应文件)
-      
 # Kubernetes 中部署 NFS Provisioner 为 NFS 提供动态分配卷
 
 ## 一、NFS Provisioner 简介
