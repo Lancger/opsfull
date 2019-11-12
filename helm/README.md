@@ -46,7 +46,6 @@ echo "source <(helm completion bash)" >> /root/.bashrc # 命令自动补全
 
 ## 4、Helm使用
 ```bash
-
 #搜索 
 helm search
 
@@ -57,6 +56,7 @@ kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"templat
 
 #安装chart的mysql应用
 helm install stable/mysql
+
 会自动部署 Service,Deployment,Secret 和 PersistentVolumeClaim,并给与很多提示信息,比如mysql密码获取,连接端口等.
 
 #查看release各个对象
