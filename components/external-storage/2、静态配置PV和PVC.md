@@ -239,7 +239,7 @@ nfs-pv002     30Gi       RWO            Recycle          Bound    default/nfs-pv
 # 从 kubectl get pvc 和 kubectl get pv 的输出可以看到 pvc001 和pvc002分别绑定到pv001和pv002，申请成功。注意pvc绑定到对应pv通过labels标签方式实现，也可以不指定，将随机绑定到pv。
 ```
 
-# 三、Pod中使用存储
+# 四、Pod中使用存储
 
 ```与使用普通 Volume 的格式类似，在 volumes 中通过 persistentVolumeClaim 指定使用nfs-pvc001和nfs-pvc002申请的 Volume。```
 
@@ -302,7 +302,7 @@ EOF
 kubectl apply -f nfs-pod002.yaml
 ```
 
-# 四、验证
+# 五、验证
 
 ## 01、验证PV是否可用
 
