@@ -277,10 +277,10 @@ spec:
 EOF
 
 #创建pod
-kubectl apply -f test-pod.yaml
+kubectl apply -f test-pod.yaml -n kube-public
 
 #查看创建的pod
-kubectl get pod -o wide
+kubectl get pod -o wide -n kube-public
 ```
 
 
