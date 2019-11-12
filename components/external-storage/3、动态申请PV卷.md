@@ -197,7 +197,7 @@ EOF
 kubectl apply -f nfs-rbac.yaml
 ```
 
-# 二、创建测试PVC
+# 四、创建PVC
 ```
 kubectl delete -f test-claim.yaml
 
@@ -229,7 +229,7 @@ kubectl get pv
 注意，出现pvc在pending的原因可能为nfs-client-provisioner pod 出现了问题，删除重建的时候会出现镜像问题
 ```
 
-# 三、创建测试Pod
+# 五、创建测试Pod
 
 ```
 cat > test-pod.yaml <<\EOF
