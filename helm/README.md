@@ -194,6 +194,10 @@ EOF
 
 1、安装
 ```bash
+#删除
+helm delete kubernetes-dashboard
+
+#安装
 helm install stable/kubernetes-dashboard \
 -n kubernetes-dashboard \
 --namespace kube-system  \
