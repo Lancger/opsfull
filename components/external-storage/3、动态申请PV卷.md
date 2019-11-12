@@ -198,29 +198,33 @@ kubectl apply -f nfs-rbac.yaml
 ```
 
 # 四、创建PVC
-```
-kubectl delete -f test-claim.yaml
+```bash
+# 创建命名空间
+kubectl create ns kube-public
 
+# 清理pvc
+kubectl delete -f test-claim.yaml -n kube-public
+
+# 编写yaml
 cat >test-claim.yaml<<\EOF
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: test-claim
-  annotations:
-    volume.beta.kubernetes.io/storage-class: "managed-nfs-storage"
 spec:
+  storageClassName: nfs-storage #---需要与上面创建的storageclass的名称一致
   accessModes:
     - ReadWriteMany
   resources:
     requests:
-      storage: 100Mi
+      storage: 100Gi
 EOF
 
 #创建PVC
-kubectl apply -f test-claim.yaml
+kubectl apply -f test-claim.yaml -n kube-public
 
 #查看创建的PV和PVC
-kubectl get pvc
+kubectl get pvc -n kube-public
 kubectl get pv
 
 然后，我们进入到NFS的export目录，可以看到对应该volume name的目录已经创建出来了。
