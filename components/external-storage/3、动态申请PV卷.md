@@ -24,113 +24,7 @@ K8S的外部NFS驱动，可以按照其工作方式（是作为NFS server还是N
 
 ## 三、部署服务
 
-### 1、部署nfs-client-provisioner
-
-首先克隆仓库获取yaml文件
-```
-git clone https://github.com/kubernetes-incubator/external-storage.git
-cp -R external-storage/nfs-client/deploy/ /root/
-cd deploy
-```
-### 2、部署NFS Provisioner
-
-修改deployment.yaml文件,这里修改的参数包括NFS服务器所在的IP地址（10.198.1.155），以及NFS服务器共享的路径（/data/nfs/），两处都需要修改为你实际的NFS服务器和共享目录。另外修改nfs-client-provisioner镜像从七牛云拉取。
-
-设置 NFS Provisioner 部署文件，这里将其部署到 “kube-system” Namespace 中。
-
-```bash
-# 清理NFS Provisioner资源
-kubectl delete -f nfs-provisioner-deploy.yaml -n kube-system
-
-export NFS_ADDRESS='10.198.1.155'
-export NFS_DIR='/data/nfs'
-
-# 编写deployment.yaml
-cat >nfs-provisioner-deploy.yaml<<-EOF
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: nfs-client-provisioner
----
-kind: Deployment
-apiVersion: apps/v1
-metadata:
-  name: nfs-client-provisioner
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: nfs-client-provisioner
-  strategy:
-    type: Recreate  #---设置升级策略为删除再创建(默认为滚动更新)
-  template:
-    metadata:
-      labels:
-        app: nfs-client-provisioner
-    spec:
-      serviceAccountName: nfs-client-provisioner
-      containers:
-        - name: nfs-client-provisioner
-          #---由于quay.io仓库国内被墙，所以替换成七牛云的仓库
-          image: quay-mirror.qiniu.com/external_storage/nfs-client-provisioner:latest
-          volumeMounts:
-            - name: nfs-client-root
-              mountPath: /persistentvolumes
-          env:
-            - name: PROVISIONER_NAME
-              value: nfs-client  #---nfs-provisioner的名称，以后设置的storageclass要和这个保持一致
-            - name: NFS_SERVER
-              value: ${NFS_ADDRESS}  #---NFS服务器地址，和 valumes 保持一致
-            - name: NFS_PATH
-              value: ${NFS_DIR}  #---NFS服务器目录，和 valumes 保持一致
-      volumes:
-        - name: nfs-client-root
-          nfs:
-            server: ${NFS_ADDRESS}  #---NFS服务器地址
-            path: ${NFS_DIR} #---NFS服务器目录
-EOF
-
-# 部署deployment.yaml
-kubectl apply -f nfs-provisioner-deploy.yaml -n kube-system
-
-# 查看创建的pod
- kubectl get pod -o wide -n kube-system|grep nfs-client
-```
-
-### 3、创建StorageClass
-
-storage class的定义，需要注意的是：provisioner属性要等于驱动所传入的环境变量`PROVISIONER_NAME`的值。否则，驱动不知道知道如何绑定storage class。
-此处可以不修改，或者修改provisioner的名字，需要与上面的deployment的`PROVISIONER_NAME`名字一致。
-
-```bash
-# 清理storageclass资源
-kubectl delete -f nfs-storage.yaml
-
-# 编写yaml
-cat >nfs-storage.yaml<<-EOF
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: nfs-storage
-  annotations:
-    storageclass.kubernetes.io/is-default-class: "true"  #---设置为默认的storageclass
-provisioner: nfs-client  #---动态卷分配者名称，必须和上面创建的"PROVISIONER_NAME"变量中设置的Name一致
-parameters:
-  archiveOnDelete: "true"  #---设置为"false"时删除PVC不会保留数据,"true"则保留数据
-mountOptions: 
-  - hard        #指定为硬挂载方式
-  - nfsvers=4   #指定NFS版本，这个需要根据 NFS Server 版本号设置
-EOF
-
-#部署class.yaml
-kubectl apply -f nfs-storage.yaml
-
-#查看创建的storageclass
-kubectl get sc
-```
-
-### 4、配置授权
+### 1、配置授权
 
 现在的 Kubernetes 集群大部分是基于 RBAC 的权限控制，所以创建一个一定权限的 ServiceAccount 与后面要创建的 “NFS Provisioner” 绑定，赋予一定的权限。
 
@@ -203,6 +97,112 @@ EOF
 
 # 应用授权
 kubectl apply -f nfs-rbac.yaml -n kube-system
+```
+
+### 2、部署nfs-client-provisioner
+
+首先克隆仓库获取yaml文件
+```
+git clone https://github.com/kubernetes-incubator/external-storage.git
+cp -R external-storage/nfs-client/deploy/ /root/
+cd deploy
+```
+### 3、部署NFS Provisioner
+
+修改deployment.yaml文件,这里修改的参数包括NFS服务器所在的IP地址（10.198.1.155），以及NFS服务器共享的路径（/data/nfs/），两处都需要修改为你实际的NFS服务器和共享目录。另外修改nfs-client-provisioner镜像从七牛云拉取。
+
+设置 NFS Provisioner 部署文件，这里将其部署到 “kube-system” Namespace 中。
+
+```bash
+# 清理NFS Provisioner资源
+kubectl delete -f nfs-provisioner-deploy.yaml -n kube-system
+
+export NFS_ADDRESS='10.198.1.155'
+export NFS_DIR='/data/nfs'
+
+# 编写deployment.yaml
+cat >nfs-provisioner-deploy.yaml<<-EOF
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nfs-client-provisioner
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: nfs-client-provisioner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nfs-client-provisioner
+  strategy:
+    type: Recreate  #---设置升级策略为删除再创建(默认为滚动更新)
+  template:
+    metadata:
+      labels:
+        app: nfs-client-provisioner
+    spec:
+      serviceAccountName: nfs-client-provisioner
+      containers:
+        - name: nfs-client-provisioner
+          #---由于quay.io仓库国内被墙，所以替换成七牛云的仓库
+          image: quay-mirror.qiniu.com/external_storage/nfs-client-provisioner:latest
+          volumeMounts:
+            - name: nfs-client-root
+              mountPath: /persistentvolumes
+          env:
+            - name: PROVISIONER_NAME
+              value: nfs-client  #---nfs-provisioner的名称，以后设置的storageclass要和这个保持一致
+            - name: NFS_SERVER
+              value: ${NFS_ADDRESS}  #---NFS服务器地址，和 valumes 保持一致
+            - name: NFS_PATH
+              value: ${NFS_DIR}  #---NFS服务器目录，和 valumes 保持一致
+      volumes:
+        - name: nfs-client-root
+          nfs:
+            server: ${NFS_ADDRESS}  #---NFS服务器地址
+            path: ${NFS_DIR} #---NFS服务器目录
+EOF
+
+# 部署deployment.yaml
+kubectl apply -f nfs-provisioner-deploy.yaml -n kube-system
+
+# 查看创建的pod
+ kubectl get pod -o wide -n kube-system|grep nfs-client
+```
+
+### 4、创建StorageClass
+
+storage class的定义，需要注意的是：provisioner属性要等于驱动所传入的环境变量`PROVISIONER_NAME`的值。否则，驱动不知道知道如何绑定storage class。
+此处可以不修改，或者修改provisioner的名字，需要与上面的deployment的`PROVISIONER_NAME`名字一致。
+
+```bash
+# 清理storageclass资源
+kubectl delete -f nfs-storage.yaml
+
+# 编写yaml
+cat >nfs-storage.yaml<<-EOF
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: nfs-storage
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"  #---设置为默认的storageclass
+provisioner: nfs-client  #---动态卷分配者名称，必须和上面创建的"PROVISIONER_NAME"变量中设置的Name一致
+parameters:
+  archiveOnDelete: "true"  #---设置为"false"时删除PVC不会保留数据,"true"则保留数据
+mountOptions: 
+  - hard        #指定为硬挂载方式
+  - nfsvers=4   #指定NFS版本，这个需要根据 NFS Server 版本号设置
+EOF
+
+#部署class.yaml
+kubectl apply -f nfs-storage.yaml
+
+#查看创建的storageclass
+kubectl get sc
 ```
 
 # 四、创建PVC
