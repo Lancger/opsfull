@@ -42,13 +42,31 @@ Export list for 192.168.56.11:
     ReadWriteMany – PV 能以 read-write 模式 mount 到多个节点。
     
 ③ persistentVolumeReclaimPolicy 指定当 PV 的回收策略为 Recycle，支持的策略有：
-    Retain – 需要管理员手工回收。
-    Recycle – 清除 PV 中的数据，效果相当于执行 rm -rf /thevolume/*。
-    Delete – 删除 Storage Provider 上的对应存储资源，例如 AWS EBS、GCE PD、AzureDisk、OpenStack Cinder Volume 等。
+    Retain – 就是保留现场，K8S什么也不做，需要管理员手动去处理PV里的数据，处理完后，再手动删除PV
+    Recycle – K8S会将PV里的数据删除，然后把PV的状态变成Available，又可以被新的PVC绑定使用
+    Delete – K8S会自动删除该PV及里面的数据
     
 ④ storageClassName 指定 PV 的 class 为 nfs。相当于为 PV 设置了一个分类，PVC 可以指定 class 申请相应 class 的 PV。
 
 ⑤ 指定 PV 在 NFS 服务器上对应的目录。
+
+一般来说，PV和PVC的生命周期分为5个阶段：
+    Provisioning，即PV的创建，可以直接创建PV（静态方式），也可以使用StorageClass动态创建
+    Binding，将PV分配给PVC
+    Using，Pod通过PVC使用该Volume
+    Releasing，Pod释放Volume并删除PVC
+    Reclaiming，回收PV，可以保留PV以便下次使用，也可以直接从云存储中删除
+
+根据这5个阶段，Volume的状态有以下4种：
+    Available：可用
+    Bound：已经分配给PVC
+    Released：PVC解绑但还未执行回收策略
+    Failed：发生错误
+
+变成Released的PV会根据定义的回收策略做相应的回收工作。有三种回收策略：
+    Retain 就是保留现场，K8S什么也不做，等待用户手动去处理PV里的数据，处理完后，再手动删除PV
+    Delete K8S会自动删除该PV及里面的数据
+    Recycle K8S会将PV里的数据删除，然后把PV的状态变成Available，又可以被新的PVC绑定使用
 ```
 
 下面创建2个名为pv001和pv002的PV卷，配置文件 nfs-pv001.yaml 如下
