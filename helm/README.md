@@ -171,6 +171,16 @@ helm install stable/nginx-ingress \
 -f ingress-nginx.yaml
 
 如果访问 http://192.168.56.11 返回default backend，则部署完成。
+
+#nginx-ingress
+docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/nginx-ingress-controller:0.26.1
+docker tag registry.cn-hangzhou.aliyuncs.com/google_containers/nginx-ingress-controller:0.26.1 quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.25.1
+docker rmi registry.cn-hangzhou.aliyuncs.com/google_containers/nginx-ingress-controller:0.26.1
+
+#defaultbackend
+docker pull googlecontainer/defaultbackend-amd64:1.5
+docker tag googlecontainer/defaultbackend-amd64:1.5 k8s.gcr.io/defaultbackend-amd64:1.5
+docker rmi googlecontainer/defaultbackend-amd64:1.5
 ```
 
 ## 4、查看 nginx-ingress 的 Pod
@@ -266,6 +276,8 @@ kubectl describe pod `kubectl get pod -A|grep dashboard|awk '{print $2}'` -n kub
 
 
 参考文档：
+
+https://www.cnblogs.com/hongdada/p/11395200.html  镜像问题
 
 https://www.qikqiak.com/post/install-nginx-ingress/
 
