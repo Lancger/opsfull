@@ -29,7 +29,7 @@ Export list for 192.168.56.11:
 /data/nfs       *
 ```
 
-# 二、创建PV
+## 1.1、创建PV
 
 ```bash
 配置说明：
@@ -130,7 +130,7 @@ EOF
 kubectl apply -f nfs-pv002.yaml
 ```
 
-# 三、查看PV
+## 1.2、查看PV
 ```bash
 # 查看pv
 $ kubectl get pv
@@ -141,7 +141,7 @@ nfs-pv002     30Gi       RWO            Recycle          Available           nfs
 #STATUS 为 Available，表示 pv 就绪，可以被 PVC 申请。
 ```
 
-# 四、创建PVC
+# 二、创建PVC
 
 接下来创建2个名为pvc001和pvc002的PVC，配置文件 nfs-pvc001.yaml 如下：
 
