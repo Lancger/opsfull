@@ -440,6 +440,7 @@ https://www.cnblogs.com/horizonli/p/10855666.html
 #部署flannel
 rm -f kube-flannel.yml
 wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+sed -i 's#image: quay.io/coreos/flannel:v0.11.0-amd64#image: registry.cn-shenzhen.aliyuncs.com/cp_m/flannel:v0.10.0-amd64#g' kube-flannel.yml
 kubectl apply -f kube-flannel.yml
 
 #另外需要注意的是如果你的节点有多个网卡的话，需要在 kube-flannel.yml 中使用--iface参数指定集群主机内网网卡的名称，否则可能会出现 dns 无法解析。flanneld 启动参数加上--iface=<iface-name>
