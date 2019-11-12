@@ -1,4 +1,5 @@
 # 一、防火墙配置
+
 ```
 chattr -i /etc/passwd* && chattr -i /etc/group* && chattr -i /etc/shadow* && chattr -i /etc/gshadow*
 
@@ -40,7 +41,9 @@ systemctl enable iptables.service
 
 iptables -nvL
 ```
+
 # 二、初始化
+
 ```bash
 cat > /etc/hosts << \EOF
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
@@ -110,6 +113,7 @@ yum-config-manager \
 yum install -y docker-ce-18.09.9-3.el7.x86_64
 systemctl start docker
 systemctl enable docker
+
 cat > /etc/docker/daemon.json << \EOF
 {
   "exec-opts": ["native.cgroupdriver=systemd"],
@@ -131,7 +135,8 @@ repo_gpgcheck=0
 gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg
         http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
 EOF
-yum install -y kubelet-1.15.3-0 kubeadm-1.15.3-0 kubectl-1.15.3-0 --disableexcludes=kubernetes
+
+yum install -y kubelet-1.16.2 kubeadm-1.16.2 kubectl-1.16.2 --disableexcludes=kubernetes
 systemctl daemon-reload
 systemctl restart kubelet.service
 kubeadm version
@@ -146,12 +151,14 @@ journalctl -f -u kubelet
 ```
 
 # 三、初始化集群
+
 1、命令行初始化
+
 ```bash
 kubeadm init \
   --apiserver-advertise-address=192.168.56.11 \
   --image-repository registry.aliyuncs.com/google_containers \
-  --kubernetes-version v1.15.3 \
+  --kubernetes-version v1.16.2 \
   --apiserver-bind-port=6443 \
   --service-cidr=10.96.0.0/12 \
   --pod-network-cidr=10.244.0.0/16    #这里使用这个是因为官方flannel使用的这个段地址，不然的话,kube-flannel.yml那里需要调整
@@ -174,11 +181,14 @@ systemctl restart kubelet
 systemctl status kubelet
 journalctl -f -u kubelet
 ```
+
 2、通过配置文件进行初始化
+
 ```bash
 #在 master 节点配置 kubeadm 初始化文件，可以通过如下命令导出默认的初始化配置：
 root># kubeadm config print init-defaults > kubeadm.yaml
 ```
+
 ```
 #然后根据我们自己的需求修改配置，比如修改 imageRepository 的值，kube-proxy 的模式为 ipvs
 
@@ -224,7 +234,7 @@ etcd:
 #imageRepository: k8s.gcr.io
 imageRepository: registry.aliyuncs.com/google_containers #国内不能访问 Google，修改为阿里云
 kind: ClusterConfiguration
-kubernetesVersion: v1.15.3 # 修改版本号
+kubernetesVersion: v1.16.2 # 修改版本号
 networking:
   dnsDomain: cluster.local
   # 配置成 flannel 的默认网段
@@ -240,7 +250,9 @@ EOF
 
 kubeadm init --config kubeadm.yaml
 ```
+
 3、初始化进行的操作
+
 ```bash
 初始化操作主要经历了下面15个步骤，每个阶段均输出均使用[步骤名称]作为开头：
 
@@ -264,6 +276,7 @@ kubectl默认会在执行的用户家目录下面的.kube目录下寻找config�
 ```
 
 2、单独部署coredns（选择操作）
+
 ```
 # 不依赖kubeadm的方式，适用于不是使用kubeadm创建的k8s集群，或者kubeadm初始化集群之后，删除了dns相关部署
 # 在calico网络中也配置一个coredns # 10.96.0.10 为k8s官方指定的kube-dns地址
@@ -283,7 +296,9 @@ kubectl delete deployment coredns -n kube-system
 kubectl delete svc kube-dns -n kube-system
 kubectl delete cm coredns -n kube-system
 ```
+
 3、集群移除节点
+
 ```
 1、#移除work节点
 在准备移除的 worker 节点上执行
@@ -295,6 +310,7 @@ kubectl delete node demo-worker-x-x
 ```
 
 4、kube-proxy开启ipvs
+
 ```
 1、#修改ConfigMap的kube-system/kube-proxy中的config.conf，把 mode: "" 改为mode: “ipvs" 保存退出即可
 
@@ -322,6 +338,7 @@ I0518 20:24:09.435271       1 controller_utils.go:1034] Caches are synced for en
 ```
 
 # 四、Master操作
+
 ```
 #将 master 节点上面的 $HOME/.kube/config 文件拷贝到 node 节点对应的文件中
 mkdir -p $HOME/.kube
@@ -338,6 +355,7 @@ echo "source <(kubectl completion bash)" >> ~/.bashrc
 ```
 
 # 五、Node操作
+
 ```
 #node节点操作
 mkdir -p $HOME/.kube
@@ -348,6 +366,7 @@ kubeadm join 192.168.56.11:6443 --token 5avfk1.fwui1smk5utcu7m9     --discovery-
 ```
 
 # 六、集群操作
+
 ```
 #批量重启docker
 docker restart `docker ps -a -q` 
@@ -410,6 +429,7 @@ iptables -D RH-Firewall-1-INPUT 4
 # 七、网络插件部署
 
 1、master上部署flannel插件
+
 ```
 #插件镜像 network: flannel image（因墙的问题，需要从国内源下载）
 docker pull quay-mirror.qiniu.com/coreos/flannel:v0.11.0-amd64
@@ -430,6 +450,7 @@ args:
 ```
 
 2、master上部署calico插件
+
 ```
 export POD_SUBNET=10.244.0.0/16
 rm -f calico.yaml
@@ -439,15 +460,19 @@ kubectl apply -f calico.yaml
 
 https://www.cnblogs.com/goldsunshine/p/10701242.html  k8s网络之Calico网络
 ```
+
 3、性能对比
+
 ```
 https://www.2cto.com/net/201701/591629.html  kubernetes flannel neutron calico三种网络方案性能测试分析
 ```
+
 # 八、安装 Dashboard
 
 使用 dashboard 最好把浏览器的默认语言设置为英文，不然在进入容器操作的时候会有bug，会出现重影
 
 1、下载yaml文件
+
 ```
 wget https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
 
@@ -483,7 +508,9 @@ spec:
   selector:
     k8s-app: kubernetes-dashboard
 ```
+
 2、dashboard最终文件
+
 ```
 cat > kubernetes-dashboard.yaml << \EOF
 # Copyright 2017 The Kubernetes Authors.
@@ -657,6 +684,7 @@ kubectl apply -f kubernetes-dashboard.yaml
 ```
 
 3、查看dashboard
+
 ```
 root># kubectl get pods -n kube-system -l k8s-app=kubernetes-dashboard
 NAME                                  READY   STATUS    RESTARTS   AGE
@@ -670,6 +698,7 @@ kubernetes-dashboard   NodePort   192.168.56.11   <none>        443:32730/TCP   
 ```
 
 4、然后创建一个具有全局所有权限的用户来登录Dashboard：(admin.yaml)
+
 ```
 cat > admin.yaml << \EOF
 kind: ClusterRoleBinding
@@ -717,13 +746,15 @@ https://192.168.56.12:31513
 1、coredns异常问题
 
   ![coredns异常问题](https://github.com/Lancger/opsfull/blob/master/images/coredns-01.png)
-  
+
 ```
 E1006 12:30:53.935744       1 reflector.go:134] github.com/coredns/coredns/plugin/kubernetes/controller.go:317: Failed to list *v1.Endpoints: Get https://10.10.0.1:443/api/v1/endpoints?limit=500&resourceVersion=0: dial tcp 10.10.0.1:443: connect: no route to host
 E1006 12:30:53.935744       1 reflector.go:134] github.com/coredns/coredns/plugin/kubernetes/controller.go:317: Failed to list *v1.Endpoints: Get https://10.10.0.1:443/api/v1/endpoints?limit=500&resourceVersion=0: dial tcp 10.10.0.1:443: connect: no route to host
 log: exiting because of error: log: cannot create log: open /tmp/coredns.coredns-bccdc95cf-vlqxk.unknownuser.log.ERROR.20191006-123053.1: no such file or directory
 ```
+
 解决办法
+
 ```
 实际上是主机防火墙的问题，需要添加
 iptables -A RH-Firewall-1-INPUT -s 10.10.0.0/16 -j ACCEPT
@@ -759,6 +790,7 @@ https://www.twblogs.net/a/5cc87d63bd9eee1ac2ed736b
 ```
 
 3、kubelet异常问题2
+
 ```
 failed to create kubelet: misconfiguration: kubelet cgroup driver: "cgroupfs" is different from docker cgroup driver: "systemd"
 
