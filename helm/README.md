@@ -166,7 +166,7 @@ helm del --purge nginx-ingress
 helm repo update
 
 helm install stable/nginx-ingress \
--n nginx-ingress \
+-n kube-system \
 --namespace ingress-nginx  \
 -f ingress-nginx.yaml
 
