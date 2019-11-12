@@ -166,8 +166,8 @@ helm del --purge nginx-ingress
 helm repo update
 
 helm install stable/nginx-ingress \
--n kube-system \
---namespace ingress-nginx  \
+--name nginx-ingress \
+--namespace kube-system  \
 -f ingress-nginx.yaml
 
 如果访问 http://192.168.56.11 返回default backend，则部署完成。
