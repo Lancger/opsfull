@@ -34,19 +34,20 @@ $ exportfs
 
 ```bash
 配置说明：
-① capacity 指定 PV 的容量为 1G。
+① capacity 指定 PV 的容量为 20G。
+
 ② accessModes 指定访问模式为 ReadWriteOnce，支持的访问模式有：
-
-ReadWriteOnce – PV 能以 read-write 模式 mount 到单个节点。
-ReadOnlyMany – PV 能以 read-only 模式 mount 到多个节点。
-ReadWriteMany – PV 能以 read-write 模式 mount 到多个节点。
+    ReadWriteOnce – PV 能以 read-write 模式 mount 到单个节点。
+    ReadOnlyMany – PV 能以 read-only 模式 mount 到多个节点。
+    ReadWriteMany – PV 能以 read-write 模式 mount 到多个节点。
+    
 ③ persistentVolumeReclaimPolicy 指定当 PV 的回收策略为 Recycle，支持的策略有：
-
-Retain – 需要管理员手工回收。
-Recycle – 清除 PV 中的数据，效果相当于执行 rm -rf /thevolume/*。
-Delete – 删除 Storage Provider 上的对应存储资源，例如 AWS EBS、GCE PD、Azure
-Disk、OpenStack Cinder Volume 等。
+    Retain – 需要管理员手工回收。
+    Recycle – 清除 PV 中的数据，效果相当于执行 rm -rf /thevolume/*。
+    Delete – 删除 Storage Provider 上的对应存储资源，例如 AWS EBS、GCE PD、AzureDisk、OpenStack Cinder Volume 等。
+    
 ④ storageClassName 指定 PV 的 class 为 nfs。相当于为 PV 设置了一个分类，PVC 可以指定 class 申请相应 class 的 PV。
+
 ⑤ 指定 PV 在 NFS 服务器上对应的目录。
 ```
 
