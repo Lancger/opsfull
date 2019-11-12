@@ -1,5 +1,5 @@
 ## 一、nfs服务端
-```
+```bash
 #所有节点安装nfs
 yum install -y nfs-utils rpcbind
 
@@ -12,6 +12,20 @@ chmod -R 666 /nfs/data
 #编辑export文件
 vim /etc/exports
 /nfs/data 192.168.56.0/24(rw,async,no_root_squash)
+#如果设置为 /nfs/data *(rw,async,no_root_squash) 则对所以的IP都有效
+
+常用选项：
+   ro：客户端挂载后，其权限为只读，默认选项；
+   rw:读写权限；
+   sync：同时将数据写入到内存与硬盘中；
+   async：异步，优先将数据保存到内存，然后再写入硬盘；
+   Secure：要求请求源的端口小于1024
+用户映射：
+   root_squash:当NFS客户端使用root用户访问时，映射到NFS服务器的匿名用户；
+   no_root_squash:当NFS客户端使用root用户访问时，映射到NFS服务器的root用户；
+   all_squash:全部用户都映射为服务器端的匿名用户；
+   anonuid=UID：将客户端登录用户映射为此处指定的用户uid；
+   anongid=GID：将客户端登录用户映射为此处指定的用户gid
 
 #配置生效
 exportfs -r
