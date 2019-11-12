@@ -79,9 +79,6 @@ EOF
 
 # 部署pv到集群中
 kubectl apply -f nfs-pv001.yaml
-
-# 查看pv
-kubectl get pv
 ```
 
 2、nfs-pv002.yaml
@@ -112,7 +109,13 @@ EOF
 
 # 部署pv到集群中
 kubectl apply -f nfs-pv002.yaml
+```
 
+# 三、查看PV
+```bash
 # 查看pv
 kubectl get pv
+
+
+#STATUS 为 Available，表示 pv就绪，可以被 PVC 申请。
 ```
