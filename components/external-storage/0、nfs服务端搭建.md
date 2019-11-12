@@ -1,7 +1,7 @@
 ## 一、nfs服务端
 ```
 #所有节点安装nfs
-yum install -y nfs-common nfs-utils 
+yum install -y nfs-common nfs-utils rpcbind
 
 #创建nfs目录
 mkdir -p /nfs/data/
