@@ -205,6 +205,11 @@ helm install stable/kubernetes-dashboard \
 kubectl get pods -n kube-system -o wide
 ```
 
+3、查看详细信息
+```bash
+kubectl describe pod `kubectl get pod -A|grep dashboard|awk '{print $2}'` -n kube-system
+```
+
 
 参考文档：
 
