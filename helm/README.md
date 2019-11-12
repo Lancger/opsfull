@@ -39,6 +39,9 @@ echo "source <(helm completion bash)" >> /root/.bashrc # 命令自动补全
 ```
 
 ## 3、Tiller服务器端安装
+
+1、安装
+
 ```bash
 helm init --upgrade -i registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.16.0 --stable-repo-url https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts
 
@@ -52,6 +55,32 @@ helm version
 
 #添加新的repo
 helm repo add stable http://mirror.azure.cn/kubernetes/charts/
+```
+
+2、创建helm-rbac.yaml文件
+```bash
+cat >helm-rbac.yaml<<\EOF
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tiller
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: tiller
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+  - kind: ServiceAccount
+    name: tiller
+    namespace: kube-system
+EOF
+
+kubectl apply -f helm-rbac.yaml
 ```
 
 ## 4、Helm使用
