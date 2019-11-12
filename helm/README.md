@@ -115,7 +115,9 @@ kubectl get pvc
 
 # 二、使用Helm部署Nginx Ingress
 
-## 1、我们将kub1(192.168.56.11)做为边缘节点，打上Label
+## 1、标记标签
+
+我们将kub1(192.168.56.11)做为边缘节点，打上Label
 
 ```bash
 #查看node标签
@@ -128,6 +130,64 @@ NAME            STATUS   ROLES         AGE   VERSION
 k8s-master-01   Ready    edge,master   59m   v1.16.2
 k8s-master-02   Ready    <none>        58m   v1.16.2
 k8s-master-03   Ready    <none>        58m   v1.16.2
+```
+
+## 2、编写chart的值文件ingress-nginx.yaml
+
+```bash
+cat >ingress-nginx.yaml<<\EOF
+controller:
+  replicaCount: 1
+  hostNetwork: true
+  nodeSelector:
+    node-role.kubernetes.io/edge: ''
+  affinity:
+    podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+            - key: app
+              operator: In
+              values:
+              - nginx-ingress
+            - key: component
+              operator: In
+              values:
+              - controller
+          topologyKey: kubernetes.io/hostname
+  tolerations:
+      - key: node-role.kubernetes.io/master
+        operator: Exists
+        effect: NoSchedule
+      - key: node-role.kubernetes.io/master
+        operator: Exists
+        effect: PreferNoSchedule
+defaultBackend:
+  nodeSelector:
+    node-role.kubernetes.io/edge: ''
+  tolerations:
+      - key: node-role.kubernetes.io/master
+        operator: Exists
+        effect: NoSchedule
+      - key: node-role.kubernetes.io/master
+        operator: Exists
+        effect: PreferNoSchedule
+EOF
+
+kubectl apply -f ingress-nginx.yaml
+```
+
+## 3、安装nginx-ingress
+
+```bash
+$ helm repo update
+$ helm install stable/nginx-ingress \
+-n nginx-ingress \
+--namespace ingress-nginx  \
+-f ingress-nginx.yaml
+
+
+如果访问 http://192.168.56.11 返回default backend，则部署完成。
 ```
 
 # 三、Helm 安装部署Kubernetes的dashboard
