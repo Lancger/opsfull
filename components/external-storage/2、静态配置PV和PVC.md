@@ -1,24 +1,10 @@
-Table of Contents
-=================
-   * [目录](#目录)
-      * [1.环境介绍](#1.环境介绍)
-         * [01. 创建PV](#01-创建PV)
-            * [1.1 Kubernetes的特性](#11-kubernetes的特性)
-         * [02. 环境说明](#02-环境说明)
-            * [2.1 集群说明](#21-集群说明)
-         * [03. K8S集群名词说明](#03-k8s集群名词说明)
-            * [3.1 Kubernetes](#31-kubernetes)
-            * [3.2 Docker](#32-docker)
-            * [3.3 Etcd](#33-etcd)
-            * [3.4 Calico](#34-calico)
-
-# 目录
-
-## 1.环境介绍
+# 一、环境介绍
 
 作为准备工作，我们已经在 k8s同一局域内网节点上搭建了一个 NFS 服务器，目录为 /data/nfs
 
-### 01. 创建PV
+# 二、PV操作
+
+### 01、创建PV卷
 
 ```bash
 # 创建pv卷对应的目录
@@ -45,22 +31,7 @@ Export list for 192.168.56.11:
 /data/nfs       *
 ```
 
-#### 1.1 Kubernetes的特性
-
-# 一、介绍
-
-
-### 01. 部署目的
-
-nfs-server上操作，添加pv卷对应目录,这里创建2个pv卷，则添加2个pv卷的目录作为挂载点。
-
-# 二、操作
-
-### 01. 创建PV
-
-
-
-### 02. PV配置参数介绍
+### 02、PV配置参数介绍
 
 ```bash
 配置说明：
@@ -100,16 +71,10 @@ nfs-server上操作，添加pv卷对应目录,这里创建2个pv卷，则添加2
     Recycle K8S会将PV里的数据删除，然后把PV的状态变成Available，又可以被新的PVC绑定使用
 ```
 
-### 02. 创建PVC
-
-# 验证
-
-
-
-
-下面创建2个名为pv001和pv002的PV卷，配置文件 nfs-pv001.yaml 如下
+### 03、创建PV资源
 
 1、nfs-pv001.yaml
+
 ```bash
 # 清理pv资源
 kubectl delete -f nfs-pv001.yaml
@@ -168,7 +133,8 @@ EOF
 kubectl apply -f nfs-pv002.yaml
 ```
 
-## 1.2、查看PV
+### 04、查看PV
+
 ```bash
 # 查看pv
 $ kubectl get pv
@@ -179,9 +145,9 @@ nfs-pv002     30Gi       RWO            Recycle          Available           nfs
 #STATUS 为 Available，表示 pv 就绪，可以被 PVC 申请。
 ```
 
-# 二、PVC资源申请
+# 三、PVC操作
 
-## 2.1、pvc配置
+### 01、创建PVC资源
 
 接下来创建2个名为pvc001和pvc002的PVC，配置文件 nfs-pvc001.yaml 如下：
 
@@ -214,6 +180,7 @@ kubectl apply -f nfs-pvc001.yaml
 ```
 
 2、nfs-pvc002.yaml
+
 ```bash
 # 清理pvc资源
 kubectl delete -f nfs-pvc002.yaml
@@ -240,7 +207,8 @@ EOF
 kubectl apply -f nfs-pvc002.yaml
 ```
 
-## 2.2、查看PVC/PV
+### 02、查看PVC/PV
+
 ```bash
 $ kubectl get pvc
 NAME            STATUS   VOLUME          CAPACITY   ACCESS MODES   STORAGECLASS   AGE
@@ -255,11 +223,9 @@ nfs-pv002     30Gi       RWO            Recycle          Bound    default/nfs-pv
 # 从 kubectl get pvc 和 kubectl get pv 的输出可以看到 pvc001 和pvc002分别绑定到pv001和pv002，申请成功。注意pvc绑定到对应pv通过labels标签方式实现，也可以不指定，将随机绑定到pv。
 ```
 
-# 三、Pod 中使用存储
+# 三、Pod中使用存储
 
-```bash
-# 与使用普通 Volume 的格式类似，在 volumes 中通过 persistentVolumeClaim 指定使用nfs-pvc001和nfs-pvc002申请的 Volume。
-```
+```与使用普通 Volume 的格式类似，在 volumes 中通过 persistentVolumeClaim 指定使用nfs-pvc001和nfs-pvc002申请的 Volume。```
 
 1、nfs-pod001.yaml 
 
@@ -292,6 +258,7 @@ kubectl apply -f nfs-pod001.yaml
 ```
 
 2、nfs-pod002.yaml
+
 ```bash
 # 清理pod资源
 kubectl delete -f nfs-pod002.yaml
@@ -319,6 +286,5 @@ EOF
 kubectl apply -f nfs-pod002.yaml
 ```
 
-参考资料：
+# 四、验证
 
-https://blog.csdn.net/networken/article/details/86697018  kubernetes部署NFS持久存储
