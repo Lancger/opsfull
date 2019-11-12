@@ -16,11 +16,19 @@ curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get |bash
 #查看
 which helm
 
-helm version # 因服务器端还没安装,这里会报无法连接
+#因服务器端还没安装,这里会报无法连接
+helm version 
 
 #添加命令补全
 helm completion bash > .helmrc
 echo "source .helmrc" >> .bashrc
+
+#源码安装
+wget -O helm-v2.16.0-linux-amd64.tar.gz https://get.helm.sh/helm-v2.16.0-linux-amd64.tar.gz
+tar -zxvf helm-v2.16.0-linux-amd64.tar.gz
+cd linux-amd64 #进入解压目录会看到两个可执行文件helm和tiller, 若采用容器化部署到kubernetes中，则可以不用管tiller，只需将helm复制到/usr/bin目录即可
+cp helm /usr/bin/
+echo "source <(helm completion bash)" >> /root/.bashrc # 命令自动补全
 ```
 
 ## 3、Tiller服务器端安装
@@ -34,14 +42,6 @@ kubectl get --namespace=kube-system pods tiller-deploy-6d6cc8dcb5-wvvr4
 
 #能够看到服务器版本信息
 helm version 
-```
-
-```bash
-wget -O helm-v2.16.0-linux-amd64.tar.gz https://get.helm.sh/helm-v2.16.0-linux-amd64.tar.gz
-tar -zxvf helm-v2.16.0-linux-amd64.tar.gz
-cd linux-amd64 #进入解压目录会看到两个可执行文件helm和tiller, 若采用容器化部署到kubernetes中，则可以不用管tiller，只需将helm复制到/usr/bin目录即可
-cp helm /usr/bin/
-echo "source <(helm completion bash)" >> /root/.bashrc # 命令自动补全
 ```
 
 ## 4、Helm使用
