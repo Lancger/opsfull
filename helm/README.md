@@ -276,6 +276,10 @@ kubectl get pods -n kube-system -o wide
 kubectl describe pod `kubectl get pod -A|grep dashboard|awk '{print $2}'` -n kube-system
 ```
 
+4、访问
+```bash
+https://k8s.test.com
+```
 
 参考文档：
 
