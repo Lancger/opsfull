@@ -32,9 +32,9 @@ git clone https://github.com/kubernetes-incubator/external-storage.git
 cp -R external-storage/nfs-client/deploy/ /root/
 cd deploy
 ```
-### 2、修改deployment.yaml文件
+### 2、部署NFS Provisioner
 
-这里修改的参数包括NFS服务器所在的IP地址（10.198.1.155），以及NFS服务器共享的路径（/data/nfs/），两处都需要修改为你实际的NFS服务器和共享目录。另外修改nfs-client-provisioner镜像从七牛云拉取。
+修改deployment.yaml文件,这里修改的参数包括NFS服务器所在的IP地址（10.198.1.155），以及NFS服务器共享的路径（/data/nfs/），两处都需要修改为你实际的NFS服务器和共享目录。另外修改nfs-client-provisioner镜像从七牛云拉取。
 
 设置 NFS Provisioner 部署文件，这里将其部署到 “kube-system” Namespace 中。
 
