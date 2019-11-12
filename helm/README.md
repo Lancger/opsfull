@@ -192,11 +192,17 @@ EOF
 
 ## 4、命令安装
 
+1、安装
 ```bash
 helm install stable/kubernetes-dashboard \
 -n kubernetes-dashboard \
 --namespace kube-system  \
 -f kubernetes-dashboard.yaml
+```
+
+2、查看pod
+```bash
+kubectl get pods -n kube-system -o wide
 ```
 
 
