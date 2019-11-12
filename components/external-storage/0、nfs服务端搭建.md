@@ -85,17 +85,17 @@ access:   granted
 ```
 
 ## 二、nfs客户端
-```
+```bash
 yum install -y nfs-utils rpcbind
+
+#客户端创建目录，然后执行挂载
+mkdir -p /mnt/nfs   #(注意挂载成功后，/mnt下原有数据将会被隐藏，无法找到)
+
+mount -t nfs -o nolock,vers=4 192.168.56.11:/nfs/data /mnt/nfs
 ```
 
 ## 三、挂载nfs
-```
-#客户端创建目录，然后执行挂载
-mkdir -p /mnt/nfs
-
-mount -t nfs -o nolock,vers=4 192.168.56.11:/nfs/data /mnt/nfs
-
+```bash
 #或者直接写到/etc/fstab文件中
 vim /etc/fstab
 192.168.56.11:/nfs/data /mnt/nfs/ nfs auto,noatime,nolock,bg,nfsvers=4,intr,tcp,actimeo=1800 0 0
