@@ -182,3 +182,10 @@ EOF
 kubectl apply -f nfs-pvc002.yaml
 ```
 
+# 五、查看PVC
+```bash
+$ kubectl get pvc
+NAME            STATUS   VOLUME          CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+nfs-pvc001      Bound    nfs-pv001       20Gi       RWO            nfs            18s
+nfs-pvc002      Bound    nfs-pv002       30Gi       RWO            nfs            7s
+```
