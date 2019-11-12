@@ -9,6 +9,8 @@ helm包含2个组件,Helm客户端和Tiller服务器.
 ```
 
 ## 2、Helm客户端安装
+
+1、脚本安装
 ```bash
 #安装
 curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get |bash
@@ -22,7 +24,10 @@ helm version
 #添加命令补全
 helm completion bash > .helmrc
 echo "source .helmrc" >> .bashrc
+```
 
+2、源码安装
+```
 #源码安装
 #curl -O https://get.helm.sh/helm-v2.16.0-linux-amd64.tar.gz
 wget -O helm-v2.16.0-linux-amd64.tar.gz https://get.helm.sh/helm-v2.16.0-linux-amd64.tar.gz
