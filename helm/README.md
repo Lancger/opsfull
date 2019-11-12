@@ -113,7 +113,24 @@ kubectl get deployments.
 kubectl get pvc
 ```
 
-# 二、Helm 安装部署Kubernetes的dashboard
+# 二、使用Helm部署Nginx Ingress
+
+## 1、我们将kub1(192.168.56.11)做为边缘节点，打上Label
+
+```bash
+#查看node标签
+kubectl get nodes --show-labels
+
+kubectl label node k8s-master-01 node-role.kubernetes.io/edge=
+
+$ kubectl get node
+NAME            STATUS   ROLES         AGE   VERSION
+k8s-master-01   Ready    edge,master   59m   v1.16.2
+k8s-master-02   Ready    <none>        58m   v1.16.2
+k8s-master-03   Ready    <none>        58m   v1.16.2
+```
+
+# 三、Helm 安装部署Kubernetes的dashboard
 
 ## 1、创建tls secret
 
