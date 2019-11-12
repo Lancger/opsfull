@@ -31,8 +31,6 @@ Export list for 192.168.56.11:
 
 # 二、创建PV
 
-下面创建2个名为pv001和pv002的PV卷，配置文件 nfs-pv001.yaml 如下
-
 ```bash
 配置说明：
 
@@ -52,6 +50,8 @@ Export list for 192.168.56.11:
 
 ⑤ 指定 PV 在 NFS 服务器上对应的目录。
 ```
+
+下面创建2个名为pv001和pv002的PV卷，配置文件 nfs-pv001.yaml 如下
 
 1、nfs-pv001.yaml
 ```bash
@@ -121,4 +121,12 @@ nfs-pv001     20Gi       RWO            Recycle          Available           nfs
 nfs-pv002     30Gi       RWO            Recycle          Available           nfs                      33s
 
 #STATUS 为 Available，表示 pv 就绪，可以被 PVC 申请。
+```
+
+# 四、创建PVC
+
+接下来创建2个名为pvc001和pvc002的PVC，配置文件 nfs-pvc001.yaml 如下：
+
+```bash
+
 ```
