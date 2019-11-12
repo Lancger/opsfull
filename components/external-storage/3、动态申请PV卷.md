@@ -132,14 +132,12 @@ kubectl get sc
 
 现在的 Kubernetes 集群大部分是基于 RBAC 的权限控制，所以创建一个一定权限的 ServiceAccount 与后面要创建的 “NFS Provisioner” 绑定，赋予一定的权限。
 
-```
-kubectl delete -f rbac.yaml
+```bash
+# 清理rbac授权
+kubectl delete -f nfs-rbac.yaml
 
-cat > rbac.yaml <<-EOF
-kind: ServiceAccount
-apiVersion: v1
-metadata:
-  name: nfs-client-provisioner
+# 编写yaml
+cat >nfs-rbac.yaml<<-EOF
 ---
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
@@ -166,7 +164,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: nfs-client-provisioner
-    namespace: default
+    namespace: kube-system      #替换成你要部署NFS Provisioner的 Namespace
 roleRef:
   kind: ClusterRole
   name: nfs-client-provisioner-runner
@@ -188,17 +186,15 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: nfs-client-provisioner
-    # replace with namespace where provisioner is deployed
-    namespace: default
+    namespace: kube-system      #替换成你要部署NFS Provisioner的 Namespace
 roleRef:
   kind: Role
   name: leader-locking-nfs-client-provisioner
   apiGroup: rbac.authorization.k8s.io
 EOF
 
-#创建 RBAC
-kubectl apply -f rbac.yaml
-
+# 应用授权
+kubectl apply -f nfs-rbac.yaml
 ```
 
 # 二、创建测试PVC
