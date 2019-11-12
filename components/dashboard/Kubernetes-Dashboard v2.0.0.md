@@ -1,4 +1,11 @@
-```
+```bash
+#安装
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta4/aio/deploy/recommended.yaml
+
+#卸载
+kubectl delete -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta4/aio/deploy/recommended.yaml
+
+#账号授权
 kubectl delete -f admin.yaml
 
 cat > admin.yaml << \EOF
