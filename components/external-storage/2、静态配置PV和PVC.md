@@ -5,23 +5,23 @@
 nfs-server上操作，添加pv卷对应目录,这里创建2个pv卷，则添加2个pv卷的目录作为挂载点。
 
 ```bash
-#创建pv卷对应的目录
+# 创建pv卷对应的目录
 mkdir -p /data/nfs/pv001
 mkdir -p /data/nfs/pv002
 
-#配置exportrs
+# 配置exportrs
 $ vim /etc/exports
 /data/nfs *(rw,no_root_squash,sync)
 /data/nfs/pv001 *(rw,no_root_squash,sync)
 /data/nfs/pv002 *(rw,no_root_squash,sync)
 
-#配置生效
+# 配置生效
 exportfs -r
 
-#重启rpcbind、nfs服务
+# 重启rpcbind、nfs服务
 systemctl restart rpcbind && systemctl restart nfs
 
-#查看挂载点
+# 查看挂载点
 $ showmount -e 192.168.56.11
 Export list for 192.168.56.11:
 /data/nfs/pv002 *
@@ -116,9 +116,9 @@ kubectl apply -f nfs-pv002.yaml
 ```bash
 # 查看pv
 kubectl get pv
-NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM                                           STORAGECLASS          REASON   AGE
-nfs-pv001                                  20Gi       RWO            Recycle          Available                                                   nfs                            68s
-nfs-pv002                                  30Gi       RWO            Recycle          Available                                                   nfs                            33s
+NAME          CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM   STORAGECLASS    REASON   AGE
+nfs-pv001     20Gi       RWO            Recycle          Available           nfs                      68s
+nfs-pv002     30Gi       RWO            Recycle          Available           nfs                      33s
 
-#STATUS 为 Available，表示 pv就绪，可以被 PVC 申请。
+#STATUS 为 Available，表示 pv 就绪，可以被 PVC 申请。
 ```
