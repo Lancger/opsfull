@@ -128,9 +128,9 @@ kubectl apply -f nfs-storage.yaml
 kubectl get sc
 ```
 
-4、配置授权
+### 4、配置授权
 
-如果集群启用了RBAC，则必须执行如下命令授权provisioner。
+现在的 Kubernetes 集群大部分是基于 RBAC 的权限控制，所以创建一个一定权限的 ServiceAccount 与后面要创建的 “NFS Provisioner” 绑定，赋予一定的权限。
 
 ```
 kubectl delete -f rbac.yaml
