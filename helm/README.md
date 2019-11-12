@@ -173,6 +173,12 @@ helm install stable/nginx-ingress \
 如果访问 http://192.168.56.11 返回default backend，则部署完成。
 ```
 
+## 4、查看 nginx-ingress 的 Pod
+
+```bash
+kubectl get pods -n kube-system | grep nginx-ingress
+```
+
 # 三、Helm 安装部署Kubernetes的dashboard
 
 ## 1、创建tls secret
