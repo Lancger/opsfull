@@ -137,41 +137,24 @@ k8s-master-03   Ready    <none>        58m   v1.16.2
 ```bash
 cat >ingress-nginx.yaml<<\EOF
 controller:
-  replicaCount: 1
   hostNetwork: true
+  daemonset:
+    useHostPort: false
+    hostPorts:
+      http: 80
+      https: 443
+  service:
+    type: ClusterIP
+  tolerations:
+    - operator: "Exists"
   nodeSelector:
     node-role.kubernetes.io/edge: ''
-  affinity:
-    podAntiAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchExpressions:
-            - key: app
-              operator: In
-              values:
-              - nginx-ingress
-            - key: component
-              operator: In
-              values:
-              - controller
-          topologyKey: kubernetes.io/hostname
-  tolerations:
-      - key: node-role.kubernetes.io/master
-        operator: Exists
-        effect: NoSchedule
-      - key: node-role.kubernetes.io/master
-        operator: Exists
-        effect: PreferNoSchedule
+
 defaultBackend:
+  tolerations:
+    - operator: "Exists"
   nodeSelector:
     node-role.kubernetes.io/edge: ''
-  tolerations:
-      - key: node-role.kubernetes.io/master
-        operator: Exists
-        effect: NoSchedule
-      - key: node-role.kubernetes.io/master
-        operator: Exists
-        effect: PreferNoSchedule
 EOF
 ```
 
@@ -275,6 +258,8 @@ kubectl describe pod `kubectl get pod -A|grep dashboard|awk '{print $2}'` -n kub
 
 
 参考文档：
+
+https://www.qikqiak.com/post/install-nginx-ingress/
 
 https://www.cnblogs.com/bugutian/p/11366556.html  国内不fq安装K8S三: 使用helm安装kubernet-dashboard
 
