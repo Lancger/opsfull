@@ -123,11 +123,6 @@ export NFS_DIR='/data/nfs'
 # 编写deployment.yaml
 cat >nfs-provisioner-deploy.yaml<<-EOF
 ---
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: nfs-client-provisioner
----
 kind: Deployment
 apiVersion: apps/v1
 metadata:
