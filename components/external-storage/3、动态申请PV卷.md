@@ -40,27 +40,30 @@ cd deploy
 
 ```bash
 # 清理NFS Provisioner资源
-kubectl delete -f deployment.yaml
+kubectl delete -f nfs-provisioner-deploy.yaml -n kube-system
 
 export NFS_ADDRESS='10.198.1.155'
 export NFS_DIR='/data/nfs'
 
 # 编写deployment.yaml
-cat >deployment.yaml<<-EOF
+cat >nfs-provisioner-deploy.yaml<<-EOF
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nfs-client-provisioner
 ---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: nfs-client-provisioner
-  labels:
-    app: nfs-client-provisioner
 spec:
   replicas: 1
-  strategy:
-    type: Recreate      #---设置升级策略为删除再创建(默认为滚动更新)
   selector:
     matchLabels:
       app: nfs-client-provisioner
+  strategy:
+    type: Recreate  #---设置升级策略为删除再创建(默认为滚动更新)
   template:
     metadata:
       labels:
@@ -70,28 +73,28 @@ spec:
       containers:
         - name: nfs-client-provisioner
           #---由于quay.io仓库国内被墙，所以替换成七牛云的仓库
-          image: quay-mirror.qiniu.com/external_storage/nfs-client-provisioner:latest 
+          image: quay-mirror.qiniu.com/external_storage/nfs-client-provisioner:latest
           volumeMounts:
             - name: nfs-client-root
               mountPath: /persistentvolumes
           env:
             - name: PROVISIONER_NAME
-              value: nfs-client       #---nfs-provisioner的名称，以后设置的storageclass要和这个保持一致
+              value: nfs-client  #---nfs-provisioner的名称，以后设置的storageclass要和这个保持一致
             - name: NFS_SERVER
-              value: ${NFS_ADDRESS}   #---NFS服务器地址，和 valumes 保持一致
+              value: ${NFS_ADDRESS}  #---NFS服务器地址，和 valumes 保持一致
             - name: NFS_PATH
-              value: ${NFS_DIR}       #---NFS服务器目录，和 valumes 保持一致
+              value: ${NFS_DIR}  #---NFS服务器目录，和 valumes 保持一致
       volumes:
         - name: nfs-client-root
           nfs:
-            server: ${NFS_ADDRESS}    #---NFS服务器地址
-            path: ${NFS_DIR}          #---NFS服务器目录
+            server: ${NFS_ADDRESS}  #---NFS服务器地址
+            path: ${NFS_DIR} #---NFS服务器目录
 EOF
 
-#部署deployment.yaml
-kubectl apply -f deployment.yaml -n kube-system
+# 部署deployment.yaml
+kubectl apply -f nfs-provisioner-deploy.yaml -n kube-system
 
-#查看创建的pod
+# 查看创建的pod
 kubectl get pod -o wide -n kube-system
 ```
 
