@@ -173,8 +173,6 @@ defaultBackend:
         operator: Exists
         effect: PreferNoSchedule
 EOF
-
-kubectl apply -f ingress-nginx.yaml
 ```
 
 ## 3、安装nginx-ingress
