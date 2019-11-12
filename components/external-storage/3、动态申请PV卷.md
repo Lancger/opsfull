@@ -204,7 +204,13 @@ kubectl get sc
 ```
 
 # 四、创建PVC
+
+创建一个新的namespace，然后创建pvc资源
+
 ```bash
+# 删除命令空间
+kubectl delete ns kube-public
+
 # 创建命名空间
 kubectl create ns kube-public
 
