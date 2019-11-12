@@ -38,7 +38,7 @@ helm init
 #查看
 kubectl get --namespace=kube-system service tiller-deploy
 kubectl get --namespace=kube-system deployments. tiller-deploy
-kubectl get --namespace=kube-system pods tiller-deploy-6d6cc8dcb5-wvvr4
+kubectl get --namespace=kube-system pods|grep tiller-deploy
 
 #能够看到服务器版本信息
 helm version 
