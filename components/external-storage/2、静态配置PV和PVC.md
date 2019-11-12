@@ -10,7 +10,7 @@ mkdir -p /data/nfs/pv001
 mkdir -p /data/nfs/pv002
 
 #配置exportrs
-vim /etc/exports
+$ vim /etc/exports
 /data/nfs *(rw,no_root_squash,sync)
 /data/nfs/pv001 *(rw,no_root_squash,sync)
 /data/nfs/pv002 *(rw,no_root_squash,sync)
@@ -20,4 +20,10 @@ exportfs -r
 
 #重启rpcbind、nfs服务
 systemctl restart rpcbind && systemctl restart nfs
+
+#查看挂载点
+$ exportfs
+/data/nfs        <world>
+/data/nfs/pv001  <world>
+/data/nfs/pv002  <world>
 ```
