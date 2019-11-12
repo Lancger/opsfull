@@ -229,7 +229,7 @@ spec:
 EOF
 
 # 创建pod资源
-kubectl delete -f nfs-pod001.yaml
+kubectl apply -f nfs-pod001.yaml
 
 ```
 
@@ -258,5 +258,5 @@ spec:
 EOF
 
 # 创建pod资源
-kubectl delete -f nfs-pod002.yaml
+kubectl apply -f nfs-pod002.yaml
 ```
