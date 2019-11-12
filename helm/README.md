@@ -27,12 +27,13 @@ echo "source .helmrc" >> .bashrc
 ```
 
 2、源码安装
-```
+```bash
 #源码安装
 #curl -O https://get.helm.sh/helm-v2.16.0-linux-amd64.tar.gz
+
 wget -O helm-v2.16.0-linux-amd64.tar.gz https://get.helm.sh/helm-v2.16.0-linux-amd64.tar.gz
 tar -zxvf helm-v2.16.0-linux-amd64.tar.gz
-cd linux-amd64 #进入解压目录会看到两个可执行文件helm和tiller, 若采用容器化部署到kubernetes中，则可以不用管tiller，只需将helm复制到/usr/bin目录即可
+cd linux-amd64 #若采用容器化部署到kubernetes中，则可以不用管tiller，只需将helm复制到/usr/bin目录即可
 cp helm /usr/bin/
 echo "source <(helm completion bash)" >> /root/.bashrc # 命令自动补全
 ```
