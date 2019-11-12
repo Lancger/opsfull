@@ -41,7 +41,10 @@ kubectl get --namespace=kube-system deployments. tiller-deploy
 kubectl get --namespace=kube-system pods|grep tiller-deploy
 
 #能够看到服务器版本信息
-helm version 
+helm version
+
+#添加新的repo
+helm repo add stable http://mirror.azure.cn/kubernetes/charts/
 ```
 
 ## 4、Helm使用
