@@ -150,7 +150,7 @@ kubectl get secret -n kube-system |grep dashboard
 ```bash
 cat >kubernetes-dashboard.yaml<<\EOF
 image:
-  repository: k8s.gcr.io/kubernetes-dashboard-amd64
+  repository: registry.cn-hangzhou.aliyuncs.com/google_containers/kubernetes-dashboard-amd64:v1.10.1
   tag: v1.10.1
 ingress:
   enabled: true
