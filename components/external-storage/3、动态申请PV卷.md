@@ -103,7 +103,7 @@ kubectl apply -f nfs-provisioner-deploy.yaml -n kube-system
 storage class的定义，需要注意的是：provisioner属性要等于驱动所传入的环境变量`PROVISIONER_NAME`的值。否则，驱动不知道知道如何绑定storage class。
 此处可以不修改，或者修改provisioner的名字，需要与上面的deployment的`PROVISIONER_NAME`名字一致。
 
-```
+```bash
 # 清理storageclass资源
 kubectl delete -f nfs-storage.yaml
 
