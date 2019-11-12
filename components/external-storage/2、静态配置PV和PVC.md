@@ -202,9 +202,14 @@ nfs-pv002     30Gi       RWO            Recycle          Bound    default/nfs-pv
 ```bash
 # 与使用普通 Volume 的格式类似，在 volumes 中通过 persistentVolumeClaim 指定使用nfs-pvc001和nfs-pvc002申请的 Volume。
 ```
+
 1、nfs-pod001.yaml 
 
 ```bash
+# 清理pod资源
+kubectl delete -f nfs-pod001.yaml
+
+# 编写pod资源文件
 cat > nfs-pod001.yaml <<\EOF
 kind: Pod
 apiVersion: v1
@@ -222,10 +227,18 @@ spec:
       persistentVolumeClaim:
         claimName: nfs-pvc001
 EOF
+
+# 创建pod资源
+kubectl delete -f nfs-pod001.yaml
+
 ```
 
 2、nfs-pod002.yaml
 ```bash
+# 清理pod资源
+kubectl delete -f nfs-pod002.yaml
+
+# 编写pod资源文件
 cat > nfs-pod002.yaml <<\EOF
 kind: Pod
 apiVersion: v1
@@ -243,4 +256,7 @@ spec:
       persistentVolumeClaim:
         claimName: nfs-pvc002
 EOF
+
+# 创建pod资源
+kubectl delete -f nfs-pod002.yaml
 ```
