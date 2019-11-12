@@ -304,3 +304,30 @@ kubectl apply -f nfs-pod002.yaml
 
 # 四、验证
 
+## 01、验证PV是否可用
+
+```bash
+# 进入到pod创建文件
+kubectl exec nfs-pod001 touch /var/www/html/index001.html
+kubectl exec nfs-pod002 touch /var/www/html/index002.html
+
+# 登录到nfs-server上面查看文件是否创建成功
+ls /data/nfs/pv001/
+ls /data/nfs/pv002/
+```
+
+## 02、进入pod查看挂载情况
+
+```bash
+kubectl exec -it nfs-pod001 /bin/bash -c df -h
+
+kubectl exec -it nfs-pod001 /bin/bash -c df -h
+```
+
+## 03、删除pod，pv和pvc不会被删除，nfs存储的数据不会被删除
+
+```bash
+kubectl delete -f nfs-pod001.yaml 
+```
+
+
