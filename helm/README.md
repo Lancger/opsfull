@@ -33,7 +33,7 @@ echo "source <(helm completion bash)" >> /root/.bashrc # 命令自动补全
 
 ## 3、Tiller服务器端安装
 ```bash
-helm init
+helm init --upgrade -i registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.16.0 --stable-repo-url https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts
 
 #查看
 kubectl get --namespace=kube-system service tiller-deploy
