@@ -116,7 +116,9 @@ kubectl apply -f nfs-pv002.yaml
 ```bash
 # 查看pv
 kubectl get pv
-
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM                                           STORAGECLASS          REASON   AGE
+nfs-pv001                                  20Gi       RWO            Recycle          Available                                                   nfs                            68s
+nfs-pv002                                  30Gi       RWO            Recycle          Available                                                   nfs                            33s
 
 #STATUS 为 Available，表示 pv就绪，可以被 PVC 申请。
 ```
