@@ -171,11 +171,11 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 20Gi
+      storage: 30Gi
   storageClassName: nfs
   selector:
     matchLabels:
-      pv: nfs-pv001
+      pv: nfs-pv002
 EOF
 
 # 部署pvc到集群中
