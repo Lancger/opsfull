@@ -34,13 +34,13 @@ cd deploy
 ```
 ### 2、修改deployment.yaml文件
 
-这里修改的参数包括NFS服务器所在的IP地址（192.168.92.56），以及NFS服务器共享的路径（/nfs/data），两处都需要修改为你实际的NFS服务器和共享目录。另外修改nfs-client-provisioner镜像从dockerhub拉取。
+这里修改的参数包括NFS服务器所在的IP地址（10.198.1.155），以及NFS服务器共享的路径（/data/nfs/），两处都需要修改为你实际的NFS服务器和共享目录。另外修改nfs-client-provisioner镜像从dockerhub拉取。
 
 ```
 kubectl delete -f deployment.yaml
 
-export NFS_ADDRESS='10.198.1.156'
-export NFS_DIR='/nfs/data'
+export NFS_ADDRESS='10.198.1.155'
+export NFS_DIR='/data/nfs'
 
 cat >deployment.yaml<<-EOF
 apiVersion: v1
