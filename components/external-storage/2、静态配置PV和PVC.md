@@ -11,9 +11,9 @@ mkdir -p /data/nfs/pv002
 
 # 配置exportrs
 $ vim /etc/exports
-/data/nfs *(rw,no_root_squash,sync)
-/data/nfs/pv001 *(rw,no_root_squash,sync)
-/data/nfs/pv002 *(rw,no_root_squash,sync)
+/data/nfs *(rw,no_root_squash,sync,insecure)
+/data/nfs/pv001 *(rw,no_root_squash,sync,insecure)
+/data/nfs/pv002 *(rw,no_root_squash,sync,insecure)
 
 # 配置生效
 exportfs -r
