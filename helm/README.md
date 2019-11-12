@@ -74,8 +74,18 @@ kubectl get deployments.
 kubectl get pvc
 ```
 
+# 二、Helm 安装部署Kubernetes的dashboard
+
+```bash
+
+```
+
 参考文档：
+
+https://www.cnblogs.com/hongdada/p/11284534.html  Helm 安装部署Kubernetes的dashboard
 
 https://www.cnblogs.com/chanix/p/11731388.html  Helm - K8S的包管理器
 
 https://www.cnblogs.com/peitianwang/p/11649621.html
+
+
