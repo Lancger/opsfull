@@ -222,9 +222,9 @@ NAME                    PROVISIONER      AGE
 nfs-storage (default)   nfs-client       3m38s
 ```
 
-# 四、创建PVC
+## 四、创建PVC
 
-创建一个新的namespace，然后创建pvc资源
+### 01、创建一个新的namespace，然后创建pvc资源
 
 ```bash
 # 删除命令空间
@@ -266,7 +266,7 @@ kubectl get pv
 #注意，出现pvc在pending的原因可能为nfs-client-provisioner pod 出现了问题，删除重建的时候会出现镜像问题
 ```
 
-# 五、创建测试Pod
+## 五、创建测试Pod
 
 ```bash
 # 清理资源
@@ -304,7 +304,7 @@ kubectl apply -f test-pod.yaml -n kube-public
 kubectl get pod -o wide -n kube-public
 ```
 
-## 01、进入 NFS Server 服务器验证是否创建对应文件
+### 01、进入 NFS Server 服务器验证是否创建对应文件
 
 进入 NFS Server 服务器的 NFS 挂载目录，查看是否存在 Pod 中创建的文件：
 
