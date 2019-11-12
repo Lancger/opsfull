@@ -34,10 +34,12 @@ cd deploy
 ```
 ### 2、修改deployment.yaml文件
 
-这里修改的参数包括NFS服务器所在的IP地址（10.198.1.155），以及NFS服务器共享的路径（/data/nfs/），两处都需要修改为你实际的NFS服务器和共享目录。另外修改nfs-client-provisioner镜像从dockerhub拉取。
+这里修改的参数包括NFS服务器所在的IP地址（10.198.1.155），以及NFS服务器共享的路径（/data/nfs/），两处都需要修改为你实际的NFS服务器和共享目录。另外修改nfs-client-provisioner镜像从七牛云拉取。
+
+设置 NFS Provisioner 部署文件，这里将其部署到 “kube-system” Namespace 中。
 
 ```
-kubectl delete -f deployment.yaml
+kubectl delete -f deployment.yaml -n kube-system
 
 export NFS_ADDRESS='10.198.1.155'
 export NFS_DIR='/data/nfs'
@@ -84,10 +86,10 @@ spec:
 EOF
 
 #部署deployment.yaml
-kubectl apply -f deployment.yaml
+kubectl apply -f deployment.yaml -n kube-system
 
 #查看创建的pod
-kubectl get pod -o wide
+kubectl get pod -o wide -n kube-system
 ```
 
 3、创建StorageClass
