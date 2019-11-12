@@ -348,7 +348,37 @@ shm                           64M     0   64M   0% /dev/shm
 ## 03、删除pod，pv和pvc不会被删除，nfs存储的数据不会被删除
 
 ```bash
-kubectl delete -f nfs-pod001.yaml 
+$ kubectl delete -f nfs-pod001.yaml 
+pod "nfs-pod001" deleted
+
+$ kubectl get pv
+NAME            CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                  STORAGECLASS    REASON   AGE
+nfs-pv001       20Gi       RWO            Recycle          Bound    default/nfs-pvc001     nfs                      13m
+nfs-pv002       30Gi       RWO            Recycle          Bound    default/nfs-pvc002     nfs                      13m
+
+$ kubectl get pvc
+NAME            STATUS   VOLUME          CAPACITY   ACCESS MODES   STORAGECLASS    AGE
+nfs-pvc001      Bound    nfs-pv001       20Gi       RWO            nfs             13m
+nfs-pvc002      Bound    nfs-pv002       30Gi       RWO            nfs             13m
+```
+## 04、继续删除pvc，pv将被释放，处于 Available 可用状态，并且nfs存储中的数据被删除。
+
+```bash
+$ kubectl delete -f nfs-pvc001.yaml 
+persistentvolumeclaim "nfs-pvc001" deleted
+
+$ kubectl get pv
+NAME            CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM                   STORAGECLASS    REASON   AGE
+nfs-pv001       20Gi       RWO            Recycle          Available                           nfs                      18m
+nfs-pv002       30Gi       RWO            Recycle          Bound       default/nfs-pvc002      nfs                      18m
+
+$ ls /nfs/data/pv001/  # 文件不存在
 ```
 
+## 05、继续删除pv
+
+```bash
+$ kubectl delete -f nfs-pv001.yaml
+persistentvolume "nfs-pv001" deleted
+```
 
