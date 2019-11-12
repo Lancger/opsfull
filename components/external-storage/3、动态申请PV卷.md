@@ -235,18 +235,18 @@ spec:
 EOF
 
 #创建PVC
-$ kubectl apply -f test-claim.yaml -n kube-public
+kubectl apply -f test-claim.yaml -n kube-public
+
+#查看创建的PV和PVC
+$ kubectl get pvc -n kube-public
 NAME         STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
 test-claim   Bound    pvc-593f241f-a75f-459a-af18-a672e5090921   100Gi      RWX            nfs-storage    3s
 
-#查看创建的PV和PVC
-kubectl get pvc -n kube-public
 kubectl get pv
 
-然后，我们进入到NFS的export目录，可以看到对应该volume name的目录已经创建出来了。
-其中volume的名字是namespace，PVC name以及uuid的组合：
+#然后，我们进入到NFS的export目录，可以看到对应该volume name的目录已经创建出来了。其中volume的名字是namespace，PVC name以及uuid的组合：
 
-注意，出现pvc在pending的原因可能为nfs-client-provisioner pod 出现了问题，删除重建的时候会出现镜像问题
+#注意，出现pvc在pending的原因可能为nfs-client-provisioner pod 出现了问题，删除重建的时候会出现镜像问题
 ```
 
 # 五、创建测试Pod
