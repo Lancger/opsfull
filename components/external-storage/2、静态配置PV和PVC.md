@@ -1,26 +1,10 @@
-Table of Contents
-=================
-
-   * [一、环境介绍](#一环境介绍)
-   * [二、PV操作](#二pv操作)
-         * [01、创建PV卷](#01创建pv卷)
-         * [02、PV配置参数介绍](#02pv配置参数介绍)
-         * [03、创建PV资源](#03创建pv资源)
-         * [04、查看PV](#04查看pv)
-   * [三、PVC操作](#三pvc操作)
-         * [01、创建PVC资源](#01创建pvc资源)
-         * [02、查看PVC/PV](#02查看pvcpv)
-   * [三、Pod中使用存储](#三pod中使用存储)
-   * [四、验证](#四验证)
-   
-
 # 一、环境介绍
 
 作为准备工作，我们已经在 k8s同一局域内网节点上搭建了一个 NFS 服务器，目录为 /data/nfs
 
 # 二、PV操作
 
-### 01、创建PV卷
+## 01、创建PV卷
 
 ```bash
 # 创建pv卷对应的目录
@@ -47,7 +31,7 @@ Export list for 192.168.56.11:
 /data/nfs       *
 ```
 
-### 02、PV配置参数介绍
+## 02、PV配置参数介绍
 
 ```bash
 配置说明：
@@ -87,7 +71,7 @@ Export list for 192.168.56.11:
     Recycle K8S会将PV里的数据删除，然后把PV的状态变成Available，又可以被新的PVC绑定使用
 ```
 
-### 03、创建PV资源
+## 03、创建PV资源
 
 1、nfs-pv001.yaml
 
@@ -149,7 +133,7 @@ EOF
 kubectl apply -f nfs-pv002.yaml
 ```
 
-### 04、查看PV
+## 04、查看PV
 
 ```bash
 # 查看pv
@@ -163,7 +147,7 @@ nfs-pv002     30Gi       RWO            Recycle          Available           nfs
 
 # 三、PVC操作
 
-### 01、创建PVC资源
+## 01、创建PVC资源
 
 接下来创建2个名为pvc001和pvc002的PVC，配置文件 nfs-pvc001.yaml 如下：
 
@@ -223,7 +207,7 @@ EOF
 kubectl apply -f nfs-pvc002.yaml
 ```
 
-### 02、查看PVC/PV
+## 02、查看PVC/PV
 
 ```bash
 $ kubectl get pvc
