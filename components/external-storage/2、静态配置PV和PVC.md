@@ -27,3 +27,38 @@ $ exportfs
 /data/nfs/pv001  <world>
 /data/nfs/pv002  <world>
 ```
+
+# 二、创建PV
+
+下面创建2个名为pv001和pv002的PV卷，配置文件 nfs-pv001.yaml 如下
+
+```bash
+# 清理pv资源
+kubectl delete -f mysql-static-pv.yaml
+
+# 编写pv资源文件
+cat > nfs-pv001.yaml <<\EOF
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-pv001
+  labels:
+    pv: nfs-pv001
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: nfs
+  nfs:
+    path: /nfs/data/pv001
+    server: 192.168.56.11
+EOF
+
+# 部署pv到集群中
+kubectl apply -f nfs-pv001.yaml
+
+# 查看pv
+kubectl get pv
+```
