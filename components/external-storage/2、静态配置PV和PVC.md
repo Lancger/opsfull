@@ -10,7 +10,8 @@ mkdir -p /data/nfs/pv001
 mkdir -p /data/nfs/pv002
 
 # 配置exportrs
-$ vim /etc/exports
+vim /etc/exports
+
 /data/nfs *(rw,no_root_squash,sync)
 /data/nfs/pv001 *(rw,no_root_squash,sync)
 /data/nfs/pv002 *(rw,no_root_squash,sync)
@@ -22,7 +23,8 @@ exportfs -r
 systemctl restart rpcbind && systemctl restart nfs
 
 # 查看挂载点
-$ showmount -e 192.168.56.11
+showmount -e 192.168.56.11
+
 Export list for 192.168.56.11:
 /data/nfs/pv002 *
 /data/nfs/pv001 *
@@ -116,6 +118,7 @@ kubectl apply -f nfs-pv002.yaml
 ```bash
 # 查看pv
 kubectl get pv
+
 NAME          CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM   STORAGECLASS    REASON   AGE
 nfs-pv001     20Gi       RWO            Recycle          Available           nfs                      68s
 nfs-pv002     30Gi       RWO            Recycle          Available           nfs                      33s
