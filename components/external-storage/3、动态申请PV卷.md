@@ -252,6 +252,10 @@ kubectl get pv
 # 五、创建测试Pod
 
 ```bash
+# 清理资源
+kubectl delete -f test-pod.yaml -n kube-public
+
+# 编写yaml
 cat > test-pod.yaml <<\EOF
 kind: Pod
 apiVersion: v1
@@ -281,6 +285,21 @@ kubectl apply -f test-pod.yaml -n kube-public
 
 #查看创建的pod
 kubectl get pod -o wide -n kube-public
+```
+
+## 01、进入 NFS Server 服务器验证是否创建对应文件
+
+进入 NFS Server 服务器的 NFS 挂载目录，查看是否存在 Pod 中创建的文件：
+
+```bash
+$ cd /data/nfs/
+$ ls
+archived-kube-public-test-claim-pvc-2dd4740d-f2d1-4e88-a0fc-383c00e37255  kube-public-test-claim-pvc-ad304939-e75d-414f-81b5-7586ef17db6c
+archived-kube-public-test-claim-pvc-593f241f-a75f-459a-af18-a672e5090921  kube-system-test1-claim-pvc-f84dc09c-b41e-4e67-a239-b14f8d342efc
+archived-kube-public-test-claim-pvc-b08b209d-c448-4ce4-ab5c-1bf37cc568e6  pv001
+default-test-claim-pvc-4f18ed06-27cd-465b-ac87-b2e0e9565428               pv002
+
+# 可以看到已经生成 SUCCESS 该文件，并且可知通过 NFS Provisioner 创建的目录命名方式为 “namespace名称-pvc名称-pv名称”，pv 名称是随机字符串，所以每次只要不删除 PVC，那么 Kubernetes 中的与存储绑定将不会丢失，要是删除 PVC 也就意味着删除了绑定的文件夹，下次就算重新创建相同名称的 PVC，生成的文件夹名称也不会一致，因为 PV 名是随机生成的字符串，而文件夹命名又跟 PV 有关,所以删除 PVC 需谨慎。
 ```
 
 
