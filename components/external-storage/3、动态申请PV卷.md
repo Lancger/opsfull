@@ -251,7 +251,7 @@ kubectl get pv
 
 # 五、创建测试Pod
 
-```
+```bash
 cat > test-pod.yaml <<\EOF
 kind: Pod
 apiVersion: v1
