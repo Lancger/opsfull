@@ -92,7 +92,7 @@ spec:
   persistentVolumeReclaimPolicy: Recycle
   storageClassName: nfs
   nfs:
-    path: /nfs/data/pv001
+    path: /data/nfs/pv001
     server: 192.168.56.11
 EOF
 
@@ -122,7 +122,7 @@ spec:
   persistentVolumeReclaimPolicy: Recycle
   storageClassName: nfs
   nfs:
-    path: /nfs/data/pv002
+    path: /data/nfs/pv002
     server: 192.168.56.11
 EOF
 
