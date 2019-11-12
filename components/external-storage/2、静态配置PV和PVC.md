@@ -141,7 +141,9 @@ nfs-pv002     30Gi       RWO            Recycle          Available           nfs
 #STATUS 为 Available，表示 pv 就绪，可以被 PVC 申请。
 ```
 
-# 二、创建PVC
+# 二、PVC资源申请
+
+## 2.1、pvc配置
 
 接下来创建2个名为pvc001和pvc002的PVC，配置文件 nfs-pvc001.yaml 如下：
 
@@ -200,7 +202,7 @@ EOF
 kubectl apply -f nfs-pvc002.yaml
 ```
 
-# 五、查看PVC/PV
+## 2.2、查看PVC/PV
 ```bash
 $ kubectl get pvc
 NAME            STATUS   VOLUME          CAPACITY   ACCESS MODES   STORAGECLASS   AGE
@@ -215,7 +217,7 @@ nfs-pv002     30Gi       RWO            Recycle          Bound    default/nfs-pv
 # 从 kubectl get pvc 和 kubectl get pv 的输出可以看到 pvc001 和pvc002分别绑定到pv001和pv002，申请成功。注意pvc绑定到对应pv通过labels标签方式实现，也可以不指定，将随机绑定到pv。
 ```
 
-# 六、Pod 中使用存储
+# 三、Pod 中使用存储
 
 ```bash
 # 与使用普通 Volume 的格式类似，在 volumes 中通过 persistentVolumeClaim 指定使用nfs-pvc001和nfs-pvc002申请的 Volume。
