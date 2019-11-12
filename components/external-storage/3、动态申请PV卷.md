@@ -1,4 +1,10 @@
-# 动态申请PV卷
+# Kubernetes 中部署 NFS Provisioner 为 NFS 提供动态分配卷
+
+## 一、NFS Provisioner 简介
+
+NFS Provisioner 是一个自动配置卷程序，它使用现有的和已配置的 NFS 服务器来支持通过持久卷声明动态配置 Kubernetes 持久卷。
+
+- 持久卷被配置为：𝑛𝑎𝑚𝑒𝑠𝑝𝑎𝑐𝑒−{pvcName}-${pvName}。
 
 External NFS驱动的工作原理
 
