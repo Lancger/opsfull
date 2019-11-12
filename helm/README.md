@@ -161,12 +161,14 @@ EOF
 ## 3、安装nginx-ingress
 
 ```bash
-$ helm repo update
-$ helm install stable/nginx-ingress \
+helm del --purge nginx-ingress
+ 
+helm repo update
+
+helm install stable/nginx-ingress \
 -n nginx-ingress \
 --namespace ingress-nginx  \
 -f ingress-nginx.yaml
-
 
 如果访问 http://192.168.56.11 返回default backend，则部署完成。
 ```
