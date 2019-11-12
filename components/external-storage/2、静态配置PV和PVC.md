@@ -345,7 +345,9 @@ shm                           64M     0   64M   0% /dev/shm
 192.168.56.11:/data/nfs/pv002  932G  620M  931G   1% /var/www/html
 ```
 
-## 03、删除pod，pv和pvc不会被删除，nfs存储的数据不会被删除
+## 03、删除pod
+
+pv和pvc不会被删除，nfs存储的数据不会被删除
 
 ```bash
 $ kubectl delete -f nfs-pod001.yaml 
@@ -361,7 +363,9 @@ NAME            STATUS   VOLUME          CAPACITY   ACCESS MODES   STORAGECLASS 
 nfs-pvc001      Bound    nfs-pv001       20Gi       RWO            nfs             13m
 nfs-pvc002      Bound    nfs-pv002       30Gi       RWO            nfs             13m
 ```
-## 04、继续删除pvc，pv将被释放，处于 Available 可用状态，并且nfs存储中的数据被删除。
+## 04、继续删除pvc
+
+pv将被释放,处于 Available 可用状态，并且nfs存储中的数据被删除。
 
 ```bash
 $ kubectl delete -f nfs-pvc001.yaml 
