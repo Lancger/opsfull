@@ -196,6 +196,7 @@ EOF
 ```bash
 #删除
 helm delete kubernetes-dashboard
+helm del --purge kubernetes-dashboard
 
 #安装
 helm install stable/kubernetes-dashboard \
