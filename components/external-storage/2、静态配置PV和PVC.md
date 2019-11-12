@@ -322,6 +322,7 @@ index002.html
 ## 02、进入pod查看挂载情况
 
 ```bash
+# 验证pod001的挂载
 $ kubectl exec -it nfs-pod001 /bin/bash
 $ root@nfs-pod001:/# df -h
 Filesystem                   Size  Used Avail Use% Mounted on
@@ -332,6 +333,7 @@ tmpfs                         16G     0   16G   0% /sys/fs/cgroup
 shm                           64M     0   64M   0% /dev/shm
 192.168.56.11:/data/nfs/pv001  932G  620M  931G   1% /var/www/html
 
+# 验证pod002的挂载
 $ kubectl exec -it nfs-pod002 /bin/bash
 $ root@nfs-pod002:/# df -h
 Filesystem                   Size  Used Avail Use% Mounted on
@@ -341,7 +343,6 @@ tmpfs                         16G     0   16G   0% /sys/fs/cgroup
 /dev/sda3                    711G   85G  627G  12% /etc/hosts
 shm                           64M     0   64M   0% /dev/shm
 192.168.56.11:/data/nfs/pv002  932G  620M  931G   1% /var/www/html
-
 ```
 
 ## 03、删除pod，pv和pvc不会被删除，nfs存储的数据不会被删除
