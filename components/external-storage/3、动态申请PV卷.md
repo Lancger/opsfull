@@ -4,7 +4,7 @@
 
 NFS Provisioner 是一个自动配置卷程序，它使用现有的和已配置的 NFS 服务器来支持通过持久卷声明动态配置 Kubernetes 持久卷。
 
-- 持久卷被配置为：𝑛𝑎𝑚𝑒𝑠𝑝𝑎𝑐𝑒−{pvcName}-${pvName}。
+- 持久卷被配置为：namespace−{pvcName}-${pvName}。
 
 ## 二、External NFS驱动的工作原理
 
@@ -20,7 +20,7 @@ K8S的外部NFS驱动，可以按照其工作方式（是作为NFS server还是N
 
 本文将介绍使用nfs-client-provisioner这个应用，利用NFS Server给Kubernetes作为持久存储的后端，并且动态提供PV。前提条件是有已经安装好的NFS服务器，并且NFS服务器与Kubernetes的Slave节点都能网络连通。将nfs-client驱动做一个deployment部署到K8S集群中，然后对外提供存储服务。
 
-nfs-client-provisioner 是一个Kubernetes的简易NFS的外部provisioner，本身不提供NFS，需要现有的NFS服务器提供存储
+`nfs-client-provisioner` 是一个Kubernetes的简易NFS的外部 provisioner，本身不提供NFS，需要现有的NFS服务器提供存储
 
 ## 三、部署服务
 
