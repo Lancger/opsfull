@@ -34,6 +34,7 @@ $ exportfs
 
 ```bash
 配置说明：
+
 ① capacity 指定 PV 的容量为 20G。
 
 ② accessModes 指定访问模式为 ReadWriteOnce，支持的访问模式有：
