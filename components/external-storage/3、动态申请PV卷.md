@@ -95,7 +95,7 @@ EOF
 kubectl apply -f nfs-provisioner-deploy.yaml -n kube-system
 
 # 查看创建的pod
-kubectl get pod -o wide -n kube-system
+ kubectl get pod -o wide -n kube-system|grep nfs-client
 ```
 
 3、创建StorageClass
