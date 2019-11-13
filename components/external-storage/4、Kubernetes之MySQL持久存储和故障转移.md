@@ -35,7 +35,7 @@ metadata:
   name: mysql-static-pv
 spec:
   capacity:
-    storage: 100Gi
+    storage: 80Gi
 
   accessModes:
     - ReadWriteOnce
@@ -83,7 +83,7 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 100Gi
+      storage: 80Gi
 EOF
 
 # 创建pvc资源
