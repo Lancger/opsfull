@@ -211,6 +211,15 @@ mysql> select * from myid;
 +------+
 1 row in set (0.00 sec)
 
+3、MySQL 服务恢复，数据也完好无损，我们可以可以在存储节点上面查看一下生成的数据库文件。
+
+[root@nfs_server mysql-pv]# ll
+-rw-rw---- 1 systemd-bus-proxy ssh_keys       56 12月 14 09:53 auto.cnf
+-rw-rw---- 1 systemd-bus-proxy ssh_keys 12582912 12月 14 10:15 ibdata1
+-rw-rw---- 1 systemd-bus-proxy ssh_keys 50331648 12月 14 10:15 ib_logfile0
+-rw-rw---- 1 systemd-bus-proxy ssh_keys 50331648 12月 14 09:53 ib_logfile1
+drwx------ 2 systemd-bus-proxy ssh_keys     4096 12月 14 10:05 mysql
+drwx------ 2 systemd-bus-proxy ssh_keys     4096 12月 14 09:53 performance_schema
 ```
 
 参考文档：
