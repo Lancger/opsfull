@@ -159,7 +159,7 @@ ls -l /lib/systemd/system/kubelet.service
 
 # 三、初始化集群
 
-1、命令行初始化
+## 1、命令行初始化
 
 ```bash
 #master节点初始化指令
@@ -196,7 +196,7 @@ systemctl status kubelet
 journalctl -f -u kubelet
 ```
 
-2、通过配置文件进行初始化
+## 2、通过配置文件进行初始化
 
 ```bash
 #在 master 节点配置 kubeadm 初始化文件，可以通过如下命令导出默认的初始化配置：
@@ -265,7 +265,7 @@ EOF
 kubeadm init --config kubeadm.yaml
 ```
 
-3、初始化进行的操作
+## 3、初始化进行的操作
 
 ```bash
 初始化操作主要经历了下面15个步骤，每个阶段均输出均使用[步骤名称]作为开头：
@@ -289,7 +289,7 @@ kubeadm init --config kubeadm.yaml
 kubectl默认会在执行的用户家目录下面的.kube目录下寻找config文件。这里是将在初始化时[kubeconfig]步骤生成的admin.conf拷贝到.kube/config。
 ```
 
-2、单独部署coredns（选择操作）
+## 4、单独部署coredns（选择操作）
 
 ```
 # 不依赖kubeadm的方式，适用于不是使用kubeadm创建的k8s集群，或者kubeadm初始化集群之后，删除了dns相关部署
@@ -311,7 +311,7 @@ kubectl delete svc kube-dns -n kube-system
 kubectl delete cm coredns -n kube-system
 ```
 
-3、集群移除节点
+## 5、集群移除节点
 
 ```
 1、#移除work节点
@@ -323,7 +323,7 @@ kubectl delete node demo-worker-x-x
 #worker 节点的名字可以通过在第一个 master 节点 demo-master-a-1 上执行 kubectl get nodes 命令获得
 ```
 
-4、kube-proxy开启ipvs
+## 6、kube-proxy开启ipvs
 
 ```
 1、#修改ConfigMap的kube-system/kube-proxy中的config.conf，把 mode: "" 改为mode: “ipvs" 保存退出即可
@@ -442,7 +442,7 @@ iptables -D RH-Firewall-1-INPUT 4
 
 # 七、网络插件部署
 
-1、master上部署flannel插件
+## 1、master上部署flannel插件
 
 ```
 #插件镜像 network: flannel image（因墙的问题，需要从国内源下载）
@@ -464,7 +464,7 @@ args:
 - --iface=eth0
 ```
 
-2、master上部署calico插件
+## 2、master上部署calico插件
 
 ```
 export POD_SUBNET=10.244.0.0/16
@@ -476,7 +476,7 @@ kubectl apply -f calico.yaml
 https://www.cnblogs.com/goldsunshine/p/10701242.html  k8s网络之Calico网络
 ```
 
-3、性能对比
+## 3、性能对比
 
 ```
 https://www.2cto.com/net/201701/591629.html  kubernetes flannel neutron calico三种网络方案性能测试分析
@@ -486,7 +486,7 @@ https://www.2cto.com/net/201701/591629.html  kubernetes flannel neutron calico�
 
 使用 dashboard 最好把浏览器的默认语言设置为英文，不然在进入容器操作的时候会有bug，会出现重影
 
-1、下载yaml文件
+## 1、下载yaml文件
 
 ```
 wget https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
@@ -524,7 +524,7 @@ spec:
     k8s-app: kubernetes-dashboard
 ```
 
-2、dashboard最终文件
+## 2、dashboard最终文件
 
 ```
 cat > kubernetes-dashboard.yaml << \EOF
@@ -698,7 +698,7 @@ EOF
 kubectl apply -f kubernetes-dashboard.yaml
 ```
 
-3、查看dashboard
+## 3、查看dashboard
 
 ```
 root># kubectl get pods -n kube-system -l k8s-app=kubernetes-dashboard
@@ -712,7 +712,7 @@ kubernetes-dashboard   NodePort   192.168.56.11   <none>        443:32730/TCP   
 然后可以通过上面的 https://NodeIP:32730 端口去访问 Dashboard，要记住使用 https，Chrome不生效可以使用Firefox测试：
 ```
 
-4、然后创建一个具有全局所有权限的用户来登录Dashboard：(admin.yaml)
+## 4、然后创建一个具有全局所有权限的用户来登录Dashboard：(admin.yaml)
 
 ```
 cat > admin.yaml << \EOF
@@ -758,7 +758,7 @@ https://192.168.56.12:31513
 
 # 九、问题排查
 
-1、coredns异常问题
+## 1、coredns异常问题
 
   ![coredns异常问题](https://github.com/Lancger/opsfull/blob/master/images/coredns-01.png)
 
@@ -768,7 +768,7 @@ E1006 12:30:53.935744       1 reflector.go:134] github.com/coredns/coredns/plugi
 log: exiting because of error: log: cannot create log: open /tmp/coredns.coredns-bccdc95cf-vlqxk.unknownuser.log.ERROR.20191006-123053.1: no such file or directory
 ```
 
-解决办法
+### 1.1、解决办法
 
 ```
 实际上是主机防火墙的问题，需要添加
@@ -779,7 +779,7 @@ https://medium.com/@cminion/quicknote-kubernetes-networking-issues-78f1e0d06e12
 https://github.com/coredns/coredns/issues/2325  
 ```
 
-2、kubelet异常问题1
+## 2、kubelet异常问题1
 
 ```
 问题现象：
@@ -804,7 +804,7 @@ https://stackoverflow.com/questions/46726216/kubelet-fails-to-get-cgroup-stats-f
 https://www.twblogs.net/a/5cc87d63bd9eee1ac2ed736b
 ```
 
-3、kubelet异常问题2
+## 3、kubelet异常问题2
 
 ```
 failed to create kubelet: misconfiguration: kubelet cgroup driver: "cgroupfs" is different from docker cgroup driver: "systemd"
