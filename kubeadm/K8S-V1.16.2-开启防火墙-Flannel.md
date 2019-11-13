@@ -503,6 +503,21 @@ wget https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta5/aio/dep
 Kubernetes Dashboard 默认部署时，只配置了最低权限的 RBAC
 
 参考文档：https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md
+
+# 我们可以看到官方的dashboard帮我们启动了web-ui，并且帮我们启动了一个Metric服务
+# 但是dashboard默认使用的https的443端口
+
+# 测试下Dashboard是否正常
+$ curl https://10.253.233.70:443 -k -I
+HTTP/1.1 200 OK
+Accept-Ranges: bytes
+Cache-Control: no-store
+Content-Length: 1262
+Content-Type: text/html; charset=utf-8
+Last-Modified: Thu, 29 Aug 2019 09:14:59 GMT
+Date: Sun, 08 Sep 2019 04:27:08 GMT
+
+https://cloud.tencent.com/developer/article/1500710   k8s dashboard 的http接口改造
 ```
 
 ## 3、查看dashboard
