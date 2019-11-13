@@ -100,6 +100,9 @@ spec:
 EOF
 
 kubectl apply -f nfs-static-nginx.yaml
+
+#查看pod
+kubectl get pods -n test
 ```
 
 # 二、nginx使用nfs动态PV
