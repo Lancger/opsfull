@@ -97,7 +97,7 @@ mysql-static-pvc   Bound         pvc-c55f8695-2a0b-4127-a60b-5c1aba8b9104   80Gi
 
 # 三、部署 MySQL
 
-MySQL 的配置文件mysql.yaml如下：
+1、MySQL 的配置文件mysql.yaml如下：
 
 ```bash
 kubectl delete -f mysql.yaml
@@ -146,7 +146,17 @@ EOF
 
 kubectl apply -f mysql.yaml
 
-PVC mysql-static-pvc Bound 的 PV mysql-static-pv 将被 mount 到 MySQL 的数据目录 /var/lib/mysql。
+# PVC mysql-static-pvc Bound 的 PV mysql-static-pv 将被 mount 到 MySQL 的数据目录 /var/lib/mysql。
+```
+
+2、更新 MySQL 数据
+
+MySQL 被部署到 k8s-node02，下面通过客户端访问 Service mysql：
+
+```bash
+$ kubectl run -it --rm --image=mysql:5.6 --restart=Never mysql-client -- mysql -h mysql -ppassword
+If you don't see a command prompt, try pressing enter.
+mysql>
 ```
 
 参考文档：
