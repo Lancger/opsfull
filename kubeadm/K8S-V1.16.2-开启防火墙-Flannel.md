@@ -496,8 +496,9 @@ wget https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta5/aio/dep
 ## 2、修改配置
 ```bash
 1、#热更新打补丁的方式修改svc
+kubectl apply -f recommended.yaml
 kubectl -n kubernetes-dashboard patch svc kubernetes-dashboard -p '{"spec":{"type":"NodePort"}}'
-kubectl -n kubernetes-dashboard patch svc kubernetes-dashboard -p '{"spec": {"ports": [{"port":443, "nodePort": 30002}]}}'
+kubectl -n kubernetes-dashboard patch svc kubernetes-dashboard -p '{"spec": {"ports": [{"port":443, "nodePort": 30001}]}}'
 kubectl get svc -A|grep kubernetes-dashboard
 
 https://www.jianshu.com/p/f38e1767bf19  使用 kubectl patch 更新 API 对象
