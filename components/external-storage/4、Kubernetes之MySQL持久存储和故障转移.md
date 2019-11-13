@@ -222,6 +222,16 @@ drwx------ 2 systemd-bus-proxy ssh_keys     4096 12月 14 10:05 mysql
 drwx------ 2 systemd-bus-proxy ssh_keys     4096 12月 14 09:53 performance_schema
 ```
 
+# 四、全新命名空间使用
+
+```bash
+kubectl create ns test-ns
+
+kubectl apply -f mysql-pvc.yaml -n test-ns
+
+kubectl apply -f mysql.yaml -n test-ns
+```
+
 参考文档：
 
 https://blog.51cto.com/wzlinux/2330295   Kubernetes 之 MySQL 持久存储和故障转移(十一)
