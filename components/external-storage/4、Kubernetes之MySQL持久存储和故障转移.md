@@ -1,6 +1,6 @@
 # 一、MySQL持久化演练
 
-数据库提供持久化存储，主要分为下面几个步骤：
+## 1、数据库提供持久化存储，主要分为下面几个步骤：
 
     1、创建 PV 和 PVC
 
@@ -21,7 +21,7 @@ PV就好比是一个仓库，我们需要先购买一个仓库，即定义一个
 PVC就好比租户，pv和pvc是一对一绑定的，挂载到POD中，一个pvc可以被多个pod挂载。
 ```
 
-1、创建 PV
+## 1、创建 PV
 
 ```bash
 # 清理pv资源
@@ -66,7 +66,7 @@ NAME                                       CAPACITY   ACCESS MODES   RECLAIM POL
 mysql-static-pv                            80Gi       RWO            Retain           Available                                                                                  4m20s
 ```
 
-2、创建PVC
+## 2、创建PVC
 
 ```bash
 # 清理pvc资源
@@ -93,6 +93,58 @@ kubectl apply -f mysql-pvc.yaml
 $ kubectl get pvc
 NAME               STATUS        VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
 mysql-static-pvc   Bound         pvc-c55f8695-2a0b-4127-a60b-5c1aba8b9104   80Gi       RWO            nfs-storage    81s
+```
+
+# 三、部署 MySQL
+
+MySQL 的配置文件mysql.yaml如下：
+
+```bash
+kubectl delete -f mysql.yaml
+
+cat >mysql.yaml<<\EOF
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  ports:
+  - port: 3306
+  selector:
+    app: mysql
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:5.6
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: password
+        ports:
+        - name: mysql
+          containerPort: 3306
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-static-pvc
+EOF
+
+kubectl apply -f mysql.yaml
 ```
 
 参考文档：
