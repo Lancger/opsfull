@@ -61,7 +61,9 @@ EOF
 kubectl apply -f mysql-static-pv.yaml
 
 # 查看pv
-kubectl get pv
+$ kubectl get pv
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM                                           STORAGECLASS          REASON   AGE
+mysql-static-pv                            80Gi       RWO            Retain           Available                                                                                  4m20s
 ```
 
 2、创建PVC
@@ -88,7 +90,9 @@ EOF
 kubectl apply -f mysql-pvc.yaml
 
 # 查看pvc
-kubectl get pvc
+$ kubectl get pvc
+NAME               STATUS        VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+mysql-static-pvc   Bound         pvc-c55f8695-2a0b-4127-a60b-5c1aba8b9104   80Gi       RWO            nfs-storage    81s
 ```
 
 参考文档：
