@@ -151,12 +151,34 @@ kubectl apply -f mysql.yaml
 
 2、更新 MySQL 数据
 
-MySQL 被部署到 k8s-node02，下面通过客户端访问 Service mysql：
+下面通过客户端访问 Service mysql：
 
 ```bash
 $ kubectl run -it --rm --image=mysql:5.6 --restart=Never mysql-client -- mysql -h mysql -ppassword
 If you don't see a command prompt, try pressing enter.
 mysql>
+
+我们在mysql库中创建一个表myid，然后在表里新增几条数据。
+
+mysql> use mysql
+Database changed
+
+mysql> drop table myid;
+Query OK, 0 rows affected (0.12 sec)
+
+mysql> create table myid(id int(4));
+Query OK, 0 rows affected (0.23 sec)
+
+mysql> insert myid values(888);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from myid;
++------+
+| id   |
++------+
+|  888 |
++------+
+1 row in set (0.00 sec)
 ```
 
 参考文档：
