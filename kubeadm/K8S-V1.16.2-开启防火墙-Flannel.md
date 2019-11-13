@@ -1,6 +1,6 @@
 # 一、防火墙配置
 
-```
+```bash
 chattr -i /etc/passwd* && chattr -i /etc/group* && chattr -i /etc/shadow* && chattr -i /etc/gshadow*
 
 yum install iptables iptables-services -y
@@ -203,7 +203,7 @@ journalctl -f -u kubelet
 root># kubeadm config print init-defaults > kubeadm.yaml
 ```
 
-```
+```bash
 #然后根据我们自己的需求修改配置，比如修改 imageRepository 的值，kube-proxy 的模式为 ipvs
 
 如果是 flannel 网络插件的，需要将 networking.podSubnet 设置为默认的 10.244.0.0/16
