@@ -489,6 +489,8 @@ https://www.2cto.com/net/201701/591629.html  kubernetes flannel neutron calico�
 ## 1、下载yaml文件
 
 ```bash
+wget https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta5/aio/deploy/recommended.yaml
+
 
 ```
 
