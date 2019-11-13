@@ -238,6 +238,8 @@ kubectl apply -f mysql.yaml -n test-ns
 kubectl get pods -n test-ns
 
 kubectl -n test-ns logs -f $(kubectl get pods -n test-ns|grep mysql|awk '{print $1}')
+
+kubectl run -n test-ns -it --rm --image=mysql:5.6 --restart=Never mysql-client -- mysql -h mysql -ppassword
 ```
 
 参考文档：
