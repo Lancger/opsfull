@@ -1,4 +1,4 @@
-# 一、nginx使用nfs共享存储静态PV
+# 一、nginx使用nfs静态PV
 
 ## 1、静态nfs-static-nginx.yaml
 
@@ -6,7 +6,7 @@
 
 ```
 
-# 二、nginx使用nfs共享存储动态PV
+# 二、nginx使用nfs动态PV
 
 ## 2、动态nfs-dynamic-nginx.yaml
 
