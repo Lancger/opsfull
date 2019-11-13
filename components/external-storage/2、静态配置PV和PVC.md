@@ -20,7 +20,7 @@ Table of Contents
       
 # 一、环境介绍
 
-作为准备工作，我们已经在 k8s同一局域内网节点上搭建了一个 NFS 服务器，目录为 /data/nfs
+作为准备工作，我们已经在 k8s同一局域内网节点上搭建了一个 NFS 服务器，目录为 /data/nfs, pv是全局的，pvc可以指定namespace。
 
 # 二、PV操作
 
