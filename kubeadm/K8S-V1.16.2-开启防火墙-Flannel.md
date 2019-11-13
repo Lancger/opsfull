@@ -489,13 +489,16 @@ https://www.2cto.com/net/201701/591629.html  kubernetes flannel neutron calico�
 ## 1、下载yaml文件
 
 ```bash
+#下载
 wget https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta5/aio/deploy/recommended.yaml
 ```
 
 ## 2、修改配置
 ```bash
-#修改recommended.yaml文件，为了方便访问，修改kubernetes-dashboard的Service定义，指定Service的type类型为NodeType，指定nodePort端口
+1、#热更新打补丁的方式修改svc
+kubectl -n kubernetes-dashboard patch svc kubernetes-dashboard -p '{"spec":{"type":"NodePort"}}'
 
+2、#手动修改recommended.yaml文件，为了方便访问，修改kubernetes-dashboard的Service定义，指定Service的type类型为NodeType，指定nodePort端口
 kubectl delete -f recommended.yaml 
 
 ---
