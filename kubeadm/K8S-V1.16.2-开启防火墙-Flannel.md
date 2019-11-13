@@ -291,7 +291,7 @@ kubectl默认会在执行的用户家目录下面的.kube目录下寻找config�
 
 ## 4、单独部署coredns（选择操作）
 
-```
+```bash
 # 不依赖kubeadm的方式，适用于不是使用kubeadm创建的k8s集群，或者kubeadm初始化集群之后，删除了dns相关部署
 # 在calico网络中也配置一个coredns # 10.96.0.10 为k8s官方指定的kube-dns地址
 rm -f coredns.yaml.sed deploy.sh coredns.yml
@@ -313,7 +313,7 @@ kubectl delete cm coredns -n kube-system
 
 ## 5、集群移除节点
 
-```
+```bash
 1、#移除work节点
 在准备移除的 worker 节点上执行
 kubeadm reset
@@ -325,7 +325,7 @@ kubectl delete node demo-worker-x-x
 
 ## 6、kube-proxy开启ipvs
 
-```
+```bash
 1、#修改ConfigMap的kube-system/kube-proxy中的config.conf，把 mode: "" 改为mode: “ipvs" 保存退出即可
 
 root># kubectl edit cm kube-proxy -n kube-system
@@ -353,7 +353,7 @@ I0518 20:24:09.435271       1 controller_utils.go:1034] Caches are synced for en
 
 # 四、Master操作
 
-```
+```bash
 #将 master 节点上面的 $HOME/.kube/config 文件拷贝到 node 节点对应的文件中
 mkdir -p $HOME/.kube
 yes | cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
@@ -370,7 +370,7 @@ echo "source <(kubectl completion bash)" >> ~/.bashrc
 
 # 五、Node操作
 
-```
+```bash
 #node节点操作
 mkdir -p $HOME/.kube
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
@@ -381,7 +381,7 @@ kubeadm join 192.168.56.11:6443 --token 5avfk1.fwui1smk5utcu7m9     --discovery-
 
 # 六、集群操作
 
-```
+```bash
 #批量重启docker
 docker restart `docker ps -a -q` 
 
@@ -444,7 +444,7 @@ iptables -D RH-Firewall-1-INPUT 4
 
 ## 1、master上部署flannel插件
 
-```
+```bash
 #插件镜像 network: flannel image（因墙的问题，需要从国内源下载）
 docker pull quay-mirror.qiniu.com/coreos/flannel:v0.11.0-amd64
 docker tag quay-mirror.qiniu.com/coreos/flannel:v0.11.0-amd64  quay.io/coreos/flannel:v0.11.0-amd64
@@ -466,7 +466,7 @@ args:
 
 ## 2、master上部署calico插件
 
-```
+```bash
 export POD_SUBNET=10.244.0.0/16
 rm -f calico.yaml
 wget https://docs.projectcalico.org/v3.8/manifests/calico.yaml
@@ -478,7 +478,7 @@ https://www.cnblogs.com/goldsunshine/p/10701242.html  k8s网络之Calico网络
 
 ## 3、性能对比
 
-```
+```bash
 https://www.2cto.com/net/201701/591629.html  kubernetes flannel neutron calico三种网络方案性能测试分析
 ```
 
@@ -488,7 +488,7 @@ https://www.2cto.com/net/201701/591629.html  kubernetes flannel neutron calico�
 
 ## 1、下载yaml文件
 
-```
+```bash
 wget https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
 
 vim kubernetes-dashboard.yaml
