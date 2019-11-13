@@ -1,11 +1,11 @@
 # 一、nginx使用nfs静态PV
 
-## 1、静态nfs-static-nginx.yaml
+## 1、静态nfs-static-nginx-rc.yaml
 
 ```bash
-kubectl delete -f nfs-static-nginx.yaml
+kubectl delete -f nfs-static-nginx-rc.yaml
 
-cat >nfs-static-nginx.yaml<<\EOF
+cat >nfs-static-nginx-rc.yaml<<\EOF
 ##创建namespaces
 ---
 apiVersion: v1
@@ -99,10 +99,16 @@ spec:
     name: nginx-test
 EOF
 
-kubectl apply -f nfs-static-nginx.yaml
+kubectl apply -f nfs-static-nginx-rc.yaml
 
 #查看pod
 kubectl get pods -n test
+```
+
+## 2、静态nfs-static-nginx-dp.yaml
+
+```bash
+
 ```
 
 # 二、nginx使用nfs动态PV
