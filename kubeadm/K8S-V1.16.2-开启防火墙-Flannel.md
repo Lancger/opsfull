@@ -497,6 +497,23 @@ wget https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta5/aio/dep
 ```bash
 #修改recommended.yaml文件，为了方便访问，修改kubernetes-dashboard的Service定义，指定Service的type类型为NodeType，指定nodePort端口
 
+---
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    k8s-app: kubernetes-dashboard
+  name: kubernetes-dashboard
+  namespace: kubernetes-dashboard
+spec:
+  type: NodePort  # 新增这一行，指定为NodePort方式
+  ports:
+    - port: 443
+      targetPort: 8443
+      nodePort: 30001  # 指定端口为30001
+  selector:
+    k8s-app: kubernetes-dashboard
+---
 
 #注：dashboard-metrics-scraper的Service不需要修改
 
