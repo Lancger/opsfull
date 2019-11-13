@@ -527,7 +527,7 @@ Kubernetes Dashboard 默认部署时，只配置了最低权限的 RBAC
 
 ## 3、查看dashboard
 
-```
+```bash
 root># kubectl  get pod,deploy,svc -n kubernetes-dashboard
 NAME                                             READY   STATUS    RESTARTS   AGE
 pod/dashboard-metrics-scraper-76585494d8-ws57d   1/1     Running   0          2m18s
@@ -558,7 +558,7 @@ Date: Wed, 13 Nov 2019 02:25:52 GMT
 
 ## 4、然后创建一个具有全局所有权限的用户来登录Dashboard：(admin.yaml)
 
-```
+```bash
 cat > admin.yaml << \EOF
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1beta1
