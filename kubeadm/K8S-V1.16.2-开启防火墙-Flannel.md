@@ -162,6 +162,7 @@ ls -l /lib/systemd/system/kubelet.service
 1、命令行初始化
 
 ```bash
+#master节点初始化指令
 kubeadm init \
   --apiserver-advertise-address=192.168.56.11 \
   --image-repository registry.aliyuncs.com/google_containers \
@@ -169,6 +170,9 @@ kubeadm init \
   --apiserver-bind-port=6443 \
   --service-cidr=10.96.0.0/12 \
   --pod-network-cidr=10.244.0.0/16  #这里使用这个是因为官方flannel使用的这个段地址，不然的话,kube-flannel.yml那里需要调整
+
+#其他节点可以先指定image源，先下载需要的镜像
+kubeadm config images pull --image-repository registry.aliyuncs.com/google_containers
 
 #获取加入集群的指令
 kubeadm token create --print-join-command
