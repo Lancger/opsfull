@@ -97,7 +97,7 @@ mysql-static-pvc   Bound         pvc-c55f8695-2a0b-4127-a60b-5c1aba8b9104   80Gi
 
 # 三、部署 MySQL
 
-1、MySQL 的配置文件mysql.yaml如下：
+## 1、MySQL 的配置文件mysql.yaml如下：
 
 ```bash
 kubectl delete -f mysql.yaml
@@ -149,9 +149,9 @@ kubectl apply -f mysql.yaml
 # PVC mysql-static-pvc Bound 的 PV mysql-static-pv 将被 mount 到 MySQL 的数据目录 /var/lib/mysql。
 ```
 
-2、更新 MySQL 数据
+## 2、更新 MySQL 数据
 
-下面通过客户端访问 Service mysql：
+MySQL 被部署到 k8s-node02，下面通过客户端访问 Service mysql：
 
 ```bash
 $ kubectl run -it --rm --image=mysql:5.6 --restart=Never mysql-client -- mysql -h mysql -ppassword
@@ -179,6 +179,38 @@ mysql> select * from myid;
 |  888 |
 +------+
 1 row in set (0.00 sec)
+```
+
+## 3、故障转移
+
+我们现在把 node02 机器关机，模拟节点宕机故障。
+
+
+```bash
+1、一段时间之后，Kubernetes 将 MySQL 迁移到 k8s-node01
+
+$ kubectl get pod -o wide
+NAME                     READY   STATUS        RESTARTS   AGE   IP            NODE     NOMINATED NODE   READINESS GATES
+mysql-7686899cf9-8z6tc   1/1     Running       0          21s   10.244.1.19   node01   <none>           <none>
+mysql-7686899cf9-d4m42   1/1     Terminating   0          23m   10.244.2.17   node02   <none>           <none>
+
+2、验证数据的一致性
+
+$ kubectl run -it --rm --image=mysql:5.6 --restart=Never mysql-client -- mysql -h mysql -ppassword
+If you don't see a command prompt, try pressing enter.
+mysql> use mysql
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> select * from myid;
++------+
+| id   |
++------+
+|  888 |
++------+
+1 row in set (0.00 sec)
+
 ```
 
 参考文档：
