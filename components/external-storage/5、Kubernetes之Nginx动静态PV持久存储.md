@@ -3,7 +3,7 @@
 ## 1、静态nfs-static-nginx.yaml
 
 ```bash
-kubectl apply -f nfs-static-nginx.yaml
+kubectl delete -f nfs-static-nginx.yaml
 
 cat >nfs-static-nginx.yaml<<\EOF
 ##创建namespaces
