@@ -49,7 +49,7 @@ spec:
   #Delete，删除存储资源，比如删除 AWS EBS 卷（只有 AWS EBS, GCE PD, Azure Disk 和 Cinder 支持）
 
   nfs:
-    path: /nfs/data/
+    path: /data/nfs/
     server: 10.198.1.156
   mountOptions:
     - vers=4
