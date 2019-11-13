@@ -491,7 +491,18 @@ https://www.2cto.com/net/201701/591629.html  kubernetes flannel neutron calico�
 ```bash
 wget https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta5/aio/deploy/recommended.yaml
 
+```
 
+## 2、修改配置
+```bash
+#修改recommended.yaml文件，为了方便访问，修改kubernetes-dashboard的Service定义，指定Service的type类型为NodeType，指定nodePort端口
+
+
+#注：dashboard-metrics-scraper的Service不需要修改
+
+Kubernetes Dashboard 默认部署时，只配置了最低权限的 RBAC
+
+参考文档：https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md
 ```
 
 ## 3、查看dashboard
