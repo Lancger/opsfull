@@ -174,6 +174,9 @@ kubeadm init \
 #其他节点可以先指定image源，先下载需要的镜像
 kubeadm config images pull --image-repository registry.aliyuncs.com/google_containers
 
+#查看集群初始化配置
+kubeadm config view
+
 #获取加入集群的指令
 kubeadm token create --print-join-command
 
