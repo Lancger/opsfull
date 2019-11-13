@@ -518,21 +518,6 @@ spec:
 
 kubectl apply -f recommended.yaml 
 
-# 我们可以看到官方的dashboard帮我们启动了web-ui，并且帮我们启动了一个Metric服务
-# 但是dashboard默认使用的https的443端口
-
-# 测试下Dashboard是否正常
-$ curl https://10.253.233.70:443 -k -I
-HTTP/1.1 200 OK
-Accept-Ranges: bytes
-Cache-Control: no-store
-Content-Length: 1262
-Content-Type: text/html; charset=utf-8
-Last-Modified: Thu, 29 Aug 2019 09:14:59 GMT
-Date: Sun, 08 Sep 2019 04:27:08 GMT
-
-https://cloud.tencent.com/developer/article/1500710   k8s dashboard 的http接口改造
-
 #注：dashboard-metrics-scraper的Service不需要修改
 
 Kubernetes Dashboard 默认部署时，只配置了最低权限的 RBAC
@@ -543,15 +528,32 @@ Kubernetes Dashboard 默认部署时，只配置了最低权限的 RBAC
 ## 3、查看dashboard
 
 ```
-root># kubectl get pods -n kube-system -l k8s-app=kubernetes-dashboard
-NAME                                  READY   STATUS    RESTARTS   AGE
-kubernetes-dashboard-fcfb4cbc-dqbq9   1/1     Running   0          8m5s
+root># kubectl  get pod,deploy,svc -n kubernetes-dashboard
+NAME                                             READY   STATUS    RESTARTS   AGE
+pod/dashboard-metrics-scraper-76585494d8-ws57d   1/1     Running   0          2m18s
+pod/kubernetes-dashboard-6b86b44f87-q26w6        1/1     Running   0          2m18s
 
-root># kubectl get svc -n kube-system -l k8s-app=kubernetes-dashboard
-NAME                   TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)         AGE
-kubernetes-dashboard   NodePort   192.168.56.11   <none>        443:32730/TCP   8m25s
+NAME                                        READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/dashboard-metrics-scraper   1/1     1            1           2m18s
+deployment.apps/kubernetes-dashboard        1/1     1            1           2m18s
 
-然后可以通过上面的 https://NodeIP:32730 端口去访问 Dashboard，要记住使用 https，Chrome不生效可以使用Firefox测试：
+NAME                                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)         AGE
+service/dashboard-metrics-scraper   ClusterIP   10.102.114.143   <none>        8000/TCP        2m18s
+service/kubernetes-dashboard        NodePort    10.111.191.70    <none>        443:30001/TCP   2m19s
+
+root># curl https://10.111.191.70:443 -k -I
+HTTP/1.1 200 OK
+Accept-Ranges: bytes
+Cache-Control: no-store
+Content-Length: 1262
+Content-Type: text/html; charset=utf-8
+Last-Modified: Mon, 14 Oct 2019 16:39:02 GMT
+Date: Wed, 13 Nov 2019 02:25:52 GMT
+
+# 我们可以看到官方的dashboard帮我们启动了web-ui，并且帮我们启动了一个Metric服务
+# 但是dashboard默认使用的https的443端口
+
+然后可以通过上面的 https://NodeIP:30001 端口去访问 Dashboard，要记住使用 https，Chrome不生效可以使用Firefox测试：
 ```
 
 ## 4、然后创建一个具有全局所有权限的用户来登录Dashboard：(admin.yaml)
