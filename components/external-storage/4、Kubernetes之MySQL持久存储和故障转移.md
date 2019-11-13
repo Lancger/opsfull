@@ -238,7 +238,7 @@ drwx------ 2 systemd-bus-proxy ssh_keys     4096 12月 14 09:53 performance_sche
 
 # 四、全新命名空间使用
 
-pv不区分命名空间，pvc区分
+pv是全局的，pvc可以指定namespace
 
 ```bash
 kubectl delete ns test-ns
