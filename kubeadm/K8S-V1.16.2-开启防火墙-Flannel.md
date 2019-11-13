@@ -490,12 +490,13 @@ https://www.2cto.com/net/201701/591629.html  kubernetes flannel neutron calico�
 
 ```bash
 wget https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta5/aio/deploy/recommended.yaml
-
 ```
 
 ## 2、修改配置
 ```bash
 #修改recommended.yaml文件，为了方便访问，修改kubernetes-dashboard的Service定义，指定Service的type类型为NodeType，指定nodePort端口
+
+kubectl delete -f recommended.yaml 
 
 ---
 kind: Service
@@ -515,11 +516,7 @@ spec:
     k8s-app: kubernetes-dashboard
 ---
 
-#注：dashboard-metrics-scraper的Service不需要修改
-
-Kubernetes Dashboard 默认部署时，只配置了最低权限的 RBAC
-
-参考文档：https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md
+kubectl apply -f recommended.yaml 
 
 # 我们可以看到官方的dashboard帮我们启动了web-ui，并且帮我们启动了一个Metric服务
 # 但是dashboard默认使用的https的443端口
@@ -535,6 +532,12 @@ Last-Modified: Thu, 29 Aug 2019 09:14:59 GMT
 Date: Sun, 08 Sep 2019 04:27:08 GMT
 
 https://cloud.tencent.com/developer/article/1500710   k8s dashboard 的http接口改造
+
+#注：dashboard-metrics-scraper的Service不需要修改
+
+Kubernetes Dashboard 默认部署时，只配置了最低权限的 RBAC
+
+参考文档：https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md
 ```
 
 ## 3、查看dashboard
