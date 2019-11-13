@@ -224,12 +224,20 @@ drwx------ 2 systemd-bus-proxy ssh_keys     4096 12月 14 09:53 performance_sche
 
 # 四、全新命名空间使用
 
+pv不区分命名空间，pvc区分
+
 ```bash
+kubectl delete ns test-ns
+
 kubectl create ns test-ns
 
 kubectl apply -f mysql-pvc.yaml -n test-ns
 
 kubectl apply -f mysql.yaml -n test-ns
+
+kubectl get pods -n test-ns
+
+kubectl -n test-ns logs -f $(kubectl get pods -n test-ns|grep mysql|awk '{print $1}')
 ```
 
 参考文档：
