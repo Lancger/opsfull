@@ -71,7 +71,7 @@ kubectl get pv
 kubectl delete -f mysql-pvc.yaml 
 
 # 编写pvc yaml资源文件
-cat > mysql-static-pv.yaml <<\EOF
+cat > mysql-pvc.yaml <<\EOF
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
