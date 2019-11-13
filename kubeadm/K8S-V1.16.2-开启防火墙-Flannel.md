@@ -497,6 +497,10 @@ wget https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta5/aio/dep
 ```bash
 1、#热更新打补丁的方式修改svc
 kubectl -n kubernetes-dashboard patch svc kubernetes-dashboard -p '{"spec":{"type":"NodePort"}}'
+kubectl -n kubernetes-dashboard patch svc kubernetes-dashboard -p '{"spec": {"ports": [{"port":443, "nodePort": 30002}]}}'
+kubectl get svc -A|grep kubernetes-dashboard
+
+https://www.jianshu.com/p/f38e1767bf19  使用 kubectl patch 更新 API 对象
 
 2、#手动修改recommended.yaml文件，为了方便访问，修改kubernetes-dashboard的Service定义，指定Service的type类型为NodeType，指定nodePort端口
 kubectl delete -f recommended.yaml 
