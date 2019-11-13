@@ -36,6 +36,7 @@ cat > /etc/sysconfig/iptables << \EOF
 COMMIT
 # Completed on Thu Aug  1 01:26:09 2019
 EOF
+
 systemctl restart iptables.service
 systemctl enable iptables.service
 
@@ -114,14 +115,19 @@ yum install -y docker-ce-18.09.9-3.el7.x86_64
 systemctl start docker
 systemctl enable docker
 
+mkdir -p /data0/docker-data
+
 cat > /etc/docker/daemon.json << \EOF
 {
   "exec-opts": ["native.cgroupdriver=systemd"],
+  "data-root": "/data0/docker-data",
   "registry-mirrors" : [
     "https://ot2k4d59.mirror.aliyuncs.com/"
-  ]
+  ],
+  "insecure-registries": ["reg.hub.com"]
 }
 EOF
+
 systemctl daemon-reload
 systemctl restart docker
 
@@ -136,10 +142,11 @@ gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg
         http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
 EOF
 
-yum install -y kubelet-1.16.2 kubeadm-1.16.2 kubectl-1.16.2 --disableexcludes=kubernetes
+yum install -y kubelet-1.16.2-0 kubeadm-1.16.2-0 kubectl-1.16.2-0 --disableexcludes=kubernetes
+
+kubeadm version
 systemctl daemon-reload
 systemctl restart kubelet.service
-kubeadm version
 systemctl enable kubelet.service
 systemctl status kubelet
 
@@ -147,7 +154,7 @@ systemctl status kubelet
 journalctl -f -u kubelet
 
 #kubelet.service服务位置
-/lib/systemd/system/kubelet.service
+ls -l /lib/systemd/system/kubelet.service
 ```
 
 # 三、初始化集群
@@ -161,7 +168,7 @@ kubeadm init \
   --kubernetes-version v1.16.2 \
   --apiserver-bind-port=6443 \
   --service-cidr=10.96.0.0/12 \
-  --pod-network-cidr=10.244.0.0/16    #这里使用这个是因为官方flannel使用的这个段地址，不然的话,kube-flannel.yml那里需要调整
+  --pod-network-cidr=10.244.0.0/16  #这里使用这个是因为官方flannel使用的这个段地址，不然的话,kube-flannel.yml那里需要调整
 
 #获取加入集群的指令
 kubeadm token create --print-join-command
