@@ -235,7 +235,7 @@ kubectl apply -f mysql-pvc.yaml -n test-ns
 
 kubectl apply -f mysql.yaml -n test-ns
 
-kubectl get pods -n test-ns
+kubectl get pods -n test-ns -o wide
 
 kubectl -n test-ns logs -f $(kubectl get pods -n test-ns|grep mysql|awk '{print $1}')
 
