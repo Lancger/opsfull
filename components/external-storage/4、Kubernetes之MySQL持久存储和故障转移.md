@@ -145,6 +145,8 @@ spec:
 EOF
 
 kubectl apply -f mysql.yaml
+
+PVC mysql-static-pvc Bound 的 PV mysql-static-pv 将被 mount 到 MySQL 的数据目录 /var/lib/mysql。
 ```
 
 参考文档：
