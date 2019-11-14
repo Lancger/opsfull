@@ -196,6 +196,9 @@ dir /var/lib/redis
 port 6379
 EOF
 
+#删除名为redis-conf的Configmap
+kubectl delete configmap redis-conf
+
 #创建名为redis-conf的Configmap
 kubectl create configmap redis-conf --from-file=redis.conf
 
@@ -226,6 +229,9 @@ Events:  <none>
 Headless service是StatefulSet实现稳定网络标识的基础，我们需要提前创建。准备文件headless-service.yml如下：
 
 ```bash
+#删除svc
+kubectl delete -f headless-service.yml
+
 #编写svc
 cat >headless-service.yaml<<\EOF 
 apiVersion: v1
