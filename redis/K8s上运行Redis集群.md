@@ -38,6 +38,13 @@ FQDN： $(podname).(headless server name).namespace.svc.cluster.local
 # 四、部署过程
 
 ```bash
+1.创建NFS存储
+2.创建PV
+3.创建PVC
+4.创建Configmap
+5.创建headless服务
+6.创建Redis StatefulSet
+7.初始化Redis集群
 ```
 
 参考文档：
