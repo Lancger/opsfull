@@ -20,7 +20,8 @@ nfs-pvc   Pending---这里发现一直处于Pending的状态                    
 
 #查看日志
 $ kubectl describe pvc nfs-pvc -n test
-Normal   ExternalProvisioning  2s (x3 over 27s)   persistentvolume-controller                                                              waiting for a volume to be created, either by external provisioner "nfs-client" or manually created by system administrator
+failed to provision volume with StorageClass "nfs-storage": claim Selector is not supported
+#从日志中发现，问题出在标签匹配的地方
 ```
 
 参考资料：
