@@ -709,6 +709,8 @@ storageClassName: nfs
 
 参考文档：
 
-https://blog.csdn.net/zhutongcloud/article/details/90768390  在K8s上部署Redis集群
+https://cloud.tencent.com/developer/article/1392872  redis动态扩容
+
+https://blog.csdn.net/zhutongcloud/article/details/90768390  部署Redis集群
 
 https://www.jianshu.com/p/65c4baadf5d9  redis故障切换nodeid原因
