@@ -584,7 +584,8 @@ External Traffic Policy:  Cluster
 Events:                   <none>
 
 #集群内测试（service ip 测试）
-yum install redis
+yum install redis -y
+
 redis-cli -h 10.111.59.191 -p 6379 -c
 10.111.59.191:6379> CLUSTER info
 cluster_state:ok
