@@ -340,6 +340,33 @@ redis-app-3                                     1/1       Running     0         
 redis-app-4                                     1/1       Running     0          2h        172.17.24.9    192.168.0.144   <none>
 redis-app-5                                     1/1       Running     0          2h        172.17.63.10   192.168.0.148   <none>
 
+如上，可以看到这些Pods在部署时是以{0…N-1}的顺序依次创建的。注意，直到redis-app-0状态启动后达到Running状态之后，redis-app-1 才开始启动。
+同时，每个Pod都会得到集群内的一个DNS域名，格式为$(podname).$(service name).$(namespace).svc.cluster.local ，也即是：
+redis-app-0.redis-service.default.svc.cluster.local
+redis-app-1.redis-service.default.svc.cluster.local
+...以此类推...
+
+在K8S集群内部，这些Pod就可以利用该域名互相通信。我们可以使用busybox镜像的nslookup检验这些域名：
+
+[root@master redis]# kubectl exec -ti busybox -- nslookup redis-app-0.redis-service
+Server:    10.0.0.2
+Address 1: 10.0.0.2 kube-dns.kube-system.svc.cluster.local
+
+Name:      redis-app-0.redis-service
+Address 1: 172.17.24.3
+
+可以看到， redis-app-0的IP为172.17.24.3。当然，若Redis Pod迁移或是重启（我们可以手动删除掉一个Redis Pod来测试），IP也是不会改变的（可能是基于StatefulSet的缘故），Pod的域名、SRV records、A record都不会改变。
+
+另外可以发现，我们之前创建的pv都被成功绑定了：
+[root@master redis]# kubectl get pv
+NAME      CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS    CLAIM                            STORAGECLASS   REASON    AGE
+nfs-pv1   200M       RWX            Retain           Bound     default/redis-data-redis-app-2                            3h
+nfs-pv3   200M       RWX            Retain           Bound     default/redis-data-redis-app-4                            3h
+nfs-pv4   200M       RWX            Retain           Bound     default/redis-data-redis-app-5                            3h
+nfs-pv5   200M       RWX            Retain           Bound     default/redis-data-redis-app-1                            3h
+nfs-pv6   200M       RWX            Retain           Bound     default/redis-data-redis-app-0                            3h
+nfs-vp2   200M       RWX            Retain           Bound     default/redis-data-redis-app-3                            3h
+
 ```
 
 参考文档：
