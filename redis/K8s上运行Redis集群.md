@@ -104,6 +104,8 @@ spec:
     storage: 20Gi
   accessModes:
     - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs
   nfs:
     server: 10.198.1.155
     path: "/data/nfs/redis/pv1"
@@ -118,6 +120,8 @@ spec:
     storage: 20Gi
   accessModes:
     - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs
   nfs:
     server: 10.198.1.155
     path: "/data/nfs/redis/pv2"
@@ -132,6 +136,8 @@ spec:
     storage: 20Gi
   accessModes:
     - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs
   nfs:
     server: 10.198.1.155
     path: "/data/nfs/redis/pv3"
@@ -146,6 +152,8 @@ spec:
     storage: 20Gi
   accessModes:
     - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs
   nfs:
     server: 10.198.1.155
     path: "/data/nfs/redis/pv4"
@@ -160,6 +168,8 @@ spec:
     storage: 20Gi
   accessModes:
     - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs
   nfs:
     server: 10.198.1.155
     path: "/data/nfs/redis/pv5"
@@ -174,6 +184,8 @@ spec:
     storage: 20Gi
   accessModes:
     - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs
   nfs:
     server: 10.198.1.155
     path: "/data/nfs/redis/pv6"
