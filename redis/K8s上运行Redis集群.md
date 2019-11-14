@@ -409,18 +409,23 @@ pod "busybox" deleted
 
 另外可以发现，我们之前创建的pv都被成功绑定了：
 
-$ kubectl get pv
-NAME      CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS    CLAIM                            STORAGECLASS   REASON    AGE
-nfs-pv1   20Gi       RWX            Retain           Bound     default/redis-data-redis-app-2                            3h
-nfs-pv3   20Gi       RWX            Retain           Bound     default/redis-data-redis-app-4                            3h
-nfs-pv4   20Gi       RWX            Retain           Bound     default/redis-data-redis-app-5                            3h
-nfs-pv5   20Gi       RWX            Retain           Bound     default/redis-data-redis-app-1                            3h
-nfs-pv6   20Gi       RWX            Retain           Bound     default/redis-data-redis-app-0                            3h
-nfs-vp2   20Gi       RWX            Retain           Bound     default/redis-data-redis-app-3                            3h
+$ kubectl get pv|grep nfs-pv
+nfs-pv1                                    20Gi       RWX            Retain           Bound      default/redis-data-redis-app-1                  nfs                            65s
+nfs-pv2                                    20Gi       RWX            Retain           Bound      default/redis-data-redis-app-0                  nfs                            65s
+nfs-pv3                                    20Gi       RWX            Retain           Bound      default/redis-data-redis-app-2                  nfs                            65s
+nfs-pv4                                    20Gi       RWX            Retain           Bound      default/redis-data-redis-app-5                  nfs                            65s
+nfs-pv5                                    20Gi       RWX            Retain           Bound      default/redis-data-redis-app-3                  nfs                            65s
+nfs-pv6                                    20Gi       RWX            Retain           Bound      default/redis-data-redis-app-4                  nfs                            65s
 
 查看pvc资源
 $ kubectl get pvc
-
+NAME                     STATUS   VOLUME    CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+redis-data-redis-app-0   Bound    nfs-pv2   20Gi       RWX            nfs            96s
+redis-data-redis-app-1   Bound    nfs-pv1   20Gi       RWX            nfs            86s
+redis-data-redis-app-2   Bound    nfs-pv3   20Gi       RWX            nfs            75s
+redis-data-redis-app-3   Bound    nfs-pv5   20Gi       RWX            nfs            69s
+redis-data-redis-app-4   Bound    nfs-pv6   20Gi       RWX            nfs            62s
+redis-data-redis-app-5   Bound    nfs-pv4   20Gi       RWX            nfs            56s
 ```
 
 ## 5、初始化Redis集群
