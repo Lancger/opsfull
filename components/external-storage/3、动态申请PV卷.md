@@ -217,7 +217,7 @@ EOF
 #部署class.yaml
 kubectl apply -f nfs-storage.yaml
 
-#查看创建的storageclass
+#查看创建的storageclass(这里可以看到nfs-storage已经变为默认的storageclass了)
 $ kubectl get sc
 NAME                    PROVISIONER      AGE
 nfs-storage (default)   nfs-client       3m38s
