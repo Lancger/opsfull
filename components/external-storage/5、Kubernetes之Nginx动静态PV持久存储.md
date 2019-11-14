@@ -122,7 +122,7 @@ nginx-test-zstf5   1/1     Running   0          54s
 #nginx应用的数据目录是使用的nfs共享存储，我们在nfs共享的目录里加入index.html文件，然后再访问nginx-service暴露的端口
 #切换到到nfs-server服务器上
 
-echo "Test NFS Share discovery with nfs-static-nginx-rc" >> /data/nfs/nginx/index.html
+echo "Test NFS Share discovery with nfs-static-nginx-rc" > /data/nfs/nginx/index.html
 
 #在浏览器上访问kubernetes主节点的 http://master:30080，就能访问到这个页面内容了
 ```
@@ -181,7 +181,7 @@ spec:
       pv: nfs-pv
 ##部署应用nginx
 ---
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-deployment
@@ -191,7 +191,8 @@ metadata:
 spec:
   replicas: 2
   selector:
-    name: nginx-test
+    matchLabels:
+      name: nginx-test
   template:
     metadata:
       labels:
@@ -241,15 +242,15 @@ kubectl get pvc -n test --show-labels
 
 ##查看pod
 $ kubectl get pods -n test
-NAME               READY   STATUS    RESTARTS   AGE
-nginx-test-r4n2j   1/1     Running   0          54s
-nginx-test-zstf5   1/1     Running   0          54s
+NAME                                READY   STATUS    RESTARTS   AGE
+nginx-deployment-64d6f78cdf-8bw8t   1/1     Running   0          55s
+nginx-deployment-64d6f78cdf-n5n4q   1/1     Running   0          55s
 
 #可以看到，nginx应用已经部署成功。
 #nginx应用的数据目录是使用的nfs共享存储，我们在nfs共享的目录里加入index.html文件，然后再访问nginx-service暴露的端口
 #切换到到nfs-server服务器上
 
-echo "Test NFS Share discovery with nfs-static-nginx-deployment" >> /data/nfs/nginx/index.html
+echo "Test NFS Share discovery with nfs-static-nginx-deployment" > /data/nfs/nginx/index.html
 
 #在浏览器上访问kubernetes主节点的 http://master:30080，就能访问到这个页面内容了
 ```
