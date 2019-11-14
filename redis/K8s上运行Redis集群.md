@@ -248,7 +248,16 @@ kubectl create -f headless-service.yml
 #查看service
 kubectl get svc
 ```
+可以看到，服务名称为redis-service，其CLUSTER-IP为None，表示这是一个“无头”服务。
 
+## 4、创建Redis 集群节点
+
+创建好Headless service后，就可以利用StatefulSet创建Redis 集群节点，这也是本文的核心内容。我们先创建redis.yml文件：
+
+
+```bash
+
+```
 
 参考文档：
 
