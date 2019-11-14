@@ -46,7 +46,7 @@ FQDN： $(podname).(headless server name).namespace.svc.cluster.local
 6.创建Redis StatefulSet
 7.初始化Redis集群
 ```
-## 1.创建NFS存储
+## 1、创建NFS存储
 
 创建NFS存储主要是为了给Redis提供稳定的后端存储，当Redis的Pod重启或迁移后，依然能获得原先的数据。这里，我们先要创建NFS，然后通过使用PV为Redis挂载一个远程的NFS路径。
 
@@ -86,7 +86,7 @@ showmount -e localhost
 
 ## 2、创建PV
 
-每一个Redis Pod都需要一个独立的PV来存储自己的数据，因此可以创建一个pv.yaml文件，包含6个PV：
+每一个Redis Pod都需要一个独立的PV来存储自己的数据，因此可以创建一个pv.yaml文件，包含6个PV
 
 ```bash
 
