@@ -76,6 +76,12 @@ systemctl enable rpcbind
 
 #查看
 exportfs -v
+
+#客户端
+yum -y install nfs-utils
+
+#查看存储端共享
+showmount -e localhost
 ```
 
 参考文档：
