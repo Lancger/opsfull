@@ -442,6 +442,8 @@ echo "Test NFS Share discovery with nfs-static-nginx-dp-many" > /data/nfs/nginx/
 
 # 二、nginx使用nfs动态PV
 
+`https://github.com/Lancger/opsfull/blob/master/components/external-storage/3%E3%80%81%E5%8A%A8%E6%80%81%E7%94%B3%E8%AF%B7PV%E5%8D%B7.md`
+
 ## 1、动态nfs-dynamic-nginx.yaml
 
 通过参数控制在哪个命名空间创建
