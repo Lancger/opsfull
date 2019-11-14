@@ -131,6 +131,7 @@ kubectl get pods -n mos-namespace
 # 四、验证redis实例
 
 ```bash
+#进入到容器操作
 kubectl exec -it `kubectl get pods -n mos-namespace|grep redis|awk '{print $1}'` /bin/bash -n mos-namespace
 
 # redis-cli -a redispassword
@@ -138,8 +139,10 @@ kubectl exec -it `kubectl get pods -n mos-namespace|grep redis|awk '{print $1}'`
 # 127.0.0.1:6379> get a
 "b"
 
-#查看日志
-kubectl logs -f `kubectl get pods -n mos-namespace|grep redis|awk '{print $1}'` -n mos-namespace
+#查看日志(因为配置文件中有配置日志写到容器里的/data/redis.log文件)
+kubectl exec -it `kubectl get pods -n mos-namespace|grep redis|awk '{print $1}'` /bin/bash -n mos-namespace
+
+$ tail -100f /data/redis.log 
 ```
 参考文档：
 
