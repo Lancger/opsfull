@@ -12,6 +12,8 @@ PersistentVolumeClaim（PVC）：让用户不需要关心具体的Volume实现�
 
 # 问题一
 
+pv挂载正常，pvc一直处于Pending状态
+
 ```bash 
 #在test的命名空间创建pvc
 $ kubectl get pvc -n test
