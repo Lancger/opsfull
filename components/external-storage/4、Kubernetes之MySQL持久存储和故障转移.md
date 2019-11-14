@@ -64,7 +64,7 @@ spec:
 
   nfs:
     path: /data/nfs/
-    server: 10.198.1.156
+    server: 10.198.1.155
   mountOptions:
     - vers=4
     - minorversion=0
