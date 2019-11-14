@@ -131,12 +131,15 @@ kubectl get pods -n mos-namespace
 # 四、验证redis实例
 
 ```bash
-kubectl exec -it mos-redis-ff5577db7-bnr6g /bin/bash -n mos-namespace
+kubectl exec -it `kubectl get pods -n mos-namespace|grep redis|awk '{print $1}'` /bin/bash -n mos-namespace
 
 # redis-cli -a redispassword
 # 127.0.0.1:6379> set a b
 # 127.0.0.1:6379> get a
 "b"
+
+#查看日志
+kubectl logs -f `kubectl get pods -n mos-namespace|grep redis|awk '{print $1}'` -n mos-namespace
 ```
 参考文档：
 
