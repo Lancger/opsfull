@@ -428,7 +428,7 @@ deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted univer
  
 deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
 deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
-> EOF
+EOF
 
 3、#成功后，原项目要求执行如下命令安装基本的软件环境：
 apt-get update
