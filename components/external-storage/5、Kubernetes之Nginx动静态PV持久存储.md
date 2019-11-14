@@ -299,7 +299,7 @@ spec:
   storageClassName: nfs  # 注意这里使用nfs的storageClassName，如果没改k8s的默认storageClassName的话，这里可以省略
   nfs:
     path: /data/nfs/nginx/
-    server: 10.19.1.155
+    server: 10.198.1.155
 ##创建nginx-etc-pv
 ---
 apiVersion: v1
@@ -317,7 +317,7 @@ spec:
   storageClassName: nfs  # 注意这里使用nfs的storageClassName，如果没改k8s的默认storageClassName的话，这里可以省略
   nfs:
     path: /data/nfs/nginx/
-    server: 10.19.1.155
+    server: 10.198.1.155
 ##创建pvc名字为nfs-nginx-data,存放数据
 ---
 kind: PersistentVolumeClaim
@@ -381,17 +381,17 @@ spec:
         volumeMounts:
         - mountPath: /usr/share/nginx/html
           name: nginx-data
-        - mountPath: /etc/nginx
-          name: nginx-etc
+        # - mountPath: /etc/nginx   #--这里需要注意，如果是这么挂载，那么需要事先现在/data/nfs/nginx/目录下把nginx的完整配置提前拷贝好
+        #   name: nginx-etc
         ports:
         - containerPort: 80
       volumes:
       - name: nginx-data
         persistentVolumeClaim:
           claimName: nfs-nginx-data
-      - name: nginx-etc
-        persistentVolumeClaim:
-         claimName: nfs-nginx-etc
+      # - name: nginx-etc
+      #   persistentVolumeClaim:
+      #     claimName: nfs-nginx-etc
 ##创建service
 ---
 apiVersion: v1
