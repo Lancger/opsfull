@@ -262,3 +262,9 @@ echo "Test NFS Share discovery with nfs-static-nginx-deployment" > /data/nfs/ngi
 ```bash
 
 ```
+
+参考文档：
+
+https://kubernetes.io/zh/docs/tasks/run-application/run-stateless-application-deployment/  
+
+https://blog.51cto.com/ylw6006/2071845 在kubernetes集群中运行nginx
