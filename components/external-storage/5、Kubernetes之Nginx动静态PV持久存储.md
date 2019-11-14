@@ -259,9 +259,9 @@ echo "Test NFS Share discovery with nfs-static-nginx-deployment" > /data/nfs/ngi
 
 ```bash
 ##清理资源
-kubectl delete -f nfs-static-nginx-deployment.yaml -n test
+kubectl delete -f nfs-static-nginx-dp-many.yaml -n test
 
-cat >nfs-static-nginx-deployment.yaml<<\EOF
+cat >nfs-static-nginx-dp-many.yaml<<\EOF
 ##创建namespace
 ---
 apiVersion: v1
@@ -280,29 +280,48 @@ metadata:
     pv: nfs-pv
 spec:
   capacity:
-    storage: 10Gi
+    storage: 200Gi
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   storageClassName: nfs  # 注意这里使用nfs的storageClassName，如果没改k8s的默认storageClassName的话，这里可以省略
   nfs:
     path: /data/nfs/nginx/
-    server: 10.198.1.155
-##创建nfs-pvc
+    server: 10.19.1.155
+##创建pvc名字为nfs-nginx-data,存放数据
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: nfs-pvc
+  name: nfs-nginx-data
   namespace: test
   labels:
-    pvc: nfs-pvc
+    pvc: nfs-nginx-data
 spec:
   accessModes:
     - ReadWriteMany
   resources:
     requests:
-      storage: 10Gi
+      storage: 150Gi  #注意这2个pvc的总和大小，不能超过pv的大小
+  storageClassName: nfs
+  selector:
+    matchLabels:
+      pv: nfs-pv
+##创建pvc名字为nfs-nginx-etc,存放配置文件
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: nfs-nginx-etc
+  namespace: test
+  labels:
+    pvc: nfs-nginx-etc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 50Gi
   storageClassName: nfs
   selector:
     matchLabels:
@@ -332,12 +351,17 @@ spec:
         volumeMounts:
         - mountPath: /usr/share/nginx/html
           name: nginx-data
+        - mountPath: /etc/nginx
+          name: nginx-etc
         ports:
         - containerPort: 80
       volumes:
       - name: nginx-data
         persistentVolumeClaim:
-          claimName: nfs-pvc
+          claimName: nfs-nginx-data
+      - name: nginx-etc
+        persistentVolumeClaim:
+         claimName: nfs-nginx-etc
 ##创建service
 ---
 apiVersion: v1
@@ -360,7 +384,7 @@ spec:
 EOF
 
 ##创建资源
-kubectl apply -f nfs-static-nginx-deployment.yaml -n test
+kubectl apply -f nfs-static-nginx-dp-many.yaml -n test
 
 ##查看pv资源
 kubectl get pv -n test --show-labels
@@ -378,7 +402,7 @@ nginx-deployment-64d6f78cdf-n5n4q   1/1     Running   0          55s
 #nginx应用的数据目录是使用的nfs共享存储，我们在nfs共享的目录里加入index.html文件，然后再访问nginx-service暴露的端口
 #切换到到nfs-server服务器上
 
-echo "Test NFS Share discovery with nfs-static-nginx-deployment" > /data/nfs/nginx/index.html
+echo "Test NFS Share discovery with nfs-static-nginx-dp-many" > /data/nfs/nginx/index.html
 
 #在浏览器上访问kubernetes主节点的 http://master:30080，就能访问到这个页面内容了
 ```
