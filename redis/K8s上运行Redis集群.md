@@ -375,7 +375,8 @@ Address:        10.96.0.10:53
 
 在K8S集群内部，这些Pod就可以利用该域名互相通信。我们可以使用busybox镜像的nslookup检验这些域名：
 
-$ kubectl run -it --rm --image=busybox --restart=Never busybox -- nslookup redis-app-0.redis-service
+kubectl run -it --rm --image=busybox --restart=Never busybox -- nslookup redis-app-0.redis-service
+
 Server:    10.0.0.2
 Address 1: 10.0.0.2 kube-dns.kube-system.svc.cluster.local
 
