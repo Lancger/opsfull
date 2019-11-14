@@ -34,6 +34,12 @@ FQDN： $(podname).(headless server name).namespace.svc.cluster.local
 
 - 7、以下为使用StatefulSet部署Redis的架构，无论是Master还是Slave，都作为StatefulSet的一个副本，并且数据通过PV进行持久化，对外暴露为一个Service，接受客户端请求。
 
+
+# 四、部署过程
+
+```bash
+```
+
 参考文档：
 
 https://blog.csdn.net/zhutongcloud/article/details/90768390  在K8s上部署Redis集群
