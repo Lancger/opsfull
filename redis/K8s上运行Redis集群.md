@@ -84,6 +84,15 @@ yum -y install nfs-utils
 showmount -e localhost
 ```
 
+## 2、创建PV
+
+每一个Redis Pod都需要一个独立的PV来存储自己的数据，因此可以创建一个pv.yaml文件，包含6个PV：
+
+```bash
+
+```
+
+
 参考文档：
 
 https://blog.csdn.net/zhutongcloud/article/details/90768390  在K8s上部署Redis集群
