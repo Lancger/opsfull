@@ -506,7 +506,47 @@ kubectl get svc redis-access-service -o wide
 #如上，在K8S集群中，所有应用都可以通过10.0.0.64 :6379来访问Redis集群。当然，为了方便测试，我们也可以为Service添加一个NodePort映射到物理机上，这里不再详细介绍。
 ```
 
+# 五、测试主从切换
 
+在K8S上搭建完好Redis集群后，我们最关心的就是其原有的高可用机制是否正常。这里，我们可以任意挑选一个Master的Pod来测试集群的主从切换机制，如redis-app-0：
+
+```bash
+[root@master redis]# kubectl get pods redis-app-0 -o wide
+NAME          READY     STATUS    RESTARTS   AGE       IP            NODE            NOMINATED NODE
+redis-app-1   1/1       Running   0          3h        172.17.24.3   192.168.0.144   <none>
+
+进入redis-app-0查看：
+[root@master redis]# kubectl exec -it redis-app-0 /bin/bash
+root@redis-app-0:/data# /usr/local/bin/redis-cli -c
+127.0.0.1:6379> role
+1) "master"
+2) (integer) 13370
+3) 1) 1) "172.17.63.9"
+      2) "6379"
+      3) "13370"
+127.0.0.1:6379> 
+
+如上可以看到，app-0为master，slave为172.17.63.9即redis-app-3。
+
+接着，我们手动删除redis-app-0：
+[root@master redis]# kubectl delete pod redis-app-0
+pod "redis-app-0" deleted
+[root@master redis]#  kubectl get pod redis-app-0 -o wide
+NAME          READY     STATUS    RESTARTS   AGE       IP            NODE            NOMINATED NODE
+redis-app-0   1/1       Running   0          4m        172.17.24.3   192.168.0.144   <none>
+
+我们再进入redis-app-0内部查看：
+[root@master redis]# kubectl exec -it redis-app-0 /bin/bash
+root@redis-app-0:/data# /usr/local/bin/redis-cli -c
+127.0.0.1:6379> role
+1) "slave"
+2) "172.17.63.9"
+3) (integer) 6379
+4) "connected"
+5) (integer) 13958
+
+如上，redis-app-0变成了slave，从属于它之前的从节点172.17.63.9即redis-app-3
+```
 参考文档：
 
 https://blog.csdn.net/zhutongcloud/article/details/90768390  在K8s上部署Redis集群
