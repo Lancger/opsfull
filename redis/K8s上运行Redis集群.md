@@ -266,6 +266,8 @@ redis-service   ClusterIP   None         <none>        6379/TCP   0s
 
 
 ```bash
+kubectl delete -f redis.yaml
+
 cat >redis.yaml<<\EOF
 apiVersion: apps/v1beta1
 kind: StatefulSet
@@ -334,6 +336,8 @@ spec:
         requests:
           storage: 200M
 EOF
+
+kubectl apply -f redis.yaml
 
 PodAntiAffinity:表示反亲和性，其决定了某个pod不可以和哪些Pod部署在同一拓扑域，可以用于将一个服务的POD分散在不同的主机或者拓扑域中，提高服务本身的稳定性。
 
