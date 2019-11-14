@@ -374,6 +374,139 @@ nfs-pv6   200M       RWX            Retain           Bound     default/redis-dat
 nfs-vp2   200M       RWX            Retain           Bound     default/redis-data-redis-app-3                            3h
 ```
 
+## 5、初始化Redis集群
+
+创建好6个Redis Pod后，我们还需要利用常用的Redis-tribe工具进行集群的初始化
+
+创建Ubuntu容器
+
+由于Redis集群必须在所有节点启动后才能进行初始化，而如果将初始化逻辑写入Statefulset中，则是一件非常复杂而且低效的行为。这里，本人不得不称赞一下原项目作者的思路，值得学习。也就是说，我们可以在K8S上创建一个额外的容器，专门用于进行K8S集群内部某些服务的管理控制。
+这里，我们专门启动一个Ubuntu的容器，可以在该容器中安装Redis-tribe，进而初始化Redis集群，执行：
+
+```bash
+1、#进入到容器
+kubectl run -it ubuntu --image=ubuntu --restart=Never /bin/bash
+
+2、#我们使用阿里云的Ubuntu源，执行
+$ cat > /etc/apt/sources.list << EOF
+deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
+
+deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
+
+deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
+
+deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+ 
+deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+> EOF
+
+3、#成功后，原项目要求执行如下命令安装基本的软件环境：
+apt-get update
+apt-get install -y vim wget python2.7 python-pip redis-tools dnsutils
+
+4、#初始化集群
+首先，我们需要安装redis-trib
+pip install redis-trib==0.5.1
+
+然后，创建只有Master节点的集群
+redis-trib.py create \
+  `dig +short redis-app-0.redis-service.default.svc.cluster.local`:6379 \
+  `dig +short redis-app-1.redis-service.default.svc.cluster.local`:6379 \
+  `dig +short redis-app-2.redis-service.default.svc.cluster.local`:6379
+
+其次，为每个Master添加Slave
+redis-trib.py replicate \
+  --master-addr `dig +short redis-app-0.redis-service.default.svc.cluster.local`:6379 \
+  --slave-addr `dig +short redis-app-3.redis-service.default.svc.cluster.local`:6379
+
+redis-trib.py replicate \
+  --master-addr `dig +short redis-app-1.redis-service.default.svc.cluster.local`:6379 \
+  --slave-addr `dig +short redis-app-4.redis-service.default.svc.cluster.local`:6379
+
+redis-trib.py replicate \
+  --master-addr `dig +short redis-app-2.redis-service.default.svc.cluster.local`:6379 \
+  --slave-addr `dig +short redis-app-5.redis-service.default.svc.cluster.local`:6379
+
+至此，我们的Redis集群就真正创建完毕了，连到任意一个Redis Pod中检验一下：
+$ kubectl exec -it redis-app-2 /bin/bash
+root@redis-app-2:/data# /usr/local/bin/redis-cli -c
+127.0.0.1:6379> cluster nodes
+5d3e77f6131c6f272576530b23d1cd7592942eec 172.17.24.3:6379@16379 master - 0 1559628533000 1 connected 0-5461
+a4b529c40a920da314c6c93d17dc603625d6412c 172.17.63.10:6379@16379 master - 0 1559628531670 6 connected 10923-16383
+368971dc8916611a86577a8726e4f1f3a69c5eb7 172.17.24.9:6379@16379 slave 0025e6140f85cb243c60c214467b7e77bf819ae3 0 1559628533672 4 connected
+0025e6140f85cb243c60c214467b7e77bf819ae3 172.17.63.8:6379@16379 master - 0 1559628533000 2 connected 5462-10922
+6d5ee94b78b279e7d3c77a55437695662e8c039e 172.17.24.8:6379@16379 myself,slave a4b529c40a920da314c6c93d17dc603625d6412c 0 1559628532000 5 connected
+2eb3e06ce914e0e285d6284c4df32573e318bc01 172.17.63.9:6379@16379 slave 5d3e77f6131c6f272576530b23d1cd7592942eec 0 1559628533000 3 connected
+127.0.0.1:6379> cluster info
+cluster_state:ok
+cluster_slots_assigned:16384
+cluster_slots_ok:16384
+cluster_slots_pfail:0
+cluster_slots_fail:0
+cluster_known_nodes:6
+cluster_size:3
+cluster_current_epoch:6
+cluster_my_epoch:6
+cluster_stats_messages_ping_sent:14910
+cluster_stats_messages_pong_sent:15139
+cluster_stats_messages_sent:30049
+cluster_stats_messages_ping_received:15139
+cluster_stats_messages_pong_received:14910
+cluster_stats_messages_received:30049
+127.0.0.1:6379> 
+
+另外，还可以在NFS上查看Redis挂载的数据：
+$ ll /usr/local/k8s/redis/pv3
+total 12
+-rw-r--r-- 1 root root  92 Jun  4 11:36 appendonly.aof
+-rw-r--r-- 1 root root 175 Jun  4 11:36 dump.rdb
+-rw-r--r-- 1 root root 794 Jun  4 11:49 nodes.conf
+```
+
+## 6、创建用于访问Service
+
+前面我们创建了用于实现StatefulSet的Headless Service，但该Service没有Cluster Ip，因此不能用于外界访问。所以，我们还需要创建一个Service，专用于为Redis集群提供访问和负载均衡：
+
+```bash
+#删除服务
+kubectl delete -f redis-access-service.yaml
+
+#编写yaml
+cat >redis-access-service.yaml<<\EOF
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-access-service
+  labels:
+    app: redis
+spec:
+  ports:
+  - name: redis-port
+    protocol: "TCP"
+    port: 6379
+    targetPort: 6379
+  selector:
+    app: redis
+    appCluster: redis-cluster
+EOF
+
+#如上，该Service名称为 redis-access-service，在K8S集群中暴露6379端口，并且会对labels name为app: redis或appCluster: redis-cluster的pod进行负载均衡。
+
+#创建服务
+kubectl apply -f redis-access-service.yaml
+
+#查看svc
+kubectl get svc redis-access-service -o wide
+
+#如上，在K8S集群中，所有应用都可以通过10.0.0.64 :6379来访问Redis集群。当然，为了方便测试，我们也可以为Service添加一个NodePort映射到物理机上，这里不再详细介绍。
+```
+
+
 参考文档：
 
 https://blog.csdn.net/zhutongcloud/article/details/90768390  在K8s上部署Redis集群
