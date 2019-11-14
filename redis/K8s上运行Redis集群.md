@@ -590,6 +590,7 @@ root@redis-app-0:/data# /usr/local/bin/redis-cli -c
 
 # 六、疑问点
 
+1、pod重启，ip变了，集群健康性如何维护
 ```
 至此，大家可能会疑惑，前面讲了这么多似乎并没有体现出StatefulSet的作用，其提供的稳定标志redis-app-*仅在初始化集群的时候用到，而后续Redis Pod的通信或配置文件中并没有使用该标志。我想说，是的，本文使用StatefulSet部署Redis确实没有体现出其优势，还不如介绍Zookeeper集群来的明显，不过没关系，学到知识就好。
 
@@ -612,6 +613,18 @@ vars currentEpoch 6 lastVoteEpoch 4
 
 当某个Master Pod下线后，集群在其Slave中选举重新的Master。待旧Master上线后，集群发现其NodeId依旧，会让旧Master变成新Master的slave。
 ```
+
+2、pvc绑定不上报错(storageclass.storage.k8s.io "nfs" not found报错)
+
+```
+$ kubectl describe pvc redis-data-redis-app-0
+
+Warning  ProvisioningFailed  14s (x2 over 24s)  persistentvolume-controller  storageclass.storage.k8s.io "nfs" not found
+
+#原因为创建pv的时候，没有指定
+storageClassName: nfs
+```
+
 参考文档：
 
 https://blog.csdn.net/zhutongcloud/article/details/90768390  在K8s上部署Redis集群
