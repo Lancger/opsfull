@@ -334,7 +334,7 @@ spec:
       accessModes: [ "ReadWriteMany" ]
       resources:
         requests:
-          storage: 200M
+          storage: 20Gi
 EOF
 
 kubectl apply -f redis.yaml
