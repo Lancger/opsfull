@@ -68,7 +68,7 @@ $ cat /etc/exports
 /data/nfs/redis/pv6 *(rw,no_root_squash,sync,insecure)
 
 #创建相应目录
-mkdir -p //data/nfs/redis/pv{1..6}
+mkdir -p /data/nfs/redis/pv{1..6}
 
 #接着，启动NFS和rpcbind服务
 systemctl restart rpcbind
