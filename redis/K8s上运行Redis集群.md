@@ -365,7 +365,7 @@ redis-app-1.redis-service.default.svc.cluster.local
 ...以此类推...
 
 这里我们可以验证一下
-kubectl run -i --tty busybox --image=busybox /bin/sh
+kubectl run --rm -i --tty busybox --image=busybox /bin/sh
 
 $ nslookup redis-app-0
 Server:         10.96.0.10
