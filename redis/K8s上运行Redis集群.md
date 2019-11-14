@@ -385,7 +385,7 @@ Name:      redis-app-0.redis-service
 Address 1: 172.17.24.3 redis-app-0.redis-service.default.svc.cluster.local
 pod "busybox" deleted
 
-可以看到， redis-app-0的IP为172.17.24.3。当然，若Redis Pod迁移或是重启（我们可以手动删除掉一个Redis Pod来测试），IP也是不会改变的（可能是基于StatefulSet的缘故），Pod的域名、SRV records、A record都不会改变。
+可以看到， redis-app-0的IP为172.17.24.3。当然，若Redis Pod迁移或是重启（我们可以手动删除掉一个Redis Pod来测试），IP是会改变的,但是Pod的域名、SRV records、A record都不会改变。
 
 另外可以发现，我们之前创建的pv都被成功绑定了：
 
