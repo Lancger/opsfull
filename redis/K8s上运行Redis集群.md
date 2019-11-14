@@ -114,7 +114,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: nfs-vp2
+  name: nfs-pv2
 spec:
   capacity:
     storage: 20Gi
