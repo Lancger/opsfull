@@ -405,6 +405,10 @@ nfs-pv4   20Gi       RWX            Retain           Bound     default/redis-dat
 nfs-pv5   20Gi       RWX            Retain           Bound     default/redis-data-redis-app-1                            3h
 nfs-pv6   20Gi       RWX            Retain           Bound     default/redis-data-redis-app-0                            3h
 nfs-vp2   20Gi       RWX            Retain           Bound     default/redis-data-redis-app-3                            3h
+
+查看pvc资源
+$ kubectl get pvc
+
 ```
 
 ## 5、初始化Redis集群
