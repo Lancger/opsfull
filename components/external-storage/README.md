@@ -10,6 +10,18 @@ PersistentVolumeClaim（PVC）：让用户不需要关心具体的Volume实现�
 
 总的来说，PV是提供者，PVC是消费者，消费的过程就是绑定
 
+# 问题一
+
+```bash 
+#在test的命名空间创建pvc
+$ kubectl get pvc -n test
+NAME      STATUS    VOLUME   CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+nfs-pvc   Pending---这里发现一直处于Pending的状态                                      nfs-storage    10s
+
+#查看日志
+$ kubectl describe pvc nfs-pvc -n test
+Normal   ExternalProvisioning  2s (x3 over 27s)   persistentvolume-controller                                                              waiting for a volume to be created, either by external provisioner "nfs-client" or manually created by system administrator
+```
 
 参考资料：
 
