@@ -355,7 +355,7 @@ redis-app-1                                     1/1       Running     0         
 redis-app-2                                     1/1       Running     0          2h        172.17.24.8    192.168.0.144   <none>
 redis-app-3                                     1/1       Running     0          2h        172.17.63.9    192.168.0.148   <none>
 redis-app-4                                     1/1       Running     0          2h        172.17.24.9    192.168.0.144   <none>
-redis-app-5                                     1/1       Running     0          2h        172.17.63.10   192.168.0.148   <none>
+redis-app-5                                     1/1       ContainerCreating     0          2h        172.17.63.10   192.168.0.148   <none>
 
 如上，可以看到这些Pods在部署时是以{0…N-1}的顺序依次创建的。注意，直到redis-app-0状态启动后达到Running状态之后，redis-app-1 才开始启动。
 
