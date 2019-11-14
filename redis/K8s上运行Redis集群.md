@@ -368,11 +368,12 @@ redis-app-1.redis-service.default.svc.cluster.local
 #kubectl run --rm curl --image=radial/busyboxplus:curl -it
 kubectl run --rm -i --tty busybox --image=busybox:1.28 /bin/sh
 
-$ nslookup redis-app-0
-Server:         10.96.0.10
-Address:        10.96.0.10:53
+$ nslookup redis-app-0.redis-service
+Server:    10.96.0.10
+Address 1: 10.96.0.10 kube-dns.kube-system.svc.cluster.local
 
-** server can't find redis-app-0.default.svc.cluster.local: NXDOMAIN
+Name:      redis-app-0.redis-service
+Address 1: 10.244.1.194 redis-app-0.redis-service.default.svc.cluster.local
 
 在K8S集群内部，这些Pod就可以利用该域名互相通信。我们可以使用busybox镜像的nslookup检验这些域名：
 
