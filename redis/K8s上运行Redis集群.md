@@ -332,6 +332,7 @@ spec:
       name: redis-data
     spec:
       accessModes: [ "ReadWriteMany" ]
+      storageClassName: "nfs-storage"  #--需要与创建的storageclass的名称一致
       resources:
         requests:
           storage: 20Gi
