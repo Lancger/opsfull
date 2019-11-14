@@ -368,7 +368,7 @@ redis-app-1.redis-service.default.svc.cluster.local
 #kubectl run --rm curl --image=radial/busyboxplus:curl -it
 kubectl run --rm -i --tty busybox --image=busybox:1.28 /bin/sh
 
-$ nslookup redis-app-0.redis-service
+$ nslookup redis-app-0.redis-service   #注意格式 $(podname).$(service name).$(namespace)
 Server:    10.96.0.10
 Address 1: 10.96.0.10 kube-dns.kube-system.svc.cluster.local
 
@@ -409,8 +409,11 @@ nfs-vp2   200M       RWX            Retain           Bound     default/redis-dat
 这里，我们专门启动一个Ubuntu的容器，可以在该容器中安装Redis-tribe，进而初始化Redis集群，执行：
 
 ```bash
-1、#进入到容器
+1、#创建一个ubuntu容器
 kubectl run -it ubuntu --image=ubuntu --restart=Never /bin/bash
+
+#进入到容器
+kubectl exec -it ubuntu /bin/bash
 
 2、#我们使用阿里云的Ubuntu源，执行
 $ cat > /etc/apt/sources.list << EOF
