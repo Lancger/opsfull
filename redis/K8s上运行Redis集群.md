@@ -486,7 +486,7 @@ cluster_stats_messages_received:30049
 127.0.0.1:6379> 
 
 另外，还可以在NFS上查看Redis挂载的数据：
-$ ll /usr/local/k8s/redis/pv3
+$ ll /data/nfs/redis/pv3
 total 12
 -rw-r--r-- 1 root root  92 Jun  4 11:36 appendonly.aof
 -rw-r--r-- 1 root root 175 Jun  4 11:36 dump.rdb
