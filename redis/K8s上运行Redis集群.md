@@ -13,7 +13,8 @@
 其包含了两种部署Redis集群的方式：
 ```bash
 StatefulSet
-Service&Deployment
+
+Service & Deployment
 ```
 两种方式各有优劣，对于像Redis、Mongodb、Zookeeper等有状态的服务，使用StatefulSet是首选方式。本文将主要介绍如何使用StatefulSet进行Redis集群的部署。
 
@@ -385,18 +386,18 @@ Name:      redis-app-0.redis-service
 Address 1: 172.17.24.3 redis-app-0.redis-service.default.svc.cluster.local
 pod "busybox" deleted
 
-可以看到， redis-app-0的IP为172.17.24.3。当然，若Redis Pod迁移或是重启（我们可以手动删除掉一个Redis Pod来测试），IP是会改变的,但是Pod的域名、SRV records、A record都不会改变。
+可以看到, redis-app-0 的IP为172.17.24.3。当然，若Redis Pod迁移或是重启(我们可以手动删除掉一个Redis Pod来测试),IP是会改变的,但是Pod的域名、SRV records、A record都不会改变。
 
 另外可以发现，我们之前创建的pv都被成功绑定了：
 
 $ kubectl get pv
 NAME      CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS    CLAIM                            STORAGECLASS   REASON    AGE
-nfs-pv1   200M       RWX            Retain           Bound     default/redis-data-redis-app-2                            3h
-nfs-pv3   200M       RWX            Retain           Bound     default/redis-data-redis-app-4                            3h
-nfs-pv4   200M       RWX            Retain           Bound     default/redis-data-redis-app-5                            3h
-nfs-pv5   200M       RWX            Retain           Bound     default/redis-data-redis-app-1                            3h
-nfs-pv6   200M       RWX            Retain           Bound     default/redis-data-redis-app-0                            3h
-nfs-vp2   200M       RWX            Retain           Bound     default/redis-data-redis-app-3                            3h
+nfs-pv1   20Gi       RWX            Retain           Bound     default/redis-data-redis-app-2                            3h
+nfs-pv3   20Gi       RWX            Retain           Bound     default/redis-data-redis-app-4                            3h
+nfs-pv4   20Gi       RWX            Retain           Bound     default/redis-data-redis-app-5                            3h
+nfs-pv5   20Gi       RWX            Retain           Bound     default/redis-data-redis-app-1                            3h
+nfs-pv6   20Gi       RWX            Retain           Bound     default/redis-data-redis-app-0                            3h
+nfs-vp2   20Gi       RWX            Retain           Bound     default/redis-data-redis-app-3                            3h
 ```
 
 ## 5、初始化Redis集群
