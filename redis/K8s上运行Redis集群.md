@@ -580,3 +580,5 @@ root@redis-app-0:/data# /usr/local/bin/redis-cli -c
 https://blog.csdn.net/zhutongcloud/article/details/90768390  在K8s上部署Redis集群
 
 https://cloud.tencent.com/developer/article/1392872   Kubernetes 通过statefulset部署redis cluster集群
+
+https://www.jianshu.com/p/65c4baadf5d9  redis故障切换nodeid原因
