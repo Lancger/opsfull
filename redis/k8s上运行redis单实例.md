@@ -27,7 +27,7 @@ mkdir config && cd config
 kubectl delete configmap redis-conf -n mos-namespace
 
 # 创建redis配置文件
-cat > redis.conf <<\EOF
+cat >redis.conf <<\EOF
 #daemonize yes
 pidfile /data/redis.pid
 port 6379
@@ -51,7 +51,7 @@ repl-diskless-sync no
 repl-diskless-sync-delay 5
 repl-disable-tcp-nodelay no
 slave-priority 100
-requirepass redispassword     # redis密码
+requirepass redispassword
 maxclients 30000
 appendonly no
 appendfilename "appendonly.aof"
