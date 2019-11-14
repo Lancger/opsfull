@@ -113,7 +113,18 @@ kubectl get pv -n test --show-labels
 kubectl get pvc -n test --show-labels
 
 ##查看pod
-kubectl get pods -n test
+$ kubectl get pods -n test
+NAME               READY   STATUS    RESTARTS   AGE
+nginx-test-r4n2j   1/1     Running   0          54s
+nginx-test-zstf5   1/1     Running   0          54s
+
+#可以看到，nginx应用已经部署成功。
+#nginx应用的数据目录是使用的nfs共享存储，我们在nfs共享的目录里加入index.html文件，然后再访问nginx-service暴露的端口
+#切换到到nfs-server服务器上
+
+echo "Test NFS Share discovery" >> /data/nfs/nginx/index.html
+
+#在浏览器上访问kubernetes主节点的 http://master:30080，就能访问到这个页面内容了
 ```
 
 ## 2、静态nfs-static-nginx-dp.yaml
@@ -217,20 +228,7 @@ EOF
 
 kubectl apply -f nfs-static-nginx-deployment.yaml
 
-#查看pod
-$ kubectl get pods -n test
-NAME               READY   STATUS    RESTARTS   AGE
-nginx-test-r4n2j   1/1     Running   0          54s
-nginx-test-zstf5   1/1     Running   0          54s
 
-#可以看到，nginx应用已经部署成功。
-
-#nginx应用的数据目录是使用的nfs共享存储，我们在nfs共享的目录里加入index.html文件，然后再访问nginx-service暴露的端口
-
-#切换到到nfs-server服务器上
-echo "Test NFS Share discovery" >> /data/nginx/index.html
-
-#在浏览器上访问kubernetes主节点的 http://master:30080，就能访问到这个页面内容了
 ```
 
 # 二、nginx使用nfs动态PV
