@@ -219,6 +219,37 @@ Events:  <none>
 #如上，redis.conf中的所有配置项都保存到redis-conf这个Configmap中。
 ```
 
+## 4、创建Headless service
+
+Headless service是StatefulSet实现稳定网络标识的基础，我们需要提前创建。准备文件headless-service.yml如下：
+
+```bash
+#编写svc
+cat >headless-service.yaml<<\EOF 
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service
+  labels:
+    app: redis
+spec:
+  ports:
+  - name: redis-port
+    port: 6379
+  clusterIP: None
+  selector:
+    app: redis
+    appCluster: redis-cluster
+EOF
+
+#创建svc
+kubectl create -f headless-service.yml
+
+#查看service
+kubectl get svc
+```
+
+
 参考文档：
 
 https://blog.csdn.net/zhutongcloud/article/details/90768390  在K8s上部署Redis集群
