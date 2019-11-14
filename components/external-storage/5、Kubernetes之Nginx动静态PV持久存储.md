@@ -560,6 +560,9 @@ echo "Test NFS Share discovery with nfs-dynamic-nginx-deployment" > /data/nfs/ku
 #在浏览器上访问kubernetes主节点的 http://master:30090，就能访问到这个页面内容了
 ```
 
+![](https://github.com/Lancger/opsfull/blob/master/images/dynamic-pv.png)
+
+
 参考文档：
 
 https://kubernetes.io/zh/docs/tasks/run-application/run-stateless-application-deployment/  
