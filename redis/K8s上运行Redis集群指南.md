@@ -586,9 +586,45 @@ Events:                   <none>
 #集群内测试（service ip 测试）
 yum install redis
 redis-cli -h 10.111.59.191 -p 6379 -c
+10.111.59.191:6379> CLUSTER info
+cluster_state:ok
+cluster_slots_assigned:16384
+cluster_slots_ok:16384
+cluster_slots_pfail:0
+cluster_slots_fail:0
+cluster_known_nodes:5
+cluster_size:3
+cluster_current_epoch:3
+cluster_my_epoch:3
+cluster_stats_messages_ping_sent:766
+cluster_stats_messages_pong_sent:790
+cluster_stats_messages_meet_sent:2
+cluster_stats_messages_sent:1558
+cluster_stats_messages_ping_received:787
+cluster_stats_messages_pong_received:768
+cluster_stats_messages_meet_received:3
+cluster_stats_messages_received:1558
 
 #宿主机端口测试(使用集群协议测试)
 redis-cli -h 10.198.1.156 -p 30010 -c
+10.198.1.156:30010> cluster info
+cluster_state:ok
+cluster_slots_assigned:16384
+cluster_slots_ok:16384
+cluster_slots_pfail:0
+cluster_slots_fail:0
+cluster_known_nodes:5
+cluster_size:3
+cluster_current_epoch:3
+cluster_my_epoch:2
+cluster_stats_messages_ping_sent:907
+cluster_stats_messages_pong_sent:901
+cluster_stats_messages_meet_sent:3
+cluster_stats_messages_sent:1811
+cluster_stats_messages_ping_received:900
+cluster_stats_messages_pong_received:910
+cluster_stats_messages_meet_received:1
+cluster_stats_messages_received:1811
 ```
 
 # 五、测试主从切换
