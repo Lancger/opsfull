@@ -428,6 +428,9 @@ NAME                                READY   STATUS    RESTARTS   AGE
 nginx-deployment-64d6f78cdf-8bw8t   1/1     Running   0          55s
 nginx-deployment-64d6f78cdf-n5n4q   1/1     Running   0          55s
 
+##进入容器
+kubectl exec -it nginx-deployment-f687cdf47-xncj8 -n test /bin/bash
+
 #可以看到，nginx应用已经部署成功。
 #nginx应用的数据目录是使用的nfs共享存储，我们在nfs共享的目录里加入index.html文件，然后再访问nginx-service暴露的端口
 #切换到到nfs-server服务器上
