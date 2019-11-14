@@ -257,6 +257,18 @@ echo "Test NFS Share discovery with nfs-static-nginx-deployment" > /data/nfs/ngi
 
 ## 3、nginx多目录挂载
 
+```
+PV和PVC是一一对应关系，当有PV被某个PVC所占用时，会显示banding，其它PVC不能再使用绑定过的PV。
+
+PVC一旦绑定PV，就相当于是一个存储卷，此时PVC可以被多个Pod所使用。（PVC支不支持被多个Pod访问，取决于访问模型accessMode的定义）。
+
+PVC若没有找到合适的PV时，则会处于pending状态。
+
+PV是属于集群级别的，不能定义在名称空间中。
+
+PVC时属于名称空间级别的。
+```
+
 ```bash
 ##清理资源
 kubectl delete -f nfs-static-nginx-dp-many.yaml -n test
