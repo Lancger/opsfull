@@ -226,11 +226,11 @@ Events:  <none>
 
 ## 4、创建Headless service
 
-Headless service是StatefulSet实现稳定网络标识的基础，我们需要提前创建。准备文件headless-service.yml如下：
+Headless service是StatefulSet实现稳定网络标识的基础，我们需要提前创建。准备文件headless-service.yaml如下：
 
 ```bash
 #删除svc
-kubectl delete -f headless-service.yml
+kubectl delete -f headless-service.yaml
 
 #编写svc
 cat >headless-service.yaml<<\EOF 
@@ -251,7 +251,7 @@ spec:
 EOF
 
 #创建svc
-kubectl create -f headless-service.yml
+kubectl create -f headless-service.yaml
 
 #查看service
 kubectl get svc
