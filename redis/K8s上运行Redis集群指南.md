@@ -542,11 +542,13 @@ metadata:
   labels:
     app: redis
 spec:
+  type: NodePort
   ports:
   - name: redis-port
     protocol: "TCP"
     port: 6379
     targetPort: 6379
+    nodePort: 30010
   selector:
     app: redis
     appCluster: redis-cluster
@@ -559,25 +561,34 @@ kubectl apply -f redis-access-service.yaml
 
 #查看svc
 $ kubectl get svc redis-access-service -o wide
-NAME                   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE   SELECTOR
-redis-access-service   ClusterIP   10.111.59.191   <none>        6379/TCP   42s   app=redis,appCluster=redis-cluster
+NAME                   TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE   SELECTOR
+redis-access-service   NodePort   10.111.59.191   <none>        6379:30010/TCP   83m   app=redis,appCluster=redis-cluster
 
-#如上，在K8S集群中，所有应用都可以通过 10.111.59.191:6379 来访问Redis集群。当然，为了方便测试，我们也可以为Service添加一个NodePort映射到物理机上，这里不再详细介绍。
+#如上，在K8S集群中，所有应用都可以通过 10.111.59.191:6379 来访问Redis集群。当然，为了方便测试，我们也可以为Service添加一个NodePort映射到物理机30010上。
 #查看svc详情
 $ kubectl describe svc redis-access-service
-Name:              redis-access-service
-Namespace:         default
-Labels:            app=redis
-Annotations:       kubectl.kubernetes.io/last-applied-configuration:
-                     {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"redis"},"name":"redis-access-service","namespace":"defau...
-Selector:          app=redis,appCluster=redis-cluster
-Type:              ClusterIP
-IP:                10.111.59.191
-Port:              redis-port  6379/TCP
-TargetPort:        6379/TCP
-Endpoints:         10.244.1.227:6379,10.244.1.228:6379,10.244.1.229:6379 + 3 more...
-Session Affinity:  None
-Events:            <none>
+Name:                     redis-access-service
+Namespace:                default
+Labels:                   app=redis
+Annotations:              kubectl.kubernetes.io/last-applied-configuration:
+                            {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"redis"},"name":"redis-access-service","namespace":"defau...
+Selector:                 app=redis,appCluster=redis-cluster
+Type:                     NodePort
+IP:                       10.111.59.191
+Port:                     redis-port  6379/TCP
+TargetPort:               6379/TCP
+NodePort:                 redis-port  30010/TCP
+Endpoints:                10.244.1.230:6379,10.244.1.231:6379,10.244.1.232:6379 + 3 more...
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+
+#集群内测试（service ip 测试）
+yum install redis
+redis-cli -h 10.111.59.191 -p 6379 -c
+
+#宿主机端口测试(使用集群协议测试)
+redis-cli -h 10.198.1.156 -p 30010 -c
 ```
 
 # 五、测试主从切换
