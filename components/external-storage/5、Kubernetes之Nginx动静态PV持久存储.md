@@ -282,17 +282,35 @@ metadata:
    name: test
    labels:
      name: test
-##创建nfs-pv
+##创建nginx-data-pv
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: nfs-pv
+  name: nginx-data-pv
   labels:
-    pv: nfs-pv
+    pv: nginx-data-pv
 spec:
   capacity:
-    storage: 200Gi
+    storage: 50Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs  # 注意这里使用nfs的storageClassName，如果没改k8s的默认storageClassName的话，这里可以省略
+  nfs:
+    path: /data/nfs/nginx/
+    server: 10.19.1.155
+##创建nginx-etc-pv
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nginx-etc-pv
+  labels:
+    pv: nginx-etc-pv
+spec:
+  capacity:
+    storage: 50Gi
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
@@ -314,11 +332,11 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: 150Gi  #注意这2个pvc的总和大小，不能超过pv的大小
+      storage: 50Gi
   storageClassName: nfs
   selector:
     matchLabels:
-      pv: nfs-pv
+      pv: nginx-data-pv
 ##创建pvc名字为nfs-nginx-etc,存放配置文件
 ---
 kind: PersistentVolumeClaim
@@ -337,7 +355,7 @@ spec:
   storageClassName: nfs
   selector:
     matchLabels:
-      pv: nfs-pv
+      pv: nginx-etc-pv
 ##部署应用nginx
 ---
 apiVersion: apps/v1
