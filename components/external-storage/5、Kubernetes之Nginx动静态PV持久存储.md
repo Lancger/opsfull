@@ -442,7 +442,7 @@ echo "Test NFS Share discovery with nfs-static-nginx-dp-many" > /data/nfs/nginx/
 
 # 二、nginx使用nfs动态PV
 
-## 2、动态nfs-dynamic-nginx.yaml
+## 1、动态nfs-dynamic-nginx.yaml
 
 通过参数控制在哪个命名空间创建
 
@@ -515,7 +515,7 @@ spec:
     protocol: TCP
     targetPort: 80
     name: http
-    nodePort: 30080
+    nodePort: 30090
   selector:
     name: nginx-test
 EOF
@@ -530,7 +530,19 @@ kubectl get pv -n k8s-public --show-labels
 kubectl get pvc -n k8s-public --show-labels
 
 ##查看pod
-kubectl get pods -n k8s-public
+$ kubectl get pods -n k8s-public
+NAME                                READY   STATUS    RESTARTS   AGE
+nginx-deployment-544f569478-5t8wm   1/1     Running   0          40s
+nginx-deployment-544f569478-8gks5   1/1     Running   0          40s
+nginx-deployment-544f569478-pw96x   1/1     Running   0          40s
+
+#可以看到，nginx应用已经部署成功。
+#nginx应用的数据目录是使用的nfs共享存储，我们在nfs共享的目录里加入index.html文件，然后再访问nginx-service暴露的端口
+#切换到到nfs-server服务器上
+
+echo "Test NFS Share discovery with nfs-dynamic-nginx-deployment" > /data/nfs/nginx/index.html
+
+#在浏览器上访问kubernetes主节点的 http://master:30090，就能访问到这个页面内容了
 ```
 
 参考文档：
