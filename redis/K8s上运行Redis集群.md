@@ -331,6 +331,9 @@ matchExpressions:规定了Redis_Pod要尽量不要调度到包含app为redis的N
 
 另外，根据StatefulSet的规则，我们生成的Redis的6个Pod的hostname会被依次命名为$(statefulset名称)-$(序号)，如下图所示：
 
+```
+
+```bash
 $ kubectl get pods -o wide 
 NAME                                            READY     STATUS      RESTARTS   AGE       IP             NODE            NOMINATED NODE
 redis-app-0                                     1/1       Running     0          2h        172.17.24.3    192.168.0.144   <none>
@@ -348,7 +351,7 @@ redis-app-1.redis-service.default.svc.cluster.local
 
 在K8S集群内部，这些Pod就可以利用该域名互相通信。我们可以使用busybox镜像的nslookup检验这些域名：
 
-[root@master redis]# kubectl exec -ti busybox -- nslookup redis-app-0.redis-service
+$ kubectl exec -ti busybox -- nslookup redis-app-0.redis-service
 Server:    10.0.0.2
 Address 1: 10.0.0.2 kube-dns.kube-system.svc.cluster.local
 
@@ -358,7 +361,7 @@ Address 1: 172.17.24.3
 可以看到， redis-app-0的IP为172.17.24.3。当然，若Redis Pod迁移或是重启（我们可以手动删除掉一个Redis Pod来测试），IP也是不会改变的（可能是基于StatefulSet的缘故），Pod的域名、SRV records、A record都不会改变。
 
 另外可以发现，我们之前创建的pv都被成功绑定了：
-[root@master redis]# kubectl get pv
+$ kubectl get pv
 NAME      CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS    CLAIM                            STORAGECLASS   REASON    AGE
 nfs-pv1   200M       RWX            Retain           Bound     default/redis-data-redis-app-2                            3h
 nfs-pv3   200M       RWX            Retain           Bound     default/redis-data-redis-app-4                            3h
@@ -366,7 +369,6 @@ nfs-pv4   200M       RWX            Retain           Bound     default/redis-dat
 nfs-pv5   200M       RWX            Retain           Bound     default/redis-data-redis-app-1                            3h
 nfs-pv6   200M       RWX            Retain           Bound     default/redis-data-redis-app-0                            3h
 nfs-vp2   200M       RWX            Retain           Bound     default/redis-data-redis-app-3                            3h
-
 ```
 
 参考文档：
