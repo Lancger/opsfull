@@ -89,7 +89,94 @@ showmount -e localhost
 每一个Redis Pod都需要一个独立的PV来存储自己的数据，因此可以创建一个pv.yaml文件，包含6个PV
 
 ```bash
+kubectl delete -f pv.yaml
 
+cat >pv.yaml<<\EOF
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-pv1
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.198.1.155
+    path: "/data/nfs/redis/pv1"
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-vp2
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.198.1.155
+    path: "/data/nfs/redis/pv2"
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-pv3
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.198.1.155
+    path: "/data/nfs/redis/pv3"
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-pv4
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.198.1.155
+    path: "/data/nfs/redis/pv4"
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-pv5
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.198.1.155
+    path: "/data/nfs/redis/pv5"
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-pv6
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.198.1.155
+    path: "/data/nfs/redis/pv6"
+EOF
+
+kubectl apply -f pv.yaml
 ```
 
 
