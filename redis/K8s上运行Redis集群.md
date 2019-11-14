@@ -254,7 +254,9 @@ EOF
 kubectl create -f headless-service.yaml
 
 #查看service
-kubectl get svc
+$ kubectl get svc
+NAME            TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)    AGE
+redis-service   ClusterIP   None         <none>        6379/TCP   0s
 ```
 可以看到，服务名称为redis-service，其CLUSTER-IP为None，表示这是一个“无头”服务。
 
