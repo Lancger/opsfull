@@ -256,7 +256,80 @@ kubectl get svc
 
 
 ```bash
+cat >redis.yaml<<\EOF
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: redis-app
+spec:
+  serviceName: "redis-service"
+  replicas: 6
+  template:
+    metadata:
+      labels:
+        app: redis
+        appCluster: redis-cluster
+    spec:
+      terminationGracePeriodSeconds: 20
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - redis
+              topologyKey: kubernetes.io/hostname
+      containers:
+      - name: redis
+        image: redis
+        command:
+          - "redis-server"  #redis启动命令
+        args:
+          - "/etc/redis/redis.conf"  #redis-server后面跟的参数,换行代表空格
+          - "--protected-mode"  #允许外网访问
+          - "no"
+        resources:  #资源
+          requests:  #请求的资源
+            cpu: "100m"  #m代表千分之,相当于0.1 个cpu资源
+            memory: "100Mi"  #内存100m大小
+        ports:
+            - name: redis
+              containerPort: 6379
+              protocol: "TCP"
+            - name: cluster
+              containerPort: 16379
+              protocol: "TCP"
+        volumeMounts:
+          - name: "redis-conf"  #挂载configmap生成的文件
+            mountPath: "/etc/redis"  #挂载到哪个路径下
+          - name: "redis-data"  #挂载持久卷的路径
+            mountPath: "/var/lib/redis"
+      volumes:
+      - name: "redis-conf"  #引用configMap卷
+        configMap:
+          name: "redis-conf"
+          items:
+            - key: "redis.conf"  #创建configMap指定的名称
+              path: "redis.conf"  #里面的那个文件--from-file参数后面的文件
+  volumeClaimTemplates:  #进行pvc持久卷声明
+  - metadata:
+      name: redis-data
+    spec:
+      accessModes: [ "ReadWriteMany" ]
+      resources:
+        requests:
+          storage: 200M
+EOF
 
+PodAntiAffinity:表示反亲和性，其决定了某个pod不可以和哪些Pod部署在同一拓扑域，可以用于将一个服务的POD分散在不同的主机或者拓扑域中，提高服务本身的稳定性。
+
+matchExpressions:规定了Redis_Pod要尽量不要调度到包含app为redis的Node上，也即是说已经存在Redis的Node上尽量不要再分配Redis Pod了.
+
+另外，根据StatefulSet的规则，我们生成的Redis的6个Pod的hostname会被依次命名为$(statefulset名称)-$(序号)，如下图所示：
 ```
 
 参考文档：
