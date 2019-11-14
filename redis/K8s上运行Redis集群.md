@@ -46,6 +46,37 @@ FQDN： $(podname).(headless server name).namespace.svc.cluster.local
 6.创建Redis StatefulSet
 7.初始化Redis集群
 ```
+## 1.创建NFS存储
+
+创建NFS存储主要是为了给Redis提供稳定的后端存储，当Redis的Pod重启或迁移后，依然能获得原先的数据。这里，我们先要创建NFS，然后通过使用PV为Redis挂载一个远程的NFS路径。
+
+```bash
+yum -y install nfs-utils   #主包提供文件系统
+yum -y install rpcbind     #提供rpc协议
+```
+然后，新增/etc/exports文件，用于设置需要共享的路径
+
+```bash
+$ cat /etc/exports
+/data/nfs/redis/pv1 *(rw,no_root_squash,sync,insecure)
+/data/nfs/redis/pv2 *(rw,no_root_squash,sync,insecure)
+/data/nfs/redis/pv3 *(rw,no_root_squash,sync,insecure)
+/data/nfs/redis/pv4 *(rw,no_root_squash,sync,insecure)
+/data/nfs/redis/pv5 *(rw,no_root_squash,sync,insecure)
+/data/nfs/redis/pv6 *(rw,no_root_squash,sync,insecure)
+
+#创建相应目录
+mkdir -p //data/nfs/redis/pv{1..6}
+
+#接着，启动NFS和rpcbind服务
+systemctl restart rpcbind
+systemctl restart nfs
+systemctl enable nfs
+systemctl enable rpcbind
+
+#查看
+exportfs -v
+```
 
 参考文档：
 
