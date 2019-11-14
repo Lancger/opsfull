@@ -330,6 +330,16 @@ PodAntiAffinity:表示反亲和性，其决定了某个pod不可以和哪些Pod�
 matchExpressions:规定了Redis_Pod要尽量不要调度到包含app为redis的Node上，也即是说已经存在Redis的Node上尽量不要再分配Redis Pod了.
 
 另外，根据StatefulSet的规则，我们生成的Redis的6个Pod的hostname会被依次命名为$(statefulset名称)-$(序号)，如下图所示：
+
+$ kubectl get pods -o wide 
+NAME                                            READY     STATUS      RESTARTS   AGE       IP             NODE            NOMINATED NODE
+redis-app-0                                     1/1       Running     0          2h        172.17.24.3    192.168.0.144   <none>
+redis-app-1                                     1/1       Running     0          2h        172.17.63.8    192.168.0.148   <none>
+redis-app-2                                     1/1       Running     0          2h        172.17.24.8    192.168.0.144   <none>
+redis-app-3                                     1/1       Running     0          2h        172.17.63.9    192.168.0.148   <none>
+redis-app-4                                     1/1       Running     0          2h        172.17.24.9    192.168.0.144   <none>
+redis-app-5                                     1/1       Running     0          2h        172.17.63.10   192.168.0.148   <none>
+
 ```
 
 参考文档：
