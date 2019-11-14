@@ -3,10 +3,11 @@
 ## 1、静态nfs-static-nginx-rc.yaml
 
 ```bash
-kubectl delete -f nfs-static-nginx-rc.yaml
+##清理资源
+kubectl delete -f nfs-static-nginx-rc.yaml -n test
 
 cat >nfs-static-nginx-rc.yaml<<\EOF
-##创建namespaces
+##创建namespace
 ---
 apiVersion: v1
 kind: Namespace
@@ -14,13 +15,12 @@ metadata:
    name: test
    labels:
      name: test
-##创建nfs-PV
+##创建nfs-pv
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: nfs-pv
-  namespace: test
   labels:
     pv: nfs-pv
 spec:
@@ -29,34 +29,38 @@ spec:
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs  # 注意这里使用nfs的storageClassName，如果没改k8s的默认storageClassName的话，这里可以省略
   nfs:
     path: /data/nfs/nginx/
-    server: 10.198.1.155
-##创建 NFS-pvc
+    server: 10.19.1.155
+##创建nfs-pvc
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: nfs-pvc
   namespace: test
+  labels:
+    pvc: nfs-pvc
 spec:
   accessModes:
     - ReadWriteMany
   resources:
     requests:
       storage: 10Gi
+  storageClassName: nfs
   selector:
     matchLabels:
       pv: nfs-pv
-## 部署应用Nginx
+##部署应用nginx
 ---
 apiVersion: v1
 kind: ReplicationController
 metadata:
   name: nginx-test
+  namespace: test
   labels:
     name: nginx-test
-  namespace: test
 spec:
   replicas: 2
   selector:
@@ -78,15 +82,15 @@ spec:
       - name: nginx-data
         persistentVolumeClaim:
           claimName: nfs-pvc
-##创建Service
+##创建service
 ---
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: test
   name: nginx-test
   labels:
-   name: nginx-test
-  namespace: test
+    name: nginx-test
 spec:
   type: NodePort
   ports:
@@ -99,9 +103,16 @@ spec:
     name: nginx-test
 EOF
 
-kubectl apply -f nfs-static-nginx-rc.yaml
+##创建资源
+kubectl apply -f nfs-static-nginx-rc.yaml -n test
 
-#查看pod
+##查看pv资源
+kubectl get pv -n test --show-labels
+
+##查看pvc资源
+kubectl get pvc -n test --show-labels
+
+##查看pod
 kubectl get pods -n test
 ```
 
