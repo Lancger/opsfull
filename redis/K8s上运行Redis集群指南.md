@@ -1,3 +1,20 @@
+Table of Contents
+=================
+
+   * [一、前言](#一前言)
+   * [二、准备操作](#二准备操作)
+   * [三、StatefulSet简介](#三statefulset简介)
+   * [四、部署过程](#四部署过程)
+      * [1、创建NFS存储](#1创建nfs存储)
+      * [2、创建PV](#2创建pv)
+      * [3、创建Configmap](#3创建configmap)
+      * [4、创建Headless service](#4创建headless-service)
+      * [4、创建Redis 集群节点](#4创建redis-集群节点)
+      * [5、初始化Redis集群](#5初始化redis集群)
+      * [6、创建用于访问Service](#6创建用于访问service)
+   * [五、测试主从切换](#五测试主从切换)
+   * [六、疑问点](#六疑问点)
+   
 # 一、前言
 
 架构原理:
