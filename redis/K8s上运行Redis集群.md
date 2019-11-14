@@ -266,8 +266,13 @@ redis-service   ClusterIP   None         <none>        6379/TCP   0s
 创建好Headless service后，就可以利用StatefulSet创建Redis 集群节点，这也是本文的核心内容。我们先创建redis.yml文件：
 
 ```bash
+#清理pvc资源
+kubectl delete pvc redis-data-redis-app-{0..5}
+
+#清理pod资源
 kubectl delete -f redis.yaml
 
+#编写yaml
 cat >redis.yaml<<\EOF
 apiVersion: apps/v1beta1
 kind: StatefulSet
@@ -338,6 +343,7 @@ spec:
           storage: 20Gi
 EOF
 
+#创建资源
 kubectl apply -f redis.yaml
 
 PodAntiAffinity:表示反亲和性，其决定了某个pod不可以和哪些Pod部署在同一拓扑域，可以用于将一个服务的POD分散在不同的主机或者拓扑域中，提高服务本身的稳定性。
