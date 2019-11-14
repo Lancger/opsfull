@@ -558,9 +558,11 @@ EOF
 kubectl apply -f redis-access-service.yaml
 
 #查看svc
-kubectl get svc redis-access-service -o wide
+$ kubectl get svc redis-access-service -o wide
+NAME                   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE   SELECTOR
+redis-access-service   ClusterIP   10.111.59.191   <none>        6379/TCP   42s   app=redis,appCluster=redis-cluster
 
-#如上，在K8S集群中，所有应用都可以通过10.0.0.64 :6379来访问Redis集群。当然，为了方便测试，我们也可以为Service添加一个NodePort映射到物理机上，这里不再详细介绍。
+#如上，在K8S集群中，所有应用都可以通过 10.111.59.191:6379 来访问Redis集群。当然，为了方便测试，我们也可以为Service添加一个NodePort映射到物理机上，这里不再详细介绍。
 ```
 
 # 五、测试主从切换
