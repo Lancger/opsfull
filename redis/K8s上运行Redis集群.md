@@ -264,7 +264,6 @@ redis-service   ClusterIP   None         <none>        6379/TCP   0s
 
 创建好Headless service后，就可以利用StatefulSet创建Redis 集群节点，这也是本文的核心内容。我们先创建redis.yml文件：
 
-
 ```bash
 kubectl delete -f redis.yaml
 
@@ -365,9 +364,18 @@ redis-app-0.redis-service.default.svc.cluster.local
 redis-app-1.redis-service.default.svc.cluster.local
 ...以此类推...
 
+这里我们可以验证一下
+kubectl run -i --tty busybox --image=busybox /bin/sh
+
+$ nslookup redis-app-0
+Server:         10.96.0.10
+Address:        10.96.0.10:53
+
+** server can't find redis-app-0.default.svc.cluster.local: NXDOMAIN
+
 在K8S集群内部，这些Pod就可以利用该域名互相通信。我们可以使用busybox镜像的nslookup检验这些域名：
 
-$ kubectl exec -ti busybox -- nslookup redis-app-0.redis-service
+$ kubectl exec -it busybox -- nslookup redis-app-0.redis-service
 Server:    10.0.0.2
 Address 1: 10.0.0.2 kube-dns.kube-system.svc.cluster.local
 
