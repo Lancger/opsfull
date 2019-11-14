@@ -179,6 +179,45 @@ EOF
 kubectl apply -f pv.yaml
 ```
 
+## 3、创建Configmap
+
+这里，我们可以直接将Redis的配置文件转化为Configmap，这是一种更方便的配置读取方式。配置文件redis.conf如下
+
+```bash
+#配置文件redis.conf
+cat >redis.conf<<\EOF 
+appendonly yes
+cluster-enabled yes
+cluster-config-file /var/lib/redis/nodes.conf
+cluster-node-timeout 5000
+dir /var/lib/redis
+port 6379
+EOF
+
+#创建名为redis-conf的Configmap
+kubectl create configmap redis-conf --from-file=redis.conf
+
+#查看创建的configmap
+$ kubectl describe cm redis-conf
+Name:         redis-conf
+Namespace:    default
+Labels:       <none>
+Annotations:  <none>
+
+Data
+====
+redis.conf:
+----
+appendonly yes
+cluster-enabled yes
+cluster-config-file /var/lib/redis/nodes.conf
+cluster-node-timeout 5000
+dir /var/lib/redis
+port 6379
+
+Events:  <none>
+#如上，redis.conf中的所有配置项都保存到redis-conf这个Configmap中。
+```
 
 参考文档：
 
