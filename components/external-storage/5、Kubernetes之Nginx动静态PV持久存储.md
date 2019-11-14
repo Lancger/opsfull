@@ -32,7 +32,7 @@ spec:
   storageClassName: nfs  # 注意这里使用nfs的storageClassName，如果没改k8s的默认storageClassName的话，这里可以省略
   nfs:
     path: /data/nfs/nginx/
-    server: 10.19.1.155
+    server: 10.198.1.155
 ##创建nfs-pvc
 ---
 kind: PersistentVolumeClaim
