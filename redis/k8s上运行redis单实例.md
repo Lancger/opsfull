@@ -131,7 +131,7 @@ kubectl get pods -n mos-namespace
 # 四、验证redis实例
 
 ```bash
-#进入到容器操作
+#进入到容器
 kubectl exec -it `kubectl get pods -n mos-namespace|grep redis|awk '{print $1}'` /bin/bash -n mos-namespace
 
 # redis-cli -a redispassword
@@ -143,6 +143,14 @@ kubectl exec -it `kubectl get pods -n mos-namespace|grep redis|awk '{print $1}'`
 kubectl exec -it `kubectl get pods -n mos-namespace|grep redis|awk '{print $1}'` /bin/bash -n mos-namespace
 
 $ tail -100f /data/redis.log 
+1:C 14 Nov 2019 06:46:13.476 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+1:C 14 Nov 2019 06:46:13.476 # Redis version=5.0.6, bits=64, commit=00000000, modified=0, pid=1, just started
+1:C 14 Nov 2019 06:46:13.476 # Configuration loaded
+1:M 14 Nov 2019 06:46:13.478 * Running mode=standalone, port=6379.
+1:M 14 Nov 2019 06:46:13.478 # WARNING: The TCP backlog setting of 30000 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+1:M 14 Nov 2019 06:46:13.478 # Server initialized
+1:M 14 Nov 2019 06:46:13.478 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
+1:M 14 Nov 2019 06:46:13.478 * Ready to accept connections
 ```
 参考文档：
 
