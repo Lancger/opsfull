@@ -542,7 +542,10 @@ nginx-deployment-544f569478-pw96x   1/1     Running   0          40s
 #nginx应用的数据目录是使用的nfs共享存储，我们在nfs共享的目录里加入index.html文件，然后再访问nginx-service暴露的端口
 #切换到到nfs-server服务器上
 
-echo "Test NFS Share discovery with nfs-dynamic-nginx-deployment" > /data/nfs/nginx/index.html
+#注意动态的在这个目录，创建的目录命名方式为 “namespace名称-pvc名称-pv名称”
+/data/nfs/kube-public-test-claim-pvc-ad304939-e75d-414f-81b5-7586ef17db6c
+
+echo "Test NFS Share discovery with nfs-dynamic-nginx-deployment" > /data/nfs/kube-public-test-claim-pvc-ad304939-e75d-414f-81b5-7586ef17db6c/index.html
 
 #在浏览器上访问kubernetes主节点的 http://master:30090，就能访问到这个页面内容了
 ```
