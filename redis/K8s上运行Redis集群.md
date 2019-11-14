@@ -9,7 +9,7 @@
 `https://github.com/zuxqoj/kubernetes-redis-cluster`
 
 其包含了两种部署Redis集群的方式：
-```
+```bash
 StatefulSet
 Service&Deployment
 ```
@@ -24,7 +24,7 @@ Service&Deployment
 - 3、在Deployment中，与之对应的服务是service，而在StatefulSet中与之对应的headless service，headless service，即无头服务，与service的区别就是它没有Cluster IP，解析它的名称时将返回该Headless Service对应的全部Pod的Endpoint列表。
 
 - 4、除此之外，StatefulSet在Headless Service的基础上又为StatefulSet控制的每个Pod副本创建了一个DNS域名，这个域名的格式为：
-```
+```bash
 $(podname).(headless server name)   
 FQDN： $(podname).(headless server name).namespace.svc.cluster.local
 ```
