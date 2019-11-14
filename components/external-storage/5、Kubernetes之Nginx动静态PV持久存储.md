@@ -444,8 +444,93 @@ echo "Test NFS Share discovery with nfs-static-nginx-dp-many" > /data/nfs/nginx/
 
 ## 2、动态nfs-dynamic-nginx.yaml
 
-```bash
+通过参数控制在哪个命名空间创建
 
+```bash
+##清理命名空间
+kubectl delete ns k8s-public
+
+##创建命名空间
+kubectl create ns k8s-public
+
+##清理资源
+kubectl delete -f nfs-dynamic-nginx-deployment.yaml -n k8s-public
+
+cat >nfs-dynamic-nginx-deployment.yaml<<\EOF
+##动态申请nfs-dynamic-pvc
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: nfs-dynamic-claim
+spec:
+  storageClassName: nfs-storage #--需要与上面创建的storageclass的名称一致
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 90Gi
+##部署应用nginx
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    name: nginx-test
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      name: nginx-test
+  template:
+    metadata:
+      labels:
+       name: nginx-test
+    spec:
+      containers:
+      - name: nginx-test
+        image: docker.io/nginx
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: nginx-data
+        ports:
+        - containerPort: 80
+      volumes:
+      - name: nginx-data
+        persistentVolumeClaim:
+          claimName: nfs-dynamic-claim
+##创建service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-test
+  labels:
+    name: nginx-test
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+    name: http
+    nodePort: 30080
+  selector:
+    name: nginx-test
+EOF
+
+##创建资源
+kubectl apply -f nfs-dynamic-nginx-deployment.yaml -n k8s-public
+
+##查看pv资源
+kubectl get pv -n k8s-public --show-labels
+
+##查看pvc资源
+kubectl get pvc -n k8s-public --show-labels
+
+##查看pod
+kubectl get pods -n k8s-public
 ```
 
 参考文档：
