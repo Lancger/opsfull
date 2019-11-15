@@ -2,15 +2,18 @@
 
 # 一、创建endpoints
 ```bash
+# 删除 mysql-endpoints
 kubectl delete -f mysql-endpoints.yaml 
 
-#创建 mysql-endpoints.yaml
+# 创建 mysql-endpoints.yaml
 cat > mysql-endpoints.yaml <<\EOF
 kind: Endpoints
 apiVersion: v1
 metadata:
   name: mysql-production
   namespace: mos-namespace
+  labels:
+    app: mysql-endpoint
 subsets:
   - addresses:
       - ip: 10.198.1.155   #需要注意策略需要开通好
@@ -19,8 +22,13 @@ subsets:
         protocol: TCP
 EOF
 
+# 创建 mysql-endpoints
 kubectl apply -f mysql-endpoints.yaml
 
+# 查看 mysql-endpoints
+kubectl get endpoints mysql-production -n mos-namespace
+
+# 查看 mysql-endpoints详情
 kubectl describe endpoints mysql-production -n mos-namespace
 ```
 
