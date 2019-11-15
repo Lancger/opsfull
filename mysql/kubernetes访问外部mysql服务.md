@@ -1,3 +1,11 @@
+Table of Contents
+=================
+
+   * [一、创建endpoints](#一创建endpoints)
+   * [二、创建service](#二创建service)
+   * [三、安装centos7基础镜像](#三安装centos7基础镜像)
+   * [四、测试数据库连接](#四测试数据库连接)
+   
 `k8s访问集群外独立的服务最好的方式是采用Endpoint方式(可以看作是将k8s集群之外的服务抽象为内部服务)，以mysql服务为例`
 
 # 一、创建endpoints
