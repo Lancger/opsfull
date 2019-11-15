@@ -100,8 +100,8 @@ spec:
     protocol: TCP
 EOF
 
-kubectl create -f mysql-endpoints-new.yaml -n mos-namespace
-kubectl create -f mysql-service-new.yaml -n mos-namespace
+kubectl apply -f mysql-endpoints-new.yaml -n mos-namespace
+kubectl apply -f mysql-service-new.yaml -n mos-namespace
 
 nc -zv `kubectl get svc mysql-production -n mos-namespace|grep mysql-production|awk '{print $3}'` 3306
 ```
