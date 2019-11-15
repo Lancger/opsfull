@@ -58,9 +58,6 @@ kubectl delete deployment centos7-app -n mos-namespace
 #kubectl run --rm --image=centos:7.2.1511 centos7-app -it --port=8080 --replicas=1 -n mos-namespace
 kubectl run --image=centos:7.2.1511 centos7-app -it --port=8080 --replicas=1 -n mos-namespace
 
-# 进入到容器
-kubectl exec `kubectl get pods -n mos-namespace|grep centos7-app|awk '{print $1}'` -it /bin/bash -n mos-namespace
-
 # 安装mysql客户端
 yum install vim net-tools telnet nc -y
 yum install -y mariadb.x86_64 mariadb-libs.x86_64
