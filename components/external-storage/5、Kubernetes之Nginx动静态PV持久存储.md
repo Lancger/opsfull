@@ -509,7 +509,6 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: nfs-nginx-data
-  namespace: test
   labels:
     pvc: nfs-nginx-data
 spec:
@@ -522,13 +521,12 @@ spec:
   selector:
     matchLabels:
       pv: nginx-data-pv
-##创建pvc名字为nfs-nginx-log,存放配置文件
+##创建pvc名字为nfs-nginx-log,存放日志文件
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: nfs-nginx-log
-  namespace: test
   labels:
     pvc: nfs-nginx-log
 spec:
