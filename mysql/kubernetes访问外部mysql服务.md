@@ -42,9 +42,10 @@ kubectl describe endpoints mysql-production -n mos-namespace
 
 # 二、创建service
 ```bash
-kubectl delete -f mysql-service.yaml
+# 删除 mysql-service
+kubectl delete -f mysql-service.yaml -n mos-namespace
 
-#创建 mysql-service.yaml
+# 编写 mysql-service.yaml
 cat > mysql-service.yaml <<\EOF
 apiVersion: v1
 kind: Service
@@ -59,10 +60,13 @@ spec:
       protocol: TCP
 EOF
 
-kubectl apply -f mysql-service.yaml
+# 创建 mysql-service
+kubectl apply -f mysql-service.yaml -n mos-namespace
 
+# 查看 mysql-service
 kubectl get svc mysql-production -n mos-namespace
 
+# 查看 mysql-service详情
 kubectl describe svc mysql-production -n mos-namespace
 ```
 
