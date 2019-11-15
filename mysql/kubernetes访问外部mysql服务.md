@@ -77,8 +77,23 @@ nc -zv `kubectl get svc mysql-production -n mos-namespace|grep mysql-production|
 
 # 三、文件合并
 
-注意点: Endpoints类型，可以打标签，但是Service不可以通过标签来选择，直接不写selector: name: mysql-endpoints 不然会出现异常，找不到endpoints节点
+`注意点: Endpoints类型，可以打标签，但是Service不可以通过标签来选择，直接不写selector: name: mysql-endpoints 不然会出现异常，找不到endpoints节点`
 
+```
+cat << EOF > mysql-service-new.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-production
+spec:
+  #selector:     ---注意这里用标签选择，直接取消
+  #  name: mysql-endpoints
+  ports:
+  - port: 3306
+    protocol: TCP
+EOF
+```
+完整文件
 ```bash
 kubectl delete -f mysql-endpoints-new.yaml -n mos-namespace
 kubectl delete -f mysql-service-new.yaml -n mos-namespace
