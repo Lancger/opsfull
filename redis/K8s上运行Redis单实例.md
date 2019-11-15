@@ -128,7 +128,39 @@ kubectl get pods -n mos-namespace
 # 注意：configMap 会挂在 /usr/local/etc/redis/redis.conf 上。与 mountPath 和 configMap 下的 path 一同指定
 ```
 
-# 四、验证redis实例
+# 四、创建redis-service服务
+
+```
+# 删除service
+kubectl delete -f redis-service.yaml -n mos-namespace
+
+# 编写redis-service.yaml
+cat >redis-service.yaml<<\EOF
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-production
+  namespace: mos-namespace
+spec:
+  selector:
+    name: mos-redis
+  ports:
+    - port: 6379
+      protocol: TCP
+EOF
+
+# 创建service
+kubectl apply -f redis-service.yaml -n mos-namespace
+
+# 查看service
+kubectl get svc redis-production -n mos-namespace
+
+# 查看service详情
+kubectl describe svc redis-production -n mos-namespace
+```
+
+
+# 五、验证redis实例
 
 ```bash
 #进入到容器
