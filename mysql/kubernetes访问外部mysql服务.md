@@ -11,7 +11,7 @@ Table of Contents
 # 一、创建endpoints
 ```bash
 # 删除 mysql-endpoints
-kubectl delete -f mysql-endpoints.yaml 
+kubectl delete -f mysql-endpoints.yaml -n mos-namespace
 
 # 创建 mysql-endpoints.yaml
 cat > mysql-endpoints.yaml <<\EOF
@@ -31,7 +31,7 @@ subsets:
 EOF
 
 # 创建 mysql-endpoints
-kubectl apply -f mysql-endpoints.yaml
+kubectl apply -f mysql-endpoints.yaml -n mos-namespace
 
 # 查看 mysql-endpoints
 kubectl get endpoints mysql-production -n mos-namespace
