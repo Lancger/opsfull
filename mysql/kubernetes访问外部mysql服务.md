@@ -20,8 +20,6 @@ apiVersion: v1
 metadata:
   name: mysql-production
   namespace: mos-namespace
-  labels:
-    app: mysql-endpoint
 subsets:
   - addresses:
       - ip: 10.198.1.155   #需要注意策略需要开通好
@@ -38,12 +36,6 @@ kubectl get endpoints mysql-production -n mos-namespace
 
 # 查看 mysql-endpoints详情
 kubectl describe endpoints mysql-production -n mos-namespace
-
-# 查看标签
-kubectl get endpoints --show-labels -n mos-namespace
-
-#NAME               ENDPOINTS           AGE    LABELS
-#mysql-production   10.198.1.155:3306    83s    app=mysql-endpoint
 
 # 探测服务是否可达
 nc -zv 10.198.1.155 3306
@@ -62,9 +54,6 @@ metadata:
   name: mysql-production
   namespace: mos-namespace
 spec:
-  selector:
-    matchLabels:
-      app: mysql-endpoint  #这里根据标签选择创建service
   ports:
     - port: 3306
       protocol: TCP
@@ -74,10 +63,13 @@ EOF
 kubectl apply -f mysql-service.yaml -n mos-namespace
 
 # 查看 mysql-service
-kubectl get svc mysql-production --show-labels -n mos-namespace
+kubectl get svc mysql-production -n mos-namespace
 
 # 查看 mysql-service详情
 kubectl describe svc mysql-production -n mos-namespace
+
+# 验证service ip的连通性
+nc -zv `kubectl get svc mysql-production -n mos-namespace|grep mysql-production|awk '{print $3}'` 3306
 ```
 
 # 三、安装centos7基础镜像
