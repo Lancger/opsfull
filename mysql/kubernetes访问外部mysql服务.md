@@ -55,6 +55,7 @@ kubectl get pods -n mos-namespace
 kubectl delete deployment centos7-app -n mos-namespace
 
 # 命令行跑一个centos7的bash基础容器
+#kubectl run --rm --image=centos:7.2.1511 centos7-app -it --port=8080 --replicas=1 -n mos-namespace
 kubectl run --image=centos:7.2.1511 centos7-app -it --port=8080 --replicas=1 -n mos-namespace
 
 # 进入到容器
