@@ -21,7 +21,7 @@ metadata:
   name: mysql-production
 subsets:
   - addresses:
-    - ip: 10.198.1.155   #需要注意策略需要开通好
+    - ip: 10.198.1.155
     ports:
     - port: 3306
       protocol: TCP
