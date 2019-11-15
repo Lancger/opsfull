@@ -44,12 +44,16 @@ metadata:
   name: mysql-production
   namespace: mos-namespace
 spec:
+  selector:
+    app: mysql-endpoint  #这里根据标签选择创建service
   ports:
     - port: 3306
       protocol: TCP
 EOF
 
 kubectl apply -f mysql-service.yaml
+
+kubectl get svc mysql-production -n mos-namespace
 
 kubectl describe svc mysql-production -n mos-namespace
 ```
