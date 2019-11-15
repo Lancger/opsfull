@@ -72,6 +72,42 @@ kubectl describe svc mysql-production -n mos-namespace
 nc -zv `kubectl get svc mysql-production -n mos-namespace|grep mysql-production|awk '{print $3}'` 3306
 ```
 
+# 三、文件合并
+
+```bash
+kubectl delete -f mysql-endpoints-new.yaml -n mos-namespace
+kubectl delete -f mysql-service-new.yaml -n mos-namespace
+
+cat << EOF > mysql-endpoints-new.yaml
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: mysql-production
+subsets:
+  - addresses:
+    - ip: 10.198.1.155
+    ports:
+    - port: 3306
+      protocol: TCP
+EOF
+
+cat << EOF > mysql-service-new.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-production
+spec:
+  ports:
+  - port: 3306
+    protocol: TCP
+EOF
+
+kubectl create -f mysql-endpoints-new.yaml -n mos-namespace
+kubectl create -f mysql-service-new.yaml -n mos-namespace
+
+nc -zv `kubectl get svc mysql-production -n mos-namespace|grep mysql-production|awk '{print $3}'` 3306
+```
+
 # 三、安装centos7基础镜像
 ```bash
 # 查看 mos-namespace 下的pod资源
