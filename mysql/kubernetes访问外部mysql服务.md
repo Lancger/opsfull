@@ -9,6 +9,9 @@ Table of Contents
 `k8s访问集群外独立的服务最好的方式是采用Endpoint方式(可以看作是将k8s集群之外的服务抽象为内部服务)，以mysql服务为例`
 
 # 一、创建endpoints
+
+(带注释的操作，建议分步操作，被这个坑了很久)
+
 ```bash
 # 删除 mysql-endpoints
 kubectl delete -f mysql-endpoints.yaml -n mos-namespace
