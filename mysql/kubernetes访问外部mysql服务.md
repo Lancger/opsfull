@@ -42,8 +42,8 @@ kubectl describe endpoints mysql-production -n mos-namespace
 # 查看标签
 kubectl get endpoints --show-labels -n mos-namespace
 
-NAME               ENDPOINTS           AGE    LABELS
-mysql-production   10.198.1.155:3306    83s    app=mysql-endpoint
+#NAME               ENDPOINTS           AGE    LABELS
+#mysql-production   10.198.1.155:3306    83s    app=mysql-endpoint
 
 # 探测服务是否可达
 nc -zv 10.198.1.155 3306
