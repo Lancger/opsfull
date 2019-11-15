@@ -14,7 +14,7 @@ Table of Contents
 kubectl delete -f mysql-endpoints.yaml -n mos-namespace
 
 # 创建 mysql-endpoints.yaml
-cat > mysql-endpoints.yaml <<\EOF
+cat >mysql-endpoints.yaml<<\EOF
 kind: Endpoints
 apiVersion: v1
 metadata:
@@ -55,7 +55,7 @@ nc -zv 10.198.1.155 3306
 kubectl delete -f mysql-service.yaml -n mos-namespace
 
 # 编写 mysql-service.yaml
-cat > mysql-service.yaml <<\EOF
+cat >mysql-service.yaml<<\EOF
 apiVersion: v1
 kind: Service
 metadata:
