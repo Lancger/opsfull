@@ -10,7 +10,7 @@ Table of Contents
 
 # 一、创建endpoints
 
-(带注释的操作，建议分步操作，被这个坑了很久)
+(带注释的操作，建议分步操作，被这个坑了很久，或者可以直接使用合并文件一步执行)
 
 ```bash
 # 删除 mysql-endpoints
