@@ -450,6 +450,157 @@ echo "Test NFS Share discovery with nfs-static-nginx-dp-many" > /data/nfs/nginx/
 #在浏览器上访问kubernetes主节点的 http://master:30080，就能访问到这个页面内容了
 ```
 
+## 4、参数namespace
+
+```bash
+##清理资源
+export NAMESPACE="mos-namespace"
+
+kubectl delete -f nfs-static-nginx-dp-many.yaml -n ${NAMESPACE}
+
+cat >nfs-static-nginx-dp-many.yaml<<-EOF
+##创建namespace
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+   name: ${NAMESPACE}
+   labels:
+     name: ${NAMESPACE}
+##创建nginx-data-pv
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nginx-data-pv
+  labels:
+    pv: nginx-data-pv
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs  # 注意这里使用nfs的storageClassName，如果没改k8s的默认storageClassName的话，这里可以省略
+  nfs:
+    path: /data/nfs/nginx/
+    server: 10.198.1.155
+##创建nginx-log-pv
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nginx-log-pv
+  labels:
+    pv: nginx-log-pv
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs  # 注意这里使用nfs的storageClassName，如果没改k8s的默认storageClassName的话，这里可以省略
+  nfs:
+    path: /data/nfs/nginx/
+    server: 10.198.1.155
+##创建pvc名字为nfs-nginx-data,存放数据
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: nfs-nginx-data
+  namespace: test
+  labels:
+    pvc: nfs-nginx-data
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 50Gi
+  storageClassName: nfs
+  selector:
+    matchLabels:
+      pv: nginx-data-pv
+##创建pvc名字为nfs-nginx-log,存放配置文件
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: nfs-nginx-log
+  namespace: test
+  labels:
+    pvc: nfs-nginx-log
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 50Gi
+  storageClassName: nfs
+  selector:
+    matchLabels:
+      pv: nginx-log-pv
+##部署应用nginx
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    name: nginx-test
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      name: nginx-test
+  template:
+    metadata:
+      labels:
+       name: nginx-test
+    spec:
+      containers:
+      - name: nginx-test
+        image: docker.io/nginx
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: nginx-data
+        - mountPath: /var/log/nginx
+          name: nginx-log
+        ports:
+        - containerPort: 80
+      volumes:
+      - name: nginx-data
+        persistentVolumeClaim:
+          claimName: nfs-nginx-data
+      - name: nginx-log
+        persistentVolumeClaim:
+          claimName: nfs-nginx-log
+##创建service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-test
+  labels:
+    name: nginx-test
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+    name: http
+    nodePort: 30180
+  selector:
+    name: nginx-test
+EOF
+
+##创建资源
+kubectl apply -f nfs-static-nginx-dp-many.yaml -n ${NAMESPACE}
+```
+
+
 # 二、nginx使用nfs动态PV
 
 `https://github.com/Lancger/opsfull/blob/master/components/external-storage/3%E3%80%81%E5%8A%A8%E6%80%81%E7%94%B3%E8%AF%B7PV%E5%8D%B7.md`
