@@ -130,7 +130,7 @@ kubectl get pods -n mos-namespace
 
 # 四、创建redis-service服务
 
-```
+```bash
 # 删除service
 kubectl delete -f redis-service.yaml -n mos-namespace
 
@@ -162,8 +162,10 @@ kubectl describe svc redis-production -n mos-namespace
 
 # 五、验证redis实例
 
+1、普通方式验证
+
 ```bash
-#进入到容器
+# 进入到容器
 kubectl exec -it `kubectl get pods -n mos-namespace|grep redis|awk '{print $1}'` /bin/bash -n mos-namespace
 
 # redis-cli -a redispassword
@@ -171,7 +173,7 @@ kubectl exec -it `kubectl get pods -n mos-namespace|grep redis|awk '{print $1}'`
 # 127.0.0.1:6379> get a
 "b"
 
-#查看日志(因为配置文件中有配置日志写到容器里的/data/redis.log文件)
+# 查看日志(因为配置文件中有配置日志写到容器里的/data/redis.log文件)
 kubectl exec -it `kubectl get pods -n mos-namespace|grep redis|awk '{print $1}'` /bin/bash -n mos-namespace
 
 $ tail -100f /data/redis.log 
@@ -183,6 +185,20 @@ $ tail -100f /data/redis.log
 1:M 14 Nov 2019 06:46:13.478 # Server initialized
 1:M 14 Nov 2019 06:46:13.478 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
 1:M 14 Nov 2019 06:46:13.478 * Ready to accept connections
+```
+
+2、通过暴露的service验证
+
+```bash
+# 命令行跑一个centos7的bash基础容器
+kubectl run --image=centos:7.2.1511 centos7-app -it --port=8080 --replicas=1 -n mos-namespace
+
+# 通过service方式验证
+kubectl exec `kubectl get pods -n mos-namespace|grep centos7-app|awk '{print $1}'` -it /bin/bash -n mos-namespace
+
+yum install epel-release  redis -y
+
+redis-cli -h redis-production -a redispassword
 ```
 参考文档：
 
