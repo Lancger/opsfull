@@ -51,11 +51,10 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mysql-production
-  namespace: mos-namespace
 spec:
   ports:
-    - port: 3306
-      protocol: TCP
+  - port: 3306
+    protocol: TCP
 EOF
 
 # 创建 mysql-service
