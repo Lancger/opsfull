@@ -109,7 +109,7 @@ kubectl apply -f mysql-service-new.yaml -n mos-namespace
 nc -zv `kubectl get svc mysql-production -n mos-namespace|grep mysql-production|awk '{print $3}'` 3306
 ```
 
-# 三、安装centos7基础镜像
+# 四、安装centos7基础镜像
 ```bash
 # 查看 mos-namespace 下的pod资源
 kubectl get pods -n mos-namespace
@@ -126,7 +126,7 @@ yum install vim net-tools telnet nc -y
 yum install -y mariadb.x86_64 mariadb-libs.x86_64
 ```
 
-# 四、测试数据库连接
+# 五、测试数据库连接
 
 ```bash
 # 进入到容器
@@ -141,6 +141,7 @@ nc -zv mysql-production 3306
 # 连接测试
 mysql -h'mysql-production' -u'root' -p'password'
 ```
+
 参考资料：
 
 https://blog.csdn.net/hxpjava1/article/details/80040407   使用kubernetes访问外部服务mysql/redis
