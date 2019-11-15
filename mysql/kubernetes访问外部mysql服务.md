@@ -21,7 +21,7 @@ EOF
 
 kubectl apply -f mysql-endpoints.yaml
 
-kubectl describe endpoints -n mos-namespace
+kubectl describe endpoints mysql-production -n mos-namespace
 ```
 
 # 二、创建service
