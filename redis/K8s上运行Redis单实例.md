@@ -1,3 +1,12 @@
+Table of Contents
+=================
+
+   * [一、创建namespace](#一创建namespace)
+   * [二、创建一个 configmap](#二创建一个-configmap)
+   * [三、创建 redis 容器](#三创建-redis-容器)
+   * [四、创建redis-service服务](#四创建redis-service服务)
+   * [五、验证redis实例](#五验证redis实例)
+   
 # 一、创建namespace
 ```bash
 # 清理 namespace
