@@ -77,6 +77,8 @@ nc -zv `kubectl get svc mysql-production -n mos-namespace|grep mysql-production|
 
 # 三、文件合并
 
+注意点: Endpoints类型，可以打标签，但是Service不可以通过标签来选择，直接不写selector: name: mysql-endpoints 不然会出现异常，找不到endpoints节点
+
 ```bash
 kubectl delete -f mysql-endpoints-new.yaml -n mos-namespace
 kubectl delete -f mysql-service-new.yaml -n mos-namespace
@@ -86,6 +88,8 @@ apiVersion: v1
 kind: Endpoints
 metadata:
   name: mysql-production
+  labels:
+    name: mysql-endpoints
 subsets:
   - addresses:
     - ip: 10.198.1.155
