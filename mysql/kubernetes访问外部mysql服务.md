@@ -19,13 +19,12 @@ kind: Endpoints
 apiVersion: v1
 metadata:
   name: mysql-production
-  namespace: mos-namespace
 subsets:
   - addresses:
-      - ip: 10.198.1.155   #需要注意策略需要开通好
+    - ip: 10.198.1.155   #需要注意策略需要开通好
     ports:
-      - port: 3306
-        protocol: TCP
+    - port: 3306
+      protocol: TCP
 EOF
 
 # 创建 mysql-endpoints
