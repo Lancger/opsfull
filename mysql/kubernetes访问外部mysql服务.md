@@ -15,8 +15,8 @@ kubectl delete -f mysql-endpoints.yaml -n mos-namespace
 
 # 创建 mysql-endpoints.yaml
 cat >mysql-endpoints.yaml<<\EOF
-kind: Endpoints
 apiVersion: v1
+kind: Endpoints
 metadata:
   name: mysql-production
 subsets:
