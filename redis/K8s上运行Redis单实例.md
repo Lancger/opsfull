@@ -168,7 +168,7 @@ kubectl describe svc redis-production -n mos-namespace
 # 进入到容器
 kubectl exec -it `kubectl get pods -n mos-namespace|grep redis|awk '{print $1}'` /bin/bash -n mos-namespace
 
-# redis-cli -a redispassword
+redis-cli -h 127.0.0.1 -a redispassword
 # 127.0.0.1:6379> set a b
 # 127.0.0.1:6379> get a
 "b"
@@ -200,6 +200,7 @@ yum install epel-release  redis -y
 
 redis-cli -h redis-production -a redispassword
 ```
+
 参考文档：
 
 https://www.cnblogs.com/klvchen/p/10862607.html 
