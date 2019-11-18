@@ -47,18 +47,17 @@
 
 # 二、k8s资源清理
 ```
-# svc清理
+1、# svc清理
 $ kubectl delete svc $(kubectl get svc -n mos-namespace|grep -v NAME|awk '{print $1}') -n mos-namespace
 service "mysql-production" deleted
 service "nginx-test" deleted
 service "redis-cluster" deleted
 service "redis-production" deleted
 
-# deployment清理
+2、# deployment清理
 $ kubectl delete deployment $(kubectl get deployment -n mos-namespace|grep -v NAME|awk '{print $1}') -n mos-namespace
 deployment.extensions "centos7-app" deleted
 
-
-# configmap清理
+3、# configmap清理
 $ kubectl delete cm $(kubectl get cm -n mos-namespace|grep -v NAME|awk '{print $1}') -n mos-namespace
 ```
