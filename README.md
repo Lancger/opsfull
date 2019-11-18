@@ -44,3 +44,19 @@
         <td><a href="docs/helm.md">6.Helm部署</a></td>
     </tr>
 </table>
+
+# k8s资源清理
+```
+# svc清理
+$ kubectl delete svc $(kubectl get svc -n mos-namespace|grep -v TYPE|awk '{print $1}') -n mos-namespace
+service "mysql-production" deleted
+service "nginx-test" deleted
+service "redis-cluster" deleted
+service "redis-production" deleted
+
+# deployment清理
+$ kubectl delete deployment $(kubectl get deployment -n mos-namespace|grep -v READY|awk '{print $1}') -n mos-namespace
+deployment.extensions "centos7-app" deleted
+
+
+```
