@@ -161,7 +161,8 @@ spec:
       containers:
         - name: nfs-client-provisioner
           #---由于quay.io仓库国内被墙，所以替换成七牛云的仓库
-          image: quay-mirror.qiniu.com/external_storage/nfs-client-provisioner:latest
+          #image: quay-mirror.qiniu.com/external_storage/nfs-client-provisioner:latest
+          image: registry.cn-hangzhou.aliyuncs.com/open-ali/nfs-client-provisioner:latest
           volumeMounts:
             - name: nfs-client-root
               mountPath: /persistentvolumes
