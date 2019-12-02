@@ -99,12 +99,15 @@ kubectl create configmap redis-conf --from-file=redis.conf -n mos-namespace
 kubectl delete -f mos_redis.yaml 
 
 cat > mos_redis.yaml <<\EOF
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mos-redis
   namespace: mos-namespace
 spec:
+  selector:
+    matchLabels:
+      name: mos-redis
   replicas: 1
   template:
     metadata:
