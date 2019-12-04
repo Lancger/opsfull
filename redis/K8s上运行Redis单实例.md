@@ -208,7 +208,7 @@ kubectl run --image=centos:7.2.1511 centos7-app -it --port=8080 --replicas=1 -n 
 # 通过service方式验证
 kubectl exec `kubectl get pods -n mos-namespace|grep centos7-app|awk '{print $1}'` -it /bin/bash -n mos-namespace
 
-yum install -y epel-release redis
+yum install -y epel-release
 yum install -y redis
 
 redis-cli -h redis-production -a redispassword
