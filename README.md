@@ -61,3 +61,6 @@ deployment.extensions "centos7-app" deleted
 3、# configmap清理
 $ kubectl delete cm $(kubectl get cm -n mos-namespace|grep -v NAME|awk '{print $1}') -n mos-namespace
 ```
+
+
+https://www.xiaodianer.net/index.php/kubernetes/istio/41-istio-https-demo
