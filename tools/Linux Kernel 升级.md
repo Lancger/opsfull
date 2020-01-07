@@ -10,7 +10,7 @@ k8s,docker,cilium等很多功能、特性需要较新的linux内核支持，所�
 # 载入公钥
 rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
 # 安装ELRepo
-rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
+rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-4.el7.elrepo.noarch.rpm
 # 载入elrepo-kernel元数据
 yum --disablerepo=\* --enablerepo=elrepo-kernel repolist
 # 查看可用的rpm包
