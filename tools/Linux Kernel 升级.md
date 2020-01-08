@@ -24,9 +24,11 @@ yum --disablerepo=\* --enablerepo=elrepo-kernel install -y kernel-lt-tools.x86_6
 
 # 查看默认启动顺序
 awk -F\' '$1=="menuentry " {print $2}' /etc/grub2.cfg  
-CentOS Linux (4.4.183-1.el7.elrepo.x86_64) 7 (Core)  
-CentOS Linux (3.10.0-327.10.1.el7.x86_64) 7 (Core)  
-CentOS Linux (0-rescue-c52097a1078c403da03b8eddeac5080b) 7 (Core)
+CentOS Linux (4.4.208-1.el7.elrepo.x86_64) 7 (Core)
+CentOS Linux (3.10.0-1062.9.1.el7.x86_64) 7 (Core)
+CentOS Linux (3.10.0-957.el7.x86_64) 7 (Core)
+CentOS Linux (0-rescue-292a31ba53a34a6aa077e3467b6f9541) 7 (Core)
+
 # 默认启动的顺序是从0开始，新内核是从头插入（目前位置在0，而4.4.4的是在1），所以需要选择0。
 grub2-set-default 0
 
