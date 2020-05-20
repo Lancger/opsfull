@@ -64,3 +64,5 @@ $ kubectl delete cm $(kubectl get cm -n mos-namespace|grep -v NAME|awk '{print $
 
 
 https://www.xiaodianer.net/index.php/kubernetes/istio/41-istio-https-demo
+
+https://mp.weixin.qq.com/s/jnVn6_cyRUILBQ0cBhBNyQ  Kubernetes v1.18.2 二进制高可用部署
